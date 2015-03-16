@@ -23,7 +23,7 @@ public class TestModelExtention implements IModelExtention
 		{
 			ModelBiped modelBiped = (ModelBiped) model;
 			box.rotationPointX = modelBiped.bipedHead.rotationPointX;
-            box.rotationPointY = modelBiped.bipedHead.rotationPointY - 2;
+            box.rotationPointY = modelBiped.bipedHead.rotationPointY - 8;
 			box.rotationPointZ = modelBiped.bipedHead.rotationPointZ;
 			box.rotateAngleY = modelBiped.bipedHead.rotateAngleY;
 			box.rotateAngleX = modelBiped.bipedHead.rotateAngleX;
