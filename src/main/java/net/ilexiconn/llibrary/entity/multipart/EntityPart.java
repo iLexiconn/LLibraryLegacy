@@ -4,7 +4,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
+
+import java.util.List;
 
 public class EntityPart extends Entity
 {
@@ -39,9 +40,12 @@ public class EntityPart extends Entity
         super.onUpdate();
 
         setLocationAndAngles(parent.posX + radius * Math.cos(parent.renderYawOffset * (Math.PI / 180f) + angleYaw),
-                             parent.posY + offsetY,
-                             parent.posZ + radius * Math.sin(parent.renderYawOffset * (Math.PI / 180f) + angleYaw),
-                             0f, 0f);
+                parent.posY + offsetY,
+                parent.posZ + radius * Math.sin(parent.renderYawOffset * (Math.PI / 180f) + angleYaw),
+                0f, 0f);
+
+
+        if (!worldObj.isRemote) collideWithNearbyEntities();
     }
 
     public boolean canBeCollidedWith()
@@ -79,32 +83,16 @@ public class EntityPart extends Entity
 
     }
 
-    public void applyEntityCollision(Entity entity)
+    public void collideWithNearbyEntities()
     {
-        if (entity.riddenByEntity != this && entity.ridingEntity != this)
+        List entities = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.expand(0.20000000298023224d, 0d, 0.20000000298023224d));
+
+        if (entities != null && !entities.isEmpty())
         {
-            double x = entity.posX - posX;
-            double y = entity.posZ - posZ;
-            double side = MathHelper.abs_max(x, y);
-
-            if (side >= 0.009999999776482582d)
+            for (Object object : entities)
             {
-                side = (double) MathHelper.sqrt_double(side);
-                x /= side;
-                y /= side;
-                double d3 = 1d / side;
-
-                if (d3 > 1d) d3 = 1d;
-
-                x *= d3;
-                y *= d3;
-                x *= 0.05000000074505806d;
-                y *= 0.05000000074505806d;
-                x *= (double) (1f - entityCollisionReduction);
-                y *= (double) (1f - entityCollisionReduction);
-                parent.addVelocity(-x, 0d, -y);
-                addVelocity(-x, 0d, -y);
-                entity.addVelocity(x, 0d, y);
+                Entity entity = (Entity) object;
+                if (entity != parent && !(entity instanceof EntityPart) && entity.canBePushed()) entity.applyEntityCollision(parent);
             }
         }
     }
