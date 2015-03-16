@@ -1,6 +1,13 @@
 package net.ilexiconn.llibrary.client.render;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -9,13 +16,37 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 public class RenderHelper
 {
+	private static Map<Class<? extends ModelBase>, List<IModelExtention>> modelExtentions = new HashMap<Class<? extends ModelBase>, List<IModelExtention>>();
+	
+	public static ModelBiped modelBipedMain;
+	
     private static ResourceLocation glintTexture = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 
+    public static void registerModelExtention(Class<? extends ModelBase> modelClazz, IModelExtention modelExtention)
+    {
+    	List<IModelExtention> extentionsForModel = modelExtentions.get(modelClazz);
+    	
+    	if(extentionsForModel == null)
+    	{
+    		extentionsForModel = new ArrayList<IModelExtention>();
+    	}
+    	
+    	extentionsForModel.add(modelExtention);
+    	
+    	modelExtentions.put(modelClazz, extentionsForModel);
+    }
+    
+    public static List<IModelExtention> getModelExtentionsFor(Class<? extends ModelBase> clazz)
+    {
+    	return modelExtentions.get(clazz);
+    }
+    
     public static void renderItemIn3d(ItemStack stack)
     {
         TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
