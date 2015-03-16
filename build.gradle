@@ -24,7 +24,7 @@ archivesBaseName = "LLibrary"
 minecraft {
     version = "1.7.10-10.13.2.1307-1.7.10"
     runDir = "minecraft"
-	replace '${version}', project.version
+    replace '${version}', project.version
 }
 
 processResources {

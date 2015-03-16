@@ -16,7 +16,7 @@ import static org.lwjgl.opengl.GL11.*;
 @SideOnly(Side.CLIENT)
 public class Item3dRenderer implements IItemRenderer
 {
-	public Item item;
+    public Item item;
     public ModelBase model;
     public ResourceLocation texture;
 
