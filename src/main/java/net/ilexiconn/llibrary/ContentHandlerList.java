@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ContentHandlerList extends ArrayList<IContentHandler>
-{
+{	
     public void init()
     {
         for (IContentHandler contentHandler : this)
