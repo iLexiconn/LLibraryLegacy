@@ -106,9 +106,7 @@ public class CommandLLibrary extends CommandBase
         				
                         if (flag)
                         {
-                        	LLibHelper.chat(icommandsender, "Opening changelog...");
-            				LLibrary.proxy.openChangelogGui(mod, astring[2]);
-//                        	LLibHelper.chat(icommandsender, EnumChatFormatting.GREEN + "Use " + EnumChatFormatting.YELLOW + "/llibrary update <modid>" + EnumChatFormatting.GREEN + " to update the desired mod.");
+                        	LLibrary.proxy.openChangelogGui(mod, astring[2]);
                         }
                         else
                         {
@@ -133,11 +131,11 @@ public class CommandLLibrary extends CommandBase
         {
             if (astring[0].equalsIgnoreCase("update") && astring.length == 2)
             {
-            	return getListOfStringsFromIterableMatchingLastWord(astring, this.getAllModIDs(VersionHandler.getOutdatedMods()));
+            	return getListOfStringsFromIterableMatchingLastWord(astring, getAllModIDs(VersionHandler.getOutdatedMods()));
             }
             if (astring[0].equalsIgnoreCase("changelog") && astring.length == 2)
             {
-                return getListOfStringsFromIterableMatchingLastWord(astring, this.getAllModIDs(UpdateHelper.modList));
+                return getListOfStringsFromIterableMatchingLastWord(astring, getAllModIDs(UpdateHelper.modList));
             }
         }
         return null;
