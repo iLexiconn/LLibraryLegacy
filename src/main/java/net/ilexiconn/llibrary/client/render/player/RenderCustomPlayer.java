@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 
-public class RenderCustomPlayer extends RenderPlayer
+public final class RenderCustomPlayer extends RenderPlayer
 {
 	public RenderCustomPlayer()
 	{

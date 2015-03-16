@@ -8,23 +8,11 @@ import net.minecraft.entity.Entity;
 @SideOnly(Side.CLIENT)
 public interface IModelExtention
 {
-	/**
-	 * Initialize your extra ModelRenderers here.
-	 */
-	void initialize(ModelBase model);
+	void init(ModelBase model);
 	
-	/**
-	 * Used to set the rotation of ModelRenderers before rendering the actual model.
-	 */
-	void setRotationAngles(Entity entity, ModelBase model, float f1, float f2, float f3, float f4, float f5, float f6);
+	void setRotationAngles(ModelBase model, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks, Entity entity);
 	
-	/**
-	 * Called before rendering the model.
-	 */
-	void preRender(Entity entity, ModelBase model, float f);
+	void preRender(Entity entity, ModelBase model, float partialTicks);
 
-	/**
-	 * Called after rendering the model.
-	 */
-	void postRender(Entity entity, ModelBase model, float f);
+	void postRender(Entity entity, ModelBase model, float partialTicks);
 }

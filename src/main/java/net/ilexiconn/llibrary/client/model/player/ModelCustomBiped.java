@@ -1,56 +1,40 @@
 package net.ilexiconn.llibrary.client.model.player;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.client.render.IModelExtention;
 import net.ilexiconn.llibrary.client.render.RenderHelper;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 
-public class ModelCustomBiped extends ModelBiped
+import java.util.List;
+
+public final class ModelCustomBiped extends ModelBiped
 {
 	public ModelCustomBiped()
 	{
-		super();
-
-		List<IModelExtention> modelExtentions = RenderHelper.getModelExtentionsFor(ModelBiped.class);
-
-		if(modelExtentions != null)
-		{
-			for (IModelExtention extention : modelExtentions)
-			{
-				extention.initialize(this);
-			}
-		}
+		List<IModelExtention> extentions = RenderHelper.getModelExtentionsFor(ModelBiped.class);
+		if (extentions != null) for (IModelExtention extention : extentions) extention.init(this);
 	}
 
-	/**
-	 * Sets the models various rotation angles then renders the model.
-	 */
-	public void render(Entity entity, float f1, float f2, float f3, float f4, float f5, float f6)
+	public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
 	{
 		RenderHelper.modelBipedMain = this;
-
 		List<IModelExtention> modelExtentions = RenderHelper.getModelExtentionsFor(ModelBiped.class);
 
-		if(modelExtentions == null)
-		{
-			modelExtentions = new ArrayList<IModelExtention>();
-		}
+		if (modelExtentions == null) modelExtentions = Lists.newArrayList();
 
 		for (IModelExtention extention : modelExtentions)
 		{
-			extention.setRotationAngles(entity, this, f1, f2, f3, f4, f5, f6);
-			extention.preRender(entity, this, f6);
+			extention.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
+			extention.preRender(entity, this, partialTicks);
 		}
 
-		super.render(entity, f1, f2, f3, f4, f5, f6);
+		super.render(entity, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks);
 
 		for (IModelExtention extention : modelExtentions)
 		{
-			extention.setRotationAngles(entity, this, f1, f2, f3, f4, f5, f6);
-			extention.postRender(entity, this, f6);
+			extention.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
+			extention.postRender(entity, this, partialTicks);
 		}
 	}
 }

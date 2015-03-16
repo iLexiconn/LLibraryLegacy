@@ -1,10 +1,6 @@
 package net.ilexiconn.llibrary.client.render;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.collect.Maps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
@@ -16,15 +12,18 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class RenderHelper
 {
-	private static Map<Class<? extends ModelBase>, List<IModelExtention>> modelExtentions = new HashMap<Class<? extends ModelBase>, List<IModelExtention>>();
-	
-	public static ModelBiped modelBipedMain;
+	private static Map<Class<? extends ModelBase>, List<IModelExtention>> modelExtentions = Maps.newHashMap();
+
+    public static ModelBiped modelBipedMain;
 	
     private static ResourceLocation glintTexture = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 
