@@ -1,9 +1,11 @@
 package net.ilexiconn.llibrary.update;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.web.WebHelper;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ChangelogHandler
 {
@@ -15,9 +17,9 @@ public class ChangelogHandler
 	
 	private static ArrayList<String> getVersionChangelog(ModUpdateContainer mod, String version) throws Exception
 	{
-		ArrayList<String> astring = new ArrayList<String>();
-		
-		try
+		ArrayList<String> astring = Lists.newArrayList();
+
+        try
 		{
 			List<String> list = WebHelper.readPastebinAsList(mod.pastebinId);
 			
@@ -30,11 +32,8 @@ public class ChangelogHandler
 					String s1 = string.substring(string.indexOf(s));
 					String s2 = s1.substring(s.length());
 					String[] astring1 = s2.split(" ENDLINE ");
-					
-					for (int i = 0; i < astring1.length; ++i)
-					{
-						astring.add(astring1[i]);
-					}
+
+                    Collections.addAll(astring, astring1);
 				}
 			}
 		}

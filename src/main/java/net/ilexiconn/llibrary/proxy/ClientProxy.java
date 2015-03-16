@@ -32,7 +32,14 @@ public class ClientProxy extends ServerProxy
     public void openChangelogGui(ModUpdateContainer mod, String version)
     {
 		String[] astring = null;
-		try {astring = ChangelogHandler.getChangelog(mod, version);} catch (Exception e) {e.printStackTrace();}
+		try
+        {
+            astring = ChangelogHandler.getChangelog(mod, version);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 		
 		Minecraft.getMinecraft().displayGuiScreen(new GuiChangelog(mod, version, astring));
     }
