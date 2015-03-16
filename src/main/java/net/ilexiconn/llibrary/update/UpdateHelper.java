@@ -1,19 +1,20 @@
 package net.ilexiconn.llibrary.update;
 
+import com.google.common.collect.Lists;
+import cpw.mods.fml.common.Mod;
+
 import java.net.URL;
 import java.util.ArrayList;
 
-import net.ilexiconn.llibrary.IContentHandler;
-import cpw.mods.fml.common.Mod;
-
 public class UpdateHelper
 {
-	public static ArrayList<ModUpdateContainer> modList = new ArrayList<ModUpdateContainer>();
-	
-	public static void registerUpdateChecker(IContentHandler contentHandlers, String pastebinId, String website)
+	public static ArrayList<ModUpdateContainer> modList = Lists.newArrayList();
+
+    public static void registerUpdateChecker(Object mod, String pastebinId, String website)
 	{
 		ModUpdateContainer container = new ModUpdateContainer();
-		Mod annotation = (Mod)contentHandlers.getClass().getAnnotation(Mod.class);
+        if (!mod.getClass().isAnnotationPresent(Mod.class)) return;
+		Mod annotation = mod.getClass().getAnnotation(Mod.class);
 		
 		try
 		{
