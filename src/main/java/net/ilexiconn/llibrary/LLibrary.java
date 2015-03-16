@@ -1,9 +1,10 @@
 package net.ilexiconn.llibrary;
 
+import net.ilexiconn.llibrary.proxy.ServerProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import net.ilexiconn.llibrary.proxy.ServerProxy;
 
 @Mod(modid = "llibrary", name = "LLibrary", version = "${version}")
 public class LLibrary
@@ -15,8 +16,14 @@ public class LLibrary
     private static ServerProxy proxy;
 
     @Mod.EventHandler
-    private void init(FMLPreInitializationEvent event)
+    private void postInit(FMLPostInitializationEvent event)
     {
-        proxy.init();
+        proxy.postInit();
+    }
+    
+    @Mod.EventHandler
+    private void preInit(FMLPreInitializationEvent event)
+    {
+        proxy.preInit();
     }
 }

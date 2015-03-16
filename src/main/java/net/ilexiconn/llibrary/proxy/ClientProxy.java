@@ -11,12 +11,17 @@ import net.minecraftforge.common.MinecraftForge;
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends ServerProxy
 {
-    public void init()
+    public void preInit()
     {
-        super.init();
+        super.preInit();
 
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
-        
+    }
+    
+    public void postInit()
+    {
+    	super.postInit();
+    	
         RenderManager.instance.entityRenderMap.put(EntityPlayer.class, new RenderCustomPlayer());
     }
 }
