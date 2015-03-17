@@ -32,26 +32,37 @@ public class ClientEventHandler
 			int x = e.target.blockX;
 			int y = e.target.blockY;
 			int z = e.target.blockZ;
+
 			Block block = e.player.worldObj.getBlock(x, y, z);
+
 			if (block instanceof IHighlightedBlock)
 			{
 				List<AxisAlignedBB> bounds = ((IHighlightedBlock) block).getHighlightedBoxes(e.player.worldObj, x, y, z, e.player);
+			
 				Vec3 pos = e.player.getPosition(e.partialTicks);
+				
 				GL11.glEnable(GL11.GL_BLEND);
+				
 				OpenGlHelper.glBlendFunc(770, 771, 1, 0);
 				GL11.glColor4f(0f, 0f, 0f, 0.4f);
 				GL11.glLineWidth(2f);
 				GL11.glDisable(GL11.GL_TEXTURE_2D);
 				GL11.glDepthMask(false);
-				for (AxisAlignedBB box : bounds) RenderGlobal.drawOutlinedBoundingBox(box.copy().offset(x, y, z).offset(-pos.xCoord, -pos.yCoord, -pos.zCoord), -1);
+
+				for (AxisAlignedBB box : bounds)
+				{
+					RenderGlobal.drawOutlinedBoundingBox(box.copy().offset(x, y, z).offset(-pos.xCoord, -pos.yCoord, -pos.zCoord), -1);
+				}
+
 				GL11.glDepthMask(true);
 				GL11.glEnable(GL11.GL_TEXTURE_2D);
 				GL11.glDisable(GL11.GL_BLEND);
+
 				e.setCanceled(true);
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onTooltip(ItemTooltipEvent event)
 	{

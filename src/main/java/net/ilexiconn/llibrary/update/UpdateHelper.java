@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.update;
 
 import com.google.common.collect.Lists;
+
 import cpw.mods.fml.common.Mod;
 
 import java.net.URL;
@@ -13,8 +14,12 @@ public class UpdateHelper
     public static void registerUpdateChecker(Object mod, String pastebinId, String website)
 	{
 		ModUpdateContainer container = new ModUpdateContainer();
-        if (!mod.getClass().isAnnotationPresent(Mod.class)) return;
-		Mod annotation = mod.getClass().getAnnotation(Mod.class);
+		
+        Class<? extends Object> modClass = mod.getClass();
+        
+		if (!modClass.isAnnotationPresent(Mod.class)) return;
+        
+		Mod annotation = modClass.getAnnotation(Mod.class);
 		
 		try
 		{
@@ -41,6 +46,7 @@ public class UpdateHelper
     			return mod;
     		}
     	}
+    	
     	return null;
     }
 }
