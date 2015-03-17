@@ -55,7 +55,7 @@ public class EntityHelper
 		}
 	}
 	
-	public static void removeEntityMapping(Class<? extends Entity> entityClass)
+	private static void removeEntityMapping(Class<? extends Entity> entityClass)
 	{
 		EntityList.IDtoClassMapping.remove(entityClass);
 		EntityList.stringToClassMapping.remove(EntityList.classToStringMapping.get(entityClass));
