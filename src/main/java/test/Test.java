@@ -27,7 +27,7 @@ public class Test implements IContentHandler
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        EntityHelper.removeEntity(EntityHorse.class);
+        EntityHelper.removeLivingEntity(EntityHorse.class);
     }
 
     public void init()
