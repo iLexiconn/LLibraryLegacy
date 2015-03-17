@@ -20,7 +20,7 @@ public final class ModelCustomBiped extends ModelBiped
 
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
 	{
-		if(Minecraft.getMinecraft().thePlayer == entity)
+		if (Minecraft.getMinecraft().thePlayer == entity)
 		{
 			RenderHelper.modelBipedMain = this;
 		}
@@ -29,7 +29,7 @@ public final class ModelCustomBiped extends ModelBiped
 
 		if (modelExtentions == null) modelExtentions = Lists.newArrayList();
 
-		this.setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
+		setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
 
 		for (IModelExtension extention : modelExtentions)
 		{
@@ -37,34 +37,34 @@ public final class ModelCustomBiped extends ModelBiped
 			extention.preRender(entity, this, partialTicks);
 		}
 		
-		if (this.isChild)
+		if (isChild)
 		{
-			float scale = 2.0F;
+			float scale = 2f;
 			GL11.glPushMatrix();
-			GL11.glScalef(1.5F / scale, 1.5F / scale, 1.5F / scale);
-			GL11.glTranslatef(0.0F, 16.0F * partialTicks, 0.0F);
-			this.bipedHead.render(partialTicks);
+			GL11.glScalef(1f / scale, 1f / scale, 1.5f / scale);
+			GL11.glTranslatef(0f, 16f * partialTicks, 0f);
+			bipedHead.render(partialTicks);
 			GL11.glPopMatrix();
 			GL11.glPushMatrix();
-			GL11.glScalef(1.0F / scale, 1.0F / scale, 1.0F / scale);
-			GL11.glTranslatef(0.0F, 24.0F * partialTicks, 0.0F);
-			this.bipedBody.render(partialTicks);
-			this.bipedRightArm.render(partialTicks);
-			this.bipedLeftArm.render(partialTicks);
-			this.bipedRightLeg.render(partialTicks);
-			this.bipedLeftLeg.render(partialTicks);
-			this.bipedHeadwear.render(partialTicks);
+			GL11.glScalef(1f / scale, 1f / scale, 1f / scale);
+			GL11.glTranslatef(0f, 24f * partialTicks, 0f);
+			bipedBody.render(partialTicks);
+			bipedRightArm.render(partialTicks);
+			bipedLeftArm.render(partialTicks);
+			bipedRightLeg.render(partialTicks);
+			bipedLeftLeg.render(partialTicks);
+			bipedHeadwear.render(partialTicks);
 			GL11.glPopMatrix();
 		}
 		else
 		{
-			this.bipedHead.render(partialTicks);
-			this.bipedBody.render(partialTicks);
-			this.bipedRightArm.render(partialTicks);
-			this.bipedLeftArm.render(partialTicks);
-			this.bipedRightLeg.render(partialTicks);
-			this.bipedLeftLeg.render(partialTicks);
-			this.bipedHeadwear.render(partialTicks);
+			bipedHead.render(partialTicks);
+			bipedBody.render(partialTicks);
+			bipedRightArm.render(partialTicks);
+			bipedLeftArm.render(partialTicks);
+			bipedRightLeg.render(partialTicks);
+			bipedLeftLeg.render(partialTicks);
+			bipedHeadwear.render(partialTicks);
 		}
 
 		for (IModelExtension extention : modelExtentions)
