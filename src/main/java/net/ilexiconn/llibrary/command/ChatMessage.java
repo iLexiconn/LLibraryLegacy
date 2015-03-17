@@ -1,16 +1,18 @@
 package net.ilexiconn.llibrary.command;
 
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
+import net.ilexiconn.llibrary.command.color.EnumChatColor;
 
+/**
+ * @author FiskFille
+ */
 public class ChatMessage
 {
 	public String message;
-	public String color;
+	public EnumChatColor color;
 	
-	public ChatMessage(String message, String color)
+	public ChatMessage(String m, EnumChatColor c)
 	{
-		this.message = message;
-		this.color = color;
+		message = m;
+		color = c;
 	}
 }

@@ -1,8 +1,6 @@
 package net.ilexiconn.llibrary.command;
 
 import net.minecraft.command.ICommandSender;
-import net.minecraft.command.server.CommandMessageRaw;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 
 /**
@@ -22,7 +20,7 @@ public class ChatHelper
 		
 		for (int i = 0; i < chatMessages.length; ++i)
 		{
-			json += (i == 0 ? "" : ",") + "{text:\"" + chatMessages[i].message + "\",color:" + chatMessages[i].color + "}";
+			json += (i == 0 ? "" : ",") + "{text:\"" + chatMessages[i].message + "\",color:" + chatMessages[i].color.colorCode + "}";
 		}
 		
 		json += "]}";
