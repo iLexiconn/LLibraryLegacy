@@ -1,20 +1,20 @@
 package net.ilexiconn.llibrary.update;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.web.WebHelper;
+
+import java.io.IOException;
+import java.util.List;
 
 public class VersionHandler
 {
-	private static List<ModUpdateContainer> outdatedMods = new ArrayList<ModUpdateContainer>();
+	private static List<ModUpdateContainer> outdatedMods = Lists.newArrayList();
 	
 	public static List<ModUpdateContainer> searchForOutdatedMods()
 	{
-		List<ModUpdateContainer> outdatedMods = new ArrayList<ModUpdateContainer>();
-		
-		for (ModUpdateContainer mod : UpdateHelper.modList)
+		List<ModUpdateContainer> outdatedMods = Lists.newArrayList();
+
+        for (ModUpdateContainer mod : UpdateHelper.modList)
 		{
 			try 
 			{

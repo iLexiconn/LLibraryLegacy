@@ -1,5 +1,7 @@
 package net.ilexiconn.llibrary.update;
 
+import com.google.common.collect.Lists;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,5 +15,5 @@ public class ModUpdateContainer
 	public URL website;
 	public String latestVersion;
 	
-	public List<String> updateFile = new ArrayList<String>();
+	public List<String> updateFile = Lists.newArrayList();
 }
