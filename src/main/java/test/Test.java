@@ -7,8 +7,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.ilexiconn.llibrary.ContentHandlerList;
 import net.ilexiconn.llibrary.IContentHandler;
 import net.ilexiconn.llibrary.entity.EntityHelper;
+import net.ilexiconn.llibrary.item.ItemHelper;
 import net.ilexiconn.llibrary.update.UpdateHelper;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityHorse;
 import test.proxy.ServerProxy;
 
@@ -29,6 +29,7 @@ public class Test implements IContentHandler
     public void postInit(FMLPostInitializationEvent event)
     {
         EntityHelper.removeLivingEntity(EntityHorse.class); //R.I.P Horse
+        ItemHelper.removeRecipes("crafting_table"); //R.I.P Crafting Table
     }
 
     public void init()
