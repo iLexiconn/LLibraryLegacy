@@ -2,11 +2,13 @@ package test;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.ilexiconn.llibrary.ContentHandlerList;
 import net.ilexiconn.llibrary.IContentHandler;
 import net.ilexiconn.llibrary.entity.EntityHelper;
 import net.ilexiconn.llibrary.update.UpdateHelper;
+import net.minecraft.entity.passive.EntityHorse;
 import test.proxy.ServerProxy;
 
 @Mod(modid = "test", name = "Test Mod", version = "1.0")
@@ -20,6 +22,12 @@ public class Test implements IContentHandler
     {
         ContentHandlerList.createList(this).init();
         UpdateHelper.registerUpdateChecker(this, "r5zKe0UF", "https://twitter.com/");
+    }
+
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent event)
+    {
+        EntityHelper.removeEntity(EntityHorse.class);
     }
 
     public void init()
