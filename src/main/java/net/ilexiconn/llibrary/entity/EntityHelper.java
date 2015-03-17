@@ -33,22 +33,19 @@ public class EntityHelper
 		EntityList.entityEggs.put(entityId, new EntityList.EntityEggInfo(entityId, primaryColor, secondaryColor));
 	}
 
-	public static void removeLivingEntity(Class<? extends Entity> clazz)
+	public static void removeLivingEntity(Class<? extends EntityLiving> clazz)
 	{
 		removeEntity(clazz);
-
-		Class<? extends EntityLiving> livingClass = (Class<? extends EntityLiving>)clazz;
-
-		removeEntityEgg(livingClass);
+		removeEntityEgg(clazz);
 
 		for (BiomeGenBase biome : BiomeGenBase.getBiomeGenArray())
 		{
 			if (biome != null)
 			{
-				EntityRegistry.removeSpawn(livingClass, EnumCreatureType.ambient, biome);
-				EntityRegistry.removeSpawn(livingClass, EnumCreatureType.creature, biome);
-				EntityRegistry.removeSpawn(livingClass, EnumCreatureType.monster, biome);
-				EntityRegistry.removeSpawn(livingClass, EnumCreatureType.waterCreature, biome);
+				EntityRegistry.removeSpawn(clazz, EnumCreatureType.ambient, biome);
+				EntityRegistry.removeSpawn(clazz, EnumCreatureType.creature, biome);
+				EntityRegistry.removeSpawn(clazz, EnumCreatureType.monster, biome);
+				EntityRegistry.removeSpawn(clazz, EnumCreatureType.waterCreature, biome);
 			}
 		}
 	}
