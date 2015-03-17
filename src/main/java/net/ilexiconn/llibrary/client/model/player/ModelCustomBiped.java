@@ -13,13 +13,13 @@ public final class ModelCustomBiped extends ModelBiped
 {
 	public ModelCustomBiped()
 	{
-		List<IModelExtension> extentions = RenderHelper.getModelExtentionsFor(ModelBiped.class);
+		List<IModelExtension> extentions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
 		if (extentions != null) for (IModelExtension extention : extentions) extention.init(this);
 	}
 
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
 	{
-		List<IModelExtension> modelExtentions = RenderHelper.getModelExtentionsFor(ModelBiped.class);
+		List<IModelExtension> modelExtentions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
 
 		if (modelExtentions == null) modelExtentions = Lists.newArrayList();
 

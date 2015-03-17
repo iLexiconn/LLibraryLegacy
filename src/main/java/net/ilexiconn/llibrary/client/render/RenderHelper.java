@@ -27,29 +27,45 @@ import java.util.Map;
  */
 public class RenderHelper
 {
-	private static Map<Class<? extends ModelBase>, List<IModelExtension>> modelExtentions = Maps.newHashMap();
+	private static Map<Class<? extends ModelBase>, List<IModelExtension>> modelExtensions = Maps.newHashMap();
 
     private static ResourceLocation glintTexture = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 
-    public static void registerModelExtention(Class<? extends ModelBase> modelClazz, IModelExtension modelExtention)
+    /**
+     * Registers the given IModelExtension.
+     * 
+     * @param modelClazz
+     * @param modelExtension
+     */
+    public static void registerModelExtension(Class<? extends ModelBase> modelClazz, IModelExtension modelExtension)
     {
-    	List<IModelExtension> extentionsForModel = modelExtentions.get(modelClazz);
+    	List<IModelExtension> extensionsForModel = modelExtensions.get(modelClazz);
     	
-    	if (extentionsForModel == null)
+    	if (extensionsForModel == null)
     	{
-    		extentionsForModel = Lists.newArrayList();
+    		extensionsForModel = Lists.newArrayList();
     	}
     	
-    	extentionsForModel.add(modelExtention);
+    	extensionsForModel.add(modelExtension);
     	
-    	modelExtentions.put(modelClazz, extentionsForModel);
+    	modelExtensions.put(modelClazz, extensionsForModel);
     }
     
-    public static List<IModelExtension> getModelExtentionsFor(Class<? extends ModelBase> clazz)
+    /**
+     * 
+     * @param clazz
+     * @returns a list of ModelExtensions for the given model class.
+     */
+    public static List<IModelExtension> getModelExtensionsFor(Class<? extends ModelBase> clazz)
     {
-    	return modelExtentions.get(clazz);
+    	return modelExtensions.get(clazz);
     }
     
+    /**
+     * Renders the given ItemStack in 3D.
+     * 
+     * @param stack the ItemStack you want to render.
+     */
     public static void renderItemIn3d(ItemStack stack)
     {
         TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
