@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import com.google.common.collect.Lists;
@@ -150,5 +151,21 @@ public class EntityHelper
 		do startEntityId++;
 		while (EntityList.getStringFromID(startEntityId) != null);
 		return startEntityId;
+	}
+	
+	public static Entity getEntityFromClass(Class entityClass, World world)
+	{
+		Entity entity = null;
+		
+		try
+		{
+			entity = (Entity)entityClass.getConstructor(new Class[] {World.class}).newInstance(new Object[] {world});
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return entity;
 	}
 }
