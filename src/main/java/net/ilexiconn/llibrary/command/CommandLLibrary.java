@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.command;
 
+import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.LLibHelper;
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.update.ChangelogHandler;
@@ -151,7 +152,7 @@ public class CommandLLibrary extends CommandBase
 
 	protected List getAllModIDs(List list)
 	{
-		ArrayList arraylist = new ArrayList();
+		ArrayList arraylist = Lists.newArrayList();
 
 		for (Object aCollection : list)
 		{

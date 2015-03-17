@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.client.render;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -15,7 +16,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +33,7 @@ public class RenderHelper
     	
     	if(extentionsForModel == null)
     	{
-    		extentionsForModel = new ArrayList<IModelExtention>();
+    		extentionsForModel = Lists.newArrayList();
     	}
     	
     	extentionsForModel.add(modelExtention);
