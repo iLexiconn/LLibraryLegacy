@@ -23,6 +23,11 @@ import java.util.Map;
 
 import static com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
+/**
+ * Player skin tools, not stable and only works in 1.7.10.
+ *
+ * @author iLexiconn
+ */
 @SideOnly(Side.CLIENT)
 public class TextureHelper
 {

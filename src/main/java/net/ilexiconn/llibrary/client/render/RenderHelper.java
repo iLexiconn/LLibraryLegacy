@@ -2,6 +2,7 @@ package net.ilexiconn.llibrary.client.render;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.ilexiconn.llibrary.client.render.item.Item3dRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
@@ -13,12 +14,18 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.MinecraftForgeClient;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Render helper class for basic render operations and the IModelExtension.
+ *
+ * @author iLexiconn & Gegy1000
+ */
 public class RenderHelper
 {
 	private static Map<Class<? extends ModelBase>, List<IModelExtension>> modelExtentions = Maps.newHashMap();
@@ -113,5 +120,10 @@ public class RenderHelper
         float g = (color >> 8 & 255) / 255f;
         float b = (color & 255) / 255f;
         GL11.glColor4f(r, g, b, 1f);
+    }
+
+    public static void registerItem3dRenderer(Item item, ModelBase model, ResourceLocation texture)
+    {
+        MinecraftForgeClient.registerItemRenderer(item, new Item3dRenderer(item, model, texture));
     }
 }

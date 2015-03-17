@@ -1,9 +1,7 @@
 package net.ilexiconn.llibrary.entity;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.collect.Lists;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -13,10 +11,15 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
-import com.google.common.collect.Lists;
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
 
-import cpw.mods.fml.common.registry.EntityRegistry;
-
+/**
+ * Class for registering entities, removing entities and getting entities.
+ *
+ * @author iLexiconn & Gegy1000 & FiskFille
+ */
 public class EntityHelper
 {
 	static int startEntityId = 0;
@@ -159,7 +162,7 @@ public class EntityHelper
 		
 		try
 		{
-			entity = (Entity)entityClass.getConstructor(new Class[] {World.class}).newInstance(new Object[] {world});
+			entity = (Entity)entityClass.getConstructor(new Class[] {World.class}).newInstance(world);
 		}
 		catch (Exception e)
 		{

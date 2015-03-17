@@ -11,6 +11,11 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLiving;
 import org.lwjgl.opengl.GL11;
 
+/**
+ * Basic class for debugging entity classes with MultiParts
+ *
+ * @author iLexiconn
+ */
 @SideOnly(Side.CLIENT)
 public abstract class RenderMultiPart extends RenderLiving
 {

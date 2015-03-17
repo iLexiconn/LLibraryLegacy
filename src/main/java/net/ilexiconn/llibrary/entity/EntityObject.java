@@ -2,6 +2,11 @@ package net.ilexiconn.llibrary.entity;
 
 import net.minecraft.entity.Entity;
 
+/**
+ * Placeholder class for registering entities using the EntityHelper class.
+ *
+ * @author iLexiconn
+ */
 public class EntityObject
 {
     private String entityName;
