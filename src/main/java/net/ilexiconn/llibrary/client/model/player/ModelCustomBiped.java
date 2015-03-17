@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 
 import net.ilexiconn.llibrary.client.render.IModelExtention;
 import net.ilexiconn.llibrary.client.render.RenderHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 
@@ -21,7 +22,11 @@ public final class ModelCustomBiped extends ModelBiped
 
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
 	{
-		RenderHelper.modelBipedMain = this;
+		if(Minecraft.getMinecraft().thePlayer == entity)
+		{
+			RenderHelper.modelBipedMain = this;
+		}
+		
 		List<IModelExtention> modelExtentions = RenderHelper.getModelExtentionsFor(ModelBiped.class);
 
 		if (modelExtentions == null) modelExtentions = Lists.newArrayList();
