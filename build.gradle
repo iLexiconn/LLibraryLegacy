@@ -40,9 +40,3 @@ processResources {
         exclude 'mcmod.info'
     }
 }
-
-jar {
-    manifest {
-        attributes 'FMLAT' : 'llibrary_at.cfg'
-    }
-}

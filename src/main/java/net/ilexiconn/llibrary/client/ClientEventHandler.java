@@ -1,13 +1,18 @@
 package net.ilexiconn.llibrary.client;
 
+import com.google.common.collect.Lists;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.block.IHighlightedBlock;
+import net.ilexiconn.llibrary.client.render.IModelExtension;
+import net.ilexiconn.llibrary.client.render.RenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.item.Item;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
@@ -70,10 +75,4 @@ public class ClientEventHandler
 			event.toolTip.add(EnumChatFormatting.DARK_GRAY + "" + Item.itemRegistry.getNameForObject(event.itemStack.getItem()));
 		}
 	}
-
-    @SubscribeEvent
-    public void entityRender(RenderLivingEvent event)
-    {
-
-    }
 }
