@@ -1,10 +1,14 @@
 package net.ilexiconn.llibrary.item;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Helper class to save ItemStacks to NBT, and removing item/block recipes.
@@ -23,27 +27,20 @@ public class ItemHelper
         nbtTag.setTag(name, stack.writeToNBT(new NBTTagCompound()));
     }
 
-    public static void removeRecipes(String toDelete)
+    public static void removeRecipes(Block block)
     {
-        ItemStack resultItem = new ItemStack((Item) Item.itemRegistry.getObject(toDelete));
-        resultItem.stackSize = 1;
-        resultItem.setItemDamage(0);
+        removeRecipes(Item.getItemFromBlock(block));
+    }
 
-        for (int i = 0; i < CraftingManager.getInstance().getRecipeList().size(); i++)
+    public static void removeRecipes(Item item)
+    {
+        List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+        Iterator<IRecipe> iterator = recipes.iterator();
+
+        while (iterator.hasNext())
         {
-            IRecipe tmpRecipe = (IRecipe) CraftingManager.getInstance().getRecipeList().get(i);
-
-            ItemStack recipeResult = tmpRecipe.getRecipeOutput();
-            if (recipeResult != null)
-            {
-                recipeResult.stackSize = 1;
-                recipeResult.setItemDamage(0);
-            }
-
-            if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
-            {
-                CraftingManager.getInstance().getRecipeList().remove(i--);
-            }
+            ItemStack stack = iterator.next().getRecipeOutput();
+            if (stack != null && stack.getItem() == item) iterator.remove();
         }
     }
 }

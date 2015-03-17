@@ -10,6 +10,7 @@ import net.ilexiconn.llibrary.entity.EntityHelper;
 import net.ilexiconn.llibrary.item.ItemHelper;
 import net.ilexiconn.llibrary.update.UpdateHelper;
 import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.init.Blocks;
 import test.proxy.ServerProxy;
 
 @Mod(modid = "test", name = "Test Mod", version = "1.0")
@@ -29,7 +30,7 @@ public class Test implements IContentHandler
     public void postInit(FMLPostInitializationEvent event)
     {
         EntityHelper.removeLivingEntity(EntityHorse.class); //R.I.P Horse
-        ItemHelper.removeRecipes("crafting_table"); //R.I.P Crafting Table
+        ItemHelper.removeRecipes(Blocks.crafting_table); //R.I.P Crafting Table
     }
 
     public void init()
