@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.gui;
 
+import net.ilexiconn.llibrary.config.LLibraryConfig;
 import net.ilexiconn.llibrary.update.ModUpdateContainer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -14,8 +15,8 @@ public class GuiChangelog extends GuiScreen
 	private final String version;
 	private final String[] changelog;
 		
-	private int verticalScroll = 0;
-	private int horizontalScroll = 0;
+	public static int verticalScroll = 0;
+	public static int horizontalScroll = 0;
 	
 	public GuiChangelog(ModUpdateContainer mod, String version, String[] changelog)
 	{
@@ -39,9 +40,9 @@ public class GuiChangelog extends GuiScreen
 		}
 	}
 	
-	protected void keyTyped(char par1, int par2)
+	protected void keyTyped(char character, int par2)
 	{
-		super.keyTyped(par1, par2);
+		super.keyTyped(character, par2);
 	}
 	
 	public boolean doesGuiPauseGame() 
@@ -56,25 +57,44 @@ public class GuiChangelog extends GuiScreen
 	
 	public int getMouseWheel()
 	{
-		int i = Mouse.getDWheel();
+		int speed = Mouse.getDWheel();
 		
-		if (i != 0)
+		if (speed != 0)
 		{
-			if (i > 1)
+			if (speed > 1)
 			{
-				i = 1;
+				speed = 1;
 			}
-			if (i < -1)
+			if (speed < -1)
 			{
-				i = -1;
+				speed = -1;
 			}
 			
-			verticalScroll += !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) ? -(i * 10) : 0;
-			horizontalScroll += Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) ? -(i * 10) : 0;
+			verticalScroll += !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) ? -(speed * 10) : 0;
+			horizontalScroll += Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) ? -(speed * 10) : 0;
+
+			if(verticalScroll > 225)
+			{
+				verticalScroll = 225;
+			}
+			else if(verticalScroll < -80)
+			{
+				verticalScroll = -80;
+			}
 			
-			i = 0;
+			if(horizontalScroll > 150)
+			{
+				horizontalScroll = 150;
+			}
+			else if(horizontalScroll < -150)
+			{
+				horizontalScroll = -150;
+			}
+			
+			speed = 0;
 		}
-		return i;
+		
+		return speed;
 	}
 	
 	public void drawScreen(int par1, int par2, float par3)
