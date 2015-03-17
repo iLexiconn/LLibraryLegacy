@@ -27,9 +27,9 @@ public class ServerEventHandler
     {
     	if (event.world.isRemote)
     	{
-    		if(event.entity instanceof EntityPlayer)
+    		if (event.entity instanceof EntityPlayer)
     		{
-        		if(!checkedForUpdates)
+        		if (!checkedForUpdates)
         		{
         			new UpdateCheckerThread().start();
         			
