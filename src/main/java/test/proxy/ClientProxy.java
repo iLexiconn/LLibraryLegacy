@@ -5,13 +5,13 @@ import net.minecraft.client.model.ModelBiped;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import test.EntityTest;
 import test.render.RenderEntityTest;
-import test.render.TestModelExtention;
+import test.render.TestModelExtension;
 
 public class ClientProxy extends ServerProxy
 {
     public void init()
     {
         RenderingRegistry.registerEntityRenderingHandler(EntityTest.class, new RenderEntityTest());
-        RenderHelper.registerModelExtention(ModelBiped.class, new TestModelExtention());
+        RenderHelper.registerModelExtention(ModelBiped.class, new TestModelExtension());
     }
 }

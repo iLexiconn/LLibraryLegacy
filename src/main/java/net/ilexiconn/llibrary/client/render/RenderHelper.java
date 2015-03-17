@@ -21,15 +21,15 @@ import java.util.Map;
 
 public class RenderHelper
 {
-	private static Map<Class<? extends ModelBase>, List<IModelExtention>> modelExtentions = Maps.newHashMap();
+	private static Map<Class<? extends ModelBase>, List<IModelExtension>> modelExtentions = Maps.newHashMap();
 
     public static ModelBiped modelBipedMain;
 	
     private static ResourceLocation glintTexture = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 
-    public static void registerModelExtention(Class<? extends ModelBase> modelClazz, IModelExtention modelExtention)
+    public static void registerModelExtention(Class<? extends ModelBase> modelClazz, IModelExtension modelExtention)
     {
-    	List<IModelExtention> extentionsForModel = modelExtentions.get(modelClazz);
+    	List<IModelExtension> extentionsForModel = modelExtentions.get(modelClazz);
     	
     	if(extentionsForModel == null)
     	{
@@ -41,7 +41,7 @@ public class RenderHelper
     	modelExtentions.put(modelClazz, extentionsForModel);
     }
     
-    public static List<IModelExtention> getModelExtentionsFor(Class<? extends ModelBase> clazz)
+    public static List<IModelExtension> getModelExtentionsFor(Class<? extends ModelBase> clazz)
     {
     	return modelExtentions.get(clazz);
     }

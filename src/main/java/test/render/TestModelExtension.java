@@ -1,12 +1,11 @@
 package test.render;
 
-import net.ilexiconn.llibrary.client.render.IModelExtention;
+import net.ilexiconn.llibrary.client.render.IModelExtension;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class TestModelExtention implements IModelExtention
+public class TestModelExtension implements IModelExtension
 {
 	public void init(ModelBase model)
 	{

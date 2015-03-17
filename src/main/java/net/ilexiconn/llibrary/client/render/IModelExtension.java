@@ -6,7 +6,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
 
 @SideOnly(Side.CLIENT)
-public interface IModelExtention
+public interface IModelExtension
 {
 	void init(ModelBase model);
 	
