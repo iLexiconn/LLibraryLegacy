@@ -1,6 +1,5 @@
 package net.ilexiconn.llibrary.gui;
 
-import net.ilexiconn.llibrary.config.LLibraryConfig;
 import net.ilexiconn.llibrary.update.ModUpdateContainer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
