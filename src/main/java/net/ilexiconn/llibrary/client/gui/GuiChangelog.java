@@ -1,5 +1,7 @@
-package net.ilexiconn.llibrary.gui;
+package net.ilexiconn.llibrary.client.gui;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.update.ModUpdateContainer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -8,6 +10,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+@SideOnly(Side.CLIENT)
 public class GuiChangelog extends GuiScreen
 {
 	private final ModUpdateContainer mod;

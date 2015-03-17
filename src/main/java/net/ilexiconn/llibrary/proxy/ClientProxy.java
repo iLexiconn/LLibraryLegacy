@@ -2,7 +2,7 @@ package net.ilexiconn.llibrary.proxy;
 
 import net.ilexiconn.llibrary.client.ClientEventHandler;
 import net.ilexiconn.llibrary.client.render.player.RenderCustomPlayer;
-import net.ilexiconn.llibrary.gui.GuiChangelog;
+import net.ilexiconn.llibrary.client.gui.GuiChangelog;
 import net.ilexiconn.llibrary.update.ChangelogHandler;
 import net.ilexiconn.llibrary.update.ModUpdateContainer;
 import net.minecraft.client.Minecraft;

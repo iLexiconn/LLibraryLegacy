@@ -2,6 +2,8 @@ package net.ilexiconn.llibrary.client.render;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.client.render.item.Item3dRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -25,6 +27,7 @@ import java.util.Map;
  *
  * @author iLexiconn & Gegy1000
  */
+@SideOnly(Side.CLIENT)
 public class RenderHelper
 {
 	private static Map<Class<? extends ModelBase>, List<IModelExtension>> modelExtensions = Maps.newHashMap();

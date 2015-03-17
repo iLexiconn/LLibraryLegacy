@@ -1,6 +1,8 @@
 package net.ilexiconn.llibrary.client.model.player;
 
 import com.google.common.collect.Lists;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.client.render.IModelExtension;
 import net.ilexiconn.llibrary.client.render.RenderHelper;
 import net.minecraft.client.model.ModelBiped;
@@ -9,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
+@SideOnly(Side.CLIENT)
 public final class ModelCustomBiped extends ModelBiped
 {
 	public ModelCustomBiped()
