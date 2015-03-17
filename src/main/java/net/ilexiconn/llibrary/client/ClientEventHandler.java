@@ -9,14 +9,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemEgg;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -25,21 +24,21 @@ import java.util.List;
 public class ClientEventHandler
 {
 	@SubscribeEvent
-	public void blockHighlight(DrawBlockHighlightEvent e)
+	public void blockHighlight(DrawBlockHighlightEvent event)
 	{
-		if (e.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+		if (event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
 		{
-			int x = e.target.blockX;
-			int y = e.target.blockY;
-			int z = e.target.blockZ;
+			int x = event.target.blockX;
+			int y = event.target.blockY;
+			int z = event.target.blockZ;
 
-			Block block = e.player.worldObj.getBlock(x, y, z);
+			Block block = event.player.worldObj.getBlock(x, y, z);
 
 			if (block instanceof IHighlightedBlock)
 			{
-				List<AxisAlignedBB> bounds = ((IHighlightedBlock) block).getHighlightedBoxes(e.player.worldObj, x, y, z, e.player);
+				List<AxisAlignedBB> bounds = ((IHighlightedBlock) block).getHighlightedBoxes(event.player.worldObj, x, y, z, event.player);
 			
-				Vec3 pos = e.player.getPosition(e.partialTicks);
+				Vec3 pos = event.player.getPosition(event.partialTicks);
 				
 				GL11.glEnable(GL11.GL_BLEND);
 				
@@ -58,17 +57,23 @@ public class ClientEventHandler
 				GL11.glEnable(GL11.GL_TEXTURE_2D);
 				GL11.glDisable(GL11.GL_BLEND);
 
-				e.setCanceled(true);
+				event.setCanceled(true);
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public void onTooltip(ItemTooltipEvent event)
+	public void itemTooltip(ItemTooltipEvent event)
 	{
 		if (Minecraft.getMinecraft().gameSettings.advancedItemTooltips)
 		{
 			event.toolTip.add(EnumChatFormatting.DARK_GRAY + "" + Item.itemRegistry.getNameForObject(event.itemStack.getItem()));
 		}
 	}
+
+    @SubscribeEvent
+    public void entityRender(RenderLivingEvent event)
+    {
+
+    }
 }

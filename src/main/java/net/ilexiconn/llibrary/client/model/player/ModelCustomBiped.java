@@ -3,7 +3,6 @@ package net.ilexiconn.llibrary.client.model.player;
 import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.client.render.IModelExtension;
 import net.ilexiconn.llibrary.client.render.RenderHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
@@ -20,11 +19,6 @@ public final class ModelCustomBiped extends ModelBiped
 
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
 	{
-		if (Minecraft.getMinecraft().thePlayer == entity)
-		{
-			RenderHelper.modelBipedMain = this;
-		}
-		
 		List<IModelExtension> modelExtentions = RenderHelper.getModelExtentionsFor(ModelBiped.class);
 
 		if (modelExtentions == null) modelExtentions = Lists.newArrayList();
