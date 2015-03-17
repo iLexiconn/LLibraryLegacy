@@ -1,14 +1,16 @@
 package net.ilexiconn.llibrary.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.ilexiconn.llibrary.entity.EntityHelper;
 import net.ilexiconn.llibrary.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.entity.multipart.IEntityMultiPart;
 import net.ilexiconn.llibrary.update.UpdateCheckerThread;
 import net.ilexiconn.llibrary.update.VersionHandler;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 
-public class ServerEventHandler
+public class CommonEventHandler
 {
 	private boolean checkedForUpdates;
 	
@@ -26,12 +28,20 @@ public class ServerEventHandler
     {
     	if(event.world.isRemote)
     	{
-    		if(!checkedForUpdates)
+    		if(event.entity instanceof EntityPlayer)
     		{
-    			new UpdateCheckerThread().start();
-    			
-    			checkedForUpdates = true;
+        		if(!checkedForUpdates)
+        		{
+        			new UpdateCheckerThread().start();
+        			
+        			checkedForUpdates = true;
+        		}
     		}
+    	}
+    	
+    	if(EntityHelper.hasEntityBeenRemoved(event.entity.getClass()))
+    	{
+    		event.setCanceled(true);
     	}
     }
 }
