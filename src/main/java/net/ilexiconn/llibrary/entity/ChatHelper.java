@@ -1,9 +1,9 @@
-package net.ilexiconn.llibrary;
+package net.ilexiconn.llibrary.entity;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 
-public class LLibHelper
+public class ChatHelper
 {
 	public static void chat(ICommandSender commandSender, String message)
 	{

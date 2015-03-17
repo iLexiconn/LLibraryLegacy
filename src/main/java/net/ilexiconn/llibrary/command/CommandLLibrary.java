@@ -1,7 +1,7 @@
 package net.ilexiconn.llibrary.command;
 
 import com.google.common.collect.Lists;
-import net.ilexiconn.llibrary.LLibHelper;
+import net.ilexiconn.llibrary.entity.ChatHelper;
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.update.ChangelogHandler;
 import net.ilexiconn.llibrary.update.ModUpdateContainer;
@@ -47,15 +47,15 @@ public class CommandLLibrary extends CommandBase
 					throw new WrongUsageException("/llibrary list");
 				}
 
-				LLibHelper.chat(sender, EnumChatFormatting.DARK_GREEN + "--- Showing a list of outdated mods ---");
+				ChatHelper.chat(sender, EnumChatFormatting.DARK_GREEN + "--- Showing a list of outdated mods ---");
 
 				for (ModUpdateContainer mod : outdatedMods)
 				{
-					LLibHelper.chat(sender, EnumChatFormatting.BLUE + "(" + mod.modid + ") " + EnumChatFormatting.WHITE + mod.name + " version " + mod.version + " - Latest version: " + mod.latestVersion);
+					ChatHelper.chat(sender, EnumChatFormatting.BLUE + "(" + mod.modid + ") " + EnumChatFormatting.WHITE + mod.name + " version " + mod.version + " - Latest version: " + mod.latestVersion);
 				}
 
-				LLibHelper.chat(sender, EnumChatFormatting.GREEN + "Use " + EnumChatFormatting.YELLOW + "/llibrary update <modid>" + EnumChatFormatting.GREEN + " to update the desired mod, " + EnumChatFormatting.RED + "or");
-				LLibHelper.chat(sender, EnumChatFormatting.GREEN + "Use " + EnumChatFormatting.YELLOW + "/llibrary changelog <modid> <version>" + EnumChatFormatting.GREEN + " to see its version changelog.");
+				ChatHelper.chat(sender, EnumChatFormatting.GREEN + "Use " + EnumChatFormatting.YELLOW + "/llibrary update <modid>" + EnumChatFormatting.GREEN + " to update the desired mod, " + EnumChatFormatting.RED + "or");
+				ChatHelper.chat(sender, EnumChatFormatting.GREEN + "Use " + EnumChatFormatting.YELLOW + "/llibrary changelog <modid> <version>" + EnumChatFormatting.GREEN + " to see its version changelog.");
 				return;
 			}
 
@@ -119,7 +119,7 @@ public class CommandLLibrary extends CommandBase
 						}
 						else
 						{
-							LLibHelper.chat(sender, EnumChatFormatting.RED + "There is no changelog for mod '" + mod.modid + "' version " + args[2] + "!");
+							ChatHelper.chat(sender, EnumChatFormatting.RED + "There is no changelog for mod '" + mod.modid + "' version " + args[2] + "!");
 						}
 					}
 				}
