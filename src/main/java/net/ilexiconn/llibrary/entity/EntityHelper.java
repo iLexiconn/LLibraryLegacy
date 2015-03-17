@@ -1,13 +1,12 @@
 package net.ilexiconn.llibrary.entity;
 
+import cpw.mods.fml.common.registry.EntityRegistry;
 import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
-import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class EntityHelper
 {
@@ -33,13 +32,13 @@ public class EntityHelper
         EntityList.entityEggs.put(entityId, new EntityList.EntityEggInfo(entityId, primaryColor, secondaryColor));
     }
 
-    public static void removeEntity(Class<? extends Entity> clazz)
+    public static void removeEntity(Class<? extends Entity> entityClass)
 	{
-		removeEntityMapping(clazz);
+		removeEntityMapping(entityClass);
 		
-		if(clazz.isInstance(EntityLiving.class))
+		if(entityClass.isInstance(EntityLiving.class))
 		{	
-			Class<? extends EntityLiving> livingClass = (Class<? extends EntityLiving>)clazz;
+			Class<? extends EntityLiving> livingClass = (Class<? extends EntityLiving>)entityClass;
 			
 			removeEntityEgg(livingClass);
 			
@@ -56,25 +55,24 @@ public class EntityHelper
 		}
 	}
 	
-	public static void removeEntityMapping(Class<? extends Entity> clazz)
+	public static void removeEntityMapping(Class<? extends Entity> entityClass)
 	{
-		EntityList.IDtoClassMapping.remove(clazz);
-		EntityList.stringToClassMapping.remove(EntityList.classToStringMapping.get(clazz));
-		EntityList.classToStringMapping.remove(clazz);
+		EntityList.IDtoClassMapping.remove(entityClass);
+		EntityList.stringToClassMapping.remove(EntityList.classToStringMapping.get(entityClass));
+		EntityList.classToStringMapping.remove(entityClass);
 	}
 	
-	public static void removeEntityEgg(Class<? extends EntityLiving> clazz)
+	public static void removeEntityEgg(Class<? extends EntityLiving> entityClass)
 	{
 		Integer toRemove = null;
 		
 		for (Object key : EntityList.entityEggs.keySet())
 		{
-			EntityEggInfo eggInfo = (EntityEggInfo) EntityList.entityEggs.get(key);
-			Integer intKey = (Integer) key;
+            Integer intKey = (Integer) key;
 			
-			Class<? extends Entity> entityClass = EntityList.getClassFromID(intKey);
+			Class<? extends Entity> eClass = EntityList.getClassFromID(intKey);
 			
-			if(clazz.equals(entityClass))
+			if(entityClass.equals(eClass))
 			{
 				toRemove = intKey;
 				
