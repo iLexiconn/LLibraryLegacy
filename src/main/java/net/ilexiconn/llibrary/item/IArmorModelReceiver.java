@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.armor;
+package net.ilexiconn.llibrary.item;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

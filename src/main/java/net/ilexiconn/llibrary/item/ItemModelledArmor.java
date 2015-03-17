@@ -2,7 +2,6 @@ package net.ilexiconn.llibrary.item;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.armor.IArmorModelReceiver;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
