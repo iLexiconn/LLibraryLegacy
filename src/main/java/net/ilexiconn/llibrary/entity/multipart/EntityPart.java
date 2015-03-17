@@ -7,6 +7,11 @@ import net.minecraft.util.DamageSource;
 
 import java.util.List;
 
+/**
+ * @see net.ilexiconn.llibrary.entity.multipart.IEntityMultiPart
+ *
+ * @author iLexiconn
+ */
 public class EntityPart extends Entity
 {
     public EntityLivingBase parent;
@@ -17,11 +22,28 @@ public class EntityPart extends Entity
 
     public float damageMultiplier;
 
+    /**
+     * @param e parent
+     * @param r radius
+     * @param y angle yaw
+     * @param o y-offset
+     * @param sizeX collision box x-size
+     * @param sizeY collision box y-size
+     */
     public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY)
     {
         this(e, r, y, o, sizeX, sizeY, 1f);
     }
 
+    /**
+     * @param e parent
+     * @param r radius
+     * @param y angle yaw
+     * @param o y-offset
+     * @param sizeX collision box x-size
+     * @param sizeY collision box y-size
+     * @param d damage multiplier
+     */
     public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY, float d)
     {
         super(e.worldObj);
