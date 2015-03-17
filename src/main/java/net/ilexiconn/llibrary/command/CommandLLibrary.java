@@ -146,6 +146,10 @@ public class CommandLLibrary extends CommandBase
 			{
 				return getListOfStringsFromIterableMatchingLastWord(astring, getAllModIDs(UpdateHelper.modList));
 			}
+			if (astring[0].equalsIgnoreCase("changelog") && astring.length == 3)
+			{
+				return getListOfStringsFromIterableMatchingLastWord(astring, getAllModChangelogs(UpdateHelper.getModContainerById(astring[1])));
+			}
 		}
 		return null;
 	}
@@ -160,6 +164,24 @@ public class CommandLLibrary extends CommandBase
 			arraylist.add(mod.modid);
 		}
 
+		return arraylist;
+	}
+	
+	protected List getAllModChangelogs(ModUpdateContainer mod)
+	{
+		ArrayList arraylist = Lists.newArrayList();
+		
+		for (String string : mod.updateFile)
+		{
+			String s = mod.modid + "Log|";
+			
+			if (string.startsWith(s))
+			{
+				String s1 = string.substring(s.length()).split(":")[0];
+				arraylist.add(s1);
+			}
+		}
+		
 		return arraylist;
 	}
 }

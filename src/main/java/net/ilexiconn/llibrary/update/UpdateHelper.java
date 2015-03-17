@@ -31,4 +31,16 @@ public class UpdateHelper
 		
 		modList.add(container);
 	}
+    
+    public static ModUpdateContainer getModContainerById(String modid)
+    {
+    	for (ModUpdateContainer mod : modList)
+    	{
+    		if (mod.modid.equals(modid))
+    		{
+    			return mod;
+    		}
+    	}
+    	return null;
+    }
 }
