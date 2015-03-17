@@ -35,7 +35,7 @@ public class GuiChangelog extends GuiScreen
 	{
 		switch (button.id)
 		{
-			//Case Shit: Do Shit FFS!
+		
 		}
 	}
 	
@@ -83,22 +83,35 @@ public class GuiChangelog extends GuiScreen
 		super.drawScreen(par1, par2, par3);
 		int i = verticalScroll;
 		int j = horizontalScroll;
+		int xSize = 0;
+		int ySize = 0;
 		this.getMouseWheel();
+		
+		for (int k = 0; k < changelog.length; ++k)
+		{
+			if (changelog[k] != null)
+			{
+				xSize = this.fontRendererObj.getStringWidth(changelog[k]) > xSize ? this.fontRendererObj.getStringWidth(changelog[k]) : xSize;
+				ySize = (k + 1) * 10 > ySize ? (k + 1) * 10 : ySize;
+			}
+		}
 		
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(0, 0, 0, 0.2F);
         this.drawTexturedModalRect(j + width / 2 - 201, i + height / 2 - 110, 0, 0, 405, 33);
-        this.drawTexturedModalRect(j + width / 2 - 201, i + height / 2 - 72, 0, 0, 405, 400);
+        this.drawTexturedModalRect(j + width / 2 - 201, i + height / 2 - 72, 0, 0, xSize > 405 ? xSize + 20 : 405, ySize + 15);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		this.drawCenteredString(this.fontRendererObj, "(" + mod.modid + ") " + mod.name + ": " + version, j + width / 2, i + height / 2 - 97, 0xffffff);
 		
 		for (int k = 0; k < changelog.length; ++k)
 		{
-			this.drawString(this.fontRendererObj, changelog[k], j + width / 2 - 190, i + height / 2 - 65 + k * 10, 0xffffff);
-		}
-		
+			if (changelog[k] != null)
+			{
+				this.drawString(this.fontRendererObj, changelog[k], j + width / 2 - 190, i + height / 2 - 65 + k * 10, 0xffffff);
+			}
+		}		
 		
 		this.drawString(this.fontRendererObj, "Press 'ESC' to exit.", 5, 5, 0xffffff);
 		this.drawString(this.fontRendererObj, "Mouse Wheel to scroll up/down.", width - 220, height - 15, 0xffffff);
