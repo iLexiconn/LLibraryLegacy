@@ -8,6 +8,11 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
+/**
+ * Helper class to parse pastebin pastes.
+ *
+ * @author Gegy1000
+ */
 public class WebHelper 
 {
 	private static String pastebinURLPrefix = "http://pastebin.com/raw.php?i=";
