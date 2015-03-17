@@ -5,7 +5,6 @@ import net.ilexiconn.llibrary.entity.EntityHelper;
 import net.ilexiconn.llibrary.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.entity.multipart.IEntityMultiPart;
 import net.ilexiconn.llibrary.update.UpdateCheckerThread;
-import net.ilexiconn.llibrary.update.VersionHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -26,7 +25,7 @@ public class ServerEventHandler
     @SubscribeEvent
     public void joinWorld(EntityJoinWorldEvent event)
     {
-    	if(event.world.isRemote)
+    	if (event.world.isRemote)
     	{
     		if(event.entity instanceof EntityPlayer)
     		{
@@ -39,7 +38,7 @@ public class ServerEventHandler
     		}
     	}
     	
-    	if(EntityHelper.hasEntityBeenRemoved(event.entity.getClass()))
+    	if (EntityHelper.hasEntityBeenRemoved(event.entity.getClass()))
     	{
     		event.setCanceled(true);
     	}
