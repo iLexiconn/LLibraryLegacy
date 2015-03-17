@@ -17,23 +17,23 @@ public class ChangelogHandler
 	
 	private static ArrayList<String> getVersionChangelog(ModUpdateContainer mod, String version) throws Exception
 	{
-		ArrayList<String> astring = Lists.newArrayList();
+		ArrayList<String> changelog = Lists.newArrayList();
 
         try
 		{
-			List<String> list = WebHelper.readPastebinAsList(mod.pastebinId);
+			List<String> list = mod.updateFile;
 			
-			for (String string : list)
+			for (String line : list)
 			{
-				String s = mod.modid + "Log|" + version + ":";
+				String expected = mod.modid + "Log|" + version + ":";
 				
-				if (string.contains(s))
+				if (line.contains(expected))
 				{
-					String s1 = string.substring(string.indexOf(s));
-					String s2 = s1.substring(s.length());
+					String s1 = line.substring(line.indexOf(expected));
+					String s2 = s1.substring(expected.length());
 					String[] astring1 = s2.split(" ENDLINE ");
 
-                    Collections.addAll(astring, astring1);
+                    Collections.addAll(changelog, astring1);
 				}
 			}
 		}
@@ -42,14 +42,14 @@ public class ChangelogHandler
 			e.printStackTrace();
 		}
 		
-		return astring;
+		return changelog;
 	}
 	
 	public static boolean hasModGotChangelogForVersion(ModUpdateContainer mod, String version) throws Exception
 	{
 		try
 		{
-			List<String> list = WebHelper.readPastebinAsList(mod.pastebinId);
+			List<String> list = mod.updateFile;
 			
 			for (String string : list)
 			{

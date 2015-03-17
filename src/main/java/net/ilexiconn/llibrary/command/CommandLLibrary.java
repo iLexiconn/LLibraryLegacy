@@ -21,136 +21,144 @@ public class CommandLLibrary extends CommandBase
 	{
 		return "llibrary";
 	}
-	
+
 	public String getCommandUsage(ICommandSender icommandsender)
 	{
 		return "/llibrary list OR /llibrary update <modid> OR /llibrary changelog <modid> <version>";
 	}
-	
-    public int getRequiredPermissionLevel()
-    {
-        return 0;
-    }
-	
-	public void processCommand(ICommandSender icommandsender, String[] astring)
+
+	public int getRequiredPermissionLevel()
+	{
+		return 0;
+	}
+
+	public void processCommand(ICommandSender sender, String[] args)
 	{
 		String title = "[LLibHelper]" + EnumChatFormatting.YELLOW + " ";
 		List<ModUpdateContainer> outdatedMods = VersionHandler.getOutdatedMods();
-        
-		if (astring.length >= 1)
-        {
-            if (astring[0].equalsIgnoreCase("list"))
-            {
-                if (astring.length > 1)
-                {
-                	throw new WrongUsageException("/llibrary list");
-                }
-                
-                LLibHelper.chat(icommandsender, EnumChatFormatting.DARK_GREEN + "--- Showing a list of outdated mods ---");
 
-                for (ModUpdateContainer mod : outdatedMods)
-                {
-                    LLibHelper.chat(icommandsender, EnumChatFormatting.BLUE + "(" + mod.modid + ") " + EnumChatFormatting.WHITE + mod.name + " version " + mod.version + " - Latest version: " + VersionHandler.getVersion(mod));
-                }
-    			
-    			LLibHelper.chat(icommandsender, EnumChatFormatting.GREEN + "Use " + EnumChatFormatting.YELLOW + "/llibrary update <modid>" + EnumChatFormatting.GREEN + " to update the desired mod, " + EnumChatFormatting.RED + "or");
-    			LLibHelper.chat(icommandsender, EnumChatFormatting.GREEN + "Use " + EnumChatFormatting.YELLOW + "/llibrary changelog <modid> <version>" + EnumChatFormatting.GREEN + " to see its version changelog.");
-    			return;
-            }
-            
-            if (astring[0].equalsIgnoreCase("update"))
-            {
-                if (astring.length != 2)
-                {
-                	throw new WrongUsageException("/llibrary update <modid>");
-                }
+		if (args.length >= 1)
+		{
+			if (args[0].equalsIgnoreCase("list"))
+			{
+				if (args.length > 1)
+				{
+					throw new WrongUsageException("/llibrary list");
+				}
 
-                for (ModUpdateContainer mod : outdatedMods)
-                {
-                    if (astring[1].equalsIgnoreCase(mod.modid))
-                    {
-                        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+				LLibHelper.chat(sender, EnumChatFormatting.DARK_GREEN + "--- Showing a list of outdated mods ---");
 
-                        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE))
-                        {
-                            try
-                            {
-                                desktop.browse(mod.website.toURI());
-                            }
-                            catch (Exception e)
-                            {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-    			
-    			return;
-            }
-            
-            if (astring[0].equalsIgnoreCase("changelog"))
-            {
-                if (astring.length != 3)
-                {
-                	throw new WrongUsageException("/llibrary changelog <modid> <version>");
-                }
-                
-            	for (int i = 0; i < UpdateHelper.modList.size(); ++i)
-    			{
-    				ModUpdateContainer mod = UpdateHelper.modList.get(i);
-    				
-    				if (astring[1].equalsIgnoreCase(mod.modid))
-    				{
-        				boolean flag = false;
-        				try {flag = ChangelogHandler.hasModGotChangelogForVersion(mod, astring[2]);} catch (Exception e) {e.printStackTrace();}
-        				
-                        if (flag)
-                        {
-                        	LLibrary.proxy.openChangelogGui(mod, astring[2]);
-                        }
-                        else
-                        {
-                        	LLibHelper.chat(icommandsender, EnumChatFormatting.RED + "There is no changelog for mod '" + mod.modid + "' version " + astring[2] + "!");
-                        }
-    				}
-    			}
-    			
-    			return;
-            }
-        }
-        throw new WrongUsageException(getCommandUsage(icommandsender));
+				for (ModUpdateContainer mod : outdatedMods)
+				{
+					LLibHelper.chat(sender, EnumChatFormatting.BLUE + "(" + mod.modid + ") " + EnumChatFormatting.WHITE + mod.name + " version " + mod.version + " - Latest version: " + mod.latestVersion);
+				}
+
+				LLibHelper.chat(sender, EnumChatFormatting.GREEN + "Use " + EnumChatFormatting.YELLOW + "/llibrary update <modid>" + EnumChatFormatting.GREEN + " to update the desired mod, " + EnumChatFormatting.RED + "or");
+				LLibHelper.chat(sender, EnumChatFormatting.GREEN + "Use " + EnumChatFormatting.YELLOW + "/llibrary changelog <modid> <version>" + EnumChatFormatting.GREEN + " to see its version changelog.");
+				return;
+			}
+
+			if (args[0].equalsIgnoreCase("update"))
+			{
+				if (args.length != 2)
+				{
+					throw new WrongUsageException("/llibrary update <modid>");
+				}
+
+				for (ModUpdateContainer mod : outdatedMods)
+				{
+					if (args[1].equalsIgnoreCase(mod.modid))
+					{
+						Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+
+						if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE))
+						{
+							try
+							{
+								desktop.browse(mod.website.toURI());
+							}
+							catch (Exception e)
+							{
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+
+				return;
+			}
+
+			if (args[0].equalsIgnoreCase("changelog"))
+			{
+				if (args.length != 3)
+				{
+					throw new WrongUsageException("/llibrary changelog <modid> <version>");
+				}
+
+				for (int i = 0; i < UpdateHelper.modList.size(); ++i)
+				{
+					ModUpdateContainer mod = UpdateHelper.modList.get(i);
+
+					if (args[1].equalsIgnoreCase(mod.modid))
+					{
+						boolean hasChangelogForVersion = false;
+						
+						try 
+						{
+							hasChangelogForVersion = ChangelogHandler.hasModGotChangelogForVersion(mod, args[2]);
+						} 
+						catch (Exception e) 
+						{
+							e.printStackTrace();
+						}
+
+						if (hasChangelogForVersion)
+						{
+							LLibrary.proxy.openChangelogGui(mod, args[2]);
+						}
+						else
+						{
+							LLibHelper.chat(sender, EnumChatFormatting.RED + "There is no changelog for mod '" + mod.modid + "' version " + args[2] + "!");
+						}
+					}
+				}
+
+				return;
+			}
+		}
+		throw new WrongUsageException(getCommandUsage(sender));
 	}
-	
-    public List addTabCompletionOptions(ICommandSender icommandsender, String[] astring)
-    {
-    	if (astring.length == 1)
-        {
-            return getListOfStringsMatchingLastWord(astring, "list", "update", "changelog");
-        }
-        else
-        {
-            if (astring[0].equalsIgnoreCase("update") && astring.length == 2)
-            {
-            	return getListOfStringsFromIterableMatchingLastWord(astring, getAllModIDs(VersionHandler.getOutdatedMods()));
-            }
-            if (astring[0].equalsIgnoreCase("changelog") && astring.length == 2)
-            {
-                return getListOfStringsFromIterableMatchingLastWord(astring, getAllModIDs(UpdateHelper.modList));
-            }
-        }
-        return null;
-    }
-    
-    protected List getAllModIDs(List list)
-    {
-        ArrayList arraylist = new ArrayList();
 
-        for (Object aCollection : list)
-        {
-            ModUpdateContainer mod = (ModUpdateContainer) aCollection;
-            arraylist.add(mod.modid);
-        }
+	public List addTabCompletionOptions(ICommandSender icommandsender, String[] astring)
+	{
+		if (astring.length == 1)
+		{
+			return getListOfStringsMatchingLastWord(astring, "list", "update", "changelog");
+		}
+		else
+		{
+			if (astring[0].equalsIgnoreCase("update") && astring.length == 2)
+			{
+				return getListOfStringsFromIterableMatchingLastWord(astring, getAllModIDs(VersionHandler.getOutdatedMods()));
+			}
+			if (astring[0].equalsIgnoreCase("changelog") && astring.length == 2)
+			{
+				return getListOfStringsFromIterableMatchingLastWord(astring, getAllModIDs(UpdateHelper.modList));
+			}
+		}
+		return null;
+	}
 
-        return arraylist;
-    }
+	protected List getAllModIDs(List list)
+	{
+		ArrayList arraylist = new ArrayList();
+
+		for (Object aCollection : list)
+		{
+			ModUpdateContainer mod = (ModUpdateContainer) aCollection;
+			arraylist.add(mod.modid);
+		}
+
+		return arraylist;
+	}
 }
