@@ -1,23 +1,21 @@
 package net.ilexiconn.llibrary.client.model.player;
 
 import com.google.common.collect.Lists;
-
-import net.ilexiconn.llibrary.client.render.IModelExtention;
+import net.ilexiconn.llibrary.client.render.IModelExtension;
 import net.ilexiconn.llibrary.client.render.RenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
+import org.lwjgl.opengl.GL11;
 
 import java.util.List;
-
-import org.lwjgl.opengl.GL11;
 
 public final class ModelCustomBiped extends ModelBiped
 {
 	public ModelCustomBiped()
 	{
-		List<IModelExtention> extentions = RenderHelper.getModelExtentionsFor(ModelBiped.class);
-		if (extentions != null) for (IModelExtention extention : extentions) extention.init(this);
+		List<IModelExtension> extentions = RenderHelper.getModelExtentionsFor(ModelBiped.class);
+		if (extentions != null) for (IModelExtension extention : extentions) extention.init(this);
 	}
 
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
@@ -27,13 +25,13 @@ public final class ModelCustomBiped extends ModelBiped
 			RenderHelper.modelBipedMain = this;
 		}
 		
-		List<IModelExtention> modelExtentions = RenderHelper.getModelExtentionsFor(ModelBiped.class);
+		List<IModelExtension> modelExtentions = RenderHelper.getModelExtentionsFor(ModelBiped.class);
 
 		if (modelExtentions == null) modelExtentions = Lists.newArrayList();
 
 		this.setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
 
-		for (IModelExtention extention : modelExtentions)
+		for (IModelExtension extention : modelExtentions)
 		{
 			extention.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
 			extention.preRender(entity, this, partialTicks);
@@ -69,7 +67,7 @@ public final class ModelCustomBiped extends ModelBiped
 			this.bipedHeadwear.render(partialTicks);
 		}
 
-		for (IModelExtention extention : modelExtentions)
+		for (IModelExtension extention : modelExtentions)
 		{
 			extention.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
 			extention.postRender(entity, this, partialTicks);
