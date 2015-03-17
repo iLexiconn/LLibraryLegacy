@@ -1,7 +1,7 @@
 package net.ilexiconn.llibrary.command;
 
 import com.google.common.collect.Lists;
-import net.ilexiconn.llibrary.entity.ChatHelper;
+
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.update.ChangelogHandler;
 import net.ilexiconn.llibrary.update.ModUpdateContainer;
@@ -10,6 +10,8 @@ import net.ilexiconn.llibrary.update.VersionHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
+import net.minecraft.command.server.CommandMessageRaw;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.awt.*;
@@ -46,16 +48,17 @@ public class CommandLLibrary extends CommandBase
 				{
 					throw new WrongUsageException("/llibrary list");
 				}
-
-				ChatHelper.chatTo(sender, EnumChatFormatting.DARK_GREEN + "--- Showing a list of outdated mods ---");
-
+				
+				ChatHelper.chatTo(sender, new ChatMessage("--- Showing a list of outdated mods ---", "dark_green"));
+				
 				for (ModUpdateContainer mod : outdatedMods)
 				{
-					ChatHelper.chatTo(sender, EnumChatFormatting.BLUE + "(" + mod.modid + ") " + EnumChatFormatting.WHITE + mod.name + " version " + mod.version + " - Latest version: " + mod.latestVersion);
+					ChatHelper.chatTo(sender, new ChatMessage("(" + mod.modid + ") ", "blue"), new ChatMessage(mod.name + " version " + mod.version + " - Latest version: " + mod.latestVersion, "white"));
 				}
-
-				ChatHelper.chatTo(sender, EnumChatFormatting.GREEN + "Use " + EnumChatFormatting.YELLOW + "/llibrary update <modid>" + EnumChatFormatting.GREEN + " to update the desired mod, " + EnumChatFormatting.RED + "or");
-				ChatHelper.chatTo(sender, EnumChatFormatting.GREEN + "Use " + EnumChatFormatting.YELLOW + "/llibrary changelog <modid> <version>" + EnumChatFormatting.GREEN + " to see its version changelog.");
+				
+				ChatHelper.chatTo(sender, new ChatMessage("Use " , "green"), new ChatMessage("/llibrary update <modid>", "yellow"), new ChatMessage(" to update the desired mod, ", "green"), new ChatMessage("or", "red"));
+				ChatHelper.chatTo(sender, new ChatMessage("Use " , "green"), new ChatMessage("/llibrary changelog <modid> <version>", "yellow"), new ChatMessage(" to see its version changelog.", "green"));
+				
 				return;
 			}
 
@@ -119,7 +122,7 @@ public class CommandLLibrary extends CommandBase
 						}
 						else
 						{
-							ChatHelper.chatTo(sender, EnumChatFormatting.RED + "There is no changelog for mod '" + mod.modid + "' version " + args[2] + "!");
+							ChatHelper.chatTo(sender, new ChatMessage("There is no changelog for mod '" + mod.modid + "' version " + args[2] + "!", "red"));
 						}
 					}
 				}
