@@ -41,7 +41,7 @@ public final class ModelCustomBiped extends ModelBiped
 		{
 			float scale = 2f;
 			GL11.glPushMatrix();
-			GL11.glScalef(1f / scale, 1f / scale, 1.5f / scale);
+			GL11.glScalef(1.5f / scale, 1.5f / scale, 1.5f / scale);
 			GL11.glTranslatef(0f, 16f * partialTicks, 0f);
 			bipedHead.render(partialTicks);
 			GL11.glPopMatrix();
