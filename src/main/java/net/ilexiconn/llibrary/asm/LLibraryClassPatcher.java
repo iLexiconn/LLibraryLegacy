@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary;
+package net.ilexiconn.llibrary.asm;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;

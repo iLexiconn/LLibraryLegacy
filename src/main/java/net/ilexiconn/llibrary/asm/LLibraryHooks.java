@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary;
+package net.ilexiconn.llibrary.asm;
 
 import net.minecraft.entity.Entity;
 

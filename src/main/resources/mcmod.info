@@ -1,0 +1,11 @@
+[
+    {
+        "modid": "llibrary",
+        "name": "LLibrary",
+        "version": "${version}",
+        "authorList": ["iLexiconn"],
+        "credits": "Gegy1000, FiskFille, BobMowzie, RafaMv",
+        "url": "https://ilexiconn.net/",
+        "description": "A lightweight library for Minecraft mods."
+    }
+]

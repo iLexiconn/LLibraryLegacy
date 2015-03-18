@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary;
+package net.ilexiconn.llibrary.asm;
 
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion;
@@ -19,7 +19,7 @@ public class LLibraryLoadingPlugin implements IFMLLoadingPlugin
 
 	public String getModContainerClass() 
 	{
-		return LLibrary.class.getName();
+		return null;
 	}
 
 	public String getSetupClass() 
