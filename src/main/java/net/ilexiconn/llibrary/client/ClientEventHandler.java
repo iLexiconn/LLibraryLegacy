@@ -4,7 +4,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.block.IHighlightedBlock;
-import net.ilexiconn.llibrary.dictionary.WeaponDictionary;
+import net.ilexiconn.llibrary.client.survivaltab.SurvivalTab;
+import net.ilexiconn.llibrary.client.survivaltab.SurvivalTabHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -15,8 +16,8 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -69,13 +70,24 @@ public class ClientEventHandler
 		if (Minecraft.getMinecraft().gameSettings.advancedItemTooltips)
 		{
 			event.toolTip.add(EnumChatFormatting.DARK_GRAY + "" + Item.itemRegistry.getNameForObject(event.itemStack.getItem()));
-
-            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && WeaponDictionary.isWeaponRegistered(event.itemStack.getItem()))
-            {
-                event.toolTip.add("");
-                event.toolTip.add(EnumChatFormatting.BLUE + "Weapon types:");
-                for (WeaponDictionary.Type type : WeaponDictionary.getTypesForWeapon(event.itemStack.getItem())) event.toolTip.add(EnumChatFormatting.DARK_GRAY + type.name().toLowerCase());
-            }
 		}
 	}
+
+    @SubscribeEvent
+    public void initGui(GuiScreenEvent.InitGuiEvent.Post event)
+    {
+        for (SurvivalTab survivalTab : SurvivalTabHelper.getSurvivalTabs())
+        {
+            if (survivalTab.getGuiContainerClass().isInstance(event.gui))
+            {
+                int xSize = 176;
+                int ySize = 166;
+                int guiLeft = event.gui.width - xSize / 2;
+                int guiTop = event.gui.height - ySize / 2;
+
+                SurvivalTabHelper.updateTabValues(guiLeft, guiTop, survivalTab.getGuiContainerClass());
+                event.buttonList.addAll(SurvivalTabHelper.getSurvivalTabs());
+            }
+        }
+    }
 }
