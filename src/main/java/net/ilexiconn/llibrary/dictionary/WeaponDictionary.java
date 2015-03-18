@@ -1,17 +1,13 @@
 package net.ilexiconn.llibrary.dictionary;
 
-import static net.ilexiconn.llibrary.dictionary.WeaponDictionary.Type.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.List;
-
+import com.google.common.collect.Lists;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.util.EnumHelper;
+
+import java.util.*;
+
+import static net.ilexiconn.llibrary.dictionary.WeaponDictionary.Type.*;
 
 public class WeaponDictionary
 {
@@ -92,7 +88,6 @@ public class WeaponDictionary
 	
 	private static final int WEAPON_LIST_SIZE = 1024 * 10;
     private static WeaponInfo[] weaponList = new WeaponInfo[WEAPON_LIST_SIZE];
-	@SuppressWarnings("unchecked")
 	private static ArrayList<Item>[] typeInfoList = new ArrayList[Type.values().length];
 	
 	private static class WeaponInfo
@@ -102,11 +97,8 @@ public class WeaponDictionary
         public WeaponInfo(Type[] types)
         {
             typeList = EnumSet.noneOf(Type.class);
-            
-            for (Type t : types)
-            {
-                typeList.add(t);
-            }
+
+            Collections.addAll(typeList, types);
         }
     }
 
@@ -137,10 +129,7 @@ public class WeaponDictionary
             }
             else
             {
-                for (Type type : types)
-                {
-                    weaponList[Item.getIdFromItem(item)].typeList.add(type);
-                }
+                Collections.addAll(weaponList[Item.getIdFromItem(item)].typeList, types);
             }
 
             return true;
@@ -216,12 +205,8 @@ public class WeaponDictionary
     {
         checkRegistration(item);
 
-        if (weaponList[Item.getIdFromItem(item)] != null)
-        {
-            return containsType(weaponList[Item.getIdFromItem(item)], type);
-        }
+        return weaponList[Item.getIdFromItem(item)] != null && containsType(weaponList[Item.getIdFromItem(item)], type);
 
-        return false;
     }
 	
     public static boolean isWeaponRegistered(Item item)
@@ -264,7 +249,7 @@ public class WeaponDictionary
 	
 	private static Type[] listSubTags(Type... types)
     {
-        List<Type> subTags = new ArrayList<Type>();
+        List<Type> subTags = Lists.newArrayList();
 
         for (Type type : types)
         {
