@@ -21,7 +21,7 @@ public class LLibraryClassPatcher implements IClassTransformer
 	@Override
 	public byte[] transform(String name, String deobfName, byte[] bytes)
 	{
-		String modelBaseName = ModelBase.class.getCanonicalName();
+		//String modelBaseName = ModelBase.class.getCanonicalName();
 
 		//		if (deobfName.equals(modelBaseName) || name.equals(modelBaseName))
 		//			return patchModelBaseClass(name, bytes, deobfName);
