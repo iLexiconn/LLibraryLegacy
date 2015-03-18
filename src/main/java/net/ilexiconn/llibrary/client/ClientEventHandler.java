@@ -4,6 +4,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.block.IHighlightedBlock;
+import net.ilexiconn.llibrary.dictionary.WeaponDictionary;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -69,10 +70,11 @@ public class ClientEventHandler
 		{
 			event.toolTip.add(EnumChatFormatting.DARK_GRAY + "" + Item.itemRegistry.getNameForObject(event.itemStack.getItem()));
 
-            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && WeaponDictionary.isWeaponRegistered(event.itemStack.getItem()))
             {
                 event.toolTip.add("");
-                event.toolTip.add("test!");
+                event.toolTip.add(EnumChatFormatting.BLUE + "Weapon types:");
+                for (WeaponDictionary.Type type : WeaponDictionary.getTypesForWeapon(event.itemStack.getItem())) event.toolTip.add(EnumChatFormatting.DARK_GRAY + type.name().toLowerCase());
             }
 		}
 	}
