@@ -27,12 +27,12 @@ public class ItemHelper
         nbtTag.setTag(name, stack.writeToNBT(new NBTTagCompound()));
     }
 
-    public static void removeRecipes(Block block)
+    public static void removeRecipe(Block block)
     {
-        removeRecipes(Item.getItemFromBlock(block));
+        removeRecipe(Item.getItemFromBlock(block));
     }
 
-    public static void removeRecipes(Item item)
+    public static void removeRecipe(Item item)
     {
         List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
         Iterator<IRecipe> iterator = recipes.iterator();

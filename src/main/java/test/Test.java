@@ -30,7 +30,7 @@ public class Test implements IContentHandler
     public void postInit(FMLPostInitializationEvent event)
     {
         EntityHelper.removeLivingEntity(EntityHorse.class); //R.I.P Horse
-        ItemHelper.removeRecipes(Blocks.crafting_table); //R.I.P Crafting Table
+        ItemHelper.removeRecipe(Blocks.crafting_table); //R.I.P Crafting Table
     }
 
     public void init()
