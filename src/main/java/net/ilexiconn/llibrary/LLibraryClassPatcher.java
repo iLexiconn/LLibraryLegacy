@@ -9,9 +9,11 @@ import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
+import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
@@ -21,87 +23,64 @@ public class LLibraryClassPatcher implements IClassTransformer
 	@Override
 	public byte[] transform(String name, String deobfName, byte[] bytes)
 	{
-		//String modelBaseName = ModelBase.class.getCanonicalName();
-
-		//		if (deobfName.equals(modelBaseName) || name.equals(modelBaseName))
-		//			return patchModelBaseClass(name, bytes, deobfName);
-		//		else
-		return bytes;
-	}
-
-	public byte[] patchModelBaseClass(String name, byte[] bytes, String deobfName) //TODO
-	{	
-		String renderMethodName = "render";
-		String setRotationAnglesMethodName = "setRotationAngles";
-
-		boolean hasPatchedRender = false;
-		boolean hasPatchedSetRotationAngles = false;
-
-		boolean obfuscated;
-
-		if(!name.equals(deobfName))
-			obfuscated = true;
-		else
-			obfuscated = false;
-
+		boolean obfuscated = !name.equals(deobfName);
+		
+		String modelBaseName = "net.minecraft.client.model.ModelBase"; 
+		
 		if(obfuscated)
 		{
-			renderMethodName = "a";
-			setRotationAnglesMethodName = "a"; //TODO Check what they really are when obfuscated.
+			modelBaseName = "bhr";
 		}
+		
+		if (deobfName.equals(modelBaseName) || name.equals(modelBaseName))
+			return patchModelBaseClass(name, bytes, deobfName, obfuscated);
+		else
+			return bytes;
+	}
 
-		String formattedEntityClassName = "L" + Entity.class.getCanonicalName().replaceAll("\\.", "/") + ";";
-		String formattedName = "L" + name.replaceAll("\\.", "/") + ";";
-
-		ClassNode classNode = new ClassNode();
-		ClassReader classReader = new ClassReader(bytes);
-		classReader.accept(classNode, 0);
-
-		Iterator<MethodNode> methods = classNode.methods.iterator();
-		while(methods.hasNext())
+	public byte[] patchModelBaseClass(String name, byte[] bytes, String deobfName, boolean obfuscated) //TODO
+	{	
+		try 
 		{
-			MethodNode m = methods.next();
+			ClassNode classNode = new ClassNode();
 
-			if ((m.name.equals(renderMethodName) && m.desc.equals("(" + formattedEntityClassName + "FFFFFF)V")))
+			ClassReader classReader = new ClassReader(bytes);
+			classReader.accept(classNode, 0);
+
+			final String RENDER_METHOD_NAME = obfuscated ? "a" : "render";
+			final String RENDER_METHOD_DESC = obfuscated ? "(Lsa;FFFFFF)V" : "(Lnet/minecraft/entity/Entity;FFFFFF)V";
+			
+			for (MethodNode method : classNode.methods)
 			{
-				InsnList toInject = new InsnList();
-				toInject.add(new VarInsnNode(Opcodes.ALOAD, 0)); //TODO insert the entity
-				toInject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "injectclasshere", "injectmethod", "(" + formattedEntityClassName +  "FFFFFF" + ")V"));
-
-				m.instructions.insert(toInject);
-
-				hasPatchedRender = true;
-
-				if(hasPatchedSetRotationAngles)
+				if(method.name.equals(RENDER_METHOD_NAME) && method.desc.equals(RENDER_METHOD_DESC))
 				{
-					break;
+					LabelNode instruction = new LabelNode();
+					
+					InsnList toInsert = new InsnList();
+					toInsert.add(new VarInsnNode(Opcodes.ALOAD, 1)); //Inputs arg 0 (Wrote 1 because 0 is the current class you're editing) of Render into custom method.
+					toInsert.add(new VarInsnNode(Opcodes.FLOAD, 2));
+					toInsert.add(new VarInsnNode(Opcodes.FLOAD, 3));
+					toInsert.add(new VarInsnNode(Opcodes.FLOAD, 4));
+					toInsert.add(new VarInsnNode(Opcodes.FLOAD, 5));
+					toInsert.add(new VarInsnNode(Opcodes.FLOAD, 6));
+					toInsert.add(new VarInsnNode(Opcodes.FLOAD, 7));
+					toInsert.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "net/ilexiconn/llibrary/LLibraryHooks", "renderHook", RENDER_METHOD_DESC, false));
+				
+					method.instructions.insert(toInsert);
 				}
 			}
-			else if((m.name.equals(setRotationAnglesMethodName) && m.desc.equals("(FF)V")))
-			{
-				m.instructions.clear();
+			
+			ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 
-				InsnList toInject = new InsnList();
-				toInject.add(new VarInsnNode(Opcodes.ALOAD, 0));
-				toInject.add(new VarInsnNode(Opcodes.FLOAD, 1));
-				toInject.add(new VarInsnNode(Opcodes.FLOAD, 2));
-				toInject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/gegy1000/advancedgravity/patcher/SetAnglesInjectCode", "customSetAngles", "(" + formattedName + "FF)V"));
-				toInject.add(new InsnNode(Opcodes.RETURN));
+			classNode.accept(classWriter);
 
-				m.instructions.insert(toInject);
-
-				hasPatchedSetRotationAngles = true;
-
-				if(hasPatchedRender)
-				{
-					break;
-				}
-			}
+			return classWriter.toByteArray();
+		} 
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
-
-		ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-		classNode.accept(writer);
-
-		return writer.toByteArray();
+		
+		return bytes;
 	}
 }

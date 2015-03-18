@@ -8,10 +8,6 @@ import net.minecraft.entity.Entity;
 
 public class TestModelExtension implements IModelExtension
 {
-    public MowzieModelRenderer headExtension;
-    public MowzieModelRenderer leftArmExtension;
-    public MowzieModelRenderer rightArmExtension;
-
 	public void init(ModelBase model)
 	{
 
