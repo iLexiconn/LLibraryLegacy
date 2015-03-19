@@ -30,14 +30,18 @@ public abstract class SurvivalTab extends GuiButton
         if (visible)
         {
             GL11.glColor4f(1f, 1f, 1f, 1f);
-
-            int yTexPos = enabled ? 3 : 32;
-            int ySize = enabled ? 25 : 32;
-            int xOffset = id == 2 ? 0 : 1;
-            int yPos = yPosition + (enabled ? 3 : 0);
+            
+            xPosition = 215 + id * 30;
+            yPosition = 98;
+            
+            boolean selected = mc.currentScreen.getClass() != getGuiContainerClass();
+            
+            int yTexPos = selected ? 3 : 32;
+            int ySize = selected ? 25 : 32;
+            int yPos = yPosition + (selected ? 3 : 0);
 
             mc.renderEngine.bindTexture(texture);
-            drawTexturedModalRect(xPosition, yPos, xOffset * 28, yTexPos, 28, ySize);
+            drawTexturedModalRect(xPosition, yPos, 28, yTexPos, 28, ySize);
 
             RenderHelper.enableGUIStandardItemLighting();
             zLevel = 100f;
@@ -62,6 +66,7 @@ public abstract class SurvivalTab extends GuiButton
             mc.displayGuiScreen(getGuiContainer(mc.thePlayer));
             return true;
         }
+        
         else return false;
     }
 
