@@ -1,9 +1,11 @@
 package net.ilexiconn.llibrary.potion;
 
-import java.util.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 
-import cpw.mods.fml.relauncher.*;
-import net.minecraft.potion.*;
+import java.util.*;
 
 public class TempPotionHelper
 {
@@ -79,11 +81,9 @@ public class TempPotionHelper
             float green = 0.0F;
             float blue = 0.0F;
             float invertedAlpha = 0.0F;
-            Iterator<PotionEffect> iterator = potionEffects.iterator();
 
-            while (iterator.hasNext())
+            for (PotionEffect potioneffect : potionEffects)
             {
-                PotionEffect potioneffect = iterator.next();
                 int color = Potion.potionTypes[potioneffect.getPotionID()].getLiquidColor();
 
                 for (int k = 0; k <= potioneffect.getAmplifier(); ++k)
@@ -119,7 +119,8 @@ public class TempPotionHelper
             }
 
             potioneffect = iterator.next();
-        } while (potioneffect.getIsAmbient());
+        }
+        while (potioneffect.getIsAmbient());
 
         return false;
     }
@@ -127,11 +128,13 @@ public class TempPotionHelper
     @SideOnly(Side.CLIENT)
     public static int getPotionLiquidColor(int damageValue, boolean isInstant)
     {
-        if (!isInstant)
+        /**
+         * Given a {@link java.util.Collection}<{@link net.minecraft.potion.PotionEffect}> will return an Integer color.
+         */if (!isInstant)
         {
             if (cachedLiquidColors.containsKey(damageValue))
             {
-                return ((Integer) cachedLiquidColors.get(damageValue)).intValue();
+                return cachedLiquidColors.get(damageValue);
             }
             else
             {
@@ -140,13 +143,7 @@ public class TempPotionHelper
                 return color;
             }
         }
-        else
-        {
-            /**
-             * Given a {@link Collection}<{@link PotionEffect}> will return an Integer color.
-             */
-            return calcPotionLiquidColor(getPotionEffects(damageValue, isInstant));
-        }
+        else return calcPotionLiquidColor(getPotionEffects(damageValue, true));
     }
 
     public static String func_77905_c(int p_77905_0_)
@@ -386,15 +383,12 @@ public class TempPotionHelper
     {
         ArrayList<PotionEffect> arraylist = null;
         Potion[] potionTypes = Potion.potionTypes;
-        int maxPotionAmount = potionTypes.length;
 
-        for (int index = 0; index < maxPotionAmount; ++index)
+        for (Potion potion : potionTypes)
         {
-            Potion potion = potionTypes[index];
-
             if (potion != null && (!potion.isUsable() || isInstant))
             {
-                String requirementCode = (String) potionRequirements.get(potion.getId());
+                String requirementCode = potionRequirements.get(potion.getId());
 
                 if (requirementCode != null)
                 {
@@ -403,7 +397,7 @@ public class TempPotionHelper
                     if (duration > 0)
                     {
                         int amplifier = 0;
-                        String amplifierCode = (String) potionAmplifiers.get(potion.getId());
+                        String amplifierCode = potionAmplifiers.get(potion.getId());
 
                         if (amplifierCode != null)
                         {
@@ -433,7 +427,7 @@ public class TempPotionHelper
 
                         if (arraylist == null)
                         {
-                            arraylist = new ArrayList<PotionEffect>();
+                            arraylist = new ArrayList<>();
                         }
 
                         PotionEffect potioneffect = new PotionEffect(potion.getId(), duration, amplifier);
@@ -614,7 +608,7 @@ public class TempPotionHelper
         potionAmplifiers.put(Potion.poison.getId(), "5");
         redstoneEffect = "-5+6-7";
         gunpowderEffect = "+14&13-13";
-        cachedLiquidColors = new HashMap<Integer, Integer>();
+        cachedLiquidColors = new HashMap<>();
         potionPrefixes = new String[] { "potion.prefix.mundane", "potion.prefix.uninteresting", "potion.prefix.bland", "potion.prefix.clear", "potion.prefix.milky", "potion.prefix.diffuse", "potion.prefix.artless", "potion.prefix.thin",
                 "potion.prefix.awkward", "potion.prefix.flat", "potion.prefix.bulky", "potion.prefix.bungling", "potion.prefix.buttered", "potion.prefix.smooth", "potion.prefix.suave", "potion.prefix.debonair", "potion.prefix.thick",
                 "potion.prefix.elegant", "potion.prefix.fancy", "potion.prefix.charming", "potion.prefix.dashing", "potion.prefix.refined", "potion.prefix.cordial", "potion.prefix.sparkling", "potion.prefix.potent", "potion.prefix.foul",
