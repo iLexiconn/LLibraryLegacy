@@ -13,27 +13,12 @@ public class SurvivalTabHelper
 
     static
     {
-        registerVanillaTabs();
-    }
-
-    private static void registerVanillaTabs()
-    {
-        registerSurvivalTab(new SurvivalTabSurvival());
+        registerSurvivalTab(new SurvivalTabInventory());
     }
 
     public static void registerSurvivalTab(SurvivalTab survivalTab)
     {
         survivalTabs.add(survivalTab);
-    }
-
-    public static void updateTabValues()
-    {
-        int count = 2;
-        for (SurvivalTab survivalTab : survivalTabs)
-        {
-            survivalTab.id = count;
-            count++;
-        }
     }
 
     public static List<SurvivalTab> getSurvivalTabs()

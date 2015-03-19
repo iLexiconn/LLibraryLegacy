@@ -80,7 +80,13 @@ public class ClientEventHandler
         {
             if (survivalTab.getGuiContainerClass().isInstance(event.gui))
             {
-                SurvivalTabHelper.updateTabValues();
+                int count = 2;
+                for (SurvivalTab tab : SurvivalTabHelper.getSurvivalTabs())
+                {
+                    tab.id = count;
+                    count++;
+                }
+
                 event.buttonList.addAll(SurvivalTabHelper.getSurvivalTabs());
             }
         }

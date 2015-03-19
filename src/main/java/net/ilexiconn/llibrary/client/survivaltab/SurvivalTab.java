@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C0DPacketCloseWindow;
@@ -69,7 +70,7 @@ public abstract class SurvivalTab extends GuiButton
             RenderHelper.disableStandardItemLighting();
 
             if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
-                drawHoveringText(getTabName(), mouseX, mouseY);
+                drawHoveringText(I18n.format(getTabName()), mouseX, mouseY);
         }
     }
 

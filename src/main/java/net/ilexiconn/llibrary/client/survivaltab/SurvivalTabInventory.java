@@ -9,11 +9,11 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 @SideOnly(Side.CLIENT)
-public class SurvivalTabSurvival extends SurvivalTab
+public class SurvivalTabInventory extends SurvivalTab
 {
     public String getTabName()
     {
-        return "Survival";
+        return "container.inventory";
     }
 
     public ItemStack getTabIcon()
