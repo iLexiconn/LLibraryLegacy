@@ -3,6 +3,7 @@ package net.ilexiconn.llibrary.client.survivaltab;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -13,9 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C0DPacketCloseWindow;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,9 +44,9 @@ public abstract class SurvivalTab extends GuiButton
                 xPosition = (currentScreen.width / 2) - 145 + id * 30;
                 yPosition = currentScreen.height / 2 - 111;
             }
-            
-			boolean selected = currentScreen.getClass() != getGuiContainerClass();
-            
+
+            boolean selected = currentScreen != null && currentScreen.getClass() != getGuiContainerClass();
+
             int yTexPos = selected ? 2 : 32;
             int ySize = selected ? 26 : 32;
             int yPos = yPosition + (selected ? 2 : 0);
@@ -143,6 +142,11 @@ public abstract class SurvivalTab extends GuiButton
             zLevel = 0f;
             renderItem.zLevel = 0f;
         }
+    }
+
+    public void func_146113_a(SoundHandler soundHandler)
+    {
+
     }
 
     public abstract String getTabName();
