@@ -1,16 +1,14 @@
 package net.ilexiconn.llibrary.potion;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-
 import java.util.*;
+
+import cpw.mods.fml.relauncher.*;
+import net.minecraft.potion.*;
 
 public class TempPotionHelper
 {
     public static final String sugarEffect;
-    public static final String ghastTearEffect = "+0-1-2-3&4-4+13";
+    public static final String ghastTearEffect;
     public static final String spiderEyeEffect;
     public static final String fermentedSpiderEyeEffect;
     public static final String speckledMelonEffect;
@@ -21,6 +19,7 @@ public class TempPotionHelper
     public static final String gunpowderEffect;
     public static final String goldenCarrotEffect;
     public static final String pufferfishEffect;
+    public static final String netherWartEffect;
     private static final HashMap<Integer, String> potionRequirements = new HashMap<Integer, String>();
     /** Potion effect amplifier map */
     private static final HashMap<Integer, String> potionAmplifiers = new HashMap<Integer, String>();
@@ -119,8 +118,7 @@ public class TempPotionHelper
             }
 
             potioneffect = iterator.next();
-        }
-        while (potioneffect.getIsAmbient());
+        } while (potioneffect.getIsAmbient());
 
         return false;
     }
@@ -130,7 +128,8 @@ public class TempPotionHelper
     {
         /**
          * Given a {@link java.util.Collection}<{@link net.minecraft.potion.PotionEffect}> will return an Integer color.
-         */if (!isInstant)
+         */
+        if (!isInstant)
         {
             if (cachedLiquidColors.containsKey(damageValue))
             {
@@ -143,7 +142,8 @@ public class TempPotionHelper
                 return color;
             }
         }
-        else return calcPotionLiquidColor(getPotionEffects(damageValue, true));
+        else
+            return calcPotionLiquidColor(getPotionEffects(damageValue, true));
     }
 
     public static String func_77905_c(int p_77905_0_)
@@ -608,6 +608,10 @@ public class TempPotionHelper
         potionAmplifiers.put(Potion.poison.getId(), "5");
         redstoneEffect = "-5+6-7";
         gunpowderEffect = "+14&13-13";
+        ghastTearEffect = "+0-1-2-3&4-4+13";
+
+        netherWartEffect = "+4";
+
         cachedLiquidColors = new HashMap<>();
         potionPrefixes = new String[] { "potion.prefix.mundane", "potion.prefix.uninteresting", "potion.prefix.bland", "potion.prefix.clear", "potion.prefix.milky", "potion.prefix.diffuse", "potion.prefix.artless", "potion.prefix.thin",
                 "potion.prefix.awkward", "potion.prefix.flat", "potion.prefix.bulky", "potion.prefix.bungling", "potion.prefix.buttered", "potion.prefix.smooth", "potion.prefix.suave", "potion.prefix.debonair", "potion.prefix.thick",
