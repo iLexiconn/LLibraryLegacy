@@ -41,18 +41,19 @@ public abstract class SurvivalTab extends GuiButton
             
             if(currentScreen != null)
             {
-                xPosition = (currentScreen.width / 2) - 145 + id * 30;
+                xPosition = (currentScreen.width / 2) - 146 + id * 29;
                 yPosition = currentScreen.height / 2 - 111;
             }
 
             boolean selected = currentScreen != null && currentScreen.getClass() != getGuiContainerClass();
 
             int yTexPos = selected ? 2 : 32;
+            int xTexPos = id == 2 ? 0 : 28;
             int ySize = selected ? 26 : 32;
             int yPos = yPosition + (selected ? 2 : 0);
 
             mc.renderEngine.bindTexture(texture);
-            drawTexturedModalRect(xPosition, yPos, 28, yTexPos, 28, ySize);
+            drawTexturedModalRect(xPosition, yPos, xTexPos, yTexPos, 28, ySize);
 
             RenderHelper.enableGUIStandardItemLighting();
             zLevel = 100f;

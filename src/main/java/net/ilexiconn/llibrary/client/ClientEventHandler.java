@@ -80,12 +80,7 @@ public class ClientEventHandler
         {
             if (survivalTab.getGuiContainerClass().isInstance(event.gui))
             {
-                int xSize = 176;
-                int ySize = 166;
-                int guiLeft = event.gui.width - xSize / 2;
-                int guiTop = event.gui.height - ySize / 2;
-
-                SurvivalTabHelper.updateTabValues(guiLeft, guiTop, survivalTab.getGuiContainerClass());
+                SurvivalTabHelper.updateTabValues();
                 event.buttonList.addAll(SurvivalTabHelper.getSurvivalTabs());
             }
         }

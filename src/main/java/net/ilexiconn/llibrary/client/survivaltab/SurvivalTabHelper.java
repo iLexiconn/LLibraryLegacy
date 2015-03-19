@@ -26,15 +26,12 @@ public class SurvivalTabHelper
         survivalTabs.add(survivalTab);
     }
 
-    public static void updateTabValues(int cornerX, int cornerY, Class<?> selectedButton)
+    public static void updateTabValues()
     {
         int count = 2;
         for (SurvivalTab survivalTab : survivalTabs)
         {
             survivalTab.id = count;
-            survivalTab.xPosition = cornerX + (count - 2) * 28;
-            survivalTab.yPosition = cornerY - 28;
-            survivalTab.enabled = !survivalTab.getClass().equals(selectedButton);
             count++;
         }
     }
