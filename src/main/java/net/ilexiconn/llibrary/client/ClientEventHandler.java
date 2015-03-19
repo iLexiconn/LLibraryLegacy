@@ -4,8 +4,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.block.IHighlightedBlock;
-import net.ilexiconn.llibrary.client.survivaltab.SurvivalTab;
-import net.ilexiconn.llibrary.client.survivaltab.SurvivalTabHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -16,7 +14,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import org.lwjgl.opengl.GL11;
 
@@ -73,15 +70,15 @@ public class ClientEventHandler
 		}
 	}
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public void initGui(GuiScreenEvent.InitGuiEvent.Post event)
     {
-        for (SurvivalTab survivalTab : SurvivalTabHelper.getSurvivalTabs())
+        for (GuiSurvivalTab survivalTab : SurvivalTabHelper.getSurvivalTabs())
         {
             if (survivalTab.getGuiContainerClass().isInstance(event.gui))
             {
                 int count = 2;
-                for (SurvivalTab tab : SurvivalTabHelper.getSurvivalTabs())
+                for (GuiSurvivalTab tab : SurvivalTabHelper.getSurvivalTabs())
                 {
                     tab.id = count;
                     count++;
@@ -90,5 +87,5 @@ public class ClientEventHandler
                 event.buttonList.addAll(SurvivalTabHelper.getSurvivalTabs());
             }
         }
-    }
+    }*/
 }

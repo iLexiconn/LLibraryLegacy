@@ -1,19 +1,17 @@
-package net.ilexiconn.llibrary.client.survivaltab;
+package net.ilexiconn.llibrary.client.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.ilexiconn.llibrary.survivaltab.SurvivalTab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.C0DPacketCloseWindow;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -21,15 +19,18 @@ import java.util.Arrays;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public abstract class SurvivalTab extends GuiButton
+public class GuiSurvivalTab extends GuiButton
 {
     private ResourceLocation texture = new ResourceLocation("textures/gui/container/creative_inventory/tabs.png");
     private RenderItem renderItem = new RenderItem();
-    private ItemStack stackIcon = getTabIcon();
+    private SurvivalTab survivalTab;
+    private ItemStack stackIcon;
 
-    public SurvivalTab()
+    public GuiSurvivalTab(int id, SurvivalTab tab)
     {
-        super(0, 0, 0, 28, 32, "");
+        super(id, 0, 0, 28, 32, "");
+        survivalTab = tab;
+        stackIcon = tab.getSurvivalTab().getTabIcon();
     }
 
     public void drawButton(Minecraft mc, int mouseX, int mouseY)
@@ -46,7 +47,7 @@ public abstract class SurvivalTab extends GuiButton
                 yPosition = currentScreen.height / 2 - 111;
             }
 
-            boolean selected = currentScreen != null && currentScreen.getClass() != getGuiContainerClass();
+            boolean selected = currentScreen != null && currentScreen.getClass() != survivalTab.getSurvivalTab().getContainerGui();
 
             int yTexPos = selected ? 2 : 32;
             int xTexPos = id == 2 ? 0 : 28;
@@ -70,7 +71,7 @@ public abstract class SurvivalTab extends GuiButton
             RenderHelper.disableStandardItemLighting();
 
             if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
-                drawHoveringText(I18n.format(getTabName()), mouseX, mouseY);
+                drawHoveringText(I18n.format(survivalTab.getSurvivalTab().getTabName()), mouseX, mouseY);
         }
     }
 
@@ -78,8 +79,7 @@ public abstract class SurvivalTab extends GuiButton
     {
         if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
         {
-            mc.thePlayer.sendQueue.addToSendQueue(new C0DPacketCloseWindow(mc.thePlayer.openContainer.windowId));
-            mc.displayGuiScreen(getGuiContainer(mc.thePlayer));
+            survivalTab.getSurvivalTab().openContainerGui();
             return true;
         }
         
@@ -150,12 +150,4 @@ public abstract class SurvivalTab extends GuiButton
     {
 
     }
-
-    public abstract String getTabName();
-
-    public abstract ItemStack getTabIcon();
-
-    public abstract GuiContainer getGuiContainer(EntityPlayer player);
-
-    public abstract Class<? extends GuiContainer> getGuiContainerClass();
 }
