@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.packet;
+package net.ilexiconn.llibrary.message;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
