@@ -487,7 +487,7 @@ public class TempPotionHelper
      * Generate a data value for a potion, given its previous data value and the encoded string of new effects it will
      * receive
      */
-    public static int applyIngredient(int id, String ingredientEffectCode)
+    public static int applyIngredient(int previousDamage, String ingredientEffectCode)
     {
         int stringLength = ingredientEffectCode.length();
         boolean hasNumber = false;
@@ -510,7 +510,7 @@ public class TempPotionHelper
             {
                 if (hasNumber)
                 {
-                    id = brewBitOperations(id, currentNumber, hasMinus, hasExclamationMark, hasAmpersAnd);
+                    previousDamage = brewBitOperations(previousDamage, currentNumber, hasMinus, hasExclamationMark, hasAmpersAnd);
                     hasAmpersAnd = false;
                     hasExclamationMark = false;
                     hasMinus = false;
@@ -524,7 +524,7 @@ public class TempPotionHelper
             {
                 if (hasNumber)
                 {
-                    id = brewBitOperations(id, currentNumber, hasMinus, hasExclamationMark, hasAmpersAnd);
+                    previousDamage = brewBitOperations(previousDamage, currentNumber, hasMinus, hasExclamationMark, hasAmpersAnd);
                     hasAmpersAnd = false;
                     hasExclamationMark = false;
                     hasMinus = false;
@@ -538,7 +538,7 @@ public class TempPotionHelper
             {
                 if (hasNumber)
                 {
-                    id = brewBitOperations(id, currentNumber, hasMinus, hasExclamationMark, hasAmpersAnd);
+                    previousDamage = brewBitOperations(previousDamage, currentNumber, hasMinus, hasExclamationMark, hasAmpersAnd);
                     hasAmpersAnd = false;
                     hasExclamationMark = false;
                     hasMinus = false;
@@ -550,7 +550,7 @@ public class TempPotionHelper
             {
                 if (hasNumber)
                 {
-                    id = brewBitOperations(id, currentNumber, hasMinus, hasExclamationMark, hasAmpersAnd);
+                    previousDamage = brewBitOperations(previousDamage, currentNumber, hasMinus, hasExclamationMark, hasAmpersAnd);
                     hasAmpersAnd = false;
                     hasExclamationMark = false;
                     hasMinus = false;
@@ -564,10 +564,10 @@ public class TempPotionHelper
 
         if (hasNumber)
         {
-            id = brewBitOperations(id, currentNumber, hasMinus, hasExclamationMark, hasAmpersAnd);
+            previousDamage = brewBitOperations(previousDamage, currentNumber, hasMinus, hasExclamationMark, hasAmpersAnd);
         }
 
-        return id & 0x7FFF; // Set id to positive if needed
+        return previousDamage & 0x7FFF; // Set id to positive if needed
     }
 
     public static int func_77908_a(int value, int p_77908_1_, int p_77908_2_, int p_77908_3_, int p_77908_4_, int p_77908_5_)
