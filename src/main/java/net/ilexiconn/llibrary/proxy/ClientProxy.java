@@ -21,26 +21,27 @@ public class ClientProxy extends ServerProxy
 
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
     }
-    
+
     public void postInit()
     {
-    	super.postInit();
-    	
+        super.postInit();
+
         RenderManager.instance.entityRenderMap.put(EntityPlayer.class, new RenderCustomPlayer());
     }
-    
+
     public void openChangelogGui(ModUpdateContainer mod, String version)
     {
-		String[] astring = null;
-		try
+        String[] changelog = null;
+
+        try
         {
-            astring = ChangelogHandler.getChangelog(mod, version);
+            changelog = ChangelogHandler.getChangelog(mod, version);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-		
-		Minecraft.getMinecraft().displayGuiScreen(new GuiChangelog(mod, version, astring));
+
+        Minecraft.getMinecraft().displayGuiScreen(new GuiChangelog(mod, version, changelog));
     }
 }
