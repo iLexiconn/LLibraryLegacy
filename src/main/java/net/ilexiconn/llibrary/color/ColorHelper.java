@@ -9,6 +9,9 @@ public class ColorHelper
 {
     /**
      * Searches a color based on alpha, red, blue, and green parameters.
+     *
+     * Note: For performance sake, the return value of this function SHOULD be cached.
+     * Two calls with the same name SHOULD return the same value.
      */
     public static int getColorInt(int red_wanted, int blue_wanted, int green_wanted, int alpha_wanted)
     {
