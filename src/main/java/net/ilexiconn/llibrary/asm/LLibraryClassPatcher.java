@@ -41,6 +41,8 @@ public class LLibraryClassPatcher implements IClassTransformer
 			{
 				if(method.name.equals(RENDER_METHOD_NAME) && method.desc.equals(RENDER_METHOD_DESC))
 				{
+                    System.out.println("[LLibrary] Patching class " + name + ", method " + RENDER_METHOD_NAME + RENDER_METHOD_DESC);
+
 					LabelNode instruction = new LabelNode();
 					
 					InsnList toInsert = new InsnList();
