@@ -23,13 +23,13 @@ public class GuiSurvivalTab extends GuiButton
 {
     private ResourceLocation texture = new ResourceLocation("textures/gui/container/creative_inventory/tabs.png");
     private RenderItem renderItem = new RenderItem();
-    private SurvivalTab survivalTab;
+    private SurvivalTab survivalTabContainer;
     private ItemStack stackIcon;
 
     public GuiSurvivalTab(int id, SurvivalTab tab)
     {
         super(id, 0, 0, 28, 32, "");
-        survivalTab = tab;
+        survivalTabContainer = tab;
         stackIcon = tab.getSurvivalTab().getTabIcon();
     }
 
@@ -41,13 +41,13 @@ public class GuiSurvivalTab extends GuiButton
             
             GuiScreen currentScreen = mc.currentScreen;
             
-            if(currentScreen != null)
+            if (currentScreen != null)
             {
-                xPosition = (currentScreen.width / 2) - 146 + id * 29;
+                xPosition = (currentScreen.width / 2) - 88 + survivalTabContainer.getTabColumn() * 29;
                 yPosition = currentScreen.height / 2 - 111;
             }
 
-            boolean selected = currentScreen != null && currentScreen.getClass() != survivalTab.getSurvivalTab().getContainerGui();
+            boolean selected = currentScreen != null && currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass();
 
             int yTexPos = selected ? 2 : 32;
             int xTexPos = id == 2 ? 0 : 28;
@@ -71,7 +71,7 @@ public class GuiSurvivalTab extends GuiButton
             RenderHelper.disableStandardItemLighting();
 
             if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
-                drawHoveringText(I18n.format(survivalTab.getSurvivalTab().getTabName()), mouseX, mouseY);
+                drawHoveringText(I18n.format(survivalTabContainer.getSurvivalTab().getTabName()), mouseX, mouseY);
         }
     }
 
@@ -79,7 +79,7 @@ public class GuiSurvivalTab extends GuiButton
     {
         if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
         {
-            survivalTab.getSurvivalTab().openContainerGui();
+            survivalTabContainer.getSurvivalTab().openContainerGui(mc.thePlayer); //todo: open on server using packets
             return true;
         }
         

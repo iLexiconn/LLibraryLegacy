@@ -8,10 +8,12 @@ import net.ilexiconn.llibrary.ContentHandlerList;
 import net.ilexiconn.llibrary.IContentHandler;
 import net.ilexiconn.llibrary.entity.EntityHelper;
 import net.ilexiconn.llibrary.item.ItemHelper;
+import net.ilexiconn.llibrary.survivaltab.TabRegistry;
 import net.ilexiconn.llibrary.update.UpdateHelper;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Blocks;
 import test.proxy.ServerProxy;
+import test.tab.SurvivalTabTest;
 
 @Mod(modid = "test", name = "Test Mod", version = "1.0")
 public class Test implements IContentHandler
@@ -24,6 +26,7 @@ public class Test implements IContentHandler
     {
         ContentHandlerList.createList(this).init();
         UpdateHelper.registerUpdateChecker(this, "r5zKe0UF", "https://twitter.com/");
+        TabRegistry.registerSurvivalTab(new SurvivalTabTest());
     }
 
     @Mod.EventHandler
