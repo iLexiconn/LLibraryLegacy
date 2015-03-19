@@ -20,10 +20,10 @@ public abstract class AbstractTileEntity extends TileEntity
         readFromNBT(packet.func_148857_g());
     }
 
-    public void readFromNBT(NBTTagCompound nbtTab)
+    public void readFromNBT(NBTTagCompound nbtTag)
     {
-        super.readFromNBT(nbtTab);
-        loadFromNBT(nbtTab);
+        super.readFromNBT(nbtTag);
+        loadFromNBT(nbtTag);
     }
 
     public void writeToNBT(NBTTagCompound nbtTag)
