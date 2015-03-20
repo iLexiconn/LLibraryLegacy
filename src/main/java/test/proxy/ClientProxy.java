@@ -12,6 +12,6 @@ public class ClientProxy extends ServerProxy
     public void init()
     {
         RenderingRegistry.registerEntityRenderingHandler(EntityTest.class, new RenderEntityTest());
-        RenderHelper.registerModelExtension(ModelBiped.class, new TestModelExtension());
+        RenderHelper.registerModelExtension(new TestModelExtension());
     }
 }
