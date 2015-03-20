@@ -21,6 +21,7 @@ public class SurvivalTabInventory implements ISurvivalTab
         return new ItemStack(Items.diamond_sword);
     }
 
+    @SideOnly(Side.CLIENT)
     public void openContainerGui(EntityPlayer player)
     {
     	Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(player));
