@@ -33,6 +33,14 @@ public class SurvivalTab
     }
 
     /**
+     * @return tabIndex
+     */
+    public int getTabIndex()
+    {
+    	return tabIndex;
+    }
+    
+    /**
      * @return ISurvivalTab instance of this container
      * @see net.ilexiconn.llibrary.survivaltab.ISurvivalTab
      */

@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -36,4 +37,9 @@ public interface ISurvivalTab
      */
     @SideOnly(Side.CLIENT)
     public Class<? extends GuiContainer> getContainerGuiClass();
+    
+    /**
+     * @return class of the container to open server side.
+     */
+    public Class<? extends Container> getContainerClass();
 }
