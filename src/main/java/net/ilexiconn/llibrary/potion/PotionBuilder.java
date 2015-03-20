@@ -25,9 +25,12 @@ public class PotionBuilder
 
         this.potionID = potionID;
 
-        byte red = (byte) (Math.random() * 255);
-        byte green = (byte) (Math.random() * 255);
-        byte blue = (byte) (Math.random() * 255);
+        Random rand = new Random(potionID.hashCode());
+        
+        byte red = (byte) ((byte) (rand.nextDouble()) * 255);
+        byte green = (byte) ((byte) (rand.nextDouble()) * 255);
+        byte blue = (byte) ((byte) (rand.nextDouble()) * 255);
+        
         liquidColor = red << 16 | green << 8 | blue;
     }
 
