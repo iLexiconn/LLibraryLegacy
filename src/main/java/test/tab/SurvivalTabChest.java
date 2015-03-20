@@ -1,41 +1,41 @@
-package net.ilexiconn.llibrary.survivaltab;
+package test.tab;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
+import net.ilexiconn.llibrary.survivaltab.ISurvivalTab;
+import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerPlayer;
+import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
 
-public class SurvivalTabInventory implements ISurvivalTab
+public class SurvivalTabChest implements ISurvivalTab
 {
     public String getTabName()
     {
-        return "container.inventory";
+        return "Chest";
     }
 
     public ItemStack getTabIcon()
     {
-        return new ItemStack(Blocks.crafting_table);
+        return new ItemStack(Blocks.chest);
     }
 
     public void openContainerGui(EntityPlayer player)
     {
-    	Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(player));
+        player.displayGUIChest(player.getInventoryEnderChest());
+    }
+
+    @SideOnly(Side.CLIENT)
+    public Class<? extends GuiContainer> getContainerGuiClass()
+    {
+        return GuiChest.class;
     }
 
     public Class<? extends Container> getContainerClass()
     {
-        return ContainerPlayer.class;
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public Class<? extends GuiContainer> getContainerGuiClass()
-    {
-        return GuiInventory.class;
+        return ContainerChest.class;
     }
 }

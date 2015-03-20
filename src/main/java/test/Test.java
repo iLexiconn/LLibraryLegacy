@@ -13,7 +13,8 @@ import net.ilexiconn.llibrary.update.UpdateHelper;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Blocks;
 import test.proxy.ServerProxy;
-import test.tab.SurvivalTabTest;
+import test.tab.SurvivalTabChest;
+import test.tab.SurvivalTabAnvil;
 
 @Mod(modid = "test", name = "Test Mod", version = "1.0")
 public class Test implements IContentHandler
@@ -26,7 +27,17 @@ public class Test implements IContentHandler
     {
         ContentHandlerList.createList(this).init();
         UpdateHelper.registerUpdateChecker(this, "r5zKe0UF", "https://twitter.com/");
-        TabRegistry.registerSurvivalTab(new SurvivalTabTest());
+
+        TabRegistry.registerSurvivalTab(new SurvivalTabAnvil());
+        TabRegistry.registerSurvivalTab(new SurvivalTabAnvil());
+        TabRegistry.registerSurvivalTab(new SurvivalTabAnvil());
+        TabRegistry.registerSurvivalTab(new SurvivalTabAnvil());
+        TabRegistry.registerSurvivalTab(new SurvivalTabAnvil());
+        TabRegistry.registerSurvivalTab(new SurvivalTabAnvil());
+        TabRegistry.registerSurvivalTab(new SurvivalTabAnvil());
+        TabRegistry.registerSurvivalTab(new SurvivalTabAnvil());
+        TabRegistry.registerSurvivalTab(new SurvivalTabAnvil());
+        TabRegistry.registerSurvivalTab(new SurvivalTabChest());
     }
 
     @Mod.EventHandler
