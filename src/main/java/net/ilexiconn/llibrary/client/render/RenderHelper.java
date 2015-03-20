@@ -7,6 +7,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.client.render.item.Item3dRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -36,11 +37,21 @@ public class RenderHelper
 
     /**
      * Registers the given IModelExtension.
+     *
+     * @param modelExtension
+     */
+    public static void registerModelExtension(IModelExtension modelExtension)
+    {
+        registerModelExtension(ModelBiped.class, modelExtension);
+    }
+
+    /**
+     * Registers the given IModelExtension to a specific model.
      * 
      * @param modelClazz
      * @param modelExtension
      */
-    public static void registerModelExtension(Class<? extends ModelBase> modelClazz, IModelExtension modelExtension)
+    private static void registerModelExtension(Class<? extends ModelBase> modelClazz, IModelExtension modelExtension)
     {
     	List<IModelExtension> extensionsForModel = modelExtensions.get(modelClazz);
     	
