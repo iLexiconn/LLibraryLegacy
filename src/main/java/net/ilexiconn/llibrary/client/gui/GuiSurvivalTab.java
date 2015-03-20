@@ -40,14 +40,14 @@ public class GuiSurvivalTab extends GuiButton
 
             boolean selected = mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass();
             xPosition = (mc.currentScreen.width / 2) - 88 + survivalTabContainer.getTabColumn() * 29;
-            yPosition = survivalTabContainer.isTabInFirstRow() ? mc.currentScreen.height / 2 - 111 : selected ? mc.currentScreen.height / 2 + 82 : mc.currentScreen.height / 2 + 79;
+            yPosition = survivalTabContainer.isTabInFirstRow() ? mc.currentScreen.height / 2 - 111 : selected ? mc.currentScreen.height / 2 + 83 : mc.currentScreen.height / 2 + 79;
 
-            int yTexPos = survivalTabContainer.isTabInFirstRow() ? selected ? 0 : 32 : selected ? 64 : 96;
+            int yTexPos = survivalTabContainer.isTabInFirstRow() ? selected ? 0 : 32 : selected ? 66 : 96;
 
             int xTexPos = id == 2 || id == 8 ? 0 : 28;
             //xTexPos = 168;
 
-            int ySize = selected ? 28 : 32;
+            int ySize = survivalTabContainer.isTabInFirstRow() ? selected ? 28 : 32 : selected ? 26 : 32;
 
             mc.renderEngine.bindTexture(texture);
             drawTexturedModalRect(xPosition, yPosition, xTexPos, yTexPos, 28, ySize);
@@ -76,7 +76,7 @@ public class GuiSurvivalTab extends GuiButton
     {
         if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
         {
-            survivalTabContainer.getSurvivalTab().openContainerGui(mc.thePlayer); //todo: open on server using packets
+            survivalTabContainer.getSurvivalTab().openContainerGui(mc.thePlayer);
             return true;
         }
         

@@ -6,9 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class SurvivalTabInventory implements ISurvivalTab
@@ -20,17 +18,12 @@ public class SurvivalTabInventory implements ISurvivalTab
 
     public ItemStack getTabIcon()
     {
-        return new ItemStack(Blocks.crafting_table);
+        return new ItemStack(Items.diamond_sword);
     }
 
     public void openContainerGui(EntityPlayer player)
     {
     	Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(player));
-    }
-
-    public Class<? extends Container> getContainerClass()
-    {
-        return ContainerPlayer.class;
     }
     
     @SideOnly(Side.CLIENT)
