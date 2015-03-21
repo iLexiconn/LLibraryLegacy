@@ -1,6 +1,6 @@
-package net.ilexiconn.llibrary.command.color;
+package net.ilexiconn.llibrary.color;
 
-public enum  EnumChatColor
+public enum EnumChatColor
 {
     BLACK("black"),
     DARK_BLUE("dark_blue"),

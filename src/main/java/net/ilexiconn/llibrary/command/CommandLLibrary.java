@@ -2,7 +2,7 @@ package net.ilexiconn.llibrary.command;
 
 import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.command.color.EnumChatColor;
+import net.ilexiconn.llibrary.color.EnumChatColor;
 import net.ilexiconn.llibrary.update.ChangelogHandler;
 import net.ilexiconn.llibrary.update.ModUpdateContainer;
 import net.ilexiconn.llibrary.update.UpdateHelper;

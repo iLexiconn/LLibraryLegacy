@@ -1,6 +1,6 @@
 package net.ilexiconn.llibrary.command;
 
-import net.ilexiconn.llibrary.command.color.EnumChatColor;
+import net.ilexiconn.llibrary.color.EnumChatColor;
 
 /**
  * @author FiskFille
