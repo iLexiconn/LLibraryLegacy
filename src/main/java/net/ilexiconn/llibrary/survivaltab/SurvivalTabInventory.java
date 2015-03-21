@@ -18,7 +18,7 @@ public class SurvivalTabInventory implements ISurvivalTab
 
     public ItemStack getTabIcon()
     {
-        return new ItemStack(Items.diamond_sword);
+        return new ItemStack(Items.book);
     }
 
     @SideOnly(Side.CLIENT)
