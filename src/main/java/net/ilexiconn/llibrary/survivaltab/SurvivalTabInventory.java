@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack;
 
 public class SurvivalTabInventory implements ISurvivalTab
 {
+    public static ItemStack stack = new ItemStack(Items.book);
+
     public String getTabName()
     {
         return "container.inventory";
@@ -18,7 +20,7 @@ public class SurvivalTabInventory implements ISurvivalTab
 
     public ItemStack getTabIcon()
     {
-        return new ItemStack(Items.book);
+        return stack;
     }
 
     @SideOnly(Side.CLIENT)
