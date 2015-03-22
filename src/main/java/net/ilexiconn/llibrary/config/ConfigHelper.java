@@ -35,6 +35,6 @@ public class ConfigHelper
     {
         if (!hasConfiguration(modid)) return;
         getConfigContainer(modid).getConfiguration().getCategory(category).put(name, new Property(name, value, type));
-        FMLCommonHandler.instance().bus().post(new ConfigChangedEvent.OnConfigChangedEvent("llibrary", "", false, false));
+        FMLCommonHandler.instance().bus().post(new ConfigChangedEvent.OnConfigChangedEvent(modid, "", false, false));
     }
 }
