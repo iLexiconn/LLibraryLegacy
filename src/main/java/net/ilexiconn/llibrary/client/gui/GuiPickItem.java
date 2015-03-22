@@ -37,20 +37,20 @@ public abstract class GuiPickItem extends GuiScreen
 	private RenderItem renderItem = new RenderItem();
 	public String text = "";
 	public final String title;
-	
+
 	public GuiPickItem(String title)
 	{
 		super();
 		this.title = title;
 	}
-	
+
 	public abstract void onClickEntry(ItemStack itemstack, EntityPlayer player);
-	
+
 	protected void keyTyped(char character, int par2)
 	{
 		super.keyTyped(character, par2);
 		Keyboard.enableRepeatEvents(true);
-		
+
 		if (ChatAllowedCharacters.isAllowedCharacter(character) && fontRendererObj.getStringWidth(text + character + "_") < 90)
 		{
 			text += character;
@@ -67,12 +67,12 @@ public abstract class GuiPickItem extends GuiScreen
 			}
 		}
 	}
-	
+
 	public boolean doesGuiPauseGame()
 	{
 		return false;
 	}
-	
+
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
 		drawDefaultBackground();
@@ -82,83 +82,91 @@ public abstract class GuiPickItem extends GuiScreen
 		mc.renderEngine.bindTexture(new ResourceLocation("textures/gui/container/creative_inventory/tab_item_search.png"));
 		drawTexturedModalRect(x, y, 80, 4, 90, 12);
 		drawString(fontRendererObj, text + (mc.thePlayer.ticksExisted % 20 >= 10 ? "" : "_"), x + 2, y + 2, 0xffffff);
-		
-//		mc.renderEngine.bindTexture(new ResourceLocation("textures/gui/container/creative_inventory/tabs.png"));
-//		drawTexturedModalRect(x, y - 29, 0, 32, 28, 28);
-//		drawItemStack(x + 6, y - 24, selectedItem);
-        
-		
-        boolean selected = false;
+
+		//		mc.renderEngine.bindTexture(new ResourceLocation("textures/gui/container/creative_inventory/tabs.png"));
+		//		drawTexturedModalRect(x, y - 29, 0, 32, 28, 28);
+		//		drawItemStack(x + 6, y - 24, selectedItem);
+
+
+		boolean selected = false;
 		Iterator<Item> iterator = Item.itemRegistry.iterator();
 		ArrayList<ItemStack> list = Lists.newArrayList();
-		
+
 		while (iterator.hasNext())
 		{
 			Item item = iterator.next();
 			ItemStack itemstack = new ItemStack(item);
-			
+
 			if (item != null)
 			{
-				list.add(itemstack);
-				List list1 = Lists.newArrayList();
-				item.getSubItems(item, null, list1);
-				int maxDamage = list1.size();
-				
-				while (item.getHasSubtypes() && itemstack.getItemDamage() < maxDamage)
-				{
-					itemstack.setItemDamage(itemstack.getItemDamage() + 1);
-					
-					if (!(item instanceof ItemDoublePlant) && !(Block.getBlockFromItem(item) instanceof BlockMobSpawner) && !(Block.getBlockFromItem(item) instanceof BlockDoublePlant) && !(item instanceof ItemMonsterPlacer))
-					{
-						list.add(new ItemStack(item, 1, itemstack.getItemDamage()));
-					}
-				}
-			}
-		}
-		
-		for (ItemStack itemstack : list)
-		{
-			String name = StatCollector.translateToLocal(itemstack.getDisplayName());
-			selected = mouseX >= x && mouseX < x + fontRendererObj.getStringWidth(name) + 20 && mouseY >= y + 16 && mouseY < y + 32;
-			
-			if (y <= height && name.toLowerCase().contains(text.toLowerCase()))
-			{
-				y += 16;
-				drawString(fontRendererObj, name, x + 20, y + 4, selected ? 0xFFFF7F : 0xFFFFFF);
-				
 				try
 				{
-					drawItemStack(x, y, itemstack);
+					list.add(itemstack);
+					List list1 = Lists.newArrayList();
+					item.getSubItems(item, null, list1);
+					int maxDamage = list1.size();
+
+					while (item.getHasSubtypes() && itemstack.getItemDamage() < maxDamage)
+					{
+						itemstack.setItemDamage(itemstack.getItemDamage() + 1);
+
+						if (!(item instanceof ItemDoublePlant) && !(Block.getBlockFromItem(item) instanceof BlockMobSpawner) && !(Block.getBlockFromItem(item) instanceof BlockDoublePlant) && !(item instanceof ItemMonsterPlacer))
+						{
+							list.add(new ItemStack(item, 1, itemstack.getItemDamage()));
+						}
+					}
 				}
 				catch (Exception e)
 				{
-					
-				}
-				
-				if (selected)
-				{					
-					if (Mouse.isButtonDown(0))
-					{
-						onClickEntry(itemstack, mc.thePlayer);
-					}
+					e.printStackTrace();
 				}
 			}
 		}
+
+		for (ItemStack itemstack : list)
+		{
+			try
+			{
+				String name = StatCollector.translateToLocal(itemstack.getDisplayName());
+				selected = mouseX >= x && mouseX < x + fontRendererObj.getStringWidth(name) + 20 && mouseY >= y + 16 && mouseY < y + 32;
+
+				if (y <= height && name.toLowerCase().contains(text.toLowerCase()))
+				{
+					y += 16;
+					drawString(fontRendererObj, name, x + 20, y + 4, selected ? 0xFFFF7F : 0xFFFFFF);
+
+					drawItemStack(x, y, itemstack);
+
+					if (selected)
+					{					
+						if (Mouse.isButtonDown(0))
+						{
+							onClickEntry(itemstack, mc.thePlayer);
+						}
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				System.err.println("[LLibrary] Error while renderering item: " + itemstack.getItem().getUnlocalizedName());
+				e.printStackTrace();
+			}
+		}
 	}
-	
+
 	public void drawItemStack(int x, int y, ItemStack itemstack)
 	{
 		RenderHelper.enableGUIStandardItemLighting();
-        zLevel = 100f;
-        renderItem.zLevel = 100f;
-        GL11.glEnable(2896);
-        GL11.glEnable(32826);
-        renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
-        renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
-        GL11.glDisable(2896);
-        GL11.glEnable(3042);
-        renderItem.zLevel = 0f;
-        zLevel = 0f;
-        RenderHelper.disableStandardItemLighting();
+		zLevel = 100f;
+		renderItem.zLevel = 100f;
+		GL11.glEnable(2896);
+		GL11.glEnable(32826);
+		renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
+		renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
+		GL11.glDisable(2896);
+		GL11.glEnable(3042);
+		renderItem.zLevel = 0f;
+		zLevel = 0f;
+		RenderHelper.disableStandardItemLighting();
 	}
 }
