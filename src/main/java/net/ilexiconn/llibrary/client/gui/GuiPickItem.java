@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMobSpawner;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -38,13 +39,15 @@ public abstract class GuiPickItem extends GuiScreen
 	public String text = "";
 	public final String title;
 
+	public GuiVerticalSlider slider = new GuiVerticalSlider(100, 0, 10, 30, 300, 10);
+
 	private ArrayList<ItemStack> items = Lists.newArrayList();
-	
+
 	public GuiPickItem(String title)
 	{
 		super();
 		this.title = title;
-		
+
 		Iterator<Item> iterator = Item.itemRegistry.iterator();
 
 		while (iterator.hasNext())
@@ -57,11 +60,11 @@ public abstract class GuiPickItem extends GuiScreen
 				try
 				{
 					items.add(itemstack);
-					
+
 					List subItems = Lists.newArrayList();
-					
+
 					item.getSubItems(item, null, subItems);
-					
+
 					int maxDamage = subItems.size() - 1;
 
 					while (item.getHasSubtypes() && itemstack.getItemDamage() < maxDamage)
@@ -80,6 +83,11 @@ public abstract class GuiPickItem extends GuiScreen
 				}
 			}
 		}
+	}
+
+	public void initGui()
+	{
+		this.buttonList.add(new GuiButton(0, width - 20, 0, 20, 20, "X"));
 	}
 
 	public abstract void onClickEntry(ItemStack itemstack, EntityPlayer player);
@@ -111,47 +119,103 @@ public abstract class GuiPickItem extends GuiScreen
 		return false;
 	}
 
+	protected void mouseClickMove(int mouseX, int mouseY, int lastButtonClicked, long timeSinceMouseClick)
+	{
+		super.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
+		slider.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
+	}
+
+	protected void mouseClicked(int mouseX, int mouseY, int button)
+	{
+		super.mouseClicked(mouseX, mouseY, button);
+		slider.mouseClicked(mouseX, mouseY, button);
+	}
+
+	protected void mouseMovedOrUp(int mouseX, int mouseY, int event)
+	{
+		super.mouseMovedOrUp(mouseX, mouseY, event);
+		slider.mouseMovedOrUp(mouseX, mouseY, event);
+	}
+
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
 		drawDefaultBackground();
 		drawCenteredString(fontRendererObj, title, width / 2, 15, 16777215);
 		int x = width / 2 - 45;
 		int y = 30;
-		mc.renderEngine.bindTexture(new ResourceLocation("textures/gui/container/creative_inventory/tab_item_search.png"));
-		drawTexturedModalRect(x, y, 80, 4, 90, 12);
-		drawString(fontRendererObj, text + (mc.thePlayer.ticksExisted % 20 >= 10 ? "" : "_"), x + 2, y + 2, 0xffffff);
+		int scrollY = 0;
+		int i = height - 20;
+		slider.minScroll = 40;
+		slider.maxScroll = i - 7;
+		slider.x = width / 2 - 70;
+		slider.drawScreen(mouseX, mouseY, partialTicks);
 
 		boolean selected = false;
+
+		List<ItemStack> displayItems = Lists.newArrayList();
 
 		for (ItemStack itemstack : items)
 		{
 			try
 			{
 				String name = StatCollector.translateToLocal(itemstack.getDisplayName());
-				selected = mouseX >= x && mouseX < x + fontRendererObj.getStringWidth(name) + 20 && mouseY >= y + 16 && mouseY < y + 32;
 
-				if (y <= height && name.toLowerCase().contains(text.toLowerCase()))
+				if (name.toLowerCase().contains(text.toLowerCase()))
 				{
-					y += 16 + 4;
-					drawString(fontRendererObj, name, x + 20, y + 4, selected ? 0xFFFF7F : 0xFFFFFF);
+					displayItems.add(itemstack);
+				}
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 
-					drawItemStack(x, y, itemstack);
+		scrollY = (-slider.y + slider.minScroll) * (displayItems.size() / ((i - slider.minScroll) / 19));
 
-					if (selected)
-					{					
-						if (Mouse.isButtonDown(0))
-						{
-							onClickEntry(itemstack, mc.thePlayer);
-						}
+		for (ItemStack itemstack : displayItems)
+		{
+			try
+			{
+				String name = StatCollector.translateToLocal(itemstack.getDisplayName());
+				selected = mouseX >= x && mouseX < x + fontRendererObj.getStringWidth(name) + 20 && mouseY >= y + 16 + scrollY && mouseY < y + 32 + scrollY;
+
+				y += 20;
+
+				if (y + scrollY <= height && y + scrollY > 42)
+				{
+					drawString(fontRendererObj, name + (selected ? " <" : ""), x + 20, y + 4 + scrollY, selected ? 0xFFFF7F : 0xFFFFFF);
+					drawString(fontRendererObj, selected ? ">" : "", x - 10, y + 4 + scrollY, 0xFFFF7F);
+
+					try
+					{
+						drawItemStack(x, y + scrollY, itemstack);
+					}
+					catch (Exception e)
+					{
+
+					}
+				}
+
+				if (selected)
+				{					
+					if (Mouse.isButtonDown(0))
+					{
+						onClickEntry(itemstack, mc.thePlayer);
 					}
 				}
 			}
 			catch (Exception e)
 			{
-				System.err.println("[LLibrary] Error while renderering item: " + itemstack.getItem().getUnlocalizedName());
 				e.printStackTrace();
 			}
 		}
+
+		GL11.glColor4f(1, 1, 1, 1);
+		mc.renderEngine.bindTexture(new ResourceLocation("textures/gui/container/creative_inventory/tab_item_search.png"));
+		drawTexturedModalRect(x, 30, 80, 4, 90, 12);
+		drawString(fontRendererObj, text + (mc.thePlayer.ticksExisted % 20 >= 10 ? "" : "_"), x + 2, 32, 0xffffff);
+		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	public void drawItemStack(int x, int y, ItemStack itemstack)
