@@ -61,8 +61,7 @@ public class EntityHelper
 
     public static void registerEntity(EntityObject entity)
     {
-        if (entity.doRegisterEgg())
-            registerEntity(entity.getEntityName(), entity.getEntityClass(), entity.getEggColorPrimary(), entity.getEggColorSecondary());
+        if (entity.doRegisterEgg()) registerEntity(entity.getEntityName(), entity.getEntityClass(), entity.getEggColorPrimary(), entity.getEggColorSecondary());
         else registerEntity(entity.getEntityName(), entity.getEntityClass());
     }
 
@@ -78,12 +77,11 @@ public class EntityHelper
         EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
         EntityList.IDtoClassMapping.put(entityId, entityClass);
         addSpawnEgg(entityClass, entityName, entityId, primaryColor, secondaryColor);
-        // EntityList.entityEggs.put(entityId, new EntityList.EntityEggInfo(entityId, primaryColor, secondaryColor));
     }
 
     public static void addSpawnEgg(Class<? extends Entity> entityClass, String entityName, int id, int background, int forground)
     {
-        net.ilexiconn.llibrary.entity.List.addToList(entityClass, entityName, id, background, forground);
+        LLibraryEntityList.addToList(entityClass, entityName, id, background, forground);
     }
 
     public static void removeLivingEntity(Class<? extends EntityLiving> clazz)
@@ -121,11 +119,7 @@ public class EntityHelper
             classToIDMapping.remove(clazz);
             stringToIDMapping.remove(name);
         }
-        catch (IllegalArgumentException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException e)
+        catch (IllegalArgumentException | IllegalAccessException e)
         {
             e.printStackTrace();
         }
