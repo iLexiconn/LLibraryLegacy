@@ -11,6 +11,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDoublePlant;
@@ -160,7 +161,27 @@ public abstract class GuiPickItem extends GuiScreen
 			{
 				String name = StatCollector.translateToLocal(itemstack.getDisplayName());
 
-				if (name.toLowerCase().contains(text.toLowerCase()))
+				Item item = itemstack.getItem();
+				
+				boolean tabEquals = false;
+				
+				if(item != null)
+				{
+					for (CreativeTabs tab : item.getCreativeTabs()) 
+					{
+						if(tab != null)
+						{
+							tabEquals = StatCollector.translateToLocal(tab.getTranslatedTabLabel()).toLowerCase().contains(text.toLowerCase());
+							
+							if(tabEquals)
+							{
+								break;
+							}
+						}
+					}
+				}
+				
+				if (name.toLowerCase().contains(text.toLowerCase()) || tabEquals)
 				{
 					displayItems.add(itemstack);
 				}
