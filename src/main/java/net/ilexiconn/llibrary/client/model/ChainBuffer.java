@@ -266,7 +266,8 @@ public class ChainBuffer
      */
     public void applyChainSwingBuffer(MowzieModelRenderer[] boxes)
     {
-        if (boxes.length == yawArray.length) for (int i = 0; i < boxes.length; i++) boxes[i].rotateAngleY += yawArray[i];
+        if (boxes.length == yawArray.length)
+            for (int i = 0; i < boxes.length; i++) boxes[i].rotateAngleY += yawArray[i];
         else System.err.println("Wrong array length being used in the buffer! (Y axis)");
     }
 
@@ -277,7 +278,8 @@ public class ChainBuffer
      */
     public void applyChainWaveBuffer(MowzieModelRenderer[] boxes)
     {
-        if (boxes.length == pitchArray.length) for (int i = 0; i < boxes.length; i++) boxes[i].rotateAngleX += pitchArray[i];
+        if (boxes.length == pitchArray.length)
+            for (int i = 0; i < boxes.length; i++) boxes[i].rotateAngleX += pitchArray[i];
         else System.err.println("Wrong array length being used in the buffer! (X axis)");
     }
 }

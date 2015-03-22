@@ -42,7 +42,8 @@ public class TextureHelper
 
         try
         {
-            if (map.containsKey(Type.SKIN)) texture = mc.renderEngine.getTexture(mc.func_152342_ad().func_152792_a((MinecraftProfileTexture) map.get(Type.SKIN), Type.SKIN));
+            if (map.containsKey(Type.SKIN))
+                texture = mc.renderEngine.getTexture(mc.func_152342_ad().func_152792_a((MinecraftProfileTexture) map.get(Type.SKIN), Type.SKIN));
             else texture = mc.renderEngine.getTexture(player.getLocationSkin());
 
             if (texture instanceof ThreadDownloadImageData)

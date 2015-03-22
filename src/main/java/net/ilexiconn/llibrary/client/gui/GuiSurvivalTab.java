@@ -79,7 +79,7 @@ public class GuiSurvivalTab extends GuiButton
             survivalTabContainer.getSurvivalTab().openContainerGui(mc.thePlayer);
             return true;
         }
-        
+
         else return false;
     }
 
@@ -111,18 +111,18 @@ public class GuiSurvivalTab extends GuiButton
 
             zLevel = 300f;
             renderItem.zLevel = 300f;
-         
+
             int mainColour = -267386864;
-            
+
             drawGradientRect(renderX - 3, renderY - 4, renderX + topWidth + 3, renderY - 3, mainColour, mainColour);
             drawGradientRect(renderX - 3, renderY + i1 + 3, renderX + topWidth + 3, renderY + i1 + 4, mainColour, mainColour);
             drawGradientRect(renderX - 3, renderY - 3, renderX + topWidth + 3, renderY + i1 + 3, mainColour, mainColour);
             drawGradientRect(renderX - 4, renderY - 3, renderX - 3, renderY + i1 + 3, mainColour, mainColour);
             drawGradientRect(renderX + topWidth + 3, renderY - 3, renderX + topWidth + 4, renderY + i1 + 3, mainColour, mainColour);
-          
+
             int borderColour = 1347420415;
             int gradient = (borderColour & 16711422) >> 1 | borderColour & -16777216;
-        
+
             drawGradientRect(renderX - 3, renderY - 3 + 1, renderX - 3 + 1, renderY + i1 + 3 - 1, borderColour, gradient);
             drawGradientRect(renderX + topWidth + 2, renderY - 3 + 1, renderX + topWidth + 3, renderY + i1 + 3 - 1, borderColour, gradient);
             drawGradientRect(renderX - 3, renderY - 3, renderX + topWidth + 3, renderY - 3 + 1, borderColour, borderColour);
@@ -130,7 +130,7 @@ public class GuiSurvivalTab extends GuiButton
 
             for (int letterIndex = 0; letterIndex < text.size(); ++letterIndex)
             {
-                String s1 = (String)text.get(letterIndex);
+                String s1 = (String) text.get(letterIndex);
                 font.drawStringWithShadow(s1, renderX, renderY, -1);
 
                 if (letterIndex == 0) renderY += 2;

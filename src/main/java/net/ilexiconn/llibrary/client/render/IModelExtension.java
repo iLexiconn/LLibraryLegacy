@@ -18,7 +18,7 @@ public interface IModelExtension
      *
      * @param model the parent model
      */
-	void init(ModelBase model);
+    void init(ModelBase model);
 
     /**
      * Method to set the rotation angles for boxes before rendering.
@@ -32,23 +32,23 @@ public interface IModelExtension
      * @param partialTicks
      * @param entity
      */
-	void setRotationAngles(ModelBase model, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks, Entity entity);
+    void setRotationAngles(ModelBase model, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks, Entity entity);
 
     /**
      * Render method called before rendering the parent model.
      *
-     * @param entity the parent entity
-     * @param model the parent model
+     * @param entity       the parent entity
+     * @param model        the parent model
      * @param partialTicks
      */
-	void preRender(Entity entity, ModelBase model, float partialTicks);
+    void preRender(Entity entity, ModelBase model, float partialTicks);
 
     /**
      * Render method called after rendering the parent model.
      *
-     * @param entity the parent entity
-     * @param model the parent model
+     * @param entity       the parent entity
+     * @param model        the parent model
      * @param partialTicks
      */
-	void postRender(Entity entity, ModelBase model, float partialTicks);
+    void postRender(Entity entity, ModelBase model, float partialTicks);
 }

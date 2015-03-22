@@ -9,7 +9,7 @@ public class ColorHelper
 {
     /**
      * Searches a color based on alpha, red, blue, and green parameters.
-     *
+     * <p/>
      * Note: For performance sake, the return value of this function SHOULD be cached.
      * Two calls with the same values SHOULD return the same value.
      */

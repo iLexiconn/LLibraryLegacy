@@ -6,11 +6,25 @@ import java.util.Arrays;
 /**
  * ArrayList to handle IContentHandlers
  *
- * @see net.ilexiconn.llibrary.IContentHandler
  * @author iLexiconn
+ * @see net.ilexiconn.llibrary.IContentHandler
  */
 public class ContentHandlerList extends ArrayList<IContentHandler>
 {
+    /**
+     * Create a new list with IContentHandlers
+     *
+     * @param contentHandlers the list of IContentHandlers
+     * @return a new instance of the list
+     * @see net.ilexiconn.llibrary.IContentHandler
+     */
+    public static ContentHandlerList createList(IContentHandler... contentHandlers)
+    {
+        ContentHandlerList list = new ContentHandlerList();
+        list.addAll(Arrays.asList(contentHandlers));
+        return list;
+    }
+
     /**
      * Initialize all the IContentHandlers in this list.
      *
@@ -30,20 +44,5 @@ public class ContentHandlerList extends ArrayList<IContentHandler>
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * Create a new list with IContentHandlers
-     *
-     * @param contentHandlers the list of IContentHandlers
-     * @return a new instance of the list
-     *
-     * @see net.ilexiconn.llibrary.IContentHandler
-     */
-    public static ContentHandlerList createList(IContentHandler... contentHandlers)
-    {
-        ContentHandlerList list = new ContentHandlerList();
-        list.addAll(Arrays.asList(contentHandlers));
-        return list;
     }
 }

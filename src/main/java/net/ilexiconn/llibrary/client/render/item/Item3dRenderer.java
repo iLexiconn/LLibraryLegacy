@@ -55,8 +55,8 @@ public class Item3dRenderer implements IItemRenderer
                 renderBlock(0f, 1f, 0f);
                 break;
             default: /** EQUIPPED **/
-            	renderBlock(0.5f, 1.5f, 0.5f);
-            	break;
+                renderBlock(0.5f, 1.5f, 0.5f);
+                break;
         }
     }
 
@@ -71,7 +71,7 @@ public class Item3dRenderer implements IItemRenderer
             glScalef(-1f, -1f, 1f);
             model.render(null, 0f, 0f, 0f, 0f, 0f, 0.0625f);
         }
-        
+
         glPopMatrix();
     }
 }

@@ -46,7 +46,8 @@ public class EntityMountableBlock extends Entity
     {
         worldObj.theProfiler.startSection("entityBaseTick");
         if (riddenByEntity == null || riddenByEntity.isDead) setDead();
-        else if (worldObj.getBlock(blockPosX, blockPosY, blockPosZ) != block) interactFirst((EntityPlayer) riddenByEntity);
+        else if (worldObj.getBlock(blockPosX, blockPosY, blockPosZ) != block)
+            interactFirst((EntityPlayer) riddenByEntity);
         ticksExisted++;
         worldObj.theProfiler.endSection();
     }

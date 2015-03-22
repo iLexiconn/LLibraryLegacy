@@ -202,7 +202,8 @@ public class ControlledAnimation
     @SideOnly(Side.CLIENT)
     public float getAnimationProgressSinToTenWithoutReturn()
     {
-        if (timerChange == -1) return MathHelper.sin(1.57079632679f * (float) (timer / duration)) * MathHelper.sin(1.57079632679f * (float) (timer / duration));
+        if (timerChange == -1)
+            return MathHelper.sin(1.57079632679f * (float) (timer / duration)) * MathHelper.sin(1.57079632679f * (float) (timer / duration));
         return (float) Math.pow((double) MathHelper.sin(1.57079632679f * (float) (timer / duration)), 10);
     }
 

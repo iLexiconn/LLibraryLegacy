@@ -17,14 +17,14 @@ public class ServerProxy
         EntityHelper.registerEntity("mountableBlock", EntityMountableBlock.class);
         UpdateHelper.registerUpdateChecker(LLibrary.instance, "TGiS6kuk", "https://ilexiconn.net/");
     }
-    
+
     public void postInit()
     {
-    	
+
     }
-    
+
     public void openChangelogGui(ModUpdateContainer mod, String version)
     {
-    	
+
     }
 }

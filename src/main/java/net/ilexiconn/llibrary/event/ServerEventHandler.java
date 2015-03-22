@@ -11,8 +11,8 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 
 public class ServerEventHandler
 {
-	private boolean checkedForUpdates;
-	
+    private boolean checkedForUpdates;
+
     @SubscribeEvent
     public void entityTick(LivingEvent.LivingUpdateEvent event)
     {
@@ -21,26 +21,26 @@ public class ServerEventHandler
             for (EntityPart part : ((IEntityMultiPart) event.entityLiving).getParts()) part.onUpdate();
         }
     }
-    
+
     @SubscribeEvent
     public void joinWorld(EntityJoinWorldEvent event)
     {
-    	if (event.world.isRemote)
-    	{
-    		if (event.entity instanceof EntityPlayer)
-    		{
-        		if (!checkedForUpdates)
-        		{
-        			new UpdateCheckerThread().start();
-        			
-        			checkedForUpdates = true;
-        		}
-    		}
-    	}
-    	
-    	if (EntityHelper.hasEntityBeenRemoved(event.entity.getClass()))
-    	{
-    		event.setCanceled(true);
-    	}
+        if (event.world.isRemote)
+        {
+            if (event.entity instanceof EntityPlayer)
+            {
+                if (!checkedForUpdates)
+                {
+                    new UpdateCheckerThread().start();
+
+                    checkedForUpdates = true;
+                }
+            }
+        }
+
+        if (EntityHelper.hasEntityBeenRemoved(event.entity.getClass()))
+        {
+            event.setCanceled(true);
+        }
     }
 }

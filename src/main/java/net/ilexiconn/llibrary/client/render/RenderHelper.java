@@ -31,7 +31,7 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class RenderHelper
 {
-	private static Map<Class<? extends ModelBase>, List<IModelExtension>> modelExtensions = Maps.newHashMap();
+    private static Map<Class<? extends ModelBase>, List<IModelExtension>> modelExtensions = Maps.newHashMap();
 
     private static ResourceLocation glintTexture = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 
@@ -47,37 +47,36 @@ public class RenderHelper
 
     /**
      * Registers the given IModelExtension to a specific model.
-     * 
+     *
      * @param modelClazz
      * @param modelExtension
      */
     private static void registerModelExtension(Class<? extends ModelBase> modelClazz, IModelExtension modelExtension)
     {
-    	List<IModelExtension> extensionsForModel = modelExtensions.get(modelClazz);
-    	
-    	if (extensionsForModel == null)
-    	{
-    		extensionsForModel = Lists.newArrayList();
-    	}
-    	
-    	extensionsForModel.add(modelExtension);
-    	
-    	modelExtensions.put(modelClazz, extensionsForModel);
+        List<IModelExtension> extensionsForModel = modelExtensions.get(modelClazz);
+
+        if (extensionsForModel == null)
+        {
+            extensionsForModel = Lists.newArrayList();
+        }
+
+        extensionsForModel.add(modelExtension);
+
+        modelExtensions.put(modelClazz, extensionsForModel);
     }
-    
+
     /**
-     * 
      * @param clazz
      * @returns a list of ModelExtensions for the given model class.
      */
     public static List<IModelExtension> getModelExtensionsFor(Class<? extends ModelBase> clazz)
     {
-    	return modelExtensions.get(clazz);
+        return modelExtensions.get(clazz);
     }
-    
+
     /**
      * Renders the given ItemStack in 3D.
-     * 
+     *
      * @param stack the ItemStack you want to render.
      */
     public static void renderItemIn3d(ItemStack stack)

@@ -3,8 +3,8 @@ package net.ilexiconn.llibrary;
 /**
  * Interface to handle the content of a mod, activated by a ContentHandlerList.
  *
- * @see net.ilexiconn.llibrary.ContentHandlerList
  * @author iLexiconn
+ * @see net.ilexiconn.llibrary.ContentHandlerList
  */
 public interface IContentHandler
 {

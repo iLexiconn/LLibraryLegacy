@@ -10,10 +10,10 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 @SideOnly(Side.CLIENT)
 public final class RenderCustomPlayer extends RenderPlayer
 {
-	public RenderCustomPlayer()
-	{
-		setRenderManager(RenderManager.instance);
-		mainModel = new ModelCustomBiped();
-		modelBipedMain = (ModelBiped) mainModel;
-	}
+    public RenderCustomPlayer()
+    {
+        setRenderManager(RenderManager.instance);
+        mainModel = new ModelCustomBiped();
+        modelBipedMain = (ModelBiped) mainModel;
+    }
 }

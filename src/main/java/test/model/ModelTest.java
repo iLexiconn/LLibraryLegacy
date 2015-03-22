@@ -152,7 +152,8 @@ public class ModelTest extends MowzieModelBase
     public MowzieModelRenderer legleftfoot;
     public MowzieModelRenderer[] tailParts;
 
-    public ModelTest() {
+    public ModelTest()
+    {
         this.textureWidth = 256;
         this.textureHeight = 128;
         this.tail4 = new MowzieModelRenderer(this, 155, 51);
@@ -857,9 +858,9 @@ public class ModelTest extends MowzieModelBase
 
         headhorn3.rotationPointZ -= 0.5;
 
-        tailParts = new MowzieModelRenderer[] {tailclub, tail4, tail3, tail2, tail1};
+        tailParts = new MowzieModelRenderer[]{tailclub, tail4, tail3, tail2, tail1};
 
-        parts = new MowzieModelRenderer[] {Waist, bodyarmor1, Chest, tail1, legrightthigh, legleftthigh, Spike20, Spike21, Spike22, Spike23, Spike19, Spike24, Spike25, Spike26, Spike27, Spike28, Spike29, Spike30, Spike35, Spike36, Spike43, Spike50, Spike49, Spike37, horn4, horn5, horn6, horn7, horn8, Horn4R, Horn5R, Horn6R, Horn7R, Horn8R, bodyarmor2, neck1, armleftthigh, armrightthigh, horn11, Horn11R, Spike13, Spike18, Spike11, Spike12, Spike14, Spike15, Spike16, Spike17, Spike31, Spike32, Spike33, Spike34, horn1, horn2, horn3, Horn1R, Horn2R, Horn3R, neckarmor1, headback, Spike7, Spike6, Spike8, Spike10, Spike9, headarmorback, head, Spike5, Spike4, Spike2, Spike1, Spike3, headarmor1, upperjaw, lowerjaw, headarmor2, headhorn1, headhorn4, headhorn2, headhorn3, armleftcalf, armleftfoot, armrightcalf, armrightfoot, tailarmor1, tail2, Shape1, Shape2, Shape3, Shape4, Shape5, Shape6, Shape7, Shape8, Spike38, Spike39, Spike44, Spike45, horn9, horn10, Horn9R, Horn10R, tailarmor2, tail3, Shape12, Shape11, Shape10, Shape9, Shape16, Shape15, Shape14, Shape13, Spike40, Spike41, Spike47, Spike46, horn12, Horn12R, tailarmor3, tail4, Shape18, Shape19, Shape17, Shape22, Shape21, Shape20, Spike48, Spike42, tailarmor4, tailend, Shape23, Shape24, Shape25, Shape26, tailarmorend, tailclub, Shape27, Shape28, legrightcalf, legrightfoot, legleftcalf, legleftfoot};
+        parts = new MowzieModelRenderer[]{Waist, bodyarmor1, Chest, tail1, legrightthigh, legleftthigh, Spike20, Spike21, Spike22, Spike23, Spike19, Spike24, Spike25, Spike26, Spike27, Spike28, Spike29, Spike30, Spike35, Spike36, Spike43, Spike50, Spike49, Spike37, horn4, horn5, horn6, horn7, horn8, Horn4R, Horn5R, Horn6R, Horn7R, Horn8R, bodyarmor2, neck1, armleftthigh, armrightthigh, horn11, Horn11R, Spike13, Spike18, Spike11, Spike12, Spike14, Spike15, Spike16, Spike17, Spike31, Spike32, Spike33, Spike34, horn1, horn2, horn3, Horn1R, Horn2R, Horn3R, neckarmor1, headback, Spike7, Spike6, Spike8, Spike10, Spike9, headarmorback, head, Spike5, Spike4, Spike2, Spike1, Spike3, headarmor1, upperjaw, lowerjaw, headarmor2, headhorn1, headhorn4, headhorn2, headhorn3, armleftcalf, armleftfoot, armrightcalf, armrightfoot, tailarmor1, tail2, Shape1, Shape2, Shape3, Shape4, Shape5, Shape6, Shape7, Shape8, Spike38, Spike39, Spike44, Spike45, horn9, horn10, Horn9R, Horn10R, tailarmor2, tail3, Shape12, Shape11, Shape10, Shape9, Shape16, Shape15, Shape14, Shape13, Spike40, Spike41, Spike47, Spike46, horn12, Horn12R, tailarmor3, tail4, Shape18, Shape19, Shape17, Shape22, Shape21, Shape20, Spike48, Spike42, tailarmor4, tailend, Shape23, Shape24, Shape25, Shape26, tailarmorend, tailclub, Shape27, Shape28, legrightcalf, legrightfoot, legleftcalf, legleftfoot};
         setInitPose();
     }
 

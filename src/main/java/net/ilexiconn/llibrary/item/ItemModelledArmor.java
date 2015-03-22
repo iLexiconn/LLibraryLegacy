@@ -46,7 +46,7 @@ public class ItemModelledArmor extends ItemArmor
     @SideOnly(Side.CLIENT)
     public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot)
     {
-        int type = ((ItemArmor)itemStack.getItem()).armorType;
+        int type = ((ItemArmor) itemStack.getItem()).armorType;
         if (type == 1 || type == 3) armorModel = armorModelReceiver.getArmorModel(0);
         else armorModel = armorModelReceiver.getArmorModel(1);
 
@@ -64,7 +64,8 @@ public class ItemModelledArmor extends ItemArmor
             armorModel.isChild = entityLiving.isChild();
             armorModel.heldItemRight = entityLiving.getEquipmentInSlot(0) != null ? 1 : 0;
 
-            if (entityLiving instanceof EntityPlayer) armorModel.aimedBow = ((EntityPlayer) entityLiving).getItemInUseDuration() > 2;
+            if (entityLiving instanceof EntityPlayer)
+                armorModel.aimedBow = ((EntityPlayer) entityLiving).getItemInUseDuration() > 2;
 
             return armorModel;
         }

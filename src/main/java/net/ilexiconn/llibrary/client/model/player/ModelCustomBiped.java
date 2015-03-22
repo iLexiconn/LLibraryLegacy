@@ -14,60 +14,60 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public final class ModelCustomBiped extends ModelBiped
 {
-	public ModelCustomBiped()
-	{
-		List<IModelExtension> extentions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
-		if (extentions != null) for (IModelExtension extention : extentions) extention.init(this);
-	}
+    public ModelCustomBiped()
+    {
+        List<IModelExtension> extentions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
+        if (extentions != null) for (IModelExtension extention : extentions) extention.init(this);
+    }
 
-	public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
-	{
-		List<IModelExtension> modelExtentions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
+    public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
+    {
+        List<IModelExtension> modelExtentions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
 
-		if (modelExtentions == null) modelExtentions = Lists.newArrayList();
+        if (modelExtentions == null) modelExtentions = Lists.newArrayList();
 
-		setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
+        setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
 
-		for (IModelExtension extention : modelExtentions)
-		{
-			extention.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
-			extention.preRender(entity, this, partialTicks);
-		}
-		
-		if (isChild)
-		{
-			float scale = 2f;
-			GL11.glPushMatrix();
-			GL11.glScalef(1.5f / scale, 1.5f / scale, 1.5f / scale);
-			GL11.glTranslatef(0f, 16f * partialTicks, 0f);
-			bipedHead.render(partialTicks);
-			GL11.glPopMatrix();
-			GL11.glPushMatrix();
-			GL11.glScalef(1f / scale, 1f / scale, 1f / scale);
-			GL11.glTranslatef(0f, 24f * partialTicks, 0f);
-			bipedBody.render(partialTicks);
-			bipedRightArm.render(partialTicks);
-			bipedLeftArm.render(partialTicks);
-			bipedRightLeg.render(partialTicks);
-			bipedLeftLeg.render(partialTicks);
-			bipedHeadwear.render(partialTicks);
-			GL11.glPopMatrix();
-		}
-		else
-		{
-			bipedHead.render(partialTicks);
-			bipedBody.render(partialTicks);
-			bipedRightArm.render(partialTicks);
-			bipedLeftArm.render(partialTicks);
-			bipedRightLeg.render(partialTicks);
-			bipedLeftLeg.render(partialTicks);
-			bipedHeadwear.render(partialTicks);
-		}
+        for (IModelExtension extention : modelExtentions)
+        {
+            extention.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
+            extention.preRender(entity, this, partialTicks);
+        }
 
-		for (IModelExtension extention : modelExtentions)
-		{
-			extention.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
-			extention.postRender(entity, this, partialTicks);
-		}
-	}
+        if (isChild)
+        {
+            float scale = 2f;
+            GL11.glPushMatrix();
+            GL11.glScalef(1.5f / scale, 1.5f / scale, 1.5f / scale);
+            GL11.glTranslatef(0f, 16f * partialTicks, 0f);
+            bipedHead.render(partialTicks);
+            GL11.glPopMatrix();
+            GL11.glPushMatrix();
+            GL11.glScalef(1f / scale, 1f / scale, 1f / scale);
+            GL11.glTranslatef(0f, 24f * partialTicks, 0f);
+            bipedBody.render(partialTicks);
+            bipedRightArm.render(partialTicks);
+            bipedLeftArm.render(partialTicks);
+            bipedRightLeg.render(partialTicks);
+            bipedLeftLeg.render(partialTicks);
+            bipedHeadwear.render(partialTicks);
+            GL11.glPopMatrix();
+        }
+        else
+        {
+            bipedHead.render(partialTicks);
+            bipedBody.render(partialTicks);
+            bipedRightArm.render(partialTicks);
+            bipedLeftArm.render(partialTicks);
+            bipedRightLeg.render(partialTicks);
+            bipedLeftLeg.render(partialTicks);
+            bipedHeadwear.render(partialTicks);
+        }
+
+        for (IModelExtension extention : modelExtentions)
+        {
+            extention.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
+            extention.postRender(entity, this, partialTicks);
+        }
+    }
 }

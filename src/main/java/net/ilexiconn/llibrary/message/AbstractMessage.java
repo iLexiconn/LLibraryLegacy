@@ -8,21 +8,21 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public abstract class AbstractMessage<REQ extends AbstractMessage> implements IMessage, IMessageHandler<REQ, IMessage>
 {
-	public IMessage onMessage(REQ message, MessageContext ctx)
-	{
-		if (ctx.side.isClient())
-		{
-			handleClientMessage(message, FMLClientHandler.instance().getClientPlayerEntity());
-		}
-		else 
-		{
-			handleServerMessage(message, ctx.getServerHandler().playerEntity);
-		}
-		
-		return null;
-	}
+    public IMessage onMessage(REQ message, MessageContext ctx)
+    {
+        if (ctx.side.isClient())
+        {
+            handleClientMessage(message, FMLClientHandler.instance().getClientPlayerEntity());
+        }
+        else
+        {
+            handleServerMessage(message, ctx.getServerHandler().playerEntity);
+        }
 
-	public abstract void handleClientMessage(REQ message, EntityPlayer player);
+        return null;
+    }
 
-	public abstract void handleServerMessage(REQ message, EntityPlayer player);
+    public abstract void handleClientMessage(REQ message, EntityPlayer player);
+
+    public abstract void handleServerMessage(REQ message, EntityPlayer player);
 }

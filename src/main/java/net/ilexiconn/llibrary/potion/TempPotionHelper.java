@@ -1,9 +1,11 @@
 package net.ilexiconn.llibrary.potion;
 
-import java.util.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 
-import cpw.mods.fml.relauncher.*;
-import net.minecraft.potion.*;
+import java.util.*;
 
 public class TempPotionHelper
 {
@@ -21,10 +23,14 @@ public class TempPotionHelper
     public static final String pufferfishEffect;
     public static final String netherWartEffect;
     private static final HashMap<Integer, String> potionRequirements = new HashMap<Integer, String>();
-    /** Potion effect amplifier map */
+    /**
+     * Potion effect amplifier map
+     */
     private static final HashMap<Integer, String> potionAmplifiers = new HashMap<Integer, String>();
     private static final HashMap<Integer, Integer> cachedLiquidColors;
-    /** An array of possible potion prefix names, as translation IDs. */
+    /**
+     * An array of possible potion prefix names, as translation IDs.
+     */
     private static final String[] potionPrefixes;
     // We don't care about: private static final String __OBFID = "CL_00000078";
 
@@ -118,7 +124,8 @@ public class TempPotionHelper
             }
 
             potioneffect = iterator.next();
-        } while (potioneffect.getIsAmbient());
+        }
+        while (potioneffect.getIsAmbient());
 
         return false;
     }
@@ -613,9 +620,9 @@ public class TempPotionHelper
         netherWartEffect = "+4";
 
         cachedLiquidColors = new HashMap<>();
-        potionPrefixes = new String[] { "potion.prefix.mundane", "potion.prefix.uninteresting", "potion.prefix.bland", "potion.prefix.clear", "potion.prefix.milky", "potion.prefix.diffuse", "potion.prefix.artless", "potion.prefix.thin",
+        potionPrefixes = new String[]{"potion.prefix.mundane", "potion.prefix.uninteresting", "potion.prefix.bland", "potion.prefix.clear", "potion.prefix.milky", "potion.prefix.diffuse", "potion.prefix.artless", "potion.prefix.thin",
                 "potion.prefix.awkward", "potion.prefix.flat", "potion.prefix.bulky", "potion.prefix.bungling", "potion.prefix.buttered", "potion.prefix.smooth", "potion.prefix.suave", "potion.prefix.debonair", "potion.prefix.thick",
                 "potion.prefix.elegant", "potion.prefix.fancy", "potion.prefix.charming", "potion.prefix.dashing", "potion.prefix.refined", "potion.prefix.cordial", "potion.prefix.sparkling", "potion.prefix.potent", "potion.prefix.foul",
-                "potion.prefix.odorless", "potion.prefix.rank", "potion.prefix.harsh", "potion.prefix.acrid", "potion.prefix.gross", "potion.prefix.stinky" };
+                "potion.prefix.odorless", "potion.prefix.rank", "potion.prefix.harsh", "potion.prefix.acrid", "potion.prefix.gross", "potion.prefix.stinky"};
     }
 }

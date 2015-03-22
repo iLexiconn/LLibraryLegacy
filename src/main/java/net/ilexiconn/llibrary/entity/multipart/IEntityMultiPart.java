@@ -3,9 +3,8 @@ package net.ilexiconn.llibrary.entity.multipart;
 /**
  * Interface for entities using the EntityPart class.
  *
- * @see net.ilexiconn.llibrary.entity.multipart.EntityPart
- *
  * @author iLexiconn
+ * @see net.ilexiconn.llibrary.entity.multipart.EntityPart
  */
 public interface IEntityMultiPart
 {

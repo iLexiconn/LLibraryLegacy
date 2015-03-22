@@ -26,9 +26,9 @@ public class SurvivalTabInventory implements ISurvivalTab
     @SideOnly(Side.CLIENT)
     public void openContainerGui(EntityPlayer player)
     {
-    	Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(player));
+        Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(player));
     }
-    
+
     @SideOnly(Side.CLIENT)
     public Class<? extends GuiContainer> getContainerGuiClass()
     {

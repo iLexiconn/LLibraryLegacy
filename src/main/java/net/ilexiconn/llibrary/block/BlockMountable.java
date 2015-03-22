@@ -26,7 +26,8 @@ public abstract class BlockMountable extends BlockContainer
         {
             List<EntityMountableBlock> mountableBlocks = world.getEntitiesWithinAABB(EntityMountableBlock.class, AxisAlignedBB.getBoundingBox(x, y, z, x + 1f, y + 1f, z + 1f).expand(1f, 1f, 1f));
             for (EntityMountableBlock mountableBlock : mountableBlocks)
-                if (mountableBlock.blockPosX == x && mountableBlock.blockPosY == y && mountableBlock.blockPosZ == z) return mountableBlock.interactFirst(player);
+                if (mountableBlock.blockPosX == x && mountableBlock.blockPosY == y && mountableBlock.blockPosZ == z)
+                    return mountableBlock.interactFirst(player);
 
             float mountX = x + mountPosX;
             float mountY = y + mountPosY;

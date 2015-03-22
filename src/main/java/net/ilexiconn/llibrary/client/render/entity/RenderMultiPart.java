@@ -39,7 +39,8 @@ public abstract class RenderMultiPart extends RenderLiving
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_CULL_FACE);
             GL11.glDisable(GL11.GL_BLEND);
-            for (EntityPart e : entity.getParts()) RenderGlobal.drawOutlinedBoundingBox(e.boundingBox.copy().offset(-RenderManager.renderPosX, -RenderManager.renderPosY, -RenderManager.renderPosZ), 0xffffff);
+            for (EntityPart e : entity.getParts())
+                RenderGlobal.drawOutlinedBoundingBox(e.boundingBox.copy().offset(-RenderManager.renderPosX, -RenderManager.renderPosY, -RenderManager.renderPosZ), 0xffffff);
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glEnable(GL11.GL_CULL_FACE);

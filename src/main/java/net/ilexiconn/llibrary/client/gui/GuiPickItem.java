@@ -1,9 +1,8 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import com.google.common.collect.Lists;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMobSpawner;
@@ -20,15 +19,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import com.google.common.collect.Lists;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author FiskFille
@@ -36,222 +33,220 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public abstract class GuiPickItem extends GuiScreen
 {
-	private RenderItem renderItem = new RenderItem();
-	public String text = "";
-	public final String title;
+    public final String title;
+    public String text = "";
+    public GuiVerticalSlider slider = new GuiVerticalSlider(100, 0, 10, 30, 300, 10);
+    private RenderItem renderItem = new RenderItem();
+    private ArrayList<ItemStack> items = Lists.newArrayList();
 
-	public GuiVerticalSlider slider = new GuiVerticalSlider(100, 0, 10, 30, 300, 10);
+    public GuiPickItem(String title)
+    {
+        super();
+        this.title = title;
 
-	private ArrayList<ItemStack> items = Lists.newArrayList();
+        Iterator<Item> iterator = Item.itemRegistry.iterator();
 
-	public GuiPickItem(String title)
-	{
-		super();
-		this.title = title;
+        while (iterator.hasNext())
+        {
+            Item item = iterator.next();
+            ItemStack itemstack = new ItemStack(item);
 
-		Iterator<Item> iterator = Item.itemRegistry.iterator();
+            if (item != null)
+            {
+                try
+                {
+                    items.add(itemstack);
 
-		while (iterator.hasNext())
-		{
-			Item item = iterator.next();
-			ItemStack itemstack = new ItemStack(item);
+                    List subItems = Lists.newArrayList();
 
-			if (item != null)
-			{
-				try
-				{
-					items.add(itemstack);
+                    item.getSubItems(item, null, subItems);
 
-					List subItems = Lists.newArrayList();
+                    int maxDamage = subItems.size() - 1;
 
-					item.getSubItems(item, null, subItems);
+                    while (item.getHasSubtypes() && itemstack.getItemDamage() < maxDamage)
+                    {
+                        itemstack.setItemDamage(itemstack.getItemDamage() + 1);
 
-					int maxDamage = subItems.size() - 1;
+                        if (!(item instanceof ItemDoublePlant) && !(Block.getBlockFromItem(item) instanceof BlockMobSpawner) && !(Block.getBlockFromItem(item) instanceof BlockDoublePlant) && !(item instanceof ItemMonsterPlacer))
+                        {
+                            items.add(new ItemStack(item, 1, itemstack.getItemDamage()));
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
-					while (item.getHasSubtypes() && itemstack.getItemDamage() < maxDamage)
-					{
-						itemstack.setItemDamage(itemstack.getItemDamage() + 1);
+    public void initGui()
+    {
+        this.buttonList.add(new GuiButton(0, width - 20, 0, 20, 20, "X"));
+    }
 
-						if (!(item instanceof ItemDoublePlant) && !(Block.getBlockFromItem(item) instanceof BlockMobSpawner) && !(Block.getBlockFromItem(item) instanceof BlockDoublePlant) && !(item instanceof ItemMonsterPlacer))
-						{
-							items.add(new ItemStack(item, 1, itemstack.getItemDamage()));
-						}
-					}
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+    public abstract void onClickEntry(ItemStack itemstack, EntityPlayer player);
 
-	public void initGui()
-	{
-		this.buttonList.add(new GuiButton(0, width - 20, 0, 20, 20, "X"));
-	}
+    protected void keyTyped(char character, int par2)
+    {
+        super.keyTyped(character, par2);
+        Keyboard.enableRepeatEvents(true);
 
-	public abstract void onClickEntry(ItemStack itemstack, EntityPlayer player);
+        if (ChatAllowedCharacters.isAllowedCharacter(character) && fontRendererObj.getStringWidth(text + character + "_") < 90)
+        {
+            text += character;
+        }
+        else if (text.length() > 0 && character == 8)
+        {
+            if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL))
+            {
+                text = text.substring(0, text.contains(" ") ? text.lastIndexOf(" ") : 0);
+            }
+            else
+            {
+                text = text.substring(0, text.length() - 1);
+            }
+        }
+    }
 
-	protected void keyTyped(char character, int par2)
-	{
-		super.keyTyped(character, par2);
-		Keyboard.enableRepeatEvents(true);
+    public boolean doesGuiPauseGame()
+    {
+        return false;
+    }
 
-		if (ChatAllowedCharacters.isAllowedCharacter(character) && fontRendererObj.getStringWidth(text + character + "_") < 90)
-		{
-			text += character;
-		}
-		else if (text.length() > 0 && character == 8)
-		{
-			if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL))
-			{
-				text = text.substring(0, text.contains(" ") ? text.lastIndexOf(" ") : 0); 
-			}
-			else
-			{
-				text = text.substring(0, text.length() - 1);
-			}
-		}
-	}
+    protected void mouseClickMove(int mouseX, int mouseY, int lastButtonClicked, long timeSinceMouseClick)
+    {
+        super.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
+        slider.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
+    }
 
-	public boolean doesGuiPauseGame()
-	{
-		return false;
-	}
+    protected void mouseClicked(int mouseX, int mouseY, int button)
+    {
+        super.mouseClicked(mouseX, mouseY, button);
+        slider.mouseClicked(mouseX, mouseY, button);
+    }
 
-	protected void mouseClickMove(int mouseX, int mouseY, int lastButtonClicked, long timeSinceMouseClick)
-	{
-		super.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
-		slider.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
-	}
+    protected void mouseMovedOrUp(int mouseX, int mouseY, int event)
+    {
+        super.mouseMovedOrUp(mouseX, mouseY, event);
+        slider.mouseMovedOrUp(mouseX, mouseY, event);
+    }
 
-	protected void mouseClicked(int mouseX, int mouseY, int button)
-	{
-		super.mouseClicked(mouseX, mouseY, button);
-		slider.mouseClicked(mouseX, mouseY, button);
-	}
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    {
+        drawDefaultBackground();
+        drawCenteredString(fontRendererObj, title, width / 2, 15, 16777215);
+        int x = width / 2 - 45;
+        int y = 30;
+        int scrollY = 0;
+        int i = height - 20;
+        slider.minScroll = 40;
+        slider.maxScroll = i - 7;
+        slider.x = width / 2 - 70;
+        slider.drawScreen(mouseX, mouseY, partialTicks);
 
-	protected void mouseMovedOrUp(int mouseX, int mouseY, int event)
-	{
-		super.mouseMovedOrUp(mouseX, mouseY, event);
-		slider.mouseMovedOrUp(mouseX, mouseY, event);
-	}
+        boolean selected = false;
 
-	public void drawScreen(int mouseX, int mouseY, float partialTicks)
-	{
-		drawDefaultBackground();
-		drawCenteredString(fontRendererObj, title, width / 2, 15, 16777215);
-		int x = width / 2 - 45;
-		int y = 30;
-		int scrollY = 0;
-		int i = height - 20;
-		slider.minScroll = 40;
-		slider.maxScroll = i - 7;
-		slider.x = width / 2 - 70;
-		slider.drawScreen(mouseX, mouseY, partialTicks);
+        List<ItemStack> displayItems = Lists.newArrayList();
 
-		boolean selected = false;
+        for (ItemStack itemstack : items)
+        {
+            try
+            {
+                String name = StatCollector.translateToLocal(itemstack.getDisplayName());
 
-		List<ItemStack> displayItems = Lists.newArrayList();
+                Item item = itemstack.getItem();
 
-		for (ItemStack itemstack : items)
-		{
-			try
-			{
-				String name = StatCollector.translateToLocal(itemstack.getDisplayName());
+                boolean tabEquals = false;
 
-				Item item = itemstack.getItem();
-				
-				boolean tabEquals = false;
-				
-				if(item != null)
-				{
-					for (CreativeTabs tab : item.getCreativeTabs()) 
-					{
-						if(tab != null)
-						{
-							tabEquals = StatCollector.translateToLocal(tab.getTranslatedTabLabel()).toLowerCase().contains(text.toLowerCase());
-							
-							if(tabEquals)
-							{
-								break;
-							}
-						}
-					}
-				}
-				
-				if (name.toLowerCase().contains(text.toLowerCase()) || tabEquals)
-				{
-					displayItems.add(itemstack);
-				}
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
+                if (item != null)
+                {
+                    for (CreativeTabs tab : item.getCreativeTabs())
+                    {
+                        if (tab != null)
+                        {
+                            tabEquals = StatCollector.translateToLocal(tab.getTranslatedTabLabel()).toLowerCase().contains(text.toLowerCase());
 
-		scrollY = ((-slider.y + slider.minScroll) * ((displayItems.size()) / ((i - slider.minScroll) / 19)));
+                            if (tabEquals)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
 
-		for (ItemStack itemstack : displayItems)
-		{
-			try
-			{
-				String name = StatCollector.translateToLocal(itemstack.getDisplayName());
-				selected = mouseX >= x && mouseX < x + fontRendererObj.getStringWidth(name) + 20 && mouseY >= y + 16 + scrollY && mouseY < y + 32 + scrollY;
+                if (name.toLowerCase().contains(text.toLowerCase()) || tabEquals)
+                {
+                    displayItems.add(itemstack);
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
 
-				y += 18;
+        scrollY = ((-slider.y + slider.minScroll) * ((displayItems.size()) / ((i - slider.minScroll) / 19)));
 
-				if (y + scrollY <= height && y + scrollY > 42)
-				{
-					drawString(fontRendererObj, name + (selected ? " <" : ""), x + 20, y + 4 + scrollY, selected ? 0xFFFF7F : 0xFFFFFF);
-					drawString(fontRendererObj, selected ? ">" : "", x - 10, y + 4 + scrollY, 0xFFFF7F);
+        for (ItemStack itemstack : displayItems)
+        {
+            try
+            {
+                String name = StatCollector.translateToLocal(itemstack.getDisplayName());
+                selected = mouseX >= x && mouseX < x + fontRendererObj.getStringWidth(name) + 20 && mouseY >= y + 16 + scrollY && mouseY < y + 32 + scrollY;
 
-					try
-					{
-						drawItemStack(x, y + scrollY, itemstack);
-					}
-					catch (Exception e)
-					{
+                y += 18;
 
-					}
-				}
+                if (y + scrollY <= height && y + scrollY > 42)
+                {
+                    drawString(fontRendererObj, name + (selected ? " <" : ""), x + 20, y + 4 + scrollY, selected ? 0xFFFF7F : 0xFFFFFF);
+                    drawString(fontRendererObj, selected ? ">" : "", x - 10, y + 4 + scrollY, 0xFFFF7F);
 
-				if (selected)
-				{					
-					if (Mouse.isButtonDown(0))
-					{
-						onClickEntry(itemstack, mc.thePlayer);
-					}
-				}
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
+                    try
+                    {
+                        drawItemStack(x, y + scrollY, itemstack);
+                    }
+                    catch (Exception e)
+                    {
 
-		GL11.glColor4f(1, 1, 1, 1);
-		mc.renderEngine.bindTexture(new ResourceLocation("textures/gui/container/creative_inventory/tab_item_search.png"));
-		drawTexturedModalRect(x, 30, 80, 4, 90, 12);
-		drawString(fontRendererObj, text + (mc.thePlayer.ticksExisted % 20 >= 10 ? "" : "_"), x + 2, 32, 0xffffff);
-		super.drawScreen(mouseX, mouseY, partialTicks);
-	}
+                    }
+                }
 
-	public void drawItemStack(int x, int y, ItemStack itemstack)
-	{
-		RenderHelper.enableGUIStandardItemLighting();
-		zLevel = 100f;
-		renderItem.zLevel = 100f;
-		GL11.glEnable(2896);
-		GL11.glEnable(32826);
-		renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
-		renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
-		GL11.glDisable(2896);
-		GL11.glEnable(3042);
-		renderItem.zLevel = 0f;
-		zLevel = 0f;
-		RenderHelper.disableStandardItemLighting();
-	}
+                if (selected)
+                {
+                    if (Mouse.isButtonDown(0))
+                    {
+                        onClickEntry(itemstack, mc.thePlayer);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        GL11.glColor4f(1, 1, 1, 1);
+        mc.renderEngine.bindTexture(new ResourceLocation("textures/gui/container/creative_inventory/tab_item_search.png"));
+        drawTexturedModalRect(x, 30, 80, 4, 90, 12);
+        drawString(fontRendererObj, text + (mc.thePlayer.ticksExisted % 20 >= 10 ? "" : "_"), x + 2, 32, 0xffffff);
+        super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    public void drawItemStack(int x, int y, ItemStack itemstack)
+    {
+        RenderHelper.enableGUIStandardItemLighting();
+        zLevel = 100f;
+        renderItem.zLevel = 100f;
+        GL11.glEnable(2896);
+        GL11.glEnable(32826);
+        renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
+        renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
+        GL11.glDisable(2896);
+        GL11.glEnable(3042);
+        renderItem.zLevel = 0f;
+        zLevel = 0f;
+        RenderHelper.disableStandardItemLighting();
+    }
 }

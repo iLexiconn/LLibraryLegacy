@@ -1,12 +1,16 @@
 package net.ilexiconn.llibrary.potion;
 
-import java.lang.reflect.*;
-import java.util.*;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemPotion;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionHelper;
+import net.minecraft.util.ResourceLocation;
 
-import net.minecraft.init.*;
-import net.minecraft.item.*;
-import net.minecraft.potion.*;
-import net.minecraft.util.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PotionAPI
 {
@@ -65,6 +69,17 @@ public class PotionAPI
         Potion built = builder.build();
     }
 
+    public static Potion createPotion(String name, int id, boolean isEffectBad, int liquidColor, ResourceLocation texture, int iconIndexX, int iconIndexY)
+    {
+        if (Potion.potionTypes.length == MAX_SIZE)
+        {
+            Potion potion = new PotionCustom(id, isEffectBad, liquidColor, texture, iconIndexX, iconIndexY);
+            potion.setPotionName(name);
+            return potion;
+        }
+        return new PotionCustom(0, false, 0, new ResourceLocation("missingno"), 0, 0);
+    }
+
     private <T> T getField(Class<? extends T> type, Class clazz, String... astring)
     {
         for (Field f : clazz.getDeclaredFields())
@@ -86,16 +101,5 @@ public class PotionAPI
         }
 
         return null;
-    }
-
-    public static Potion createPotion(String name, int id, boolean isEffectBad, int liquidColor, ResourceLocation texture, int iconIndexX, int iconIndexY)
-    {
-        if (Potion.potionTypes.length == MAX_SIZE)
-        {
-            Potion potion = new PotionCustom(id, isEffectBad, liquidColor, texture, iconIndexX, iconIndexY);
-            potion.setPotionName(name);
-            return potion;
-        }
-        return new PotionCustom(0, false, 0, new ResourceLocation("missingno"), 0, 0);
     }
 }

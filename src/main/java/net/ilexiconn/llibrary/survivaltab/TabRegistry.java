@@ -22,9 +22,9 @@ public class TabRegistry
     {
         return survivalTabs;
     }
-    
+
     public static SurvivalTab getSurvivalTab(int id)
     {
-    	return survivalTabs.get(id + 1); //TODO -1?
+        return survivalTabs.get(id + 1); //TODO -1?
     }
 }
