@@ -1,7 +1,5 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.config.ConfigHelper;
@@ -25,8 +23,7 @@ public class GuiLLibraryConfig extends GuiScreen
         {
             public void onClickEntry(ItemStack itemstack, EntityPlayer player)
             {
-                ConfigHelper.getConfigContainer("llibrary").getConfiguration().getCategory(Configuration.CATEGORY_GENERAL).put("survivalInventoryItem", new Property("survivalInventoryItem", Item.itemRegistry.getNameForObject(itemstack.getItem()), Property.Type.STRING));
-                FMLCommonHandler.instance().bus().post(new ConfigChangedEvent.OnConfigChangedEvent("llibrary", "", false, false));
+                ConfigHelper.setProperty("llibrary", Configuration.CATEGORY_GENERAL, "survivalInventoryItem", Item.itemRegistry.getNameForObject(itemstack.getItem()) + ":" + itemstack.getItemDamage(), Property.Type.STRING);
                 mc.displayGuiScreen(parent);
             }
         };

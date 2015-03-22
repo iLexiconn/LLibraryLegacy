@@ -22,9 +22,4 @@ public class TabHelper
     {
         return survivalTabs;
     }
-
-    public static SurvivalTab getSurvivalTab(int id)
-    {
-        return survivalTabs.get(id + 1); //TODO -1?
-    }
 }
