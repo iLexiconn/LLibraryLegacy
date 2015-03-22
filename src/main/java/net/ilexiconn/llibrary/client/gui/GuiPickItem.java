@@ -249,4 +249,9 @@ public abstract class GuiPickItem extends GuiScreen
         zLevel = 0f;
         RenderHelper.disableStandardItemLighting();
     }
+
+    protected void actionPerformed(GuiButton button)
+    {
+        if (button.id == 0) mc.displayGuiScreen(null);
+    }
 }
