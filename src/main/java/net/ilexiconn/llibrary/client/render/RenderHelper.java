@@ -25,46 +25,46 @@ import java.util.Map;
 
 /**
  * Render helper class for basic render operations and the IModelExtension.
- *
+ * 
  * @author iLexiconn & Gegy1000
  */
 @SideOnly(Side.CLIENT)
 public class RenderHelper
 {
     private static Map<Class<? extends ModelBase>, List<IModelExtension>> modelExtensions = Maps.newHashMap();
-
+    
     private static ResourceLocation glintTexture = new ResourceLocation("textures/misc/enchanted_item_glint.png");
-
+    
     /**
      * Registers the given IModelExtension.
-     *
+     * 
      * @param modelExtension
      */
     public static void registerModelExtension(IModelExtension modelExtension)
     {
         registerModelExtension(ModelBiped.class, modelExtension);
     }
-
+    
     /**
      * Registers the given IModelExtension to a specific model.
-     *
+     * 
      * @param modelClazz
      * @param modelExtension
      */
     private static void registerModelExtension(Class<? extends ModelBase> modelClazz, IModelExtension modelExtension)
     {
         List<IModelExtension> extensionsForModel = modelExtensions.get(modelClazz);
-
+        
         if (extensionsForModel == null)
         {
             extensionsForModel = Lists.newArrayList();
         }
-
+        
         extensionsForModel.add(modelExtension);
-
+        
         modelExtensions.put(modelClazz, extensionsForModel);
     }
-
+    
     /**
      * @param clazz
      * @returns a list of ModelExtensions for the given model class.
@@ -73,16 +73,18 @@ public class RenderHelper
     {
         return modelExtensions.get(clazz);
     }
-
+    
     /**
      * Renders the given ItemStack in 3D.
-     *
-     * @param stack the ItemStack you want to render.
+     * 
+     * @param stack
+     *            the ItemStack you want to render.
      */
     public static void renderItemIn3d(ItemStack stack)
     {
         TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
-        if (textureManager == null) return;
+        if (textureManager == null)
+            return;
         Item item = stack.getItem();
         GL11.glPushMatrix();
         Tessellator tessellator = Tessellator.instance;
@@ -91,11 +93,13 @@ public class RenderHelper
         GL11.glTranslatef(-0.5f, -0.5f, 1 / 32f);
         GL11.glColor4f(1f, 1f, 1f, 1f);
         int passes = item.getRenderPasses(stack.getItemDamage());
-
+        
         for (int pass = 0; pass < passes; pass++)
         {
-            if (stack.getItemSpriteNumber() == 0) textureManager.bindTexture(TextureMap.locationBlocksTexture);
-            else textureManager.bindTexture(TextureMap.locationItemsTexture);
+            if (stack.getItemSpriteNumber() == 0)
+                textureManager.bindTexture(TextureMap.locationBlocksTexture);
+            else
+                textureManager.bindTexture(TextureMap.locationItemsTexture);
             IIcon icon = item.getIcon(stack, pass);
             float minU = icon.getMinU();
             float maxU = icon.getMaxU();
@@ -104,7 +108,7 @@ public class RenderHelper
             setColorFromInt(item.getColorFromItemStack(stack, pass));
             ItemRenderer.renderItemIn2D(tessellator, maxU, minV, minU, maxV, icon.getIconWidth(), icon.getIconHeight(), 0625f);
         }
-
+        
         if (stack.hasEffect(0))
         {
             GL11.glDepthFunc(GL11.GL_EQUAL);
@@ -135,11 +139,11 @@ public class RenderHelper
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glDepthFunc(GL11.GL_LEQUAL);
         }
-
+        
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
     }
-
+    
     private static void setColorFromInt(int color)
     {
         float r = (color >> 16 & 255) / 255f;
@@ -147,7 +151,7 @@ public class RenderHelper
         float b = (color & 255) / 255f;
         GL11.glColor4f(r, g, b, 1f);
     }
-
+    
     public static void registerItem3dRenderer(Item item, ModelBase model, ResourceLocation texture)
     {
         MinecraftForgeClient.registerItemRenderer(item, new Item3dRenderer(item, model, texture));

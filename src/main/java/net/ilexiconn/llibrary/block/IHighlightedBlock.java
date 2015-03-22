@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Interface for blocks, implement to render all AxisAlignedBB in a list.
- *
+ * 
  * @author iLexiconn
  */
 public interface IHighlightedBlock

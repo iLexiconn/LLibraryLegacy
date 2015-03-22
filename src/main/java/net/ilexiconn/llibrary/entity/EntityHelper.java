@@ -17,27 +17,27 @@ import java.util.Map;
 
 /**
  * Class for registering entities, removing entities and getting entities.
- *
+ * 
  * @author iLexiconn & Gegy1000 & FiskFille
  */
 public class EntityHelper
 {
     static int startEntityId = 0;
-
+    
     private static Field classToIDMappingField;
     private static Field stringToIDMappingField;
-
+    
     private static List<Class<? extends Entity>> removedEntities = Lists.newArrayList();
-
+    
     public static boolean hasEntityBeenRemoved(Class<? extends Entity> entity)
     {
         return removedEntities.contains(entity);
     }
-
+    
     static
     {
         int i = 0;
-
+        
         for (Field field : EntityList.class.getDeclaredFields())
         {
             if (field.getType() == Map.class)
@@ -53,25 +53,26 @@ public class EntityHelper
                     stringToIDMappingField = field;
                     break;
                 }
-
+                
                 i++;
             }
         }
     }
-
+    
     public static void registerEntity(EntityObject entity)
     {
         if (entity.doRegisterEgg())
             registerEntity(entity.getEntityName(), entity.getEntityClass(), entity.getEggColorPrimary(), entity.getEggColorSecondary());
-        else registerEntity(entity.getEntityName(), entity.getEntityClass());
+        else
+            registerEntity(entity.getEntityName(), entity.getEntityClass());
     }
-
+    
     public static void registerEntity(String entityName, Class<? extends Entity> entityClass)
     {
         int entityId = getUniqueEntityId();
         EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
     }
-
+    
     public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int primaryColor, int secondaryColor)
     {
         int entityId = getUniqueEntityId();
@@ -79,12 +80,12 @@ public class EntityHelper
         EntityList.IDtoClassMapping.put(entityId, entityClass);
         EntityList.entityEggs.put(entityId, new EntityList.EntityEggInfo(entityId, primaryColor, secondaryColor));
     }
-
+    
     public static void removeLivingEntity(Class<? extends EntityLiving> clazz)
     {
         removeEntity(clazz);
         removeEntityEgg(clazz);
-
+        
         for (BiomeGenBase biome : BiomeGenBase.getBiomeGenArray())
         {
             if (biome != null)
@@ -96,18 +97,18 @@ public class EntityHelper
             }
         }
     }
-
+    
     public static void removeEntity(Class<? extends Entity> clazz)
     {
         removedEntities.add(clazz);
-
+        
         EntityList.IDtoClassMapping.remove(clazz);
-
+        
         Object name = EntityList.classToStringMapping.get(clazz);
-
+        
         EntityList.stringToClassMapping.remove(name);
         EntityList.classToStringMapping.remove(clazz);
-
+        
         try
         {
             Map classToIDMapping = (Map) classToIDMappingField.get(null);
@@ -124,52 +125,53 @@ public class EntityHelper
             e.printStackTrace();
         }
     }
-
+    
     public static void removeEntityEgg(Class<? extends EntityLiving> clazz)
     {
         Integer toRemove = null;
-
+        
         for (Object key : EntityList.entityEggs.keySet())
         {
             EntityEggInfo eggInfo = (EntityEggInfo) EntityList.entityEggs.get(key);
             Integer intKey = (Integer) key;
-
+            
             Class<? extends Entity> entityClass = EntityList.getClassFromID(intKey);
-
+            
             if (clazz.equals(entityClass))
             {
                 toRemove = intKey;
-
+                
                 break;
             }
         }
-
+        
         if (toRemove != null)
         {
             EntityList.entityEggs.remove(toRemove);
         }
     }
-
+    
     private static int getUniqueEntityId()
     {
-        do startEntityId++;
+        do
+            startEntityId++;
         while (EntityList.getStringFromID(startEntityId) != null);
         return startEntityId;
     }
-
+    
     public static Entity getEntityFromClass(Class entityClass, World world)
     {
         Entity entity = null;
-
+        
         try
         {
-            entity = (Entity) entityClass.getConstructor(new Class[]{World.class}).newInstance(world);
+            entity = (Entity) entityClass.getConstructor(new Class[] { World.class }).newInstance(world);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-
+        
         return entity;
     }
 }

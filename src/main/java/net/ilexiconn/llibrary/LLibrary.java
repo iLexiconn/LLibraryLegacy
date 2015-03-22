@@ -15,23 +15,23 @@ public class LLibrary
 {
     @Mod.Instance("llibrary")
     public static LLibrary instance;
-
+    
     @SidedProxy(serverSide = "net.ilexiconn.llibrary.proxy.ServerProxy", clientSide = "net.ilexiconn.llibrary.proxy.ClientProxy")
     public static ServerProxy proxy;
-
+    
     @Mod.EventHandler
     private void preInit(FMLPreInitializationEvent event)
     {
         ConfigHelper.registerConfigHandler("llibrary", event.getSuggestedConfigurationFile(), new LLibraryConfigHandler());
         proxy.preInit();
     }
-
+    
     @Mod.EventHandler
     private void postInit(FMLPostInitializationEvent event)
     {
         proxy.postInit();
     }
-
+    
     @Mod.EventHandler
     public void serverStart(FMLServerStartingEvent event)
     {

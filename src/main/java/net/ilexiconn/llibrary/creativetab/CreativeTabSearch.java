@@ -9,7 +9,7 @@ public abstract class CreativeTabSearch extends CreativeTabs
         super(label);
         setBackgroundImageName("item_search.png");
     }
-
+    
     public boolean hasSearchBar()
     {
         return true;

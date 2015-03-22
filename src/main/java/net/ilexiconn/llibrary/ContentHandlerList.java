@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 /**
  * ArrayList to handle IContentHandlers
- *
+ * 
  * @author iLexiconn
  * @see net.ilexiconn.llibrary.IContentHandler
  */
@@ -13,8 +13,9 @@ public class ContentHandlerList extends ArrayList<IContentHandler>
 {
     /**
      * Create a new list with IContentHandlers
-     *
-     * @param contentHandlers the list of IContentHandlers
+     * 
+     * @param contentHandlers
+     *            the list of IContentHandlers
      * @return a new instance of the list
      * @see net.ilexiconn.llibrary.IContentHandler
      */
@@ -24,10 +25,10 @@ public class ContentHandlerList extends ArrayList<IContentHandler>
         list.addAll(Arrays.asList(contentHandlers));
         return list;
     }
-
+    
     /**
      * Initialize all the IContentHandlers in this list.
-     *
+     * 
      * @see net.ilexiconn.llibrary.IContentHandler
      */
     public void init()

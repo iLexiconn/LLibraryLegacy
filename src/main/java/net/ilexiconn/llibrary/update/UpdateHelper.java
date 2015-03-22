@@ -8,36 +8,39 @@ import java.util.ArrayList;
 
 /**
  * Helper class to register a mod for automatic update checking.
- *
+ * 
  * @author FiskFille
  */
 public class UpdateHelper
 {
     public static ArrayList<ModUpdateContainer> modList = Lists.newArrayList();
-
+    
     /**
      * Register the main mod class for automatic update checking.
      * <p/>
      * Example pastebin version file:
      * <p/>
-     * fiskutils|:1.0.1
-     * fiskutilsLog|1.0.0:* Released mod.
-     * fiskutilsLog|1.0.1:* Updated to 1.7.10.
-     *
-     * @param mod        the main mod instance
-     * @param pastebinId the paste id
-     * @param website    the update website
+     * fiskutils|:1.0.1 fiskutilsLog|1.0.0:* Released mod. fiskutilsLog|1.0.1:*
+     * Updated to 1.7.10.
+     * 
+     * @param mod
+     *            the main mod instance
+     * @param pastebinId
+     *            the paste id
+     * @param website
+     *            the update website
      */
     public static void registerUpdateChecker(Object mod, String pastebinId, String website)
     {
         ModUpdateContainer container = new ModUpdateContainer();
-
+        
         Class<?> modClass = mod.getClass();
-
-        if (!modClass.isAnnotationPresent(Mod.class)) return;
-
+        
+        if (!modClass.isAnnotationPresent(Mod.class))
+            return;
+        
         Mod annotation = modClass.getAnnotation(Mod.class);
-
+        
         try
         {
             container.modid = annotation.modid();
@@ -50,10 +53,10 @@ public class UpdateHelper
         {
             e.printStackTrace();
         }
-
+        
         modList.add(container);
     }
-
+    
     public static ModUpdateContainer getModContainerById(String modid)
     {
         for (ModUpdateContainer mod : modList)
@@ -63,7 +66,7 @@ public class UpdateHelper
                 return mod;
             }
         }
-
+        
         return null;
     }
 }

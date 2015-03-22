@@ -18,11 +18,11 @@ public abstract class AbstractMessage<REQ extends AbstractMessage> implements IM
         {
             handleServerMessage(message, ctx.getServerHandler().playerEntity);
         }
-
+        
         return null;
     }
-
+    
     public abstract void handleClientMessage(REQ message, EntityPlayer player);
-
+    
     public abstract void handleServerMessage(REQ message, EntityPlayer player);
 }

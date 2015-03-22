@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL11;
 
 /**
  * Basic class for debugging entity classes with MultiParts
- *
+ * 
  * @author iLexiconn
  */
 @SideOnly(Side.CLIENT)
@@ -23,13 +23,13 @@ public abstract class RenderMultiPart extends RenderLiving
     {
         super(model, shadow);
     }
-
+    
     public void doRender(EntityLiving entity, double x, double y, double z, float rotationYaw, float partialTicks)
     {
         super.doRender(entity, x, y, z, rotationYaw, partialTicks);
         doRender((IEntityMultiPart) entity, x, y, z, rotationYaw, partialTicks);
     }
-
+    
     public void doRender(IEntityMultiPart entity, double x, double y, double z, float rotationYaw, float partialTicks)
     {
         if (RenderManager.debugBoundingBox)

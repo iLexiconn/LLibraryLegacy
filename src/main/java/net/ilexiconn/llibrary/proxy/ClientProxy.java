@@ -18,21 +18,21 @@ public class ClientProxy extends ServerProxy
     public void preInit()
     {
         super.preInit();
-
+        
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
     }
-
+    
     public void postInit()
     {
         super.postInit();
-
+        
         RenderManager.instance.entityRenderMap.put(EntityPlayer.class, new RenderCustomPlayer());
     }
-
+    
     public void openChangelogGui(ModUpdateContainer mod, String version)
     {
         String[] changelog = null;
-
+        
         try
         {
             changelog = ChangelogHandler.getChangelog(mod, version);
@@ -41,7 +41,7 @@ public class ClientProxy extends ServerProxy
         {
             e.printStackTrace();
         }
-
+        
         Minecraft.getMinecraft().displayGuiScreen(new GuiChangelog(mod, version, changelog));
     }
 }

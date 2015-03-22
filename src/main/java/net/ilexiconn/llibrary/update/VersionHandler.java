@@ -9,20 +9,20 @@ import java.util.List;
 public class VersionHandler
 {
     private static List<ModUpdateContainer> outdatedMods = Lists.newArrayList();
-
+    
     public static List<ModUpdateContainer> searchForOutdatedMods()
     {
         List<ModUpdateContainer> outdatedMods = Lists.newArrayList();
-
+        
         for (ModUpdateContainer mod : UpdateHelper.modList)
         {
             try
             {
                 List<String> list = WebHelper.readPastebinAsList(mod.pastebinId);
                 mod.updateFile = list;
-
+                
                 String version = getVersion(mod);
-
+                
                 if (!mod.version.equals(version))
                 {
                     mod.latestVersion = version;
@@ -34,17 +34,17 @@ public class VersionHandler
                 e.printStackTrace();
             }
         }
-
+        
         VersionHandler.outdatedMods = outdatedMods;
-
+        
         return outdatedMods;
     }
-
+    
     public static List<ModUpdateContainer> getOutdatedMods()
     {
         return VersionHandler.outdatedMods;
     }
-
+    
     public static String getVersion(ModUpdateContainer mod)
     {
         try
@@ -55,7 +55,7 @@ public class VersionHandler
                 {
                     String string1 = string.substring(string.indexOf(mod.modid + "|"));
                     String[] astring = string1.split(":");
-
+                    
                     if (astring[0].equals(mod.modid + "|"))
                     {
                         return astring[1];
@@ -67,7 +67,7 @@ public class VersionHandler
         {
             e.printStackTrace();
         }
-
+        
         return null;
     }
 }

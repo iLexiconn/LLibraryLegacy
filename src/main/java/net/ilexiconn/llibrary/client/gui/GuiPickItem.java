@@ -39,32 +39,32 @@ public abstract class GuiPickItem extends GuiScreen
     public GuiVerticalSlider slider = new GuiVerticalSlider(100, 0, 12, 15, 300, 10);
     private RenderItem renderItem = new RenderItem();
     private ArrayList<ItemStack> items = Lists.newArrayList();
-
+    
     public GuiPickItem(String title)
     {
         super();
         this.title = title;
-
+        
         for (Item item : (Iterable<Item>) Item.itemRegistry)
         {
             ItemStack itemstack = new ItemStack(item);
-
+            
             if (item != null)
             {
                 try
                 {
                     items.add(itemstack);
-
+                    
                     List subItems = Lists.newArrayList();
-
+                    
                     item.getSubItems(item, null, subItems);
-
+                    
                     int maxDamage = subItems.size() - 1;
-
+                    
                     while (item.getHasSubtypes() && itemstack.getItemDamage() < maxDamage)
                     {
                         itemstack.setItemDamage(itemstack.getItemDamage() + 1);
-
+                        
                         if (!(item instanceof ItemDoublePlant) && !(Block.getBlockFromItem(item) instanceof BlockMobSpawner) && !(Block.getBlockFromItem(item) instanceof BlockDoublePlant) && !(item instanceof ItemMonsterPlacer))
                         {
                             items.add(new ItemStack(item, 1, itemstack.getItemDamage()));
@@ -78,19 +78,19 @@ public abstract class GuiPickItem extends GuiScreen
             }
         }
     }
-
+    
     public void initGui()
     {
         this.buttonList.add(new GuiButton(0, width - 20, 0, 20, 20, "X"));
     }
-
+    
     public abstract void onClickEntry(ItemStack itemstack, EntityPlayer player);
-
+    
     protected void keyTyped(char character, int par2)
     {
         super.keyTyped(character, par2);
         Keyboard.enableRepeatEvents(true);
-
+        
         if (ChatAllowedCharacters.isAllowedCharacter(character) && fontRendererObj.getStringWidth(text + character + "_") < 90)
         {
             text += character;
@@ -107,30 +107,30 @@ public abstract class GuiPickItem extends GuiScreen
             }
         }
     }
-
+    
     public boolean doesGuiPauseGame()
     {
         return false;
     }
-
+    
     protected void mouseClickMove(int mouseX, int mouseY, int lastButtonClicked, long timeSinceMouseClick)
     {
         super.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
         slider.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
     }
-
+    
     protected void mouseClicked(int mouseX, int mouseY, int button)
     {
         super.mouseClicked(mouseX, mouseY, button);
         slider.mouseClicked(mouseX, mouseY, button);
     }
-
+    
     protected void mouseMovedOrUp(int mouseX, int mouseY, int event)
     {
         super.mouseMovedOrUp(mouseX, mouseY, event);
         slider.mouseMovedOrUp(mouseX, mouseY, event);
     }
-
+    
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         drawDefaultBackground();
@@ -143,21 +143,21 @@ public abstract class GuiPickItem extends GuiScreen
         slider.maxScroll = i - 7;
         slider.x = width / 2 - 70;
         slider.drawScreen(mouseX, mouseY, partialTicks);
-
+        
         boolean selected = false;
-
+        
         List<ItemStack> displayItems = Lists.newArrayList();
-
+        
         for (ItemStack itemstack : items)
         {
             try
             {
                 String name = StatCollector.translateToLocal(itemstack.getDisplayName());
-
+                
                 Item item = itemstack.getItem();
-
+                
                 boolean tabEquals = false;
-
+                
                 if (item != null)
                 {
                     for (CreativeTabs tab : item.getCreativeTabs())
@@ -165,7 +165,7 @@ public abstract class GuiPickItem extends GuiScreen
                         if (tab != null)
                         {
                             tabEquals = StatCollector.translateToLocal(tab.getTranslatedTabLabel()).toLowerCase().contains(text.toLowerCase());
-
+                            
                             if (tabEquals)
                             {
                                 break;
@@ -173,7 +173,7 @@ public abstract class GuiPickItem extends GuiScreen
                         }
                     }
                 }
-
+                
                 if (name.toLowerCase().contains(text.toLowerCase()) || tabEquals)
                 {
                     displayItems.add(itemstack);
@@ -184,33 +184,33 @@ public abstract class GuiPickItem extends GuiScreen
                 e.printStackTrace();
             }
         }
-
+        
         scrollY = ((-slider.y + slider.minScroll) * ((displayItems.size()) / ((i - slider.minScroll) / 19)));
-
+        
         for (ItemStack itemstack : displayItems)
         {
             try
             {
                 String name = StatCollector.translateToLocal(itemstack.getDisplayName());
                 selected = mouseX >= x && mouseX < x + fontRendererObj.getStringWidth(name) + 20 && mouseY >= y + 16 + scrollY && mouseY < y + 32 + scrollY;
-
+                
                 y += 18;
-
+                
                 if (y + scrollY <= height && y + scrollY > 42)
                 {
                     drawString(fontRendererObj, name + (selected ? " <" : ""), x + 20, y + 4 + scrollY, selected ? 0xFFFF7F : 0xFFFFFF);
                     drawString(fontRendererObj, selected ? ">" : "", x - 10, y + 4 + scrollY, 0xFFFF7F);
-
+                    
                     try
                     {
                         drawItemStack(x, y + scrollY, itemstack);
                     }
                     catch (Exception e)
                     {
-
+                        
                     }
                 }
-
+                
                 if (selected)
                 {
                     if (Mouse.isButtonDown(0))
@@ -225,14 +225,14 @@ public abstract class GuiPickItem extends GuiScreen
                 e.printStackTrace();
             }
         }
-
+        
         GL11.glColor4f(1, 1, 1, 1);
         mc.renderEngine.bindTexture(new ResourceLocation("textures/gui/container/creative_inventory/tab_item_search.png"));
         drawTexturedModalRect(x, 30, 80, 4, 90, 12);
         drawString(fontRendererObj, text + (mc.thePlayer.ticksExisted % 20 >= 10 ? "" : "_"), x + 2, 32, 0xffffff);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
-
+    
     public void drawItemStack(int x, int y, ItemStack itemstack)
     {
         RenderHelper.enableGUIStandardItemLighting();
@@ -248,14 +248,15 @@ public abstract class GuiPickItem extends GuiScreen
         zLevel = 0f;
         RenderHelper.disableStandardItemLighting();
     }
-
+    
     public void playClickSound(SoundHandler soundHandler)
     {
         soundHandler.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1f));
     }
-
+    
     protected void actionPerformed(GuiButton button)
     {
-        if (button.id == 0) mc.displayGuiScreen(null);
+        if (button.id == 0)
+            mc.displayGuiScreen(null);
     }
 }

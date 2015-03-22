@@ -14,12 +14,12 @@ public abstract class BlockMountable extends BlockContainer
     private float mountPosX = 0.5f;
     private float mountPosY = 1f;
     private float mountPosZ = 0.5f;
-
+    
     public BlockMountable(Material material)
     {
         super(material);
     }
-
+    
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float hitX, float hitY, float hitZ)
     {
         if (!world.isRemote)
@@ -28,19 +28,19 @@ public abstract class BlockMountable extends BlockContainer
             for (EntityMountableBlock mountableBlock : mountableBlocks)
                 if (mountableBlock.blockPosX == x && mountableBlock.blockPosY == y && mountableBlock.blockPosZ == z)
                     return mountableBlock.interactFirst(player);
-
+            
             float mountX = x + mountPosX;
             float mountY = y + mountPosY;
             float mountZ = z + mountPosZ;
-
+            
             EntityMountableBlock mountableBlock = new EntityMountableBlock(world, x, y, z, mountX, mountY, mountZ);
             world.spawnEntityInWorld(mountableBlock);
             return mountableBlock.interactFirst(player);
         }
-
+        
         return true;
     }
-
+    
     public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int meta)
     {
         if (!world.isRemote)
@@ -50,7 +50,7 @@ public abstract class BlockMountable extends BlockContainer
                 mountableBlock.setDead();
         }
     }
-
+    
     public void setMountingPosition(float x, float y, float z)
     {
         mountPosX = x;
