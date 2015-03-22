@@ -1,44 +1,59 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import com.google.common.collect.Lists;
-import cpw.mods.fml.client.config.DummyConfigElement.DummyCategoryElement;
-import cpw.mods.fml.client.config.GuiConfig;
-import cpw.mods.fml.client.config.GuiConfigEntries;
-import cpw.mods.fml.client.config.IConfigElement;
+import cpw.mods.fml.client.event.ConfigChangedEvent;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.config.ConfigHelper;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.common.config.ConfigElement;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-
-import java.util.List;
+import net.minecraftforge.common.config.Property;
 
 @SideOnly(Side.CLIENT)
-public class GuiLLibraryConfig extends GuiConfig
+public class GuiLLibraryConfig extends GuiScreen
 {
-    public GuiLLibraryConfig(GuiScreen parent)
+    public GuiScreen parent;
+    public GuiPickItem pickItem;
+
+    public GuiLLibraryConfig(GuiScreen p)
     {
-        super(parent, getConfigElements(), "llibrary", "llibrary", true, false, "LLibrary Config");
+        parent = p;
+        pickItem = new GuiPickItem("Set survival tab item icon")
+        {
+            public void onClickEntry(ItemStack itemstack, EntityPlayer player)
+            {
+                ConfigHelper.getConfigContainer("llibrary").getConfiguration().getCategory(Configuration.CATEGORY_GENERAL).put("survivalInventoryItem", new Property("survivalInventoryItem", Item.itemRegistry.getNameForObject(itemstack.getItem()), Property.Type.STRING));
+                FMLCommonHandler.instance().bus().post(new ConfigChangedEvent.OnConfigChangedEvent("llibrary", "", false, false));
+                mc.displayGuiScreen(parent);
+            }
+        };
     }
 
-    private static List<IConfigElement> getConfigElements()
+    protected void keyTyped(char character, int key)
     {
-        List<IConfigElement> list = Lists.newArrayList();
-        list.add(new DummyCategoryElement("General", "general", LLibraryGeneral.class));
-        return list;
+        pickItem.keyTyped(character, key);
     }
 
-    public static class LLibraryGeneral extends GuiConfigEntries.CategoryEntry
+    protected void mouseClickMove(int mouseX, int mouseY, int lastButtonClicked, long timeSinceMouseClick)
     {
-        public LLibraryGeneral(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop)
-        {
-            super(owningScreen, owningEntryList, prop);
-        }
+        pickItem.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
+    }
 
-        public GuiScreen buildChildScreen()
-        {
-            return new GuiConfig(owningScreen, new ConfigElement(ConfigHelper.getConfigContainer("llibrary").getConfiguration().getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(), "llibrary", false, false, "LLibrary Config", "General");
-        }
+    protected void mouseClicked(int mouseX, int mouseY, int button)
+    {
+        pickItem.mouseClicked(mouseX, mouseY, button);
+    }
+
+    protected void mouseMovedOrUp(int mouseX, int mouseY, int event)
+    {
+        pickItem.mouseMovedOrUp(mouseX, mouseY, event);
+    }
+
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    {
+        pickItem.drawScreen(mouseX, mouseY, partialTicks);
     }
 }
