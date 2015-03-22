@@ -1,13 +1,20 @@
 package net.ilexiconn.llibrary.client.gui;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 /**
  * @author FiskFille
  */
+@SideOnly(Side.CLIENT)
 public class GuiVerticalSlider extends GuiScreen
 {
+    private ResourceLocation texture = new ResourceLocation("textures/gui/container/creative_inventory/tabs.png");
+
     public int x;
     public int y;
     public int width;
@@ -66,9 +73,10 @@ public class GuiVerticalSlider extends GuiScreen
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(0, 0, 0, 0.5F);
         drawTexturedModalRect(x - 2, minScroll - 2, 0, 0, width + 4, maxScroll - minScroll + 4);
-        float shade = 0.8F;
-        GL11.glColor4f(shade, shade, shade, 1.0F);
-        drawTexturedModalRect(x, y, 0, 0, width, height);
+
+        GL11.glColor4f(1f, 1f, 1f, 1f);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
+        Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+        drawTexturedModalRect(x, y, 232, 0, width, height);
     }
 }

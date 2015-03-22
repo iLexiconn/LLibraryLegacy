@@ -24,7 +24,6 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -35,7 +34,7 @@ public abstract class GuiPickItem extends GuiScreen
 {
     public final String title;
     public String text = "";
-    public GuiVerticalSlider slider = new GuiVerticalSlider(100, 0, 10, 30, 300, 10);
+    public GuiVerticalSlider slider = new GuiVerticalSlider(100, 0, 12, 15, 300, 10);
     private RenderItem renderItem = new RenderItem();
     private ArrayList<ItemStack> items = Lists.newArrayList();
 
@@ -44,11 +43,8 @@ public abstract class GuiPickItem extends GuiScreen
         super();
         this.title = title;
 
-        Iterator<Item> iterator = Item.itemRegistry.iterator();
-
-        while (iterator.hasNext())
+        for (Item item : (Iterable<Item>) Item.itemRegistry)
         {
-            Item item = iterator.next();
             ItemStack itemstack = new ItemStack(item);
 
             if (item != null)
