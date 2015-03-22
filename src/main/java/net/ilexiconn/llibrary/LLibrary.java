@@ -6,6 +6,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import net.ilexiconn.llibrary.command.CommandLLibrary;
+import net.ilexiconn.llibrary.config.ConfigHelper;
+import net.ilexiconn.llibrary.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.proxy.ServerProxy;
 
 @Mod(modid = "llibrary", name = "LLibrary", version = "${version}")
@@ -20,6 +22,7 @@ public class LLibrary
     @Mod.EventHandler
     private void preInit(FMLPreInitializationEvent event)
     {
+        ConfigHelper.registerConfigHandler("llibrary", event.getSuggestedConfigurationFile(), new LLibraryConfigHandler());
         proxy.preInit();
     }
 

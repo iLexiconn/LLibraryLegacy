@@ -34,7 +34,7 @@ public class EntityHelper
         return removedEntities.contains(entity);
     }
 
-    public static void init()
+    static
     {
         int i = 0;
 

@@ -53,7 +53,7 @@ public class LLibraryClassPatcher implements IClassTransformer
                     toInsert.add(new VarInsnNode(Opcodes.FLOAD, 5));
                     toInsert.add(new VarInsnNode(Opcodes.FLOAD, 6));
                     toInsert.add(new VarInsnNode(Opcodes.FLOAD, 7));
-                    toInsert.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "net/ilexiconn/llibrary/LLibraryHooks", "renderHook", RENDER_METHOD_DESC, false));
+                    toInsert.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "net/ilexiconn/llibrary/asm/LLibraryHooks", "renderHook", RENDER_METHOD_DESC, false));
 
                     method.instructions.insert(toInsert);
                 }

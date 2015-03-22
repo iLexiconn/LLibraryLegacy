@@ -13,7 +13,6 @@ public class ServerProxy
     public void preInit()
     {
         MinecraftForge.EVENT_BUS.register(new ServerEventHandler());
-        EntityHelper.init();
         EntityHelper.registerEntity("mountableBlock", EntityMountableBlock.class);
         UpdateHelper.registerUpdateChecker(LLibrary.instance, "TGiS6kuk", "https://ilexiconn.net/");
     }

@@ -1,12 +1,14 @@
 package net.ilexiconn.llibrary.client;
 
+import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.block.IHighlightedBlock;
 import net.ilexiconn.llibrary.client.gui.GuiSurvivalTab;
+import net.ilexiconn.llibrary.config.ConfigHelper;
 import net.ilexiconn.llibrary.survivaltab.SurvivalTab;
-import net.ilexiconn.llibrary.survivaltab.TabRegistry;
+import net.ilexiconn.llibrary.survivaltab.TabHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -18,6 +20,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import org.lwjgl.opengl.GL11;
 
@@ -77,18 +80,29 @@ public class ClientEventHandler
     @SubscribeEvent
     public void initGui(GuiScreenEvent.InitGuiEvent.Post event)
     {
-        for (SurvivalTab survivalTab : TabRegistry.getSurvivalTabs())
+        for (SurvivalTab survivalTab : TabHelper.getSurvivalTabs())
         {
             if (survivalTab.getSurvivalTab().getContainerGuiClass().isInstance(event.gui))
             {
                 int count = 2;
 
-                for (SurvivalTab tab : TabRegistry.getSurvivalTabs())
+                for (SurvivalTab tab : TabHelper.getSurvivalTabs())
                 {
                     event.buttonList.add(new GuiSurvivalTab(count, tab));
                     count++;
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void saveConfig(ConfigChangedEvent.OnConfigChangedEvent event)
+    {
+        if (ConfigHelper.hasConfiguration(event.modID))
+        {
+            Configuration configuration = ConfigHelper.getConfigContainer(event.modID).getConfiguration();
+            ConfigHelper.getConfigContainer(event.modID).getConfigHandler().loadConfig(configuration);
+            configuration.save();
         }
     }
 }

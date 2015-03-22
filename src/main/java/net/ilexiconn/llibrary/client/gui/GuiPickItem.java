@@ -6,6 +6,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMobSpawner;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
@@ -213,6 +215,7 @@ public abstract class GuiPickItem extends GuiScreen
                 {
                     if (Mouse.isButtonDown(0))
                     {
+                        playClickSound(mc.getSoundHandler());
                         onClickEntry(itemstack, mc.thePlayer);
                     }
                 }
@@ -244,6 +247,11 @@ public abstract class GuiPickItem extends GuiScreen
         renderItem.zLevel = 0f;
         zLevel = 0f;
         RenderHelper.disableStandardItemLighting();
+    }
+
+    public void playClickSound(SoundHandler soundHandler)
+    {
+        soundHandler.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1f));
     }
 
     protected void actionPerformed(GuiButton button)

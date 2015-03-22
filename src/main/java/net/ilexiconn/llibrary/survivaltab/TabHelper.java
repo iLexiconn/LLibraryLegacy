@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-public class TabRegistry
+public class TabHelper
 {
     private static List<SurvivalTab> survivalTabs = Lists.newArrayList();
 
