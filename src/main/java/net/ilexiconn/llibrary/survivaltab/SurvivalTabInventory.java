@@ -1,18 +1,17 @@
 package net.ilexiconn.llibrary.survivaltab;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.ilexiconn.llibrary.config.LLibraryConfigHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class SurvivalTabInventory implements ISurvivalTab
 {
-    public static ItemStack stack = new ItemStack(Items.book);
-
     public String getTabName()
     {
         return "container.inventory";
@@ -20,7 +19,8 @@ public class SurvivalTabInventory implements ISurvivalTab
 
     public ItemStack getTabIcon()
     {
-        return stack;
+        String[] stack = LLibraryConfigHandler.survivalInventoryItem.split(":");
+        return GameRegistry.findItemStack(stack[0], stack[1], 1);
     }
 
     @SideOnly(Side.CLIENT)
