@@ -42,7 +42,8 @@ public class StructureGenerator extends StructureGeneratorBase
 		super(entity, blocks);
 	}
 
-	public StructureGenerator(Entity entity, int[][][][] blocks, int structureFacing) {
+	public StructureGenerator(Entity entity, int[][][][] blocks, int structureFacing)
+    {
 		super(entity, blocks, structureFacing);
 	}
 
