@@ -77,7 +77,13 @@ public class EntityHelper
         int entityId = getUniqueEntityId();
         EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
         EntityList.IDtoClassMapping.put(entityId, entityClass);
-        EntityList.entityEggs.put(entityId, new EntityList.EntityEggInfo(entityId, primaryColor, secondaryColor));
+        addSpawnEgg(entityClass, entityName, entityId, primaryColor, secondaryColor);
+        // EntityList.entityEggs.put(entityId, new EntityList.EntityEggInfo(entityId, primaryColor, secondaryColor));
+    }
+
+    public static void addSpawnEgg(Class<? extends Entity> entityClass, String entityName, int id, int background, int forground)
+    {
+        net.ilexiconn.llibrary.entity.List.addToList(entityClass, entityName, id, background, forground);
     }
 
     public static void removeLivingEntity(Class<? extends EntityLiving> clazz)
