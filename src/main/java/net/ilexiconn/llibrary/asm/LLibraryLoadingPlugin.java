@@ -10,33 +10,33 @@ import java.util.Map;
 public class LLibraryLoadingPlugin implements IFMLLoadingPlugin
 {
     public static File modFile;
-    
+
     public String[] getASMTransformerClass()
     {
-        // return null;
-        return new String[] { LLibraryClassPatcher.class.getName() };
+        //return null;
+        return new String[]{LLibraryClassPatcher.class.getName()};
     }
-    
+
     public String getModContainerClass()
     {
         return null;
     }
-    
+
     public String getSetupClass()
     {
         return null;
     }
-    
+
     public void injectData(Map<String, Object> data)
     {
         modFile = (File) data.get("coremodLocation");
-        
+
         if (modFile == null)
         {
             System.out.println("[LLibrary] Mod file is missing. Either you are in a development environment, or things are not going to work!");
         }
     }
-    
+
     public String getAccessTransformerClass()
     {
         return null;

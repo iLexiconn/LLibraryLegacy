@@ -12,17 +12,16 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 public class ServerEventHandler
 {
     private boolean checkedForUpdates;
-    
+
     @SubscribeEvent
     public void entityTick(LivingEvent.LivingUpdateEvent event)
     {
         if (event.entityLiving instanceof IEntityMultiPart)
         {
-            for (EntityPart part : ((IEntityMultiPart) event.entityLiving).getParts())
-                part.onUpdate();
+            for (EntityPart part : ((IEntityMultiPart) event.entityLiving).getParts()) part.onUpdate();
         }
     }
-    
+
     @SubscribeEvent
     public void joinWorld(EntityJoinWorldEvent event)
     {
@@ -33,12 +32,12 @@ public class ServerEventHandler
                 if (!checkedForUpdates)
                 {
                     new UpdateCheckerThread().start();
-                    
+
                     checkedForUpdates = true;
                 }
             }
         }
-        
+
         if (EntityHelper.hasEntityBeenRemoved(event.entity.getClass()))
         {
             event.setCanceled(true);

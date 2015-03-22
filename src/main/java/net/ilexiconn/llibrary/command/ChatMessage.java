@@ -9,7 +9,7 @@ public class ChatMessage
 {
     public String message;
     public EnumChatColor color;
-    
+
     public ChatMessage(String m, EnumChatColor c)
     {
         message = m;

@@ -33,11 +33,11 @@ public class TempPotionHelper
      */
     private static final String[] potionPrefixes;
     // We don't care about: private static final String __OBFID = "CL_00000078";
-    
+
     private static final int EQUAL = 0;
     private static final int GREATER = 1;
     private static final int LESS = 2;
-    
+
     /**
      * Is the bit given set to 1?
      */
@@ -45,7 +45,7 @@ public class TempPotionHelper
     {
         return (valueToCheck & 1 << bitIndex) != 0;
     }
-    
+
     /**
      * Returns 1 if the flag is set, 0 if it is not set.
      */
@@ -56,7 +56,7 @@ public class TempPotionHelper
          */
         return checkFlag(valueToCheck, bitIndex) ? 1 : 0;
     }
-    
+
     /**
      * Returns 0 if the flag is set, 1 if it is not set.
      */
@@ -67,31 +67,30 @@ public class TempPotionHelper
          */
         return checkFlag(valueToCheck, bitIndex) ? 0 : 1;
     }
-    
+
     public static int func_77909_a(int p_77909_0_)
     {
         return func_77908_a(p_77909_0_, 5, 4, 3, 2, 1);
     }
-    
+
     /**
-     * Given a {@link Collection}<{@link PotionEffect}> will return an Integer
-     * color.
+     * Given a {@link Collection}<{@link PotionEffect}> will return an Integer color.
      */
     public static int calcPotionLiquidColor(Collection<PotionEffect> potionEffects)
     {
         int i = 3694022;
-        
+
         if (potionEffects != null && !potionEffects.isEmpty())
         {
             float red = 0.0F;
             float green = 0.0F;
             float blue = 0.0F;
             float invertedAlpha = 0.0F;
-            
+
             for (PotionEffect potioneffect : potionEffects)
             {
                 int color = Potion.potionTypes[potioneffect.getPotionID()].getLiquidColor();
-                
+
                 for (int k = 0; k <= potioneffect.getAmplifier(); ++k)
                 {
                     red += (float) (color >> 16 & 255) / 255.0F;
@@ -100,7 +99,7 @@ public class TempPotionHelper
                     ++invertedAlpha;
                 }
             }
-            
+
             red = red / invertedAlpha * 255.0F;
             green = green / invertedAlpha * 255.0F;
             blue = blue / invertedAlpha * 255.0F;
@@ -111,33 +110,31 @@ public class TempPotionHelper
             return i;
         }
     }
-    
+
     public static boolean areValidBeaconEffects(Collection<PotionEffect> potionEffects)
     {
         Iterator<PotionEffect> iterator = potionEffects.iterator();
         PotionEffect potioneffect;
-        
+
         do
         {
             if (!iterator.hasNext())
             {
                 return true;
             }
-            
+
             potioneffect = iterator.next();
         }
         while (potioneffect.getIsAmbient());
-        
+
         return false;
     }
-    
+
     @SideOnly(Side.CLIENT)
     public static int getPotionLiquidColor(int damageValue, boolean isInstant)
     {
         /**
-         * Given a {@link java.util.Collection}<
-         * {@link net.minecraft.potion.PotionEffect}> will return an Integer
-         * color.
+         * Given a {@link java.util.Collection}<{@link net.minecraft.potion.PotionEffect}> will return an Integer color.
          */
         if (!isInstant)
         {
@@ -155,17 +152,17 @@ public class TempPotionHelper
         else
             return calcPotionLiquidColor(getPotionEffects(damageValue, true));
     }
-    
+
     public static String func_77905_c(int p_77905_0_)
     {
         int j = func_77909_a(p_77905_0_);
         return potionPrefixes[j];
     }
-    
+
     private static int performBitOperations(boolean checkUnset, boolean hasNumbers, boolean subtraction, int equalityType, int flagIndex, int p_77904_5_, int value)
     {
         int result = 0;
-        
+
         if (checkUnset)
         {
             result = isFlagUnset(value, flagIndex);
@@ -189,35 +186,35 @@ public class TempPotionHelper
         {
             result = isFlagSet(value, flagIndex);
         }
-        
+
         if (hasNumbers)
         {
             result *= p_77904_5_;
         }
-        
+
         if (subtraction)
         {
             result *= -1;
         }
-        
+
         return result;
     }
-    
+
     /**
      * Count the number of bits in an integer set to ON.
      */
     private static int countSetFlags(int par1)
     {
         int result;
-        
+
         for (result = 0; par1 > 0; ++result)
         {
             par1 &= par1 - 1;
         }
-        
+
         return result;
     }
-    
+
     public static int parsePotionEffects(String requirementCode, int par1, int requirementCodeLength, int damageValue)
     {
         if (par1 < requirementCode.length() && requirementCodeLength >= 0 && par1 < requirementCodeLength)
@@ -225,11 +222,11 @@ public class TempPotionHelper
             int indexOfOR = requirementCode.indexOf('|', par1);
             int indexOfAND;
             int j2;
-            
+
             if (indexOfOR >= 0 && indexOfOR < requirementCodeLength)
             {
                 indexOfAND = parsePotionEffects(requirementCode, par1, indexOfOR - 1, damageValue);
-                
+
                 if (indexOfAND > 0)
                 {
                     return indexOfAND;
@@ -243,11 +240,11 @@ public class TempPotionHelper
             else
             {
                 indexOfAND = requirementCode.indexOf('&', par1);
-                
+
                 if (indexOfAND >= 0 && indexOfAND < requirementCodeLength)
                 {
                     j2 = parsePotionEffects(requirementCode, par1, indexOfAND - 1, damageValue);
-                    
+
                     if (j2 <= 0)
                     {
                         return 0;
@@ -269,11 +266,11 @@ public class TempPotionHelper
                     int flagIndex = 0;
                     int multiplier = 0;
                     int result = 0;
-                    
+
                     for (int iterableInt = par1; iterableInt < requirementCodeLength; ++iterableInt)
                     {
                         char character = requirementCode.charAt(iterableInt);
-                        
+
                         if (character >= '0' && character <= '9') // 0 to 9
                         {
                             if (hasAsterisk)
@@ -306,7 +303,7 @@ public class TempPotionHelper
                                 flagIndex = 0;
                                 equalityType = -1;
                             }
-                            
+
                             checkUnset = true;
                         }
                         else if (character == '-')
@@ -323,7 +320,7 @@ public class TempPotionHelper
                                 flagIndex = 0;
                                 equalityType = -1;
                             }
-                            
+
                             isSubtraction = true;
                         }
                         else if (character != '=' && character != '<' && character != '>')
@@ -355,7 +352,7 @@ public class TempPotionHelper
                                 flagIndex = 0;
                                 equalityType = -1;
                             }
-                            
+
                             if (character == '=')
                             {
                                 equalityType = EQUAL;
@@ -370,12 +367,12 @@ public class TempPotionHelper
                             }
                         }
                     }
-                    
+
                     if (parsingNumber)
                     {
                         result += performBitOperations(checkUnset, hasNumber, isSubtraction, equalityType, flagIndex, multiplier, damageValue);
                     }
-                    
+
                     return result;
                 }
             }
@@ -385,7 +382,7 @@ public class TempPotionHelper
             return 0;
         }
     }
-    
+
     /**
      * Returns a list of effects for the specified potion damage value.
      */
@@ -393,32 +390,32 @@ public class TempPotionHelper
     {
         ArrayList<PotionEffect> arraylist = null;
         Potion[] potionTypes = Potion.potionTypes;
-        
+
         for (Potion potion : potionTypes)
         {
             if (potion != null && (!potion.isUsable() || isInstant))
             {
                 String requirementCode = potionRequirements.get(potion.getId());
-                
+
                 if (requirementCode != null)
                 {
                     int duration = parsePotionEffects(requirementCode, 0, requirementCode.length(), damageValue);
-                    
+
                     if (duration > 0)
                     {
                         int amplifier = 0;
                         String amplifierCode = potionAmplifiers.get(potion.getId());
-                        
+
                         if (amplifierCode != null)
                         {
                             amplifier = parsePotionEffects(amplifierCode, 0, amplifierCode.length(), damageValue);
-                            
+
                             if (amplifier < 0)
                             {
                                 amplifier = 0;
                             }
                         }
-                        
+
                         if (potion.isInstant())
                         {
                             duration = 1;
@@ -428,39 +425,38 @@ public class TempPotionHelper
                             duration = 1200 * (duration * 3 + (duration - 1) * 2);
                             duration >>= amplifier;
                             duration = (int) Math.round((double) duration * potion.getEffectiveness());
-                            
+
                             if ((damageValue & 0x4000) != 0)
                             {
                                 duration = (int) Math.round((double) duration * 0.75D + 0.5D);
                             }
                         }
-                        
+
                         if (arraylist == null)
                         {
                             arraylist = new ArrayList<>();
                         }
-                        
+
                         PotionEffect potioneffect = new PotionEffect(potion.getId(), duration, amplifier);
-                        
+
                         if ((damageValue & 0x4000) != 0)
                         {
                             potioneffect.setSplashPotion(true);
                         }
-                        
+
                         arraylist.add(potioneffect);
                     }
                 }
             }
         }
-        
+
         return arraylist;
     }
-    
+
     /**
-     * Does bit operations for brewPotionData, given data, the index of the bit
-     * being operated upon, whether the bit will be removed, whether the bit
-     * will be toggled (NOT), or whether the data field will be set to 0 if the
-     * bit is not present.
+     * Does bit operations for brewPotionData, given data, the index of the bit being operated upon, whether the bit
+     * will be removed, whether the bit will be toggled (NOT), or whether the data field will be set to 0 if the bit is
+     * not present.
      */
     private static int brewBitOperations(int id, int flagIndex, boolean hasMinus, boolean hasExclamation, boolean hasAmpersAnd)
     {
@@ -490,13 +486,13 @@ public class TempPotionHelper
         {
             id |= 1 << flagIndex;
         }
-        
+
         return id;
     }
-    
+
     /**
-     * Generate a data value for a potion, given its previous data value and the
-     * encoded string of new effects it will receive
+     * Generate a data value for a potion, given its previous data value and the encoded string of new effects it will
+     * receive
      */
     public static int applyIngredient(int previousDamage, String ingredientEffectCode)
     {
@@ -506,11 +502,11 @@ public class TempPotionHelper
         boolean hasMinus = false;
         boolean hasAmpersAnd = false;
         int currentNumber = 0;
-        
+
         for (int index = 0; index < stringLength; ++index)
         {
             char character = ingredientEffectCode.charAt(index);
-            
+
             if (character >= '0' && character <= '9') // 0 to 9
             {
                 currentNumber *= 10;
@@ -528,7 +524,7 @@ public class TempPotionHelper
                     hasNumber = false;
                     currentNumber = 0;
                 }
-                
+
                 hasExclamationMark = true;
             }
             else if (character == '-') // -
@@ -542,7 +538,7 @@ public class TempPotionHelper
                     hasNumber = false;
                     currentNumber = 0;
                 }
-                
+
                 hasMinus = true;
             }
             else if (character == '+') // +
@@ -568,24 +564,24 @@ public class TempPotionHelper
                     hasNumber = false;
                     currentNumber = 0;
                 }
-                
+
                 hasAmpersAnd = true;
             }
         }
-        
+
         if (hasNumber)
         {
             previousDamage = brewBitOperations(previousDamage, currentNumber, hasMinus, hasExclamationMark, hasAmpersAnd);
         }
-        
+
         return previousDamage & 0x7FFF; // Set id to positive if needed
     }
-    
+
     public static int func_77908_a(int value, int p_77908_1_, int p_77908_2_, int p_77908_3_, int p_77908_4_, int p_77908_5_)
     {
         return (checkFlag(value, p_77908_1_) ? 16 : 0) | (checkFlag(value, p_77908_2_) ? 8 : 0) | (checkFlag(value, p_77908_3_) ? 4 : 0) | (checkFlag(value, p_77908_4_) ? 2 : 0) | (checkFlag(value, p_77908_5_) ? 1 : 0);
     }
-    
+
     static
     {
         potionRequirements.put(Potion.regeneration.getId(), "0 & !1 & !2 & !3 & 0+6");
@@ -620,10 +616,13 @@ public class TempPotionHelper
         redstoneEffect = "-5+6-7";
         gunpowderEffect = "+14&13-13";
         ghastTearEffect = "+0-1-2-3&4-4+13";
-        
+
         netherWartEffect = "+4";
-        
+
         cachedLiquidColors = new HashMap<>();
-        potionPrefixes = new String[] { "potion.prefix.mundane", "potion.prefix.uninteresting", "potion.prefix.bland", "potion.prefix.clear", "potion.prefix.milky", "potion.prefix.diffuse", "potion.prefix.artless", "potion.prefix.thin", "potion.prefix.awkward", "potion.prefix.flat", "potion.prefix.bulky", "potion.prefix.bungling", "potion.prefix.buttered", "potion.prefix.smooth", "potion.prefix.suave", "potion.prefix.debonair", "potion.prefix.thick", "potion.prefix.elegant", "potion.prefix.fancy", "potion.prefix.charming", "potion.prefix.dashing", "potion.prefix.refined", "potion.prefix.cordial", "potion.prefix.sparkling", "potion.prefix.potent", "potion.prefix.foul", "potion.prefix.odorless", "potion.prefix.rank", "potion.prefix.harsh", "potion.prefix.acrid", "potion.prefix.gross", "potion.prefix.stinky" };
+        potionPrefixes = new String[]{"potion.prefix.mundane", "potion.prefix.uninteresting", "potion.prefix.bland", "potion.prefix.clear", "potion.prefix.milky", "potion.prefix.diffuse", "potion.prefix.artless", "potion.prefix.thin",
+                "potion.prefix.awkward", "potion.prefix.flat", "potion.prefix.bulky", "potion.prefix.bungling", "potion.prefix.buttered", "potion.prefix.smooth", "potion.prefix.suave", "potion.prefix.debonair", "potion.prefix.thick",
+                "potion.prefix.elegant", "potion.prefix.fancy", "potion.prefix.charming", "potion.prefix.dashing", "potion.prefix.refined", "potion.prefix.cordial", "potion.prefix.sparkling", "potion.prefix.potent", "potion.prefix.foul",
+                "potion.prefix.odorless", "potion.prefix.rank", "potion.prefix.harsh", "potion.prefix.acrid", "potion.prefix.gross", "potion.prefix.stinky"};
     }
 }

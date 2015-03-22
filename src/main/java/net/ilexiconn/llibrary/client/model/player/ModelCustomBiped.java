@@ -17,26 +17,23 @@ public final class ModelCustomBiped extends ModelBiped
     public ModelCustomBiped()
     {
         List<IModelExtension> extentions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
-        if (extentions != null)
-            for (IModelExtension extention : extentions)
-                extention.init(this);
+        if (extentions != null) for (IModelExtension extention : extentions) extention.init(this);
     }
-    
+
     public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
     {
         List<IModelExtension> modelExtentions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
-        
-        if (modelExtentions == null)
-            modelExtentions = Lists.newArrayList();
-        
+
+        if (modelExtentions == null) modelExtentions = Lists.newArrayList();
+
         setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
-        
+
         for (IModelExtension extention : modelExtentions)
         {
             extention.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
             extention.preRender(entity, this, partialTicks);
         }
-        
+
         if (isChild)
         {
             float scale = 2f;
@@ -66,7 +63,7 @@ public final class ModelCustomBiped extends ModelBiped
             bipedLeftLeg.render(partialTicks);
             bipedHeadwear.render(partialTicks);
         }
-        
+
         for (IModelExtension extention : modelExtentions)
         {
             extention.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);

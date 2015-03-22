@@ -37,37 +37,37 @@ public class ClientEventHandler
             int x = event.target.blockX;
             int y = event.target.blockY;
             int z = event.target.blockZ;
-            
+
             Block block = event.player.worldObj.getBlock(x, y, z);
-            
+
             if (block instanceof IHighlightedBlock)
             {
                 List<AxisAlignedBB> bounds = ((IHighlightedBlock) block).getHighlightedBoxes(event.player.worldObj, x, y, z, event.player);
-                
+
                 Vec3 pos = event.player.getPosition(event.partialTicks);
-                
+
                 GL11.glEnable(GL11.GL_BLEND);
-                
+
                 OpenGlHelper.glBlendFunc(770, 771, 1, 0);
                 GL11.glColor4f(0f, 0f, 0f, 0.4f);
                 GL11.glLineWidth(2f);
                 GL11.glDisable(GL11.GL_TEXTURE_2D);
                 GL11.glDepthMask(false);
-                
+
                 for (AxisAlignedBB box : bounds)
                 {
                     RenderGlobal.drawOutlinedBoundingBox(box.copy().offset(x, y, z).offset(-pos.xCoord, -pos.yCoord, -pos.zCoord), -1);
                 }
-                
+
                 GL11.glDepthMask(true);
                 GL11.glEnable(GL11.GL_TEXTURE_2D);
                 GL11.glDisable(GL11.GL_BLEND);
-                
+
                 event.setCanceled(true);
             }
         }
     }
-    
+
     @SubscribeEvent
     public void itemTooltip(ItemTooltipEvent event)
     {
@@ -76,7 +76,7 @@ public class ClientEventHandler
             event.toolTip.add(EnumChatFormatting.DARK_GRAY + "" + Item.itemRegistry.getNameForObject(event.itemStack.getItem()));
         }
     }
-    
+
     @SubscribeEvent
     public void initGui(GuiScreenEvent.InitGuiEvent.Post event)
     {
@@ -85,7 +85,7 @@ public class ClientEventHandler
             if (survivalTab.getSurvivalTab().getContainerGuiClass().isInstance(event.gui))
             {
                 int count = 2;
-                
+
                 for (SurvivalTab tab : TabHelper.getSurvivalTabs())
                 {
                     event.buttonList.add(new GuiSurvivalTab(count, tab));
@@ -94,7 +94,7 @@ public class ClientEventHandler
             }
         }
     }
-    
+
     @SubscribeEvent
     public void saveConfig(ConfigChangedEvent.OnConfigChangedEvent event)
     {

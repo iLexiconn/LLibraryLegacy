@@ -12,23 +12,23 @@ import net.minecraft.item.ItemStack;
 public class SurvivalTabInventory implements ISurvivalTab
 {
     public static ItemStack stack = new ItemStack(Items.book);
-    
+
     public String getTabName()
     {
         return "container.inventory";
     }
-    
+
     public ItemStack getTabIcon()
     {
         return stack;
     }
-    
+
     @SideOnly(Side.CLIENT)
     public void openContainerGui(EntityPlayer player)
     {
         Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(player));
     }
-    
+
     @SideOnly(Side.CLIENT)
     public Class<? extends GuiContainer> getContainerGuiClass()
     {

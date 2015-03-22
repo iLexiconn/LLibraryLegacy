@@ -14,9 +14,9 @@ public class ItemModelledArmor extends ItemArmor
 {
     @SideOnly(Side.CLIENT)
     private ModelBiped armorModel;
-    
+
     private IArmorModelReceiver armorModelReceiver;
-    
+
     public ItemModelledArmor(String textureName, ArmorMaterial material, int armorType, IArmorModelReceiver receiver)
     {
         super(material, 4, armorType);
@@ -24,13 +24,13 @@ public class ItemModelledArmor extends ItemArmor
         setTextureName(textureName);
         armorModelReceiver = receiver;
     }
-    
+
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister)
     {
         itemIcon = iconRegister.registerIcon(getIconString());
     }
-    
+
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
     {
         ItemArmor item = (ItemArmor) stack.getItem();
@@ -42,16 +42,14 @@ public class ItemModelledArmor extends ItemArmor
                 return armorModelReceiver.getModelTextureName() + "_0.png";
         }
     }
-    
+
     @SideOnly(Side.CLIENT)
     public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot)
     {
         int type = ((ItemArmor) itemStack.getItem()).armorType;
-        if (type == 1 || type == 3)
-            armorModel = armorModelReceiver.getArmorModel(0);
-        else
-            armorModel = armorModelReceiver.getArmorModel(1);
-        
+        if (type == 1 || type == 3) armorModel = armorModelReceiver.getArmorModel(0);
+        else armorModel = armorModelReceiver.getArmorModel(1);
+
         if (armorModel != null)
         {
             armorModel.bipedHead.showModel = armorSlot == 0;
@@ -65,13 +63,13 @@ public class ItemModelledArmor extends ItemArmor
             armorModel.isRiding = entityLiving.isRiding();
             armorModel.isChild = entityLiving.isChild();
             armorModel.heldItemRight = entityLiving.getEquipmentInSlot(0) != null ? 1 : 0;
-            
+
             if (entityLiving instanceof EntityPlayer)
                 armorModel.aimedBow = ((EntityPlayer) entityLiving).getItemInUseDuration() > 2;
-            
+
             return armorModel;
         }
-        
+
         return null;
     }
 }

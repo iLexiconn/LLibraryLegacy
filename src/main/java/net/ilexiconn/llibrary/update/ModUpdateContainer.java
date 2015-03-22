@@ -13,6 +13,6 @@ public class ModUpdateContainer
     public String pastebinId;
     public URL website;
     public String latestVersion;
-    
+
     public List<String> updateFile = Lists.newArrayList();
 }
