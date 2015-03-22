@@ -19,7 +19,7 @@ public class EntityTest extends EntityLiving implements IEntityMultiPart
         partArray = new EntityPart[]{
                 new EntityPart(this, 1.3f, 0f, 0.4f, 0.4f, 0.5f, 2f),
                 new EntityPart(this, 1.6f, 0f, 0.5f, 0.2f, 0.3f, 2f),
-                new EntityPart(this, 1.0f, 0f, 0.4f, 0.5f, 0.6f, 2f),
+                new EntityPart(this, 1f, 0f, 0.4f, 0.5f, 0.6f, 2f),
                 new EntityPart(this, 0.3f, 0f, 0.4f, 0.8f, 0.8f),
                 new EntityPart(this, 0.6f, 60f, 0f, 0.3f, 0.8f),
                 new EntityPart(this, 0.6f, -60f, 0f, 0.3f, 0.8f),

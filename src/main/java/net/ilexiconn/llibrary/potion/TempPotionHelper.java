@@ -82,10 +82,10 @@ public class TempPotionHelper
 
         if (potionEffects != null && !potionEffects.isEmpty())
         {
-            float red = 0.0F;
-            float green = 0.0F;
-            float blue = 0.0F;
-            float invertedAlpha = 0.0F;
+            float red = 0f;
+            float green = 0f;
+            float blue = 0f;
+            float invertedAlpha = 0f;
 
             for (PotionEffect potioneffect : potionEffects)
             {
@@ -93,16 +93,16 @@ public class TempPotionHelper
 
                 for (int k = 0; k <= potioneffect.getAmplifier(); ++k)
                 {
-                    red += (float) (color >> 16 & 255) / 255.0F;
-                    green += (float) (color >> 8 & 255) / 255.0F;
-                    blue += (float) (color >> 0 & 255) / 255.0F;
+                    red += (float) (color >> 16 & 255) / 255f;
+                    green += (float) (color >> 8 & 255) / 255f;
+                    blue += (float) (color >> 0 & 255) / 255f;
                     ++invertedAlpha;
                 }
             }
 
-            red = red / invertedAlpha * 255.0F;
-            green = green / invertedAlpha * 255.0F;
-            blue = blue / invertedAlpha * 255.0F;
+            red = red / invertedAlpha * 255f;
+            green = green / invertedAlpha * 255f;
+            blue = blue / invertedAlpha * 255f;
             return (int) red << 16 | (int) green << 8 | (int) blue;
         }
         else

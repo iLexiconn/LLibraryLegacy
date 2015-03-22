@@ -1,26 +1,11 @@
-/**
-    Copyright (C) <2013> <coolAlias>
-
-    This file is part of coolAlias' Structure Generation Tool; as such,
-    you can redistribute it and/or modify it under the terms of the GNU
-    General Public License as published by the Free Software Foundation,
-    either version 3 of the License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
 package net.ilexiconn.llibrary.structure.util;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author coolAlias
+ */
 public class Structure
 {
 	/** The name of this structure */
@@ -38,78 +23,83 @@ public class Structure
 	/**
 	 * Constructor for unnamed structures
 	 */
-	public Structure() {
-		this.name = "";
+	public Structure()
+    {
+		name = "";
 	}
 
 	/**
 	 * Constructor for named structures
 	 */
-	public Structure(String name) {
-		this.name = name;
+	public Structure(String n)
+    {
+		name = n;
 	}
 
 	/**
 	 * Returns the blockArray List for this structure
 	 */
-	public final List<int[][][][]> blockArrayList() {
-		return this.blockArrayList;
+	public final List<int[][][][]> blockArrayList()
+    {
+		return blockArrayList;
 	}
 
 	/**
 	 * Returns the structure's default facing
 	 */
-	public final int getFacing() {
-		return this.facing;
+	public final int getFacing()
+    {
+		return facing;
 	}
 
 	/**
 	 * Sets the default direction the structure is facing. This side will always face the player
 	 * unless you manually rotate the structure with the rotateStructureFacing() method.
 	 */
-	public final void setFacing(int facing) {
-		this.facing = facing;
+	public final void setFacing(int f)
+    {
+		facing = f;
 	}
 
 	/**
 	 * Adds a block array 'layer' to the list to be generated
 	 */
-	public final void addBlockArray(int blocks[][][][]) {
-		this.blockArrayList.add(blocks);
+	public final void addBlockArray(int blocks[][][][])
+    {
+		blockArrayList.add(blocks);
 	}
 
 	/**
 	 * Adds all elements contained in the parameter list to the structure
 	 */
-	public final void addBlockArrayList(List<int[][][][]> list) {
-		this.blockArrayList.addAll(list);
+	public final void addBlockArrayList(List<int[][][][]> list)
+    {
+		blockArrayList.addAll(list);
 	}
 
 	/**
 	 * Returns lowest structure layer's width along the x axis or 0 if no structure has been added
 	 */
-	public final int getWidthX() {
+	public final int getWidthX()
+    {
 		return blockArrayList.size() > 0 ? blockArrayList.get(0)[0].length : 0;
 	}
 
 	/**
 	 * Returns lowest structure layer's width along the z axis or 0 if no structure has been set
 	 */
-	public final int getWidthZ() {
+	public final int getWidthZ()
+    {
 		return blockArrayList != null ? blockArrayList.get(0)[0][0].length : 0;
 	}
 
 	/**
 	 * Returns structure's total height
 	 */
-	public final int getHeight() {
+	public final int getHeight()
+    {
 		int sum = 0;
-		Iterator<int[][][][]> iterator = this.blockArrayList.iterator();
-
-		while (iterator.hasNext()) {
-			int[][][][] blockArray = iterator.next();
-			sum += blockArray.length;
-		}
+        for (int[][][][] blockArray : blockArrayList) sum += blockArray.length;
 
 		return sum;
 	}
@@ -117,22 +107,25 @@ public class Structure
 	/**
 	 * Returns the structure's offset for the x axis
 	 */
-	public final int getOffsetX() {
-		return this.offsetX;
+	public final int getOffsetX()
+    {
+		return offsetX;
 	}
 
 	/**
 	 * Returns the structure's offset for the y axis
 	 */
-	public final int getOffsetY() {
-		return this.offsetY;
+	public final int getOffsetY()
+    {
+		return offsetY;
 	}
 
 	/**
 	 * Returns the structure's offset for the z axis
 	 */
-	public final int getOffsetZ() {
-		return this.offsetZ;
+	public final int getOffsetZ()
+    {
+		return offsetZ;
 	}
 
 	/**
@@ -142,7 +135,8 @@ public class Structure
 	 * to the left and you want the door to spawn in front of the player, or if your
 	 * structure should always be spawned in the air, etc.
 	 */
-	public final void setStructureOffset(int x, int y, int z) {
+	public final void setStructureOffset(int x, int y, int z)
+    {
 		offsetX = x;
 		offsetZ = z;
 		offsetY = y;

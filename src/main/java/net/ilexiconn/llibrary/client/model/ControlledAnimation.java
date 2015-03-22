@@ -136,7 +136,7 @@ public class ControlledAnimation
     }
 
     /**
-     * Returns a float that represents a fraction of the animation, a value between 0.0F and 1.0F.
+     * Returns a float that represents a fraction of the animation, a value between 0f and 1f.
      */
     public float getAnimationFraction()
     {

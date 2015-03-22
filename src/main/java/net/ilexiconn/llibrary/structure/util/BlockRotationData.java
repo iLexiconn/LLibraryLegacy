@@ -1,29 +1,14 @@
-/**
-    Copyright (C) <2014> <coolAlias>
-
-    This file is part of coolAlias' Structure Generation Tool; as such,
-    you can redistribute it and/or modify it under the terms of the GNU
-    General Public License as published by the Free Software Foundation,
-    either version 3 of the License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
 package net.ilexiconn.llibrary.structure.util;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
-
+import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
+import java.util.Map;
+
+/**
+ * @author coolAlias
+ */
 public class BlockRotationData
 {
 	/** Valid rotation types. Each type is handled like vanilla blocks of this kind. */
@@ -78,43 +63,48 @@ public class BlockRotationData
 		 * if neither 0x4 nor 0x8 are set, wood is up/down; if both are set, wood is all bark
 		 */
 		WOOD
-	};
+	}
 
 	/** A mapping of blocks to rotation type for handling rotation. Allows custom blocks to be added. */
-	private static final Map<Block, Rotation> blockRotationData = new HashMap<Block, Rotation>();
+	private static final Map<Block, Rotation> blockRotationData = Maps.newHashMap();
 
 	/**
 	 * Returns the rotation type for the block given, or null if no type is registered
 	 */
-	public static final Rotation getBlockRotationType(Block block) {
+	public static Rotation getBlockRotationType(Block block)
+    {
 		return blockRotationData.get(block);
 	}
 
 	/**
 	 * Maps a block to a specified rotation type. Allows custom blocks to rotate with structure.
+     *
 	 * @param block a valid block
 	 * @param rotationType types predefined by enumerated type ROTATION
+     *
 	 * @return false if a rotation type has already been specified for the given block
 	 */
-	public static final boolean registerCustomBlockRotation(Block block, Rotation rotationType) {
+	public static boolean registerCustomBlockRotation(Block block, Rotation rotationType)
+    {
 		return registerCustomBlockRotation(block, rotationType, false);
 	}
 
 	/**
 	 * Maps a block to a specified rotation type. Allows custom blocks to rotate with structure.
+     *
 	 * @param block a valid block
 	 * @param rotationType types predefined by enumerated type ROTATION
 	 * @param override if true, will override the previously set rotation data for specified block
+     *
 	 * @return false if a rotation type has already been specified for the given block
 	 */
-	public static final boolean registerCustomBlockRotation(Block block, Rotation rotationType, boolean override) {
-		if (blockRotationData.containsKey(block)) {
-			Logger.getLogger("StructureGenAPI").warning("Block " + block + " already has a rotation type." + (override ? " Overriding previous data." : ""));
-			if (override) {
-				blockRotationData.remove(block);
-			} else {
-				return false;
-			}
+	public static boolean registerCustomBlockRotation(Block block, Rotation rotationType, boolean override)
+    {
+		if (blockRotationData.containsKey(block))
+        {
+            System.err.println("[LLibrary] Block " + block + " already has a rotation type." + (override ? " Overriding previous data." : ""));
+			if (override) blockRotationData.remove(block);
+			else return false;
 		}
 
 		blockRotationData.put(block, rotationType);
