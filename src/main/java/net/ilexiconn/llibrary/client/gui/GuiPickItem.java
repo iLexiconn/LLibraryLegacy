@@ -171,7 +171,7 @@ public abstract class GuiPickItem extends GuiScreen
 			}
 		}
 
-		scrollY = (-slider.y + slider.minScroll) * (displayItems.size() / ((i - slider.minScroll) / 19));
+		scrollY = ((-slider.y + slider.minScroll) * ((displayItems.size()) / ((i - slider.minScroll) / 19)));
 
 		for (ItemStack itemstack : displayItems)
 		{
@@ -180,7 +180,7 @@ public abstract class GuiPickItem extends GuiScreen
 				String name = StatCollector.translateToLocal(itemstack.getDisplayName());
 				selected = mouseX >= x && mouseX < x + fontRendererObj.getStringWidth(name) + 20 && mouseY >= y + 16 + scrollY && mouseY < y + 32 + scrollY;
 
-				y += 20;
+				y += 18;
 
 				if (y + scrollY <= height && y + scrollY > 42)
 				{

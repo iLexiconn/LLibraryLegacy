@@ -32,7 +32,7 @@ public class GuiVerticalSlider extends GuiScreen
 	{
 		if (dragging)
 		{
-			y = mouseY;
+			y = mouseY - height / 2;
 		}
 	}
 	
