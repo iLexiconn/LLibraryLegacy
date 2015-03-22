@@ -21,7 +21,7 @@ import net.minecraft.world.World;
  *
  * @author Ry_dog101
  */
-public class SpawnEgg extends Item
+public class ItemSpawnEgg extends Item
 {
     @SideOnly(Side.CLIENT)
     private IIcon theIcon;
@@ -29,7 +29,7 @@ public class SpawnEgg extends Item
     /**
      * @param creativeTab Creative Tab you want your mods eggs to be in
      */
-    public SpawnEgg(CreativeTabs creativeTab)
+    public ItemSpawnEgg(CreativeTabs creativeTab)
     {
         setUnlocalizedName("spawnEgg");
         setCreativeTab(creativeTab);

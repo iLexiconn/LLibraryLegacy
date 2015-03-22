@@ -10,7 +10,7 @@ import net.ilexiconn.llibrary.IContentHandler;
 import net.ilexiconn.llibrary.creativetab.CreativeTabSearch;
 import net.ilexiconn.llibrary.entity.EntityHelper;
 import net.ilexiconn.llibrary.item.ItemHelper;
-import net.ilexiconn.llibrary.item.SpawnEgg;
+import net.ilexiconn.llibrary.item.ItemSpawnEgg;
 import net.ilexiconn.llibrary.update.UpdateHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityHorse;
@@ -37,7 +37,7 @@ public class Test implements IContentHandler
                 return Items.bone;
             }
         };
-        GameRegistry.registerItem(new SpawnEgg(test), "spawnegg");
+        GameRegistry.registerItem(new ItemSpawnEgg(test), "spawnegg");
     }
 
     @Mod.EventHandler
