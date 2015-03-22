@@ -21,7 +21,7 @@ public class GuiLLibraryConfig extends GuiScreen
     public GuiLLibraryConfig(GuiScreen p)
     {
         parent = p;
-        pickItem = new GuiPickItem("Set survival tab item icon")
+        pickItem = new GuiPickItem("Survival Inventory Icon")
         {
             public void onClickEntry(ItemStack itemstack, EntityPlayer player)
             {
