@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.proxy;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.client.ClientEventHandler;
@@ -20,6 +21,7 @@ public class ClientProxy extends ServerProxy
         super.preInit();
 
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
+        FMLCommonHandler.instance().bus().register(new ClientEventHandler());
     }
 
     public void postInit()

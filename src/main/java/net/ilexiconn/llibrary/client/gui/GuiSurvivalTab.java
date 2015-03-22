@@ -41,12 +41,10 @@ public class GuiSurvivalTab extends GuiButton
             boolean selected = mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass();
             xPosition = (mc.currentScreen.width / 2) - 88 + survivalTabContainer.getTabColumn() * 29;
             yPosition = survivalTabContainer.isTabInFirstRow() ? mc.currentScreen.height / 2 - 111 : selected ? mc.currentScreen.height / 2 + 83 : mc.currentScreen.height / 2 + 79;
+            if (!mc.thePlayer.getActivePotionEffects().isEmpty()) xPosition += 60;
 
             int yTexPos = survivalTabContainer.isTabInFirstRow() ? selected ? 0 : 32 : selected ? 66 : 96;
-
             int xTexPos = id == 2 || id == 8 ? 0 : 28;
-            //xTexPos = 168;
-
             int ySize = survivalTabContainer.isTabInFirstRow() ? selected ? 28 : 32 : selected ? 26 : 32;
 
             mc.renderEngine.bindTexture(texture);
@@ -76,8 +74,13 @@ public class GuiSurvivalTab extends GuiButton
     {
         if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
         {
-            survivalTabContainer.getSurvivalTab().openContainerGui(mc.thePlayer);
-            return true;
+            if(mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass())
+            {
+                survivalTabContainer.getSurvivalTab().openContainerGui(mc.thePlayer);
+                return true;
+            }
+            
+            return false;
         }
 
         else return false;

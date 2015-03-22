@@ -6,10 +6,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMobSpawner;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.creativetab.CreativeTabs;
@@ -18,7 +20,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemDoublePlant;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.input.Keyboard;
@@ -34,16 +35,24 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public abstract class GuiPickItem extends GuiScreen
 {
-    public final String title;
-    public String text = "";
+    public String title;
+    private GuiTextField textField;
     public GuiVerticalSlider slider = new GuiVerticalSlider(100, 0, 12, 15, 300, 10);
     private RenderItem renderItem = new RenderItem();
     private ArrayList<ItemStack> items = Lists.newArrayList();
 
-    public GuiPickItem(String title)
+    public GuiPickItem(String t)
     {
-        super();
-        this.title = title;
+        title = t;
+
+        Minecraft mc = Minecraft.getMinecraft();
+        ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+        int w = scaledresolution.getScaledWidth();
+        int h = scaledresolution.getScaledHeight();
+        setWorldAndResolution(mc, w, h);
+
+        textField = new GuiTextField(fontRendererObj, width / 2 - 45, 30, 103, 12);
+        textField.setMaxStringLength(40);
 
         for (Item item : (Iterable<Item>) Item.itemRegistry)
         {
@@ -79,33 +88,12 @@ public abstract class GuiPickItem extends GuiScreen
         }
     }
 
-    public void initGui()
-    {
-        this.buttonList.add(new GuiButton(0, width - 20, 0, 20, 20, "X"));
-    }
-
     public abstract void onClickEntry(ItemStack itemstack, EntityPlayer player);
 
-    protected void keyTyped(char character, int par2)
+    protected void keyTyped(char c, int key)
     {
-        super.keyTyped(character, par2);
         Keyboard.enableRepeatEvents(true);
-
-        if (ChatAllowedCharacters.isAllowedCharacter(character) && fontRendererObj.getStringWidth(text + character + "_") < 90)
-        {
-            text += character;
-        }
-        else if (text.length() > 0 && character == 8)
-        {
-            if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL))
-            {
-                text = text.substring(0, text.contains(" ") ? text.lastIndexOf(" ") : 0);
-            }
-            else
-            {
-                text = text.substring(0, text.length() - 1);
-            }
-        }
+        textField.textboxKeyTyped(c, key);
     }
 
     public boolean doesGuiPauseGame()
@@ -115,19 +103,17 @@ public abstract class GuiPickItem extends GuiScreen
 
     protected void mouseClickMove(int mouseX, int mouseY, int lastButtonClicked, long timeSinceMouseClick)
     {
-        super.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
         slider.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
     }
 
     protected void mouseClicked(int mouseX, int mouseY, int button)
     {
-        super.mouseClicked(mouseX, mouseY, button);
         slider.mouseClicked(mouseX, mouseY, button);
+        textField.mouseClicked(mouseX, mouseY, button);
     }
 
     protected void mouseMovedOrUp(int mouseX, int mouseY, int event)
     {
-        super.mouseMovedOrUp(mouseX, mouseY, event);
         slider.mouseMovedOrUp(mouseX, mouseY, event);
     }
 
@@ -137,14 +123,14 @@ public abstract class GuiPickItem extends GuiScreen
         drawCenteredString(fontRendererObj, title, width / 2, 15, 16777215);
         int x = width / 2 - 45;
         int y = 30;
-        int scrollY = 0;
+        int scrollY;
         int i = height - 20;
         slider.minScroll = 40;
         slider.maxScroll = i - 7;
         slider.x = width / 2 - 70;
         slider.drawScreen(mouseX, mouseY, partialTicks);
 
-        boolean selected = false;
+        boolean selected;
 
         List<ItemStack> displayItems = Lists.newArrayList();
 
@@ -164,7 +150,7 @@ public abstract class GuiPickItem extends GuiScreen
                     {
                         if (tab != null)
                         {
-                            tabEquals = StatCollector.translateToLocal(tab.getTranslatedTabLabel()).toLowerCase().contains(text.toLowerCase());
+                            tabEquals = StatCollector.translateToLocal(tab.getTranslatedTabLabel()).toLowerCase().contains(textField.getText().toLowerCase());
 
                             if (tabEquals)
                             {
@@ -174,7 +160,7 @@ public abstract class GuiPickItem extends GuiScreen
                     }
                 }
 
-                if (name.toLowerCase().contains(text.toLowerCase()) || tabEquals)
+                if (name.toLowerCase().contains(textField.getText().toLowerCase()) || tabEquals)
                 {
                     displayItems.add(itemstack);
                 }
@@ -227,9 +213,9 @@ public abstract class GuiPickItem extends GuiScreen
         }
 
         GL11.glColor4f(1, 1, 1, 1);
-        mc.renderEngine.bindTexture(new ResourceLocation("textures/gui/container/creative_inventory/tab_item_search.png"));
-        drawTexturedModalRect(x, 30, 80, 4, 90, 12);
-        drawString(fontRendererObj, text + (mc.thePlayer.ticksExisted % 20 >= 10 ? "" : "_"), x + 2, 32, 0xffffff);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_BLEND);
+        textField.drawTextBox();
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
@@ -252,10 +238,5 @@ public abstract class GuiPickItem extends GuiScreen
     public void playClickSound(SoundHandler soundHandler)
     {
         soundHandler.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1f));
-    }
-
-    protected void actionPerformed(GuiButton button)
-    {
-        if (button.id == 0) mc.displayGuiScreen(null);
     }
 }

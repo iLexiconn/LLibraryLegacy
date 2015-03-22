@@ -10,7 +10,7 @@ import net.ilexiconn.llibrary.config.ConfigHelper;
 import net.ilexiconn.llibrary.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.proxy.ServerProxy;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "${version}")
+@Mod(modid = "llibrary", name = "LLibrary", version = "${version}", guiFactory = "net.ilexiconn.llibrary.config.LLibraryConfigFactory")
 public class LLibrary
 {
     @Mod.Instance("llibrary")
