@@ -20,7 +20,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import org.lwjgl.opengl.GL11;
 
@@ -100,9 +99,8 @@ public class ClientEventHandler
     {
         if (ConfigHelper.hasConfiguration(event.modID))
         {
-            Configuration configuration = ConfigHelper.getConfigContainer(event.modID).getConfiguration();
-            ConfigHelper.getConfigContainer(event.modID).getConfigHandler().loadConfig(configuration);
-            configuration.save();
+            ConfigHelper.getConfigContainer(event.modID).getConfigHandler().loadConfig(ConfigHelper.getConfigContainer(event.modID).getConfiguration());
+            ConfigHelper.getConfigContainer(event.modID).getConfiguration().save();
         }
     }
 }
