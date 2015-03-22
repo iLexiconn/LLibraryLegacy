@@ -38,10 +38,48 @@ public abstract class GuiPickItem extends GuiScreen
 	public String text = "";
 	public final String title;
 
+	private ArrayList<ItemStack> items = Lists.newArrayList();
+	
 	public GuiPickItem(String title)
 	{
 		super();
 		this.title = title;
+		
+		Iterator<Item> iterator = Item.itemRegistry.iterator();
+
+		while (iterator.hasNext())
+		{
+			Item item = iterator.next();
+			ItemStack itemstack = new ItemStack(item);
+
+			if (item != null)
+			{
+				try
+				{
+					items.add(itemstack);
+					
+					List subItems = Lists.newArrayList();
+					
+					item.getSubItems(item, null, subItems);
+					
+					int maxDamage = subItems.size() - 1;
+
+					while (item.getHasSubtypes() && itemstack.getItemDamage() < maxDamage)
+					{
+						itemstack.setItemDamage(itemstack.getItemDamage() + 1);
+
+						if (!(item instanceof ItemDoublePlant) && !(Block.getBlockFromItem(item) instanceof BlockMobSpawner) && !(Block.getBlockFromItem(item) instanceof BlockDoublePlant) && !(item instanceof ItemMonsterPlacer))
+						{
+							items.add(new ItemStack(item, 1, itemstack.getItemDamage()));
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	public abstract void onClickEntry(ItemStack itemstack, EntityPlayer player);
@@ -83,47 +121,9 @@ public abstract class GuiPickItem extends GuiScreen
 		drawTexturedModalRect(x, y, 80, 4, 90, 12);
 		drawString(fontRendererObj, text + (mc.thePlayer.ticksExisted % 20 >= 10 ? "" : "_"), x + 2, y + 2, 0xffffff);
 
-		//		mc.renderEngine.bindTexture(new ResourceLocation("textures/gui/container/creative_inventory/tabs.png"));
-		//		drawTexturedModalRect(x, y - 29, 0, 32, 28, 28);
-		//		drawItemStack(x + 6, y - 24, selectedItem);
-
-
 		boolean selected = false;
-		Iterator<Item> iterator = Item.itemRegistry.iterator();
-		ArrayList<ItemStack> list = Lists.newArrayList();
 
-		while (iterator.hasNext())
-		{
-			Item item = iterator.next();
-			ItemStack itemstack = new ItemStack(item);
-
-			if (item != null)
-			{
-				try
-				{
-					list.add(itemstack);
-					List list1 = Lists.newArrayList();
-					item.getSubItems(item, null, list1);
-					int maxDamage = list1.size();
-
-					while (item.getHasSubtypes() && itemstack.getItemDamage() < maxDamage)
-					{
-						itemstack.setItemDamage(itemstack.getItemDamage() + 1);
-
-						if (!(item instanceof ItemDoublePlant) && !(Block.getBlockFromItem(item) instanceof BlockMobSpawner) && !(Block.getBlockFromItem(item) instanceof BlockDoublePlant) && !(item instanceof ItemMonsterPlacer))
-						{
-							list.add(new ItemStack(item, 1, itemstack.getItemDamage()));
-						}
-					}
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		}
-
-		for (ItemStack itemstack : list)
+		for (ItemStack itemstack : items)
 		{
 			try
 			{
@@ -132,7 +132,7 @@ public abstract class GuiPickItem extends GuiScreen
 
 				if (y <= height && name.toLowerCase().contains(text.toLowerCase()))
 				{
-					y += 16;
+					y += 16 + 4;
 					drawString(fontRendererObj, name, x + 20, y + 4, selected ? 0xFFFF7F : 0xFFFFFF);
 
 					drawItemStack(x, y, itemstack);
