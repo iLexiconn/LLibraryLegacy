@@ -119,6 +119,12 @@ public abstract class GuiPickItem extends GuiScreen
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+        Minecraft mc = Minecraft.getMinecraft();
+        ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+        int w = scaledresolution.getScaledWidth();
+        int h = scaledresolution.getScaledHeight();
+        setWorldAndResolution(mc, w, h);
+        
         drawDefaultBackground();
         drawCenteredString(fontRendererObj, title, width / 2, 15, 16777215);
         int x = width / 2 - 45;
