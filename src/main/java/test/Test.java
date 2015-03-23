@@ -4,15 +4,12 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.ilexiconn.llibrary.ContentHandlerList;
 import net.ilexiconn.llibrary.IContentHandler;
 import net.ilexiconn.llibrary.creativetab.CreativeTabSearch;
 import net.ilexiconn.llibrary.entity.EntityHelper;
 import net.ilexiconn.llibrary.item.ItemHelper;
-import net.ilexiconn.llibrary.item.SpawnEgg;
 import net.ilexiconn.llibrary.update.UpdateHelper;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -30,14 +27,13 @@ public class Test implements IContentHandler
     {
         ContentHandlerList.createList(this).init();
         UpdateHelper.registerUpdateChecker(this, "r5zKe0UF", "https://twitter.com/");
-        CreativeTabs test = new CreativeTabSearch("test")
+        new CreativeTabSearch("test")
         {
             public Item getTabIconItem()
             {
                 return Items.bone;
             }
         };
-        GameRegistry.registerItem(new SpawnEgg(test), "spawnegg");
     }
 
     @Mod.EventHandler

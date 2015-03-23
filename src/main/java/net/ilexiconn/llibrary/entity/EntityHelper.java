@@ -5,7 +5,6 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.World;
@@ -77,13 +76,7 @@ public class EntityHelper
         int entityId = getUniqueEntityId();
         EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
         EntityList.IDtoClassMapping.put(entityId, entityClass);
-        addSpawnEgg(entityClass, entityName, entityId, primaryColor, secondaryColor);
-        // EntityList.entityEggs.put(entityId, new EntityList.EntityEggInfo(entityId, primaryColor, secondaryColor));
-    }
-
-    public static void addSpawnEgg(Class<? extends Entity> entityClass, String entityName, int id, int background, int forground)
-    {
-        net.ilexiconn.llibrary.entity.List.addToList(entityClass, entityName, id, background, forground);
+        EntityList.entityEggs.put(entityId, new EntityList.EntityEggInfo(entityId, primaryColor, secondaryColor));
     }
 
     public static void removeLivingEntity(Class<? extends EntityLiving> clazz)
@@ -137,7 +130,6 @@ public class EntityHelper
 
         for (Object key : EntityList.entityEggs.keySet())
         {
-            EntityEggInfo eggInfo = (EntityEggInfo) EntityList.entityEggs.get(key);
             Integer intKey = (Integer) key;
 
             Class<? extends Entity> entityClass = EntityList.getClassFromID(intKey);
