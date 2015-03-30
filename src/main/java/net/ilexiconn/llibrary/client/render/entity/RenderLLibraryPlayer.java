@@ -1,19 +1,19 @@
-package net.ilexiconn.llibrary.client.render.player;
+package net.ilexiconn.llibrary.client.render.entity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.client.model.player.ModelCustomBiped;
+import net.ilexiconn.llibrary.client.model.entity.ModelLLibraryBiped;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 
 @SideOnly(Side.CLIENT)
-public final class RenderCustomPlayer extends RenderPlayer
+public final class RenderLLibraryPlayer extends RenderPlayer
 {
-    public RenderCustomPlayer()
+    public RenderLLibraryPlayer()
     {
         setRenderManager(RenderManager.instance);
-        mainModel = new ModelCustomBiped();
+        mainModel = new ModelLLibraryBiped();
         modelBipedMain = (ModelBiped) mainModel;
     }
 }

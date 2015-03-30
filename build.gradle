@@ -22,7 +22,7 @@ group = "net.ilexiconn.llibrary"
 archivesBaseName = "LLibrary"
 
 minecraft {
-    version = "1.7.10-10.13.2.1307-1.7.10"
+    version = "1.7.10-10.13.2.1343-1.7.10"
     runDir = "minecraft"
     replace '${version}', project.version
 }
@@ -38,11 +38,5 @@ processResources {
         
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
-    }
-}
-jar {
-        manifest {
-        attributes 'FMLCorePlugin': 'net.ilexiconn.llibrary.LLibraryLoadingPlugin',
-                        'FMLCorePluginContainsFMLMod': 'true'
     }
 }

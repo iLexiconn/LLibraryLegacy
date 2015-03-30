@@ -1,5 +1,7 @@
 package net.ilexiconn.llibrary.potion;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.potion.Potion;
@@ -434,7 +436,7 @@ public class TempPotionHelper
 
                         if (arraylist == null)
                         {
-                            arraylist = new ArrayList<>();
+                            arraylist = Lists.newArrayList();
                         }
 
                         PotionEffect potioneffect = new PotionEffect(potion.getId(), duration, amplifier);
@@ -619,7 +621,7 @@ public class TempPotionHelper
 
         netherWartEffect = "+4";
 
-        cachedLiquidColors = new HashMap<>();
+        cachedLiquidColors = Maps.newHashMap();
         potionPrefixes = new String[]{"potion.prefix.mundane", "potion.prefix.uninteresting", "potion.prefix.bland", "potion.prefix.clear", "potion.prefix.milky", "potion.prefix.diffuse", "potion.prefix.artless", "potion.prefix.thin",
                 "potion.prefix.awkward", "potion.prefix.flat", "potion.prefix.bulky", "potion.prefix.bungling", "potion.prefix.buttered", "potion.prefix.smooth", "potion.prefix.suave", "potion.prefix.debonair", "potion.prefix.thick",
                 "potion.prefix.elegant", "potion.prefix.fancy", "potion.prefix.charming", "potion.prefix.dashing", "potion.prefix.refined", "potion.prefix.cordial", "potion.prefix.sparkling", "potion.prefix.potent", "potion.prefix.foul",

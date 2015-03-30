@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.client.ClientEventHandler;
 import net.ilexiconn.llibrary.client.gui.GuiChangelog;
-import net.ilexiconn.llibrary.client.render.player.RenderCustomPlayer;
+import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.update.ChangelogHandler;
 import net.ilexiconn.llibrary.update.ModUpdateContainer;
 import net.minecraft.client.Minecraft;
@@ -28,7 +28,7 @@ public class ClientProxy extends ServerProxy
     {
         super.postInit();
 
-        RenderManager.instance.entityRenderMap.put(EntityPlayer.class, new RenderCustomPlayer());
+        RenderManager.instance.entityRenderMap.put(EntityPlayer.class, new RenderLLibraryPlayer());
     }
 
     public void openChangelogGui(ModUpdateContainer mod, String version)
