@@ -1,13 +1,14 @@
 package net.ilexiconn.llibrary.json;
 
+import java.io.InputStreamReader;
+import java.util.List;
+
 import net.ilexiconn.llibrary.LLibrary;
+import net.ilexiconn.llibrary.client.model.entity.animation.IModelAnimator;
 import net.ilexiconn.llibrary.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.json.container.JsonHitbox;
 import net.ilexiconn.llibrary.json.container.JsonTabulaModel;
 import net.minecraft.entity.EntityLivingBase;
-
-import java.io.InputStreamReader;
-import java.util.List;
 
 public class JsonHelper
 {

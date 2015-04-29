@@ -21,6 +21,12 @@ public class MowzieModelRenderer extends ModelRenderer
     public MowzieModelRenderer(ModelBase modelBase, int x, int y)
     {
         super(modelBase, x, y);
+        
+        if(modelBase instanceof MowzieModelBase)
+        {
+            MowzieModelBase mowzieModelBase = (MowzieModelBase) modelBase;
+            mowzieModelBase.parts.add(this);
+        }
     }
 
     public MowzieModelRenderer(ModelBase modelBase)
