@@ -28,7 +28,7 @@ public class JsonHelper
         return new EntityPart(parent, hitbox.getRadius(), hitbox.getAngleYaw(), hitbox.getOffsetY(), hitbox.getSizeX(), hitbox.getSizeY(), hitbox.getDamageMultiplier());
     }
 
-    public static JsonTabulaModel parseTablaModel(String file)
+    public static JsonTabulaModel parseTabulaModel(String file)
     {
         return JsonFactory.getGson().fromJson(new InputStreamReader(LLibrary.class.getResourceAsStream(file)), JsonTabulaModel.class);
     }

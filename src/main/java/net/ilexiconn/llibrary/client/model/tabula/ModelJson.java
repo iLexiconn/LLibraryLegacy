@@ -52,7 +52,7 @@ public class ModelJson extends ModelBase
         }
     }
 
-    public void cubeGroup(CubeGroup group)
+    private void cubeGroup(CubeGroup group)
     {
         for (CubeInfo cube : group.cubes)
         {
@@ -65,7 +65,7 @@ public class ModelJson extends ModelBase
         }
     }
 
-    public void cube(CubeInfo cube, ModelRenderer parent)
+    private void cube(CubeInfo cube, ModelRenderer parent)
     {
         ModelRenderer modelRenderer = createModelRenderer(cube);
 
@@ -82,7 +82,7 @@ public class ModelJson extends ModelBase
         }
     }
 
-    public ModelRenderer createModelRenderer(CubeInfo cubeInfo)
+    private ModelRenderer createModelRenderer(CubeInfo cubeInfo)
     {
         ModelRenderer cube = new ModelRenderer(this, cubeInfo.txOffset[0], cubeInfo.txOffset[1]);
         cube.setRotationPoint((float) cubeInfo.position[0], (float) cubeInfo.position[1], (float) cubeInfo.position[2]);
