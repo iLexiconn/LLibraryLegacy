@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.json.container;
 
+import net.ilexiconn.llibrary.client.model.tabula.Animation;
 import net.ilexiconn.llibrary.client.model.tabula.CubeGroup;
 import net.ilexiconn.llibrary.client.model.tabula.CubeInfo;
 
@@ -14,7 +15,8 @@ public class JsonTabulaModel
 
     private ArrayList<CubeGroup> cubeGroups;
     private ArrayList<CubeInfo> cubes;
-
+    private ArrayList<Animation> anims;
+    
     private int cubeCount;
 
     public int getTextureWidth()
@@ -40,6 +42,11 @@ public class JsonTabulaModel
     public ArrayList<CubeInfo> getCubes()
     {
         return cubes;
+    }
+    
+    public ArrayList<Animation> getAnimations()
+    {
+    	return anims;
     }
 
     public int getCubeCount()
