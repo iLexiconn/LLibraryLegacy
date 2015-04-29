@@ -28,11 +28,6 @@ public class EntityHelper
 
     private static List<Class<? extends Entity>> removedEntities = Lists.newArrayList();
 
-    public static boolean hasEntityBeenRemoved(Class<? extends Entity> entity)
-    {
-        return removedEntities.contains(entity);
-    }
-
     static
     {
         int i = 0;
@@ -56,6 +51,11 @@ public class EntityHelper
                 i++;
             }
         }
+    }
+
+    public static boolean hasEntityBeenRemoved(Class<? extends Entity> entity)
+    {
+        return removedEntities.contains(entity);
     }
 
     public static void registerEntity(EntityObject entity)

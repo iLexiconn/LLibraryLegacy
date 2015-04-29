@@ -74,12 +74,12 @@ public class GuiSurvivalTab extends GuiButton
     {
         if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
         {
-            if(mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass())
+            if (mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass())
             {
                 survivalTabContainer.getSurvivalTab().openContainerGui(mc.thePlayer);
                 return true;
             }
-            
+
             return false;
         }
 

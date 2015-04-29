@@ -13,8 +13,6 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class GuiVerticalSlider extends GuiScreen
 {
-    private ResourceLocation texture = new ResourceLocation("textures/gui/container/creative_inventory/tabs.png");
-
     public int x;
     public int y;
     public int width;
@@ -22,6 +20,7 @@ public class GuiVerticalSlider extends GuiScreen
     public int maxScroll;
     public int minScroll;
     public boolean dragging = false;
+    private ResourceLocation texture = new ResourceLocation("textures/gui/container/creative_inventory/tabs.png");
 
     public GuiVerticalSlider(int x, int y, int width, int height, int maxScroll, int minScroll)
     {

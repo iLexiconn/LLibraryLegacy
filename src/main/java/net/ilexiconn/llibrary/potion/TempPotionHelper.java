@@ -40,6 +40,50 @@ public class TempPotionHelper
     private static final int GREATER = 1;
     private static final int LESS = 2;
 
+    static
+    {
+        potionRequirements.put(Potion.regeneration.getId(), "0 & !1 & !2 & !3 & 0+6");
+        sugarEffect = "-0+1-2-3&4-4+13";
+        potionRequirements.put(Potion.moveSpeed.getId(), "!0 & 1 & !2 & !3 & 1+6");
+        magmaCreamEffect = "+0+1-2-3&4-4+13";
+        potionRequirements.put(Potion.fireResistance.getId(), "0 & 1 & !2 & !3 & 0+6");
+        speckledMelonEffect = "+0-1+2-3&4-4+13";
+        potionRequirements.put(Potion.heal.getId(), "0 & !1 & 2 & !3");
+        spiderEyeEffect = "-0-1+2-3&4-4+13";
+        potionRequirements.put(Potion.poison.getId(), "!0 & !1 & 2 & !3 & 2+6");
+        fermentedSpiderEyeEffect = "-0+3-4+13";
+        potionRequirements.put(Potion.weakness.getId(), "!0 & !1 & !2 & 3 & 3+6");
+        potionRequirements.put(Potion.harm.getId(), "!0 & !1 & 2 & 3");
+        potionRequirements.put(Potion.moveSlowdown.getId(), "!0 & 1 & !2 & 3 & 3+6");
+        blazePowderEffect = "+0-1-2+3&4-4+13";
+        potionRequirements.put(Potion.damageBoost.getId(), "0 & !1 & !2 & 3 & 3+6");
+        goldenCarrotEffect = "-0+1+2-3+13&4-4";
+        potionRequirements.put(Potion.nightVision.getId(), "!0 & 1 & 2 & !3 & 2+6");
+        potionRequirements.put(Potion.invisibility.getId(), "!0 & 1 & 2 & 3 & 2+6");
+        pufferfishEffect = "+0-1+2+3+13&4-4";
+        potionRequirements.put(Potion.waterBreathing.getId(), "0 & !1 & 2 & 3 & 2+6");
+        glowstoneEffect = "+5-6-7";
+        potionAmplifiers.put(Potion.moveSpeed.getId(), "5");
+        potionAmplifiers.put(Potion.digSpeed.getId(), "5");
+        potionAmplifiers.put(Potion.damageBoost.getId(), "5");
+        potionAmplifiers.put(Potion.regeneration.getId(), "5");
+        potionAmplifiers.put(Potion.harm.getId(), "5");
+        potionAmplifiers.put(Potion.heal.getId(), "5");
+        potionAmplifiers.put(Potion.resistance.getId(), "5");
+        potionAmplifiers.put(Potion.poison.getId(), "5");
+        redstoneEffect = "-5+6-7";
+        gunpowderEffect = "+14&13-13";
+        ghastTearEffect = "+0-1-2-3&4-4+13";
+
+        netherWartEffect = "+4";
+
+        cachedLiquidColors = Maps.newHashMap();
+        potionPrefixes = new String[]{"potion.prefix.mundane", "potion.prefix.uninteresting", "potion.prefix.bland", "potion.prefix.clear", "potion.prefix.milky", "potion.prefix.diffuse", "potion.prefix.artless", "potion.prefix.thin",
+                "potion.prefix.awkward", "potion.prefix.flat", "potion.prefix.bulky", "potion.prefix.bungling", "potion.prefix.buttered", "potion.prefix.smooth", "potion.prefix.suave", "potion.prefix.debonair", "potion.prefix.thick",
+                "potion.prefix.elegant", "potion.prefix.fancy", "potion.prefix.charming", "potion.prefix.dashing", "potion.prefix.refined", "potion.prefix.cordial", "potion.prefix.sparkling", "potion.prefix.potent", "potion.prefix.foul",
+                "potion.prefix.odorless", "potion.prefix.rank", "potion.prefix.harsh", "potion.prefix.acrid", "potion.prefix.gross", "potion.prefix.stinky"};
+    }
+
     /**
      * Is the bit given set to 1?
      */
@@ -582,49 +626,5 @@ public class TempPotionHelper
     public static int func_77908_a(int value, int p_77908_1_, int p_77908_2_, int p_77908_3_, int p_77908_4_, int p_77908_5_)
     {
         return (checkFlag(value, p_77908_1_) ? 16 : 0) | (checkFlag(value, p_77908_2_) ? 8 : 0) | (checkFlag(value, p_77908_3_) ? 4 : 0) | (checkFlag(value, p_77908_4_) ? 2 : 0) | (checkFlag(value, p_77908_5_) ? 1 : 0);
-    }
-
-    static
-    {
-        potionRequirements.put(Potion.regeneration.getId(), "0 & !1 & !2 & !3 & 0+6");
-        sugarEffect = "-0+1-2-3&4-4+13";
-        potionRequirements.put(Potion.moveSpeed.getId(), "!0 & 1 & !2 & !3 & 1+6");
-        magmaCreamEffect = "+0+1-2-3&4-4+13";
-        potionRequirements.put(Potion.fireResistance.getId(), "0 & 1 & !2 & !3 & 0+6");
-        speckledMelonEffect = "+0-1+2-3&4-4+13";
-        potionRequirements.put(Potion.heal.getId(), "0 & !1 & 2 & !3");
-        spiderEyeEffect = "-0-1+2-3&4-4+13";
-        potionRequirements.put(Potion.poison.getId(), "!0 & !1 & 2 & !3 & 2+6");
-        fermentedSpiderEyeEffect = "-0+3-4+13";
-        potionRequirements.put(Potion.weakness.getId(), "!0 & !1 & !2 & 3 & 3+6");
-        potionRequirements.put(Potion.harm.getId(), "!0 & !1 & 2 & 3");
-        potionRequirements.put(Potion.moveSlowdown.getId(), "!0 & 1 & !2 & 3 & 3+6");
-        blazePowderEffect = "+0-1-2+3&4-4+13";
-        potionRequirements.put(Potion.damageBoost.getId(), "0 & !1 & !2 & 3 & 3+6");
-        goldenCarrotEffect = "-0+1+2-3+13&4-4";
-        potionRequirements.put(Potion.nightVision.getId(), "!0 & 1 & 2 & !3 & 2+6");
-        potionRequirements.put(Potion.invisibility.getId(), "!0 & 1 & 2 & 3 & 2+6");
-        pufferfishEffect = "+0-1+2+3+13&4-4";
-        potionRequirements.put(Potion.waterBreathing.getId(), "0 & !1 & 2 & 3 & 2+6");
-        glowstoneEffect = "+5-6-7";
-        potionAmplifiers.put(Potion.moveSpeed.getId(), "5");
-        potionAmplifiers.put(Potion.digSpeed.getId(), "5");
-        potionAmplifiers.put(Potion.damageBoost.getId(), "5");
-        potionAmplifiers.put(Potion.regeneration.getId(), "5");
-        potionAmplifiers.put(Potion.harm.getId(), "5");
-        potionAmplifiers.put(Potion.heal.getId(), "5");
-        potionAmplifiers.put(Potion.resistance.getId(), "5");
-        potionAmplifiers.put(Potion.poison.getId(), "5");
-        redstoneEffect = "-5+6-7";
-        gunpowderEffect = "+14&13-13";
-        ghastTearEffect = "+0-1-2-3&4-4+13";
-
-        netherWartEffect = "+4";
-
-        cachedLiquidColors = Maps.newHashMap();
-        potionPrefixes = new String[]{"potion.prefix.mundane", "potion.prefix.uninteresting", "potion.prefix.bland", "potion.prefix.clear", "potion.prefix.milky", "potion.prefix.diffuse", "potion.prefix.artless", "potion.prefix.thin",
-                "potion.prefix.awkward", "potion.prefix.flat", "potion.prefix.bulky", "potion.prefix.bungling", "potion.prefix.buttered", "potion.prefix.smooth", "potion.prefix.suave", "potion.prefix.debonair", "potion.prefix.thick",
-                "potion.prefix.elegant", "potion.prefix.fancy", "potion.prefix.charming", "potion.prefix.dashing", "potion.prefix.refined", "potion.prefix.cordial", "potion.prefix.sparkling", "potion.prefix.potent", "potion.prefix.foul",
-                "potion.prefix.odorless", "potion.prefix.rank", "potion.prefix.harsh", "potion.prefix.acrid", "potion.prefix.gross", "potion.prefix.stinky"};
     }
 }

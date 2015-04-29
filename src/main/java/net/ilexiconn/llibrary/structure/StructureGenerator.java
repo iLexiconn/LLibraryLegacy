@@ -1,8 +1,8 @@
 package net.ilexiconn.llibrary.structure;
 
+import net.ilexiconn.llibrary.structure.util.StructureGeneratorBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
-import net.ilexiconn.llibrary.structure.util.StructureGeneratorBase;
 
 /**
  * This class is responsible for handling custom block hooks used in your block arrays,
@@ -12,33 +12,33 @@ import net.ilexiconn.llibrary.structure.util.StructureGeneratorBase;
  */
 public class StructureGenerator extends StructureGeneratorBase
 {
-	public StructureGenerator()
+    public StructureGenerator()
     {
 
     }
 
-	public StructureGenerator(Entity entity, int[][][][] blocks)
+    public StructureGenerator(Entity entity, int[][][][] blocks)
     {
-		super(entity, blocks);
-	}
+        super(entity, blocks);
+    }
 
-	public StructureGenerator(Entity entity, int[][][][] blocks, int structureFacing)
+    public StructureGenerator(Entity entity, int[][][][] blocks, int structureFacing)
     {
-		super(entity, blocks, structureFacing);
-	}
+        super(entity, blocks, structureFacing);
+    }
 
-	public StructureGenerator(Entity entity, int[][][][] blocks, int structureFacing, int offX, int offY, int offZ)
+    public StructureGenerator(Entity entity, int[][][][] blocks, int structureFacing, int offX, int offY, int offZ)
     {
-		super(entity, blocks, structureFacing, offX, offY, offZ);
-	}
+        super(entity, blocks, structureFacing, offX, offY, offZ);
+    }
 
-	public int getRealBlockID(int fakeID, int customData1)
+    public int getRealBlockID(int fakeID, int customData1)
     {
-		return 0;
-	}
+        return 0;
+    }
 
-	public void onCustomBlockAdded(World world, int x, int y, int z, int fakeID, int customData1, int customData2)
+    public void onCustomBlockAdded(World world, int x, int y, int z, int fakeID, int customData1, int customData2)
     {
 
-	}
+    }
 }
