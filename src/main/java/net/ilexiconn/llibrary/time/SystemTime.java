@@ -2,6 +2,8 @@ package net.ilexiconn.llibrary.time;
 
 import java.util.Calendar;
 
+import net.minecraft.client.resources.*;
+
 /**
  * Helper class for getting time and date for the current system.
  * NOTE: The time returned from the methods in this class are only snapshots of what it was
@@ -18,42 +20,42 @@ public class SystemTime
 	
 	public static int getYear()
 	{
-		return c.get(c.YEAR);
+		return c.get(Calendar.YEAR);
 	}
 	
 	public static int getMonth()
 	{
-		return c.get(c.MONTH) + 1;
+		return c.get(Calendar.MONTH) + 1;
 	}
 	
 	public static int getWeekOfMonth()
 	{
-		return c.get(c.WEEK_OF_MONTH);
+		return c.get(Calendar.WEEK_OF_MONTH);
 	}
 	
 	public static int getWeekOfYear()
 	{
-		return c.get(c.WEEK_OF_YEAR);
+		return c.get(Calendar.WEEK_OF_YEAR);
 	}
 	
 	public static int getDayOfMonth()
 	{
-		return c.get(c.DAY_OF_MONTH);
+		return c.get(Calendar.DAY_OF_MONTH);
 	}
 	
 	public static int getDayOfWeek()
 	{
-		int i = c.get(c.DAY_OF_WEEK);
+		int i = c.get(Calendar.DAY_OF_WEEK);
 		return i == 1 ? 7 : i - 1;
 	}
 	
 	public static int getDayOfWeek(int year, int month, int day)
 	{
 		Calendar cal = Calendar.getInstance();
-		cal.set(cal.YEAR, year);
-		cal.set(cal.MONTH, month - 1);
-		cal.set(cal.DAY_OF_MONTH, day);
-		int i = cal.get(cal.DAY_OF_WEEK);
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.MONTH, month - 1);
+		cal.set(Calendar.DAY_OF_MONTH, day);
+		int i = cal.get(Calendar.DAY_OF_WEEK);
 		return i == 1 ? 7 : i - 1;
 	}
 	
@@ -69,22 +71,22 @@ public class SystemTime
 	
 	public static int getDayOfYear()
 	{
-		return c.get(c.DAY_OF_YEAR);
+		return c.get(Calendar.DAY_OF_YEAR);
 	}
 	
 	public static int getHourOfDay()
 	{
-		return c.get(c.HOUR_OF_DAY);
+		return c.get(Calendar.HOUR_OF_DAY);
 	}
 	
 	public static int getMinuteOfHour()
 	{
-		return c.get(c.MINUTE);
+		return c.get(Calendar.MINUTE);
 	}
 	
 	public static int getSecondOfMinute()
 	{
-		return c.get(c.SECOND);
+		return c.get(Calendar.SECOND);
 	}
 	
 	public static Time getTime()
@@ -131,24 +133,9 @@ public class SystemTime
 	}
 	
 	public static String getNumberSuffix(int number)
-	{
-		String s = String.valueOf(number);
-		
-		if (s.endsWith("1"))
-		{
-			return "st";
-		}
-		else if (s.endsWith("2"))
-		{
-			return "nd";
-		}
-		else if (s.endsWith("3"))
-		{
-			return "rd";
-		}
-		else
-		{
-			return "th";
-		}
-	}
+    {
+        String stringVersion = String.valueOf(number);
+        char lastChar = stringVersion.charAt(stringVersion.length() - 1);
+        return I18n.format("number.suffix." + lastChar);
+    }
 }
