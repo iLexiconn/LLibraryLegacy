@@ -53,10 +53,10 @@ public class ModelJson extends MowzieModelBase
         setInitPose();
     }
 
-    public ModelJson(JsonTabulaModel model, IModelAnimator animator)
+    public ModelJson(JsonTabulaModel model, IModelAnimator a)
     {
         this(model);
-        this.animator = animator;
+        animator = a;
     }
 
     public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
@@ -84,7 +84,7 @@ public class ModelJson extends MowzieModelBase
     {
         super.setRotationAngles(limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
 
-        this.setToInitPose();
+        setToInitPose();
 
         if (playingAnimation != null)
         {
