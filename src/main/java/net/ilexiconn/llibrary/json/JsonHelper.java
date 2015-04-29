@@ -1,14 +1,13 @@
 package net.ilexiconn.llibrary.json;
 
-import java.io.InputStreamReader;
-import java.util.List;
-
-import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.client.model.entity.animation.IModelAnimator;
 import net.ilexiconn.llibrary.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.json.container.JsonHitbox;
 import net.ilexiconn.llibrary.json.container.JsonTabulaModel;
 import net.minecraft.entity.EntityLivingBase;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
 
 public class JsonHelper
 {
@@ -29,8 +28,8 @@ public class JsonHelper
         return new EntityPart(parent, hitbox.getRadius(), hitbox.getAngleYaw(), hitbox.getOffsetY(), hitbox.getSizeX(), hitbox.getSizeY(), hitbox.getDamageMultiplier());
     }
 
-    public static JsonTabulaModel parseTabulaModel(String file)
+    public static JsonTabulaModel parseTabulaModel(InputStream stream)
     {
-        return JsonFactory.getGson().fromJson(new InputStreamReader(LLibrary.class.getResourceAsStream(file)), JsonTabulaModel.class);
+        return JsonFactory.getGson().fromJson(new InputStreamReader(stream), JsonTabulaModel.class);
     }
 }
