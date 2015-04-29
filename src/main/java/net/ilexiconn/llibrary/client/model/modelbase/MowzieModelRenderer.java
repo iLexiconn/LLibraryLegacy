@@ -1,11 +1,8 @@
-package net.ilexiconn.llibrary.client.model;
+package net.ilexiconn.llibrary.client.model.modelbase;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 
-/**
- * @author BobMowzie
- */
 public class MowzieModelRenderer extends ModelRenderer
 {
     public float initRotateAngleX;
@@ -60,9 +57,6 @@ public class MowzieModelRenderer extends ModelRenderer
         rotateAngleZ = z;
     }
 
-    /**
-     * Resets all rotation points.
-     */
     public void resetAllRotationPoints()
     {
         rotationPointX = initRotationPointX;
@@ -70,33 +64,21 @@ public class MowzieModelRenderer extends ModelRenderer
         rotationPointZ = initRotationPointZ;
     }
 
-    /**
-     * Resets X rotation point.
-     */
     public void resetXRotationPoints()
     {
         rotationPointX = initRotationPointX;
     }
 
-    /**
-     * Resets Y rotation point.
-     */
     public void resetYRotationPoints()
     {
         rotationPointY = initRotationPointY;
     }
 
-    /**
-     * Resets Z rotation point.
-     */
     public void resetZRotationPoints()
     {
         rotationPointZ = initRotationPointZ;
     }
 
-    /**
-     * Resets all rotations.
-     */
     public void resetAllRotations()
     {
         rotateAngleX = initRotateAngleX;
@@ -104,68 +86,39 @@ public class MowzieModelRenderer extends ModelRenderer
         rotateAngleZ = initRotateAngleZ;
     }
 
-    /**
-     * Resets X rotation.
-     */
     public void resetXRotations()
     {
         rotateAngleX = initRotateAngleX;
     }
 
-    /**
-     * Resets Y rotation.
-     */
     public void resetYRotations()
     {
         rotateAngleY = initRotateAngleY;
     }
 
-    /**
-     * Resets Z rotation.
-     */
     public void resetZRotations()
     {
         rotateAngleZ = initRotateAngleZ;
     }
 
-    /**
-     * Copies the rotation point coordinates.
-     *
-     * @param target the MowzieModelRenderer with the updated values;
-     */
-    public void copyAllRotationPoints(MowzieModelRenderer target)
+    public void copyAllRotationPoints(ResettableModelRenderer target)
     {
         rotationPointX = target.rotationPointX;
         rotationPointY = target.rotationPointY;
         rotationPointZ = target.rotationPointZ;
     }
 
-    /**
-     * Copies X rotation point.
-     *
-     * @param target the MowzieModelRenderer with the updated values;
-     */
-    public void copyXRotationPoint(MowzieModelRenderer target)
+    public void copyXRotationPoint(ResettableModelRenderer target)
     {
         rotationPointX = target.rotationPointX;
     }
 
-    /**
-     * Copies Y rotation point.
-     *
-     * @param target the MowzieModelRenderer with the updated values;
-     */
-    public void copyYRotationPoint(MowzieModelRenderer target)
+    public void copyYRotationPoint(ResettableModelRenderer target)
     {
         rotationPointY = target.rotationPointY;
     }
 
-    /**
-     * Copies Z rotation point.
-     *
-     * @param target the MowzieModelRenderer with the updated values;
-     */
-    public void copyZRotationPoint(MowzieModelRenderer target)
+    public void copyZRotationPoint(ResettableModelRenderer target)
     {
         rotationPointZ = target.rotationPointZ;
     }
