@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.entity;
 
 import com.google.common.collect.Lists;
+
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.entity.Entity;
@@ -28,6 +29,11 @@ public class EntityHelper
 
     private static List<Class<? extends Entity>> removedEntities = Lists.newArrayList();
 
+    public static boolean hasEntityBeenRemoved(Class<? extends Entity> entity)
+    {
+        return removedEntities.contains(entity);
+    }
+
     static
     {
         int i = 0;
@@ -53,30 +59,28 @@ public class EntityHelper
         }
     }
 
-    public static boolean hasEntityBeenRemoved(Class<? extends Entity> entity)
-    {
-        return removedEntities.contains(entity);
-    }
-
     public static void registerEntity(EntityObject entity)
     {
-        if (entity.doRegisterEgg())
-            registerEntity(entity.getEntityName(), entity.getEntityClass(), entity.getEggColorPrimary(), entity.getEggColorSecondary());
-        else registerEntity(entity.getEntityName(), entity.getEntityClass());
+        String entityName = entity.getEntityName();
+		Class<? extends Entity> entityClass = entity.getEntityClass();
+		
+		if (entity.doRegisterEgg())
+            registerEntity(entityName, entityClass, entity.getEggColorPrimary(), entity.getEggColorSecondary());
+        else registerEntity(entityName, entityClass);
     }
 
     public static void registerEntity(String entityName, Class<? extends Entity> entityClass)
     {
         int entityId = getUniqueEntityId();
+        EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId);
         EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
     }
 
     public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int primaryColor, int secondaryColor)
     {
         int entityId = getUniqueEntityId();
+        EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId, primaryColor, secondaryColor);
         EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
-        EntityList.IDtoClassMapping.put(entityId, entityClass);
-        EntityList.entityEggs.put(entityId, new EntityList.EntityEggInfo(entityId, primaryColor, secondaryColor));
     }
 
     public static void removeLivingEntity(Class<? extends EntityLiving> clazz)

@@ -36,8 +36,8 @@ import java.util.List;
 public abstract class GuiPickItem extends GuiScreen
 {
     public String title;
-    public GuiVerticalSlider slider = new GuiVerticalSlider(100, 0, 12, 15, 300, 10);
     private GuiTextField textField;
+    public GuiVerticalSlider slider = new GuiVerticalSlider(100, 0, 12, 15, 300, 10);
     private RenderItem renderItem = new RenderItem();
     private ArrayList<ItemStack> items = Lists.newArrayList();
 
@@ -124,7 +124,7 @@ public abstract class GuiPickItem extends GuiScreen
         int w = scaledresolution.getScaledWidth();
         int h = scaledresolution.getScaledHeight();
         setWorldAndResolution(mc, w, h);
-
+        
         drawDefaultBackground();
         drawCenteredString(fontRendererObj, title, width / 2, 15, 16777215);
         int x = width / 2 - 45;

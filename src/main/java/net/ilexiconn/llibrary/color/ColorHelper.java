@@ -11,7 +11,7 @@ import com.google.common.collect.Maps;
  */
 public class ColorHelper
 {
-	private static Map<RGB, Integer> colorChache = Maps.newHashMap();
+	private static Map<RGB, Integer> colorCache = Maps.newHashMap();
 
 	/**
 	 * Searches a color based on alpha, red, blue, and green parameters.
@@ -20,7 +20,7 @@ public class ColorHelper
 	{
 		int color = 0;
 
-		Integer cached = colorChache.get(new RGB(r, g, b, a));
+		Integer cached = colorCache.get(new RGB(r, g, b, a));
 
 		if(cached == null)
 		{

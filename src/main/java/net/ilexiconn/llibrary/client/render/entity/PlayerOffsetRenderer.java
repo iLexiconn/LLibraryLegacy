@@ -12,23 +12,13 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class PlayerOffsetRenderer extends EntityRenderer
 {
-    private static Map<EntityPlayer, Float> offsetY = Maps.newHashMap();
     public Minecraft mc;
+    private static Map<EntityPlayer, Float> offsetY = Maps.newHashMap();
 
     public PlayerOffsetRenderer(Minecraft minecraft)
     {
         super(minecraft, minecraft.getResourceManager());
         mc = minecraft;
-    }
-
-    public static void setOffsetY(EntityPlayer player, float f)
-    {
-        offsetY.put(player, f);
-    }
-
-    public static float getOffsetY(EntityPlayer entityPlayer)
-    {
-        return offsetY.get(entityPlayer);
     }
 
     public void updateCameraAndRender(float partialTick)
@@ -75,5 +65,15 @@ public class PlayerOffsetRenderer extends EntityRenderer
         mc.thePlayer.posY -= offsetForPlayer;
         mc.thePlayer.prevPosY -= offsetForPlayer;
         mc.thePlayer.lastTickPosY -= offsetForPlayer;
+    }
+
+    public static void setOffsetY(EntityPlayer player, float f)
+    {
+        offsetY.put(player, f);
+    }
+
+    public static float getOffsetY(EntityPlayer entityPlayer)
+    {
+        return offsetY.get(entityPlayer);
     }
 }

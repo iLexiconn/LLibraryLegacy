@@ -16,7 +16,7 @@ public class JsonTabulaModel
     private ArrayList<CubeGroup> cubeGroups;
     private ArrayList<CubeInfo> cubes;
     private ArrayList<Animation> anims;
-
+    
     private int cubeCount;
 
     public int getTextureWidth()
@@ -43,10 +43,10 @@ public class JsonTabulaModel
     {
         return cubes;
     }
-
+    
     public ArrayList<Animation> getAnimations()
     {
-        return anims;
+    	return anims;
     }
 
     public int getCubeCount()

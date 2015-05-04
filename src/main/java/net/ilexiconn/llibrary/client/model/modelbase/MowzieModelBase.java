@@ -1,11 +1,12 @@
 package net.ilexiconn.llibrary.client.model.modelbase;
 
-import com.google.common.collect.Lists;
+import java.util.List;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.MathHelper;
 
-import java.util.List;
+import com.google.common.collect.Lists;
 
 public class MowzieModelBase extends ModelBase
 {

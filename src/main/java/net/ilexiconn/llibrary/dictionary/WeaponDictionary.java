@@ -15,11 +15,6 @@ public class WeaponDictionary
     private static WeaponInfo[] weaponList = new WeaponInfo[WEAPON_LIST_SIZE];
     private static ArrayList<Item>[] typeInfoList = new ArrayList[Type.values().length];
 
-    static
-    {
-        registerVanillaWeapons();
-    }
-
     public static boolean registerWeaponType(Item item, Type... types)
     {
         types = listSubTags(types);
@@ -318,5 +313,9 @@ public class WeaponDictionary
 
             Collections.addAll(typeList, types);
         }
+    }
+    static
+    {
+        registerVanillaWeapons();
     }
 }
