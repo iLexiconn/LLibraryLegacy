@@ -167,9 +167,15 @@ public class ModelJson extends MowzieModelBase
 
 			for (AnimationComponent component : entry.getValue())
 			{
-				if(animationTimer > component.startKey && animationTimer < component.startKey + component.length)
+				if(animationTimer > component.startKey) //&& animationTimer < component.startKey + component.length)
 				{
 					int componentTimer = animationTimer - component.startKey;
+					
+					if(componentTimer > component.length)
+					{
+						componentTimer = component.length;
+					}
+					
 					//TODO more?
 					animating.rotationPointX += component.posChange[0] / component.length * componentTimer;
 					animating.rotationPointY += component.posChange[1] / component.length * componentTimer;
