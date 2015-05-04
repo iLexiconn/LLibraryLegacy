@@ -22,156 +22,156 @@ import java.util.Map;
  */
 public class EntityHelper
 {
-    static int startEntityId = 0;
+	static int startEntityId = 0;
 
-    private static Field classToIDMappingField;
-    private static Field stringToIDMappingField;
+	private static Field classToIDMappingField;
+	private static Field stringToIDMappingField;
 
-    private static List<Class<? extends Entity>> removedEntities = Lists.newArrayList();
+	private static List<Class<? extends Entity>> removedEntities = Lists.newArrayList();
 
-    public static boolean hasEntityBeenRemoved(Class<? extends Entity> entity)
-    {
-        return removedEntities.contains(entity);
-    }
+	public static boolean hasEntityBeenRemoved(Class<? extends Entity> entity)
+	{
+		return removedEntities.contains(entity);
+	}
 
-    static
-    {
-        int i = 0;
+	static
+	{
+		int i = 0;
 
-        for (Field field : EntityList.class.getDeclaredFields())
-        {
-            if (field.getType() == Map.class)
-            {
-                if (i == 3)
-                {
-                    field.setAccessible(true);
-                    classToIDMappingField = field;
-                }
-                else if (i == 4)
-                {
-                    field.setAccessible(true);
-                    stringToIDMappingField = field;
-                    break;
-                }
+		for (Field field : EntityList.class.getDeclaredFields())
+		{
+			if (field.getType() == Map.class)
+			{
+				if (i == 3)
+				{
+					field.setAccessible(true);
+					classToIDMappingField = field;
+				}
+				else if (i == 4)
+				{
+					field.setAccessible(true);
+					stringToIDMappingField = field;
+					break;
+				}
 
-                i++;
-            }
-        }
-    }
+				i++;
+			}
+		}
+	}
 
-    public static void registerEntity(EntityObject entity)
-    {
-        String entityName = entity.getEntityName();
+	public static void registerEntity(EntityObject entity)
+	{
+		String entityName = entity.getEntityName();
 		Class<? extends Entity> entityClass = entity.getEntityClass();
-		
+
 		if (entity.doRegisterEgg())
-            registerEntity(entityName, entityClass, entity.getEggColorPrimary(), entity.getEggColorSecondary());
-        else registerEntity(entityName, entityClass);
-    }
+			registerEntity(entityName, entityClass, entity.getEggColorPrimary(), entity.getEggColorSecondary());
+		else registerEntity(entityName, entityClass);
+	}
 
-    public static void registerEntity(String entityName, Class<? extends Entity> entityClass)
-    {
-        int entityId = getUniqueEntityId();
-        EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId);
-        EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
-    }
+	public static void registerEntity(String entityName, Class<? extends Entity> entityClass)
+	{
+		int entityId = EntityRegistry.findGlobalUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId);
+		EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
+	}
 
-    public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int primaryColor, int secondaryColor)
-    {
-        int entityId = getUniqueEntityId();
-        EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId, primaryColor, secondaryColor);
-        EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
-    }
+	public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int primaryColor, int secondaryColor)
+	{
+		int entityId = EntityRegistry.findGlobalUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId, primaryColor, secondaryColor);
+		EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
+	}
 
-    public static void removeLivingEntity(Class<? extends EntityLiving> clazz)
-    {
-        removeEntity(clazz);
-        removeEntityEgg(clazz);
+	public static void removeLivingEntity(Class<? extends EntityLiving> clazz)
+	{
+		removeEntity(clazz);
+		removeEntityEgg(clazz);
 
-        for (BiomeGenBase biome : BiomeGenBase.getBiomeGenArray())
-        {
-            if (biome != null)
-            {
-                EntityRegistry.removeSpawn(clazz, EnumCreatureType.ambient, biome);
-                EntityRegistry.removeSpawn(clazz, EnumCreatureType.creature, biome);
-                EntityRegistry.removeSpawn(clazz, EnumCreatureType.monster, biome);
-                EntityRegistry.removeSpawn(clazz, EnumCreatureType.waterCreature, biome);
-            }
-        }
-    }
+		for (BiomeGenBase biome : BiomeGenBase.getBiomeGenArray())
+		{
+			if (biome != null)
+			{
+				EntityRegistry.removeSpawn(clazz, EnumCreatureType.ambient, biome);
+				EntityRegistry.removeSpawn(clazz, EnumCreatureType.creature, biome);
+				EntityRegistry.removeSpawn(clazz, EnumCreatureType.monster, biome);
+				EntityRegistry.removeSpawn(clazz, EnumCreatureType.waterCreature, biome);
+			}
+		}
+	}
 
-    public static void removeEntity(Class<? extends Entity> clazz)
-    {
-        removedEntities.add(clazz);
+	public static void removeEntity(Class<? extends Entity> clazz)
+	{
+		removedEntities.add(clazz);
 
-        EntityList.IDtoClassMapping.remove(clazz);
+		EntityList.IDtoClassMapping.remove(clazz);
 
-        Object name = EntityList.classToStringMapping.get(clazz);
+		Object name = EntityList.classToStringMapping.get(clazz);
 
-        EntityList.stringToClassMapping.remove(name);
-        EntityList.classToStringMapping.remove(clazz);
+		EntityList.stringToClassMapping.remove(name);
+		EntityList.classToStringMapping.remove(clazz);
 
-        try
-        {
-            Map classToIDMapping = (Map) classToIDMappingField.get(null);
-            Map stringToIDMapping = (Map) stringToIDMappingField.get(null);
-            classToIDMapping.remove(clazz);
-            stringToIDMapping.remove(name);
-        }
-        catch (IllegalArgumentException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException e)
-        {
-            e.printStackTrace();
-        }
-    }
+		try
+		{
+			Map classToIDMapping = (Map) classToIDMappingField.get(null);
+			Map stringToIDMapping = (Map) stringToIDMappingField.get(null);
+			classToIDMapping.remove(clazz);
+			stringToIDMapping.remove(name);
+		}
+		catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IllegalAccessException e)
+		{
+			e.printStackTrace();
+		}
+	}
 
-    public static void removeEntityEgg(Class<? extends EntityLiving> clazz)
-    {
-        Integer toRemove = null;
+	public static void removeEntityEgg(Class<? extends EntityLiving> clazz)
+	{
+		Integer toRemove = null;
 
-        for (Object key : EntityList.entityEggs.keySet())
-        {
-            Integer intKey = (Integer) key;
+		for (Object key : EntityList.entityEggs.keySet())
+		{
+			Integer intKey = (Integer) key;
 
-            Class<? extends Entity> entityClass = EntityList.getClassFromID(intKey);
+			Class<? extends Entity> entityClass = EntityList.getClassFromID(intKey);
 
-            if (clazz.equals(entityClass))
-            {
-                toRemove = intKey;
+			if (clazz.equals(entityClass))
+			{
+				toRemove = intKey;
 
-                break;
-            }
-        }
+				break;
+			}
+		}
 
-        if (toRemove != null)
-        {
-            EntityList.entityEggs.remove(toRemove);
-        }
-    }
+		if (toRemove != null)
+		{
+			EntityList.entityEggs.remove(toRemove);
+		}
+	}
 
-    private static int getUniqueEntityId()
-    {
-        do startEntityId++;
-        while (EntityList.getStringFromID(startEntityId) != null);
-        return startEntityId;
-    }
+	private static int getUniqueEntityId()
+	{
+		do startEntityId++;
+		while (EntityList.getStringFromID(startEntityId) != null);
+		return startEntityId;
+	}
 
-    public static Entity getEntityFromClass(Class entityClass, World world)
-    {
-        Entity entity = null;
+	public static Entity getEntityFromClass(Class entityClass, World world)
+	{
+		Entity entity = null;
 
-        try
-        {
-            entity = (Entity) entityClass.getConstructor(new Class[]{World.class}).newInstance(world);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+		try
+		{
+			entity = (Entity) entityClass.getConstructor(new Class[]{World.class}).newInstance(world);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 
-        return entity;
-    }
+		return entity;
+	}
 }

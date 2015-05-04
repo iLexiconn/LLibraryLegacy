@@ -8,7 +8,9 @@ import net.ilexiconn.llibrary.client.model.entity.animation.IModelAnimator;
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelBase;
 import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.ilexiconn.llibrary.json.container.JsonTabulaModel;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.event.entity.minecart.MinecartCollisionEvent;
 
 import org.lwjgl.opengl.GL11;
 
@@ -86,16 +88,19 @@ public class ModelJson extends MowzieModelBase
 	{
 		super.setRotationAngles(limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
 
-		this.setToInitPose();
-
-		if(playingAnimation != null)
+		if(!Minecraft.getMinecraft().isGamePaused())
 		{
-			updateAnimation();
-		}
+			this.setToInitPose();
 
-		if(animator != null)
-		{
-			animator.setRotationAngles(this, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
+			if(playingAnimation != null)
+			{
+				updateAnimation();
+			}
+
+			if(animator != null)
+			{
+				animator.setRotationAngles(this, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
+			}
 		}
 	}
 
@@ -170,12 +175,12 @@ public class ModelJson extends MowzieModelBase
 				if(animationTimer > component.startKey) //&& animationTimer < component.startKey + component.length)
 				{
 					int componentTimer = animationTimer - component.startKey;
-					
+
 					if(componentTimer > component.length)
 					{
 						componentTimer = component.length;
 					}
-					
+
 					//TODO more?
 					animating.rotationPointX += component.posChange[0] / component.length * componentTimer;
 					animating.rotationPointY += component.posChange[1] / component.length * componentTimer;
@@ -192,7 +197,14 @@ public class ModelJson extends MowzieModelBase
 
 		if(animationTimer > animationLength)
 		{
-			stopAnimation();
+			if(playingAnimation.loops)
+			{
+				animationTimer = 0;
+			}
+			else
+			{
+				stopAnimation();
+			}
 		}
 	}
 
