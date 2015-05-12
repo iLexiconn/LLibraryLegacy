@@ -1,17 +1,20 @@
 package net.ilexiconn.llibrary.proxy;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.client.ClientEventHandler;
 import net.ilexiconn.llibrary.client.gui.GuiChangelog;
+import net.ilexiconn.llibrary.client.gui.GuiLLibMainMenu;
+import net.ilexiconn.llibrary.client.gui.GuiOverrideHelper;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.update.ChangelogHandler;
 import net.ilexiconn.llibrary.update.ModUpdateContainer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends ServerProxy
@@ -22,6 +25,10 @@ public class ClientProxy extends ServerProxy
 
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
         FMLCommonHandler.instance().bus().register(new ClientEventHandler());
+        MinecraftForge.EVENT_BUS.register(new GuiOverrideHelper());
+        FMLCommonHandler.instance().bus().register(new GuiOverrideHelper());
+        
+        GuiOverrideHelper.addOverride(GuiMainMenu.class, new GuiLLibMainMenu());
     }
 
     public void postInit()
