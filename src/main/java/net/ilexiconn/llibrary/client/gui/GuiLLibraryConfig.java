@@ -2,7 +2,7 @@ package net.ilexiconn.llibrary.client.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.config.ConfigHelper;
+import net.ilexiconn.llibrary.common.config.ConfigHelper;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

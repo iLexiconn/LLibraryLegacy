@@ -1,21 +1,18 @@
 package net.ilexiconn.llibrary.client.gui;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiLabel;
-import net.minecraft.client.gui.GuiScreen;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-
 public class GuiOverride extends GuiScreen
 {
-	public Minecraft mc = Minecraft.getMinecraft();
-	public Random rand = new Random();
-	public GuiScreen overriddenScreen;
-	public List buttonList = new ArrayList();
+    public Minecraft mc = Minecraft.getMinecraft();
+    public Random rand = new Random();
+    public GuiScreen overriddenScreen;
+    public List buttonList = new ArrayList();
 
 //	public void drawScreen(int mouseX, int mouseY, float partalTicks)
 //	{

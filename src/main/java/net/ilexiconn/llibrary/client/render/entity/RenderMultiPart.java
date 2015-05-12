@@ -2,8 +2,8 @@ package net.ilexiconn.llibrary.client.render.entity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.entity.multipart.EntityPart;
-import net.ilexiconn.llibrary.entity.multipart.IEntityMultiPart;
+import net.ilexiconn.llibrary.common.entity.multipart.EntityPart;
+import net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.entity.RenderLiving;

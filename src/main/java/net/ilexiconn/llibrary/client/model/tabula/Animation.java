@@ -1,9 +1,9 @@
 package net.ilexiconn.llibrary.client.model.tabula;
 
+import com.google.common.collect.Ordering;
+
 import java.util.ArrayList;
 import java.util.TreeMap;
-
-import com.google.common.collect.Ordering;
 
 public class Animation
 {

@@ -5,24 +5,21 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import net.ilexiconn.llibrary.command.CommandLLibrary;
-import net.ilexiconn.llibrary.config.ConfigHelper;
-import net.ilexiconn.llibrary.config.LLibraryConfigHandler;
-import net.ilexiconn.llibrary.proxy.ServerProxy;
+import net.ilexiconn.llibrary.common.ServerProxy;
+import net.ilexiconn.llibrary.common.command.CommandLLibrary;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "${version}", guiFactory = "net.ilexiconn.llibrary.config.LLibraryConfigFactory")
+@Mod(modid = "llibrary", name = "LLibrary", version = "${version}")
 public class LLibrary
 {
     @Mod.Instance("llibrary")
     public static LLibrary instance;
 
-    @SidedProxy(serverSide = "net.ilexiconn.llibrary.proxy.ServerProxy", clientSide = "net.ilexiconn.llibrary.proxy.ClientProxy")
+    @SidedProxy(serverSide = "net.ilexiconn.llibrary.common.ServerProxy", clientSide = "net.ilexiconn.llibrary.client.ClientProxy")
     public static ServerProxy proxy;
 
     @Mod.EventHandler
     private void preInit(FMLPreInitializationEvent event)
     {
-        ConfigHelper.registerConfigHandler("llibrary", event.getSuggestedConfigurationFile(), new LLibraryConfigHandler());
         proxy.preInit();
     }
 

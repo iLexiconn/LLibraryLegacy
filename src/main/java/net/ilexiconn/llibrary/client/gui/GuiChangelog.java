@@ -2,7 +2,7 @@ package net.ilexiconn.llibrary.client.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.update.ModUpdateContainer;
+import net.ilexiconn.llibrary.common.update.ModUpdateContainer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Keyboard;
