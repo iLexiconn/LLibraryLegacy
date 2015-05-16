@@ -1,20 +1,23 @@
 package net.ilexiconn.llibrary.client.gui;
 
+import java.util.List;
+import java.util.Map;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
+import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
-import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author FiskFille
@@ -86,29 +89,47 @@ public class GuiHelper
                     ticks = 0;
                     timer += 1000;
                 }
-
+                
                 gui.drawScreen(event.mouseX, event.mouseY, event.renderPartialTicks);
 
                 if (!gui.buttonList.isEmpty())
                 {
-                    List<GuiButton> buttonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, event.gui, "buttonList", "field_146292_n");
+                	List<GuiButton> buttonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, event.gui, "buttonList", "field_146292_n");
 
-                    for (GuiButton button : (List<GuiButton>) gui.buttonList)
-                    {
-                        for (int i = 0; i < buttonList.size(); ++i)
-                        {
-                            GuiButton button1 = buttonList.get(i);
+                	for (GuiButton button : (List<GuiButton>) gui.buttonList)
+                	{
+                		for (int i = 0; i < buttonList.size(); ++i)
+                		{
+                			GuiButton button1 = buttonList.get(i);
 
-                            if (button.id == button1.id)
-                            {
-                                buttonList.remove(button1);
-                            }
-                        }
-                    }
+                			if (button.id == button1.id)
+                			{
+                				buttonList.remove(button1);
+                			}
+                		}
+                	}
 
-                    buttonList.addAll(gui.buttonList);
-                    ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, event.gui, buttonList, "buttonList", "field_146292_n");
+                	buttonList.addAll(gui.buttonList);
+                	ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, event.gui, buttonList, "buttonList", "field_146292_n");
                 }
+            }
+        }
+    }
+    
+    @SubscribeEvent
+    public void onButtonPressPre(GuiScreenEvent.ActionPerformedEvent.Pre event)
+    {
+//        if (event.gui instanceof GuiMainMenu && event.button.id == TABULA_BUTTON_ID)
+//        {
+//            Tabula.proxy.tickHandlerClient.initializeMainframe(null, -1, -1, -1);
+//            event.setCanceled(true);
+//        }
+        
+        for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : GuiHelper.getOverrides().entrySet())
+        {
+            if (event.gui.getClass() == e.getValue())
+            {
+            	e.getKey().actionPerformed(event.button);
             }
         }
     }

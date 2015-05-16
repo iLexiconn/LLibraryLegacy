@@ -9,4 +9,12 @@ public class GuiLLibMainMenu extends GuiOverride
         super.initGui();
         buttonList.add(new GuiButton(85, width / 2 - 100, 0, 200, 20, "Yay, GUI overrides! :D"));
     }
+    
+    public void actionPerformed(GuiButton button)
+    {
+    	if (button.id == 85)
+    	{
+    		System.out.println("PARTY!");
+    	}
+    }
 }
