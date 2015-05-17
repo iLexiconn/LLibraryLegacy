@@ -1,19 +1,23 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import com.google.common.collect.Lists;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -22,12 +26,16 @@ import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.common.collect.Lists;
+
+import cpw.mods.fml.client.GuiSlotModList;
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author FiskFille
@@ -36,25 +44,31 @@ import java.util.List;
 public abstract class GuiPickItem extends GuiScreen
 {
     public String title;
-    public GuiVerticalSlider slider = new GuiVerticalSlider(100, 0, 12, 15, 300, 10);
+    private GuiScreen parentScreen;
+    private GuiSlotItemStackList itemList;
     private GuiTextField textField;
     private RenderItem renderItem = new RenderItem();
     private ArrayList<ItemStack> items = Lists.newArrayList();
+    public ArrayList<ItemStack> itemsFiltered = Lists.newArrayList(); 
+    
+    private int selectedIndex;
+    private int listWidth;
 
     public GuiPickItem(String t)
     {
         title = t;
-
+        parentScreen = Minecraft.getMinecraft().currentScreen;
+        
         Minecraft mc = Minecraft.getMinecraft();
         ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
         int w = scaledresolution.getScaledWidth();
         int h = scaledresolution.getScaledHeight();
         setWorldAndResolution(mc, w, h);
 
-        textField = new GuiTextField(fontRendererObj, width / 2 - 45, 30, 103, 12);
+        textField = new GuiTextField(fontRendererObj, 20, 30, 103, 12);
         textField.setMaxStringLength(40);
 
-        for (Item item : (Iterable<Item>) Item.itemRegistry)
+        for (Item item : (Iterable<Item>)Item.itemRegistry)
         {
             ItemStack itemstack = new ItemStack(item);
 
@@ -63,11 +77,8 @@ public abstract class GuiPickItem extends GuiScreen
                 try
                 {
                     items.add(itemstack);
-
                     List subItems = Lists.newArrayList();
-
                     item.getSubItems(item, null, subItems);
-
                     int maxDamage = subItems.size() - 1;
 
                     while (item.getHasSubtypes() && itemstack.getItemDamage() < maxDamage)
@@ -87,13 +98,50 @@ public abstract class GuiPickItem extends GuiScreen
             }
         }
     }
-
-    public abstract void onClickEntry(ItemStack itemstack, EntityPlayer player);
+    
+    public void initGui()
+    {
+    	super.initGui();
+    	
+    	for (ItemStack itemstack : items)
+    	{
+            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(StatCollector.translateToLocal(itemstack.getDisplayName())) + 30);
+        }
+    	
+        listWidth = Math.min(listWidth, 300);
+        
+        if (textField != null)
+        {
+        	textField.xPosition = 20 + listWidth / 2 - textField.width / 2;
+            textField.yPosition = 30;
+        }
+        
+        buttonList.add(new GuiButton(0, 20, height - 40, listWidth, 20, "Select"));
+    	itemList = new GuiSlotItemStackList(this, items, listWidth);
+    	itemList.registerScrollButtons(buttonList, 7, 8);
+    }
+    
+    public abstract void onSelectEntry(ItemStack itemstack, EntityPlayer player);
+    
+    protected void actionPerformed(GuiButton button)
+    {
+    	int id = button.id;
+    	
+    	if (id == 0)
+    	{
+    		onSelectEntry(itemsFiltered.get(selectedIndex), Minecraft.getMinecraft().thePlayer);
+    	}
+    }
 
     protected void keyTyped(char c, int key)
     {
         Keyboard.enableRepeatEvents(true);
         textField.textboxKeyTyped(c, key);
+        
+        if (key == Keyboard.KEY_ESCAPE)
+        {
+        	mc.displayGuiScreen(parentScreen);
+        }
     }
 
     public boolean doesGuiPauseGame()
@@ -101,138 +149,70 @@ public abstract class GuiPickItem extends GuiScreen
         return false;
     }
 
-    protected void mouseClickMove(int mouseX, int mouseY, int lastButtonClicked, long timeSinceMouseClick)
-    {
-        slider.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
-    }
-
     protected void mouseClicked(int mouseX, int mouseY, int button)
     {
-        slider.mouseClicked(mouseX, mouseY, button);
+    	super.mouseClicked(mouseX, mouseY, button);
         textField.mouseClicked(mouseX, mouseY, button);
-    }
-
-    protected void mouseMovedOrUp(int mouseX, int mouseY, int event)
-    {
-        slider.mouseMovedOrUp(mouseX, mouseY, event);
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        Minecraft mc = Minecraft.getMinecraft();
-        ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-        int w = scaledresolution.getScaledWidth();
-        int h = scaledresolution.getScaledHeight();
-        setWorldAndResolution(mc, w, h);
-
-        drawDefaultBackground();
-        drawCenteredString(fontRendererObj, title, width / 2, 15, 16777215);
-        int x = width / 2 - 45;
-        int y = 30;
-        int scrollY;
-        int i = height - 20;
-        slider.minScroll = 40;
-        slider.maxScroll = i - 7;
-        slider.x = width / 2 - 70;
-        slider.drawScreen(mouseX, mouseY, partialTicks);
-
-        boolean selected;
-
-        List<ItemStack> displayItems = Lists.newArrayList();
-
-        for (ItemStack itemstack : items)
-        {
-            try
-            {
-                String name = StatCollector.translateToLocal(itemstack.getDisplayName());
-
-                Item item = itemstack.getItem();
-
-                boolean tabEquals = false;
-
-                if (item != null)
-                {
-                    for (CreativeTabs tab : item.getCreativeTabs())
-                    {
-                        if (tab != null)
-                        {
-                            tabEquals = StatCollector.translateToLocal(tab.getTranslatedTabLabel()).toLowerCase().contains(textField.getText().toLowerCase());
-
-                            if (tabEquals)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (name.toLowerCase().contains(textField.getText().toLowerCase()) || tabEquals)
-                {
-                    displayItems.add(itemstack);
-                }
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        scrollY = ((-slider.y + slider.minScroll) * ((displayItems.size()) / ((i - slider.minScroll) / 19)));
-
-        for (ItemStack itemstack : displayItems)
-        {
-            try
-            {
-                String name = StatCollector.translateToLocal(itemstack.getDisplayName());
-                selected = mouseX >= x && mouseX < x + fontRendererObj.getStringWidth(name) + 20 && mouseY >= y + 16 + scrollY && mouseY < y + 32 + scrollY;
-
-                y += 18;
-
-                if (y + scrollY <= height && y + scrollY > 42)
-                {
-                    drawString(fontRendererObj, name + (selected ? " <" : ""), x + 20, y + 4 + scrollY, selected ? 0xFFFF7F : 0xFFFFFF);
-                    drawString(fontRendererObj, selected ? ">" : "", x - 10, y + 4 + scrollY, 0xFFFF7F);
-
-                    try
-                    {
-                        drawItemStack(x, y + scrollY, itemstack);
-                    }
-                    catch (Exception e)
-                    {
-
-                    }
-                }
-
-                if (selected)
-                {
-                    if (Mouse.isButtonDown(0))
-                    {
-                        playClickSound(mc.getSoundHandler());
-                        onClickEntry(itemstack, mc.thePlayer);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        GL11.glColor4f(1, 1, 1, 1);
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glDisable(GL11.GL_BLEND);
+    	filterItemsBySearch();
+    	itemList.drawScreen(mouseX, mouseY, partialTicks);
+    	
+    	drawCenteredString(fontRendererObj, title, 20 + listWidth / 2, 15, 16777215);
         textField.drawTextBox();
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    public void drawItemStack(int x, int y, ItemStack itemstack)
+    private void filterItemsBySearch()
+    {
+    	itemsFiltered.clear();
+    	
+    	for (ItemStack itemstack : items)
+		{
+			try
+			{
+				String name = StatCollector.translateToLocal(itemstack.getDisplayName());
+				Item item = itemstack.getItem();
+				boolean tabEquals = false;
+
+				if (item != null)
+				{
+					for (CreativeTabs tab : item.getCreativeTabs())
+					{
+						if (tab != null)
+						{
+							tabEquals = StatCollector.translateToLocal(tab.getTranslatedTabLabel()).toLowerCase().contains(textField.getText().toLowerCase());
+
+							if (tabEquals)
+							{
+								break;
+							}
+						}
+					}
+				}
+
+				if (name.toLowerCase().contains(textField.getText().toLowerCase()) || tabEquals)
+				{
+					itemsFiltered.add(itemstack);
+				}
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void drawItemStack(int x, int y, ItemStack itemstack)
     {
         RenderHelper.enableGUIStandardItemLighting();
         zLevel = 100f;
         renderItem.zLevel = 100f;
         GL11.glEnable(2896);
         GL11.glEnable(32826);
-        renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
+        renderItem.renderItemIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);        
         renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
         GL11.glDisable(2896);
         GL11.glEnable(3042);
@@ -245,4 +225,24 @@ public abstract class GuiPickItem extends GuiScreen
     {
         soundHandler.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1f));
     }
+
+	public void selectItemIndex(int var1)
+	{
+		selectedIndex = var1;
+	}
+
+	public boolean itemIndexSelected(int var1)
+	{
+		return selectedIndex == var1;
+	}
+
+	public FontRenderer getFontRenderer()
+	{
+		return fontRendererObj;
+	}
+
+	public Minecraft getMinecraftInstance()
+	{
+		return Minecraft.getMinecraft();
+	}
 }

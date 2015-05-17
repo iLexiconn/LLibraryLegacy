@@ -119,12 +119,6 @@ public class GuiHelper
     @SubscribeEvent
     public void onButtonPressPre(GuiScreenEvent.ActionPerformedEvent.Pre event)
     {
-//        if (event.gui instanceof GuiMainMenu && event.button.id == TABULA_BUTTON_ID)
-//        {
-//            Tabula.proxy.tickHandlerClient.initializeMainframe(null, -1, -1, -1);
-//            event.setCanceled(true);
-//        }
-        
         for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : GuiHelper.getOverrides().entrySet())
         {
             if (event.gui.getClass() == e.getValue())
