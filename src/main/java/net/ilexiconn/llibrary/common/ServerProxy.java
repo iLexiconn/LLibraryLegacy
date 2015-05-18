@@ -17,7 +17,7 @@ public class ServerProxy
         MinecraftForge.EVENT_BUS.register(new ServerEventHandler());
         EntityHelper.registerEntity("mountableBlock", EntityMountableBlock.class);
         
-        UpdateHelper.registerUpdateChecker(LLibrary.instance, "http://pastebin.com/raw.php?i=TGiS6kuk", "https://ilexiconn.net/", null, "https://ilexiconn.net/llibrary/logo.png");
+        UpdateHelper.registerUpdateChecker(LLibrary.instance, "http://pastebin.com/raw.php?i=TGiS6kuk", "https://ilexiconn.net/", null, "http://ilexiconn.net/llibrary/logo.png");
     }
 
     public void postInit()
