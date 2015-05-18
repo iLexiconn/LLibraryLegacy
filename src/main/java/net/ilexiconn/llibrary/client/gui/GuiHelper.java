@@ -70,9 +70,7 @@ public class GuiHelper
                 long currentTime = System.nanoTime();
                 deltaU += (currentTime - initialTime) / timeU;
                 initialTime = currentTime;
-
-                gui.buttonList.clear();
-                gui.initGui();
+                
                 gui.width = event.gui.width;
                 gui.height = event.gui.height;
                 gui.overriddenScreen = event.gui;

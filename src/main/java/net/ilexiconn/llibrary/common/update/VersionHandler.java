@@ -6,38 +6,47 @@ import net.ilexiconn.llibrary.common.web.WebHelper;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author FiskFille
+ */
 public class VersionHandler
 {
     private static List<ModUpdateContainer> outdatedMods = Lists.newArrayList();
-
-    public static List<ModUpdateContainer> searchForOutdatedMods()
+    
+    public static List<ModUpdateContainer> searchForOutdatedModsInefficiently() throws IOException
     {
         List<ModUpdateContainer> outdatedMods = Lists.newArrayList();
 
         for (ModUpdateContainer mod : UpdateHelper.modList)
         {
-            try
-            {
-                List<String> list = WebHelper.readPastebinAsList(mod.pastebinId);
-                mod.updateFile = list;
+            List<String> list = WebHelper.downloadTextFileList(mod.updateTextFileURL);
+            mod.updateFile = list;
 
-                String version = getVersion(mod);
+            String version = getVersion(mod);
 
-                if (!mod.version.equals(version))
-                {
-                    mod.latestVersion = version;
-                    outdatedMods.add(mod);
-                }
-            }
-            catch (IOException e)
+            if (!mod.version.equals(version))
             {
-                e.printStackTrace();
+                mod.latestVersion = version;
+                outdatedMods.add(mod);
             }
         }
 
         VersionHandler.outdatedMods = outdatedMods;
-
         return outdatedMods;
+    }
+    
+    public static List<ModUpdateContainer> searchForOutdatedMods()
+    {
+    	try
+    	{
+			return searchForOutdatedModsInefficiently();
+		}
+    	catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+    	
+    	return Lists.newArrayList();
     }
 
     public static List<ModUpdateContainer> getOutdatedMods()

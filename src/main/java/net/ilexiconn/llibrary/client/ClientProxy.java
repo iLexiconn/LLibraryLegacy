@@ -2,11 +2,13 @@ package net.ilexiconn.llibrary.client;
 
 import net.ilexiconn.llibrary.client.gui.GuiChangelog;
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
+import net.ilexiconn.llibrary.client.gui.GuiLLibMainMenu;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.common.ServerProxy;
 import net.ilexiconn.llibrary.common.update.ChangelogHandler;
 import net.ilexiconn.llibrary.common.update.ModUpdateContainer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,6 +27,9 @@ public class ClientProxy extends ServerProxy
         FMLCommonHandler.instance().bus().register(new ClientEventHandler());
         MinecraftForge.EVENT_BUS.register(new GuiHelper());
         FMLCommonHandler.instance().bus().register(new GuiHelper());
+        
+        
+        GuiHelper.addOverride(GuiMainMenu.class, new GuiLLibMainMenu());
     }
 
     public void postInit()

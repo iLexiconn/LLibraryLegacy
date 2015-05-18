@@ -1,15 +1,23 @@
 package net.ilexiconn.llibrary.common.web;
 
-import com.google.common.collect.Lists;
-
-import java.io.*;
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import com.google.common.collect.Lists;
 
 /**
  * Helper class to parse <a href="http://pastebin.com">Pastebin.com</a> pastes and read files from given URL
  *
- * @author Gegy1000, jglrxavpok
+ * @author Gegy1000, jglrxavpok, FiskFille
  */
 public class WebHelper
 {
@@ -108,5 +116,19 @@ public class WebHelper
             e.printStackTrace();
             return null;
         }
+    }
+    
+    /**
+     * Downloads an image from given URL.
+     *
+     * @param imageURL The URL to download the image from
+     * @return A BufferedImage object downloaded from the given URL
+     * @throws IOException Thrown in case there are problems downloading the file
+     */
+    public static BufferedImage downloadImage(String imageURL) throws IOException
+    {
+    	URL url = new URL(imageURL);
+		InputStream in = new BufferedInputStream(url.openStream());
+		return ImageIO.read(in);
     }
 }
