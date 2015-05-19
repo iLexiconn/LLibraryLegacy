@@ -3,13 +3,18 @@ package net.ilexiconn.llibrary.client.gui;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+/**
+ * @author FiskFille
+ */
 @SideOnly(Side.CLIENT)
 public class GuiChangelog extends GuiScreen
 {
@@ -22,6 +27,7 @@ public class GuiChangelog extends GuiScreen
     public GuiChangelog(JsonModUpdate mod, String version, String[] changelog)
     {
         super();
+        this.mc = Minecraft.getMinecraft();
         this.mod = mod;
         this.version = version;
         this.changelog = changelog;
@@ -29,21 +35,18 @@ public class GuiChangelog extends GuiScreen
 
     public void initGui()
     {
-        buttonList.clear();
-        buttonList.add(new GuiButton(0, width / 2 - 100, height / 2 + 60, 200, 20, "Done"));
+        buttonList.add(new GuiButton(0, width / 2 - 100, height - 50, 200, 20, "Done"));
     }
 
     protected void actionPerformed(GuiButton button)
     {
         switch (button.id)
         {
-
+        case 0:
+        {
+        	keyTyped((char)1, 1);
         }
-    }
-
-    protected void keyTyped(char character, int par2)
-    {
-        super.keyTyped(character, par2);
+        }
     }
 
     public boolean doesGuiPauseGame()
@@ -131,7 +134,7 @@ public class GuiChangelog extends GuiScreen
         parent.drawTexturedModalRect(offsetX + parent.width / 2 - 201, offsetY + parent.height / 2 - 110, 0, 0, 405, 33);
         parent.drawTexturedModalRect(offsetX + parent.width / 2 - 201, offsetY + parent.height / 2 - 72, 0, 0, xSize > 405 ? xSize + 20 : 405, ySize + 15);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        parent.drawCenteredString(fontRenderer, "(" + mod.modid + ") " + mod.name + ": " + version, offsetX + parent.width / 2, offsetY + parent.height / 2 - 97, 0xffffff);
+        parent.drawString(fontRenderer, "(" + mod.modid + ") " + mod.name + ": " + version, offsetX + parent.width / 2 - 190, offsetY + parent.height / 2 - 97, 0xffffff);
 
         for (int k = 0; k < changelog.length; ++k)
         {

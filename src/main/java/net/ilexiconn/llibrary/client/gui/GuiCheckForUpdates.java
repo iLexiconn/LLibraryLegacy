@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.client.gui;
 
 import com.google.common.collect.Lists;
+
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.update.ChangelogHandler;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
@@ -11,6 +12,7 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
+
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -18,6 +20,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * @author FiskFille
+ */
 public class GuiCheckForUpdates extends GuiScreen
 {
     public List<JsonModUpdate> outdatedMods;
@@ -34,7 +39,7 @@ public class GuiCheckForUpdates extends GuiScreen
 
         if (loadingTimer >= 50)
         {
-            buttonList.add(new GuiButton(0, width / 2 - 60, height - 38, I18n.format("gui.done")));
+            buttonList.add(new GuiButton(0, width / 2 - 100, height - 38, I18n.format("gui.done")));
 
             for (JsonModUpdate mod : outdatedMods)
             {
@@ -53,9 +58,37 @@ public class GuiCheckForUpdates extends GuiScreen
         {
             buttonList.add(new GuiButton(0, width / 2 - 100, height - 38, I18n.format("gui.cancel")));
         }
+        
+        centerDoneButton();
     }
 
-    protected void actionPerformed(GuiButton button)
+    public void centerDoneButton()
+    {
+        int j = 0;
+        int k = 0;
+        
+        for (int i = 0; i < buttonList.size(); ++i)
+        {
+        	GuiButton button = (GuiButton)buttonList.get(i);
+        	int id = button.id;
+        	
+        	if (id == 0)
+        	{
+        		k = button.xPosition;
+        	}
+        	else if (id == 1)
+        	{
+        		j = button.xPosition + button.width;
+        	}
+        }
+        
+        if (j > k)
+        {
+        	((GuiButton)buttonList.get(0)).xPosition += j - k + 20;
+        }
+	}
+
+	protected void actionPerformed(GuiButton button)
     {
         int id = button.id;
 
