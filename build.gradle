@@ -40,3 +40,12 @@ processResources {
         exclude 'mcmod.info'
     }
 }
+
+task devJar(type: Jar) {
+    classifier = 'dev'
+    from sourceSets.main.output
+}
+
+artifacts {
+    archives devJar
+}
