@@ -2,7 +2,7 @@ package net.ilexiconn.llibrary.client.gui;
 
 import net.minecraft.client.gui.GuiButton;
 
-public class GuiLLibMainMenu extends GuiOverride
+public class GuiLLibraryMainMenu extends GuiOverride
 {
 	private GuiButtonCheckForUpdates buttonCheckForUpdates;
 	

@@ -1,22 +1,18 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import java.util.Iterator;
-import java.util.List;
-
-import net.ilexiconn.llibrary.LLibrary;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-
 import scala.actors.threadpool.Arrays;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiButtonCheckForUpdates extends GuiButton
@@ -79,11 +75,10 @@ public class GuiButtonCheckForUpdates extends GuiButton
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_DEPTH_TEST);
             int k = 0;
-            Iterator iterator = text.iterator();
 
-            while (iterator.hasNext())
+            for (Object t : text)
             {
-                String s = (String)iterator.next();
+                String s = (String) t;
                 int l = font.getStringWidth(s);
 
                 if (l > k)

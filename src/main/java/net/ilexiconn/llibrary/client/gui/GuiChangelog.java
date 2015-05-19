@@ -27,7 +27,7 @@ public class GuiChangelog extends GuiScreen
         this.changelog = changelog;
     }
 
-    public void init()
+    public void initGui()
     {
         buttonList.clear();
         buttonList.add(new GuiButton(0, width / 2 - 100, height / 2 + 60, 200, 20, "Done"));

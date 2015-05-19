@@ -2,7 +2,7 @@ package net.ilexiconn.llibrary.client;
 
 import net.ilexiconn.llibrary.client.gui.GuiChangelog;
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
-import net.ilexiconn.llibrary.client.gui.GuiLLibMainMenu;
+import net.ilexiconn.llibrary.client.gui.GuiLLibraryMainMenu;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.common.ServerProxy;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
@@ -29,7 +29,7 @@ public class ClientProxy extends ServerProxy
         FMLCommonHandler.instance().bus().register(new GuiHelper());
         
         
-        GuiHelper.addOverride(GuiMainMenu.class, new GuiLLibMainMenu());
+        GuiHelper.addOverride(GuiMainMenu.class, new GuiLLibraryMainMenu());
     }
 
     public void postInit()
