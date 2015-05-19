@@ -1,13 +1,8 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.util.List;
-
-import net.ilexiconn.llibrary.common.command.CommandLLibrary;
+import com.google.common.collect.Lists;
+import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.update.ChangelogHandler;
-import net.ilexiconn.llibrary.common.update.ModUpdateContainer;
-import net.ilexiconn.llibrary.common.update.UpdateHelper;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -15,17 +10,17 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
-
 import org.lwjgl.opengl.GL11;
 
-import com.google.common.collect.Lists;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.util.List;
 
 public class GuiCheckForUpdates extends GuiScreen
 {
-	public List<ModUpdateContainer> outdatedMods;
+	public List<JsonModUpdate> outdatedMods;
 	private GuiSlotModUpdateContainerList modList;
 	private int selectedIndex;
     private int listWidth;
@@ -41,12 +36,12 @@ public class GuiCheckForUpdates extends GuiScreen
 		
 		if (loadingTimer >= 50)
 		{
-			for (ModUpdateContainer mod : outdatedMods)
+			for (JsonModUpdate mod : outdatedMods)
 	    	{
 				int i = 20 + 32;
 	            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.name) + i);
 	            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.modid) + i);
-	            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.version) + i);
+	            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.currentVersion) + i);
 	        }
 	    	
 	        listWidth = Math.min(listWidth, 200);
@@ -68,14 +63,14 @@ public class GuiCheckForUpdates extends GuiScreen
 		{
 			if (selectedIndex < outdatedMods.size())
 			{
-				ModUpdateContainer mod = outdatedMods.get(selectedIndex);
+				JsonModUpdate mod = outdatedMods.get(selectedIndex);
 				Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 
 	            if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE))
 	            {
 	                try
 	                {
-	                    desktop.browse(mod.website.toURI());
+	                    desktop.browse(new URI(mod.getUpdateUrl()));
 	                }
 	                catch (Exception e)
 	                {
@@ -148,12 +143,12 @@ public class GuiCheckForUpdates extends GuiScreen
 		{
 			if (selectedIndex < outdatedMods.size())
 			{
-				ModUpdateContainer mod = outdatedMods.get(selectedIndex);
+				JsonModUpdate mod = outdatedMods.get(selectedIndex);
 				String[] changelog = null;
 				
 		        try
 		        {
-		            changelog = ChangelogHandler.getChangelog(mod, mod.latestVersion);
+		            changelog = ChangelogHandler.getChangelog(mod, mod.getNewestVersion());
 		        }
 		        catch (Exception e)
 		        {
@@ -162,7 +157,7 @@ public class GuiCheckForUpdates extends GuiScreen
 		        
 		        int k = Math.max(modList.getLeft() + listWidth + 20 - width / 2 + 201, 1);
 		        int l = modList.getTop() - height / 2 + 110;
-		        GuiChangelog.drawChangelog(this, getFontRenderer(), changelog, k, l, mod.latestVersion, mod);
+		        GuiChangelog.drawChangelog(this, getFontRenderer(), changelog, k, l, mod.getNewestVersion(), mod);
 			}
 		}
 		

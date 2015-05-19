@@ -1,70 +1,27 @@
 package net.ilexiconn.llibrary.common.update;
 
-import com.google.common.collect.Lists;
+import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author FiskFille, iLexiconn
+ */
 public class ChangelogHandler
 {
-    public static String[] getChangelog(ModUpdateContainer mod, String version) throws Exception
+    public static String[] getChangelog(JsonModUpdate mod, String version) throws Exception
     {
-        ArrayList<String> list = getVersionChangelog(mod, version);
+        List<String> list = getVersionChangelog(mod, version);
         return list.toArray(new String[4096]);
     }
 
-    private static ArrayList<String> getVersionChangelog(ModUpdateContainer mod, String version) throws Exception
+    private static List<String> getVersionChangelog(JsonModUpdate mod, String version) throws Exception
     {
-        ArrayList<String> changelog = Lists.newArrayList();
-
-        try
-        {
-            List<String> list = mod.updateFile;
-
-            for (String line : list)
-            {
-                String expected = mod.modid + "Log|" + version + ":";
-
-                if (line.contains(expected))
-                {
-                    String s1 = line.substring(line.indexOf(expected));
-                    String s2 = s1.substring(expected.length());
-                    String[] astring1 = s2.split(" ENDLINE ");
-
-                    Collections.addAll(changelog, astring1);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        return changelog;
+        return mod.getVersions().get(version);
     }
 
-    public static boolean hasModGotChangelogForVersion(ModUpdateContainer mod, String version) throws Exception
+    public static boolean hasModGotChangelogForVersion(JsonModUpdate mod, String version) throws Exception
     {
-        try
-        {
-            List<String> list = mod.updateFile;
-
-            for (String string : list)
-            {
-                String s = mod.modid + "Log|" + version + ":";
-
-                if (string.contains(s))
-                {
-                    return true;
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        return false;
+        return mod.getVersions().containsKey(version);
     }
 }

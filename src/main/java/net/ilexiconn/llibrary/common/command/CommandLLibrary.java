@@ -3,17 +3,18 @@ package net.ilexiconn.llibrary.common.command;
 import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.common.color.EnumChatColor;
+import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.update.ChangelogHandler;
-import net.ilexiconn.llibrary.common.update.ModUpdateContainer;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
-import net.minecraft.util.EnumChatFormatting;
 
 import java.awt.*;
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class CommandLLibrary extends CommandBase
@@ -35,8 +36,7 @@ public class CommandLLibrary extends CommandBase
 
     public void processCommand(ICommandSender sender, String[] args)
     {
-        String title = "[LLibHelper]" + EnumChatFormatting.YELLOW + " ";
-        List<ModUpdateContainer> outdatedMods = VersionHandler.getOutdatedMods();
+        List<JsonModUpdate> outdatedMods = VersionHandler.getOutdatedMods();
 
         if (args.length >= 1)
         {
@@ -49,9 +49,9 @@ public class CommandLLibrary extends CommandBase
 
                 ChatHelper.chatTo(sender, new ChatMessage("--- Showing a list of outdated mods ---", EnumChatColor.DARK_GREEN));
 
-                for (ModUpdateContainer mod : outdatedMods)
+                for (JsonModUpdate mod : outdatedMods)
                 {
-                    ChatHelper.chatTo(sender, new ChatMessage("(" + mod.modid + ") ", EnumChatColor.BLUE), new ChatMessage(mod.name + " version " + mod.version + " - Latest version: " + mod.latestVersion, EnumChatColor.WHITE));
+                    ChatHelper.chatTo(sender, new ChatMessage("(" + mod.modid + ") ", EnumChatColor.BLUE), new ChatMessage(mod.name + " version " + mod.currentVersion + " - Latest version: " + mod.getNewestVersion(), EnumChatColor.WHITE));
                 }
 
                 ChatHelper.chatTo(sender, new ChatMessage("Use ", EnumChatColor.GREEN), new ChatMessage("/llibrary update <modid>", EnumChatColor.YELLOW), new ChatMessage(" to update the desired mod, ", EnumChatColor.GREEN), new ChatMessage("or", EnumChatColor.RED));
@@ -67,7 +67,7 @@ public class CommandLLibrary extends CommandBase
                     throw new WrongUsageException("/llibrary update <modid>");
                 }
 
-                for (ModUpdateContainer mod : outdatedMods)
+                for (JsonModUpdate mod : outdatedMods)
                 {
                     if (args[1].equalsIgnoreCase(mod.modid))
                     {
@@ -77,7 +77,7 @@ public class CommandLLibrary extends CommandBase
                         {
                             try
                             {
-                                desktop.browse(mod.website.toURI());
+                                desktop.browse(new URI(mod.getUpdateUrl()));
                             }
                             catch (Exception e)
                             {
@@ -99,7 +99,7 @@ public class CommandLLibrary extends CommandBase
 
                 for (int i = 0; i < UpdateHelper.modList.size(); ++i)
                 {
-                    ModUpdateContainer mod = UpdateHelper.modList.get(i);
+                    JsonModUpdate mod = UpdateHelper.modList.get(i);
 
                     if (args[1].equalsIgnoreCase(mod.modid))
                     {
@@ -161,28 +161,15 @@ public class CommandLLibrary extends CommandBase
 
         for (Object aCollection : list)
         {
-            ModUpdateContainer mod = (ModUpdateContainer) aCollection;
+            JsonModUpdate mod = (JsonModUpdate) aCollection;
             arraylist.add(mod.modid);
         }
 
         return arraylist;
     }
 
-    protected List getAllModChangelogs(ModUpdateContainer mod)
+    protected Collection<String> getAllModChangelogs(JsonModUpdate mod)
     {
-        ArrayList arraylist = Lists.newArrayList();
-
-        for (String string : mod.updateFile)
-        {
-            String s = mod.modid + "Log|";
-
-            if (string.startsWith(s))
-            {
-                String s1 = string.substring(s.length()).split(":")[0];
-                arraylist.add(s1);
-            }
-        }
-
-        return arraylist;
+        return mod.getVersions().keySet();
     }
 }

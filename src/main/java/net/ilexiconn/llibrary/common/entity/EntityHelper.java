@@ -58,16 +58,6 @@ public class EntityHelper
         return removedEntities.contains(entity);
     }
 
-    public static void registerEntity(EntityObject entity)
-    {
-        String entityName = entity.getEntityName();
-        Class<? extends Entity> entityClass = entity.getEntityClass();
-
-        if (entity.doRegisterEgg())
-            registerEntity(entityName, entityClass, entity.getEggColorPrimary(), entity.getEggColorSecondary());
-        else registerEntity(entityName, entityClass);
-    }
-
     public static void registerEntity(String entityName, Class<? extends Entity> entityClass)
     {
         int entityId = EntityRegistry.findGlobalUniqueEntityId();

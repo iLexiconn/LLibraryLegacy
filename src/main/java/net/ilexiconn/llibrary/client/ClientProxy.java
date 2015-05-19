@@ -5,8 +5,8 @@ import net.ilexiconn.llibrary.client.gui.GuiHelper;
 import net.ilexiconn.llibrary.client.gui.GuiLLibMainMenu;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.common.ServerProxy;
+import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.update.ChangelogHandler;
-import net.ilexiconn.llibrary.common.update.ModUpdateContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -39,7 +39,7 @@ public class ClientProxy extends ServerProxy
         RenderManager.instance.entityRenderMap.put(EntityPlayer.class, new RenderLLibraryPlayer());
     }
 
-    public void openChangelogGui(ModUpdateContainer mod, String version)
+    public void openChangelogGui(JsonModUpdate mod, String version)
     {
         String[] changelog = null;
 

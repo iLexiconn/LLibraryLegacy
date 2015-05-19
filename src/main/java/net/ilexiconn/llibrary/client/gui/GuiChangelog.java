@@ -1,27 +1,25 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import net.ilexiconn.llibrary.common.update.ModUpdateContainer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiChangelog extends GuiScreen
 {
     public int verticalScroll = 0;
     public int horizontalScroll = 0;
-    private final ModUpdateContainer mod;
+    private final JsonModUpdate mod;
     private final String version;
     private final String[] changelog;
 
-    public GuiChangelog(ModUpdateContainer mod, String version, String[] changelog)
+    public GuiChangelog(JsonModUpdate mod, String version, String[] changelog)
     {
         super();
         this.mod = mod;
@@ -112,10 +110,8 @@ public class GuiChangelog extends GuiScreen
         super.drawScreen(par1, par2, par3);
     }
 
-	public static void drawChangelog(GuiScreen parent, FontRenderer fontRenderer, String[] changelog, int offsetX, int offsetY, String version, ModUpdateContainer mod)
+	public static void drawChangelog(GuiScreen parent, FontRenderer fontRenderer, String[] changelog, int offsetX, int offsetY, String version, JsonModUpdate mod)
 	{
-		int i = offsetY;
-        int j = offsetX;
         int xSize = 0;
         int ySize = 0;
 
@@ -132,16 +128,16 @@ public class GuiChangelog extends GuiScreen
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(0, 0, 0, 0.35F);
-        parent.drawTexturedModalRect(j + parent.width / 2 - 201, i + parent.height / 2 - 110, 0, 0, 405, 33);
-        parent.drawTexturedModalRect(j + parent.width / 2 - 201, i + parent.height / 2 - 72, 0, 0, xSize > 405 ? xSize + 20 : 405, ySize + 15);
+        parent.drawTexturedModalRect(offsetX + parent.width / 2 - 201, offsetY + parent.height / 2 - 110, 0, 0, 405, 33);
+        parent.drawTexturedModalRect(offsetX + parent.width / 2 - 201, offsetY + parent.height / 2 - 72, 0, 0, xSize > 405 ? xSize + 20 : 405, ySize + 15);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        parent.drawCenteredString(fontRenderer, "(" + mod.modid + ") " + mod.name + ": " + version, j + parent.width / 2, i + parent.height / 2 - 97, 0xffffff);
+        parent.drawCenteredString(fontRenderer, "(" + mod.modid + ") " + mod.name + ": " + version, offsetX + parent.width / 2, offsetY + parent.height / 2 - 97, 0xffffff);
 
         for (int k = 0; k < changelog.length; ++k)
         {
             if (changelog[k] != null)
             {
-            	parent.drawString(fontRenderer, changelog[k], j + parent.width / 2 - 190, i + parent.height / 2 - 65 + k * 10, 0xffffff);
+            	parent.drawString(fontRenderer, changelog[k], offsetX + parent.width / 2 - 190, offsetY + parent.height / 2 - 65 + k * 10, 0xffffff);
             }
         }
 	}

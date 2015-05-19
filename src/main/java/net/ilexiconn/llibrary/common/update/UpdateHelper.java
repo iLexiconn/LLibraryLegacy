@@ -1,89 +1,62 @@
 package net.ilexiconn.llibrary.common.update;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-
-import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.common.web.WebHelper;
-import net.minecraft.util.ResourceLocation;
-
 import com.google.common.collect.Lists;
-
 import cpw.mods.fml.common.Mod;
+import net.ilexiconn.llibrary.common.json.JsonFactory;
+import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
+import net.ilexiconn.llibrary.common.web.WebHelper;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Helper class to register a mod for automatic update checking.
  *
- * @author FiskFille
+ * @author FiskFille, iLexiconn
  */
 public class UpdateHelper
 {
-    public static ArrayList<ModUpdateContainer> modList = Lists.newArrayList();
+    public static ArrayList<JsonModUpdate> modList = Lists.newArrayList();
 
     /**
      * Register the main mod class for automatic update checking.
      * <p/>
      * Example pastebin version file:
      * <p/>
-     * fiskutils|:1.0.1 
-     * fiskutilsLog|1.0.0:* Released mod. ENDLINE * Made example changelog. 
-     * fiskutilsLog|1.0.1:* Updated to 1.7.10. 
+     * TODO
      *
      * @param mod        		the main mod instance
-     * @param updateTextFileURL the paste id
-     * @param website    		the update website
-     * @param icon		 		a square mod icon
-     * @param iconURL			the URL from which LLib should download the mod's icon. If null, it will use the local mod icon provided in parameter 'icon'.  
+     * @param url               the updater file
+     *
+     * @throws IOException
      */
-    public static void registerUpdateChecker(Object mod, String updateTextFileURL, String website, String icon, String iconURL)
+    public static void registerUpdateChecker(Object mod, String url) throws IOException
     {
-        ModUpdateContainer container = new ModUpdateContainer();
+        JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(url), JsonModUpdate.class);
         Class<?> modClass = mod.getClass();
 
-        if (!modClass.isAnnotationPresent(Mod.class)) return;
+        if (!modClass.isAnnotationPresent(Mod.class)) throw new RuntimeException("Please register the updater in your main class.");
         
         Mod annotation = modClass.getAnnotation(Mod.class);
 
         try
         {
-            container.modid = annotation.modid();
-            container.version = annotation.version();
-            container.name = annotation.name();
-            container.updateTextFileURL = updateTextFileURL;
-            container.website = new URL(website);
-            
-            if (iconURL == null)
-            {
-            	File dest = new File(LLibrary.class.getResource("LLibrary.class").toString().replace("%20", " ")).getParentFile().getParentFile().getParentFile().getParentFile();
-            	File destFile = new File(String.valueOf(dest).substring(6) + "/" + icon);
-            	InputStream logoResource = new FileInputStream(destFile);
-            	
-            	if (logoResource != null)
-            	{
-            		container.thumbnail = ImageIO.read(logoResource);
-            	}
-            }
-            else
-            {
-            	container.thumbnail = WebHelper.downloadImage(iconURL);
-            }
+            json.modid = annotation.modid();
+            json.currentVersion = annotation.version();
+            json.name = annotation.name();
+            json.thumbnail = WebHelper.downloadImage(json.getIconUrl());
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
 
-        modList.add(container);
+        modList.add(json);
     }
 
-    public static ModUpdateContainer getModContainerById(String modid)
+    public static JsonModUpdate getModContainerById(String modid)
     {
-        for (ModUpdateContainer mod : modList)
+        for (JsonModUpdate mod : modList)
         {
             if (mod.modid.equals(modid))
             {

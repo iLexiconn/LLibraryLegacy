@@ -1,26 +1,16 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
-
-import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.common.update.ModUpdateContainer;
+import cpw.mods.fml.client.GuiScrollingList;
+import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.client.GuiScrollingList;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class GuiSlotModUpdateContainerList extends GuiScrollingList
 {
@@ -82,14 +72,14 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
 	{
 		if (listIndex < parent.outdatedMods.size())
 		{
-			ModUpdateContainer mod = parent.outdatedMods.get(listIndex);
+			JsonModUpdate mod = parent.outdatedMods.get(listIndex);
 			
 			if (mod != null)
 			{
 				int i = 4 + 32;
 				parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.name, listWidth - 10), left + i, y + 2, 0xFFFFFF);
 				parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.modid, listWidth - 10), left + i, y + 12, 0xCCCCCC);
-				parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.version, listWidth - 10), left + i, y + 22, 0xCCCCCC);
+				parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.currentVersion, listWidth - 10), left + i, y + 22, 0xCCCCCC);
 				
 				
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

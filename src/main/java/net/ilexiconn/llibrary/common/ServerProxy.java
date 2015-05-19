@@ -1,14 +1,14 @@
 package net.ilexiconn.llibrary.common;
 
-import cpw.mods.fml.client.GuiModList;
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.common.entity.EntityHelper;
 import net.ilexiconn.llibrary.common.entity.EntityMountableBlock;
 import net.ilexiconn.llibrary.common.event.ServerEventHandler;
-import net.ilexiconn.llibrary.common.update.ModUpdateContainer;
+import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+
+import java.io.IOException;
 
 public class ServerProxy
 {
@@ -16,8 +16,15 @@ public class ServerProxy
     {
         MinecraftForge.EVENT_BUS.register(new ServerEventHandler());
         EntityHelper.registerEntity("mountableBlock", EntityMountableBlock.class);
-        
-        UpdateHelper.registerUpdateChecker(LLibrary.instance, "http://ilexiconn.net/llibrary/data/versions.txt", "http://ilexiconn.net/llibrary", null, "http://ilexiconn.net/llibrary/data/logo.png");
+
+        try
+        {
+            UpdateHelper.registerUpdateChecker(LLibrary.instance, "http://pastebin.com/raw.php?i=TGiS6kuk");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void postInit()
@@ -25,7 +32,7 @@ public class ServerProxy
 
     }
 
-    public void openChangelogGui(ModUpdateContainer mod, String version)
+    public void openChangelogGui(JsonModUpdate mod, String version)
     {
 
     }
