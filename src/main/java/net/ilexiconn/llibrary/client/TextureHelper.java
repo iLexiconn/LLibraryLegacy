@@ -1,9 +1,6 @@
 package net.ilexiconn.llibrary.client;
 
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.ImageBufferDownload;
@@ -11,7 +8,11 @@ import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.io.IOUtils;
 
 import javax.imageio.ImageIO;
@@ -24,26 +25,27 @@ import java.util.Map;
 import static com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
 /**
- * Player skin tools, not stable and only works in 1.7.10.
+ * Player skin tools, not stable.
  *
  * @author iLexiconn
  */
 @SideOnly(Side.CLIENT)
 public class TextureHelper
 {
+    private static ResourceLocation locationStevePng = new ResourceLocation("textures/entity/steve.png");
     private static Minecraft mc = Minecraft.getMinecraft();
 
     public static BufferedImage getPlayerSkin(AbstractClientPlayer player)
     {
         BufferedImage bufferedImage = null;
         InputStream inputStream = null;
-        Map map = mc.func_152342_ad().func_152788_a(player.getGameProfile());
+        Map map = mc.getSkinManager().loadSkinFromCache(player.getGameProfile());
         ITextureObject texture;
 
         try
         {
             if (map.containsKey(Type.SKIN))
-                texture = mc.renderEngine.getTexture(mc.func_152342_ad().func_152792_a((MinecraftProfileTexture) map.get(Type.SKIN), Type.SKIN));
+                texture = mc.renderEngine.getTexture(mc.getSkinManager().loadSkin((MinecraftProfileTexture) map.get(Type.SKIN), Type.SKIN));
             else texture = mc.renderEngine.getTexture(player.getLocationSkin());
 
             if (texture instanceof ThreadDownloadImageData)
@@ -59,7 +61,7 @@ public class TextureHelper
             }
             else
             {
-                inputStream = mc.getResourceManager().getResource(AbstractClientPlayer.locationStevePng).getInputStream();
+                inputStream = mc.getResourceManager().getResource(locationStevePng).getInputStream();
                 bufferedImage = ImageIO.read(inputStream);
             }
         }
@@ -89,7 +91,7 @@ public class TextureHelper
 
     public static boolean hasBackup(AbstractClientPlayer player)
     {
-        return new File("llibrary" + File.separator + "skin-backups" + File.separator + player.getCommandSenderName() + ".png").exists();
+        return new File("llibrary" + File.separator + "skin-backups" + File.separator + player.getDisplayNameString() + ".png").exists();
     }
 
     private static void backupPlayerSkin(AbstractClientPlayer entityPlayer)
@@ -98,7 +100,7 @@ public class TextureHelper
 
         File file = new File("llibrary" + File.separator + "skin-backups");
         file.mkdir();
-        File skinFile = new File(file, entityPlayer.getCommandSenderName() + ".png");
+        File skinFile = new File(file, entityPlayer.getDisplayNameString() + ".png");
         try
         {
             skinFile.createNewFile();
@@ -116,7 +118,7 @@ public class TextureHelper
 
         if (textureObject == null)
         {
-            textureObject = new ThreadDownloadImageData(null, String.format("http://skins.minecraft.net/MinecraftSkins/%s.png", StringUtils.stripControlCodes(player.getCommandSenderName())), AbstractClientPlayer.locationStevePng, new ImageBufferDownload());
+            textureObject = new ThreadDownloadImageData(null, String.format("http://skins.minecraft.net/MinecraftSkins/%s.png", StringUtils.stripControlCodes(player.getDisplayNameString())), locationStevePng, new ImageBufferDownload());
             Minecraft.getMinecraft().renderEngine.loadTexture(player.getLocationSkin(), textureObject);
         }
 
@@ -125,7 +127,7 @@ public class TextureHelper
 
     private static BufferedImage getOriginalPlayerSkin(AbstractClientPlayer entityPlayer)
     {
-        File file = new File("llibrary" + File.separator + "skin-backups" + File.separator + entityPlayer.getCommandSenderName() + ".png");
+        File file = new File("llibrary" + File.separator + "skin-backups" + File.separator + entityPlayer.getDisplayNameString() + ".png");
         BufferedImage bufferedImage = null;
 
         try

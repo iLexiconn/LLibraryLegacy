@@ -10,7 +10,7 @@ public class ChatHelper
 {
     public static void chatToFromJSON(ICommandSender commandSender, String json)
     {
-        IChatComponent ichatcomponent = IChatComponent.Serializer.func_150699_a(json);
+        IChatComponent ichatcomponent = IChatComponent.Serializer.jsonToComponent(json);
         commandSender.addChatMessage(ichatcomponent);
     }
 

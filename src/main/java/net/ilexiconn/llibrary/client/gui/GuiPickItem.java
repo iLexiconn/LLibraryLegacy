@@ -1,41 +1,27 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDoublePlant;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import com.google.common.collect.Lists;
-
-import cpw.mods.fml.client.GuiSlotModList;
-import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author FiskFille
@@ -47,7 +33,6 @@ public abstract class GuiPickItem extends GuiScreen
     private GuiScreen parentScreen;
     private GuiSlotItemStackList itemList;
     private GuiTextField textField;
-    private RenderItem renderItem = new RenderItem();
     private ArrayList<ItemStack> items = Lists.newArrayList();
     public ArrayList<ItemStack> itemsFiltered = Lists.newArrayList(); 
     
@@ -65,7 +50,7 @@ public abstract class GuiPickItem extends GuiScreen
         int h = scaledresolution.getScaledHeight();
         setWorldAndResolution(mc, w, h);
 
-        textField = new GuiTextField(fontRendererObj, 20, 30, 103, 12);
+        textField = new GuiTextField(0, fontRendererObj, 20, 30, 103, 12);
         textField.setMaxStringLength(40);
 
         for (Item item : (Iterable<Item>)Item.itemRegistry)
@@ -149,7 +134,7 @@ public abstract class GuiPickItem extends GuiScreen
         return false;
     }
 
-    protected void mouseClicked(int mouseX, int mouseY, int button)
+    protected void mouseClicked(int mouseX, int mouseY, int button) throws IOException
     {
     	super.mouseClicked(mouseX, mouseY, button);
         textField.mouseClicked(mouseX, mouseY, button);
@@ -209,21 +194,14 @@ public abstract class GuiPickItem extends GuiScreen
     {
         RenderHelper.enableGUIStandardItemLighting();
         zLevel = 100f;
-        renderItem.zLevel = 100f;
         GL11.glEnable(2896);
         GL11.glEnable(32826);
-        renderItem.renderItemIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);        
-        renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
+        mc.getRenderItem().renderItemIntoGUI(itemstack, x, y);
+        mc.getRenderItem().renderItemOverlayIntoGUI(mc.fontRendererObj, itemstack, x, y, "");
         GL11.glDisable(2896);
         GL11.glEnable(3042);
-        renderItem.zLevel = 0f;
         zLevel = 0f;
         RenderHelper.disableStandardItemLighting();
-    }
-
-    public void playClickSound(SoundHandler soundHandler)
-    {
-        soundHandler.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1f));
     }
 
 	public void selectItemIndex(int var1)

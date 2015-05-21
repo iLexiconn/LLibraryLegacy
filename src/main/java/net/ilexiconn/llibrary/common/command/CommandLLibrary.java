@@ -8,8 +8,10 @@ import net.ilexiconn.llibrary.common.update.ChangelogHandler;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
+import net.minecraft.util.BlockPos;
 
 import java.awt.*;
 import java.net.URI;
@@ -19,7 +21,7 @@ import java.util.List;
 
 public class CommandLLibrary extends CommandBase
 {
-    public String getCommandName()
+    public String getName()
     {
         return "llibrary";
     }
@@ -29,12 +31,7 @@ public class CommandLLibrary extends CommandBase
         return "/llibrary list OR /llibrary update <modid> OR /llibrary changelog <modid> <version>";
     }
 
-    public int getRequiredPermissionLevel()
-    {
-        return 0;
-    }
-
-    public void processCommand(ICommandSender sender, String[] args)
+    public void execute(ICommandSender sender, String[] args) throws CommandException
     {
         List<JsonModUpdate> outdatedMods = VersionHandler.getOutdatedMods();
 
@@ -131,25 +128,30 @@ public class CommandLLibrary extends CommandBase
         throw new WrongUsageException(getCommandUsage(sender));
     }
 
-    public List addTabCompletionOptions(ICommandSender icommandsender, String[] astring)
+    public int getRequiredPermissionLevel()
     {
-        if (astring.length == 1)
+        return 0;
+    }
+
+    public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    {
+        if (args.length == 1)
         {
-            return getListOfStringsMatchingLastWord(astring, "list", "update", "changelog");
+            return getListOfStringsMatchingLastWord(args, "list", "update", "changelog");
         }
         else
         {
-            if (astring[0].equalsIgnoreCase("update") && astring.length == 2)
+            if (args[0].equalsIgnoreCase("update") && args.length == 2)
             {
-                return getListOfStringsFromIterableMatchingLastWord(astring, getAllModIDs(VersionHandler.getOutdatedMods()));
+                return func_175762_a(args, getAllModIDs(VersionHandler.getOutdatedMods()));
             }
-            if (astring[0].equalsIgnoreCase("changelog") && astring.length == 2)
+            if (args[0].equalsIgnoreCase("changelog") && args.length == 2)
             {
-                return getListOfStringsFromIterableMatchingLastWord(astring, getAllModIDs(UpdateHelper.modList));
+                return func_175762_a(args, getAllModIDs(UpdateHelper.modList));
             }
-            if (astring[0].equalsIgnoreCase("changelog") && astring.length == 3)
+            if (args[0].equalsIgnoreCase("changelog") && args.length == 3)
             {
-                return getListOfStringsFromIterableMatchingLastWord(astring, getAllModChangelogs(UpdateHelper.getModContainerById(astring[1])));
+                return func_175762_a(args, getAllModChangelogs(UpdateHelper.getModContainerById(args[1])));
             }
         }
         return null;

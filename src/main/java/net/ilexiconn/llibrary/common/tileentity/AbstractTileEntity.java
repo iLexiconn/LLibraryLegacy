@@ -12,12 +12,12 @@ public abstract class AbstractTileEntity extends TileEntity
     {
         NBTTagCompound nbtTag = new NBTTagCompound();
         writeToNBT(nbtTag);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, nbtTag);
+        return new S35PacketUpdateTileEntity(pos, 0, nbtTag);
     }
 
     public void onDataPacket(NetworkManager manager, S35PacketUpdateTileEntity packet)
     {
-        readFromNBT(packet.func_148857_g());
+        readFromNBT(packet.getNbtCompound());
     }
 
     public void readFromNBT(NBTTagCompound nbtTag)

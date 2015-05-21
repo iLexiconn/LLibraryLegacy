@@ -1,14 +1,13 @@
 package net.ilexiconn.llibrary.common.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemModelledArmor extends ItemArmor
 {
@@ -17,18 +16,11 @@ public class ItemModelledArmor extends ItemArmor
 
     private IArmorModelReceiver armorModelReceiver;
 
-    public ItemModelledArmor(String textureName, ArmorMaterial material, int armorType, IArmorModelReceiver receiver)
+    public ItemModelledArmor(String name, ArmorMaterial material, int armorType, IArmorModelReceiver receiver)
     {
         super(material, 4, armorType);
-        setUnlocalizedName(receiver.getModelTextureName() + "_" + textureName);
-        setTextureName(textureName);
+        setUnlocalizedName(receiver.getModelTextureName() + "_" + name);
         armorModelReceiver = receiver;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        itemIcon = iconRegister.registerIcon(getIconString());
     }
 
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)

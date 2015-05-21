@@ -4,13 +4,12 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public class EntityMountableBlock extends Entity
 {
-    public int blockPosX;
-    public int blockPosY;
-    public int blockPosZ;
+    public BlockPos blockPos;
     public Block block;
 
     public EntityMountableBlock(World world)
@@ -18,15 +17,13 @@ public class EntityMountableBlock extends Entity
         super(world);
     }
 
-    public EntityMountableBlock(World world, int x, int y, int z, float mountX, float mountY, float mountZ)
+    public EntityMountableBlock(World world, BlockPos pos, float mountX, float mountY, float mountZ)
     {
         super(world);
         noClip = true;
         preventEntitySpawning = true;
-        blockPosX = x;
-        blockPosY = y;
-        blockPosZ = z;
-        block = world.getBlock(x, y, z);
+        blockPos = pos;
+        block = world.getBlockState(pos).getBlock();
 
         setPosition(mountX, mountY, mountZ);
         setSize(0f, 0f);
@@ -46,7 +43,7 @@ public class EntityMountableBlock extends Entity
     {
         worldObj.theProfiler.startSection("entityBaseTick");
         if (riddenByEntity == null || riddenByEntity.isDead) setDead();
-        else if (worldObj.getBlock(blockPosX, blockPosY, blockPosZ) != block)
+        else if (worldObj.getBlockState(blockPos).getBlock() != block)
             interactFirst((EntityPlayer) riddenByEntity);
         ticksExisted++;
         worldObj.theProfiler.endSection();

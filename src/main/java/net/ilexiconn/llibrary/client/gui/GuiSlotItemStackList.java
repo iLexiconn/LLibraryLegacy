@@ -1,16 +1,11 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import java.util.ArrayList;
-
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import cpw.mods.fml.client.GuiScrollingList;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.LoaderState.ModState;
-import cpw.mods.fml.common.ModContainer;
+import net.minecraftforge.fml.client.GuiScrollingList;
+
+import java.util.ArrayList;
 
 public class GuiSlotItemStackList extends GuiScrollingList
 {

@@ -1,10 +1,10 @@
 package net.ilexiconn.llibrary.common.update;
 
 import com.google.common.collect.Lists;
-import cpw.mods.fml.common.Mod;
 import net.ilexiconn.llibrary.common.json.JsonFactory;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.web.WebHelper;
+import net.minecraftforge.fml.common.Mod;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class UpdateHelper
         JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(url), JsonModUpdate.class);
         Class<?> modClass = mod.getClass();
 
-        if (!modClass.isAnnotationPresent(Mod.class)) throw new RuntimeException("Please register the updater in your main class.");
+        if (!modClass.isAnnotationPresent(Mod.class)) throw new RuntimeException("Please specify the class wit the @Mod annotation.");
         
         Mod annotation = modClass.getAnnotation(Mod.class);
 

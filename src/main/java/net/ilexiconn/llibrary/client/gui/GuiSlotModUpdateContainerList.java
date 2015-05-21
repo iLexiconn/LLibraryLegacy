@@ -1,12 +1,13 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import cpw.mods.fml.client.GuiScrollingList;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.GuiScrollingList;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -112,13 +113,13 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
 				    cachedLogoDimensions[listIndex].height *= scale;
 				    int top = y - 1;
 				    int offset = 21;
-				    Tessellator tess = Tessellator.instance;
+				    WorldRenderer tess = Tessellator.getInstance().getWorldRenderer();
 				    tess.startDrawingQuads();
 				    tess.addVertexWithUV(offset, top + cachedLogoDimensions[listIndex].height, 0, 0, 1);
 				    tess.addVertexWithUV(offset + cachedLogoDimensions[listIndex].width, top + cachedLogoDimensions[listIndex].height, 0, 1, 1);
 				    tess.addVertexWithUV(offset + cachedLogoDimensions[listIndex].width, top, 0, 1, 0);
 				    tess.addVertexWithUV(offset, top, 0, 0, 0);
-				    tess.draw();
+				    tess.finishDrawing();
 				}
 			}
 		}

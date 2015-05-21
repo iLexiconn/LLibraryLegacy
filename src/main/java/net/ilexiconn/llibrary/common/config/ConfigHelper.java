@@ -1,10 +1,10 @@
 package net.ilexiconn.llibrary.common.config;
 
 import com.google.common.collect.Maps;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.io.File;
 import java.util.Map;

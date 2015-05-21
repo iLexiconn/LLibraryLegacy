@@ -19,7 +19,7 @@ public class ServerProxy
 
         try
         {
-            UpdateHelper.registerUpdateChecker(LLibrary.instance, "http://pastebin.com/raw.php?i=TGiS6kuk");
+            UpdateHelper.registerUpdateChecker(LLibrary.instance, "http://pastebin.com/raw.php?i=DKhMG369");
         }
         catch (IOException e)
         {

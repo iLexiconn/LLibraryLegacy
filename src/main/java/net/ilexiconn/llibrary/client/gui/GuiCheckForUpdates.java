@@ -13,6 +13,8 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -23,6 +25,7 @@ import java.util.List;
 /**
  * @author FiskFille
  */
+@SideOnly(Side.CLIENT)
 public class GuiCheckForUpdates extends GuiScreen
 {
     public List<JsonModUpdate> outdatedMods;

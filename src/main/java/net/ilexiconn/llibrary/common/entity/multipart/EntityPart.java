@@ -81,7 +81,7 @@ public class EntityPart extends Entity
 
     public boolean attackEntityFrom(DamageSource source, float damage)
     {
-        return !isEntityInvulnerable() && parent.attackEntityFrom(source, damage * damageMultiplier);
+        return !isEntityInvulnerable(source) && parent.attackEntityFrom(source, damage * damageMultiplier);
     }
 
     public boolean isEntityEqual(Entity entity)
@@ -106,7 +106,7 @@ public class EntityPart extends Entity
 
     public void collideWithNearbyEntities()
     {
-        List entities = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.expand(0.20000000298023224d, 0d, 0.20000000298023224d));
+        List entities = worldObj.getEntitiesWithinAABBExcludingEntity(this, getBoundingBox().expand(0.20000000298023224d, 0d, 0.20000000298023224d));
 
         if (entities != null && !entities.isEmpty())
         {

@@ -3,8 +3,11 @@ package net.ilexiconn.llibrary.common.block;
 import net.ilexiconn.llibrary.common.entity.EntityMountableBlock;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -20,20 +23,20 @@ public abstract class BlockMountable extends BlockContainer
         super(material);
     }
 
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (!world.isRemote)
         {
-            List<EntityMountableBlock> mountableBlocks = world.getEntitiesWithinAABB(EntityMountableBlock.class, AxisAlignedBB.getBoundingBox(x, y, z, x + 1f, y + 1f, z + 1f).expand(1f, 1f, 1f));
+            List<EntityMountableBlock> mountableBlocks = world.getEntitiesWithinAABB(EntityMountableBlock.class, AxisAlignedBB.fromBounds(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1f, pos.getY() + 1f, pos.getZ() + 1f).expand(1f, 1f, 1f));
             for (EntityMountableBlock mountableBlock : mountableBlocks)
-                if (mountableBlock.blockPosX == x && mountableBlock.blockPosY == y && mountableBlock.blockPosZ == z)
+                if (mountableBlock.blockPos == pos)
                     return mountableBlock.interactFirst(player);
 
-            float mountX = x + mountPosX;
-            float mountY = y + mountPosY;
-            float mountZ = z + mountPosZ;
+            float mountX = pos.getX() + mountPosX;
+            float mountY = pos.getY() + mountPosY;
+            float mountZ = pos.getZ() + mountPosZ;
 
-            EntityMountableBlock mountableBlock = new EntityMountableBlock(world, x, y, z, mountX, mountY, mountZ);
+            EntityMountableBlock mountableBlock = new EntityMountableBlock(world, pos, mountX, mountY, mountZ);
             world.spawnEntityInWorld(mountableBlock);
             return mountableBlock.interactFirst(player);
         }
@@ -41,11 +44,11 @@ public abstract class BlockMountable extends BlockContainer
         return true;
     }
 
-    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int meta)
+    public void onBlockDestroyedByPlayer(World world, BlockPos pos, IBlockState state)
     {
         if (!world.isRemote)
         {
-            List<EntityMountableBlock> mountableBlocks = world.getEntitiesWithinAABB(EntityMountableBlock.class, AxisAlignedBB.getBoundingBox(x, y, z, x + 1f, y + 1f, z + 1f).expand(1f, 1f, 1f));
+            List<EntityMountableBlock> mountableBlocks = world.getEntitiesWithinAABB(EntityMountableBlock.class, AxisAlignedBB.fromBounds(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1f, pos.getY() + 1f, pos.getZ() + 1f).expand(1f, 1f, 1f));
             for (EntityMountableBlock mountableBlock : mountableBlocks)
                 mountableBlock.setDead();
         }

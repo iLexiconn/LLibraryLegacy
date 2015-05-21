@@ -1,13 +1,13 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import scala.actors.threadpool.Arrays;
@@ -61,7 +61,7 @@ public class GuiButtonCheckForUpdates extends GuiButton
             
             if (hoverTimer >= 20)
     		{
-    			drawHoveringText(Arrays.asList(new String[] {I18n.format("gui.llibrary.updatecheck.desc")}), mouseX, mouseY, mc.fontRenderer);
+    			drawHoveringText(Arrays.asList(new String[] {I18n.format("gui.llibrary.updatecheck.desc")}), mouseX, mouseY, mc.fontRendererObj);
     		}
         }
     }

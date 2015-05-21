@@ -1,16 +1,17 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+
+import java.io.IOException;
 
 /**
  * @author FiskFille
@@ -42,10 +43,17 @@ public class GuiChangelog extends GuiScreen
     {
         switch (button.id)
         {
-        case 0:
-        {
-        	keyTyped((char)1, 1);
-        }
+            case 0:
+            {
+                try
+                {
+                    keyTyped((char) 1, 1);
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -106,15 +114,15 @@ public class GuiChangelog extends GuiScreen
         drawDefaultBackground();
         getMouseWheel();
         drawChangelog(this, fontRendererObj, changelog, horizontalScroll, verticalScroll, version, mod);
-        
+
         drawString(fontRendererObj, "Press 'ESC' to exit.", 5, 5, 0xffffff);
         drawString(fontRendererObj, "Mouse Wheel to scroll up/down.", width - 220, height - 15, 0xffffff);
         drawString(fontRendererObj, "Mouse Wheel + 'SHIFT' to scroll left/right.", width - 220, height - 25, 0xffffff);
         super.drawScreen(par1, par2, par3);
     }
 
-	public static void drawChangelog(GuiScreen parent, FontRenderer fontRenderer, String[] changelog, int offsetX, int offsetY, String version, JsonModUpdate mod)
-	{
+    public static void drawChangelog(GuiScreen parent, FontRenderer fontRenderer, String[] changelog, int offsetX, int offsetY, String version, JsonModUpdate mod)
+    {
         int xSize = 0;
         int ySize = 0;
 
@@ -140,8 +148,8 @@ public class GuiChangelog extends GuiScreen
         {
             if (changelog[k] != null)
             {
-            	parent.drawString(fontRenderer, changelog[k], offsetX + parent.width / 2 - 190, offsetY + parent.height / 2 - 65 + k * 10, 0xffffff);
+                parent.drawString(fontRenderer, changelog[k], offsetX + parent.width / 2 - 190, offsetY + parent.height / 2 - 65 + k * 10, 0xffffff);
             }
         }
-	}
+    }
 }
