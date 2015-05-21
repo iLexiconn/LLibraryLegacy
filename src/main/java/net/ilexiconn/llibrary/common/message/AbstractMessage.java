@@ -12,15 +12,15 @@ public abstract class AbstractMessage<REQ extends AbstractMessage> implements IM
         if (ctx.side.isClient())
         {
             Object obj = null;
-            try 
+            try
             {
-        	    obj = Class.forName("cpw.mods.fml.client.FMLClientHandler").getMethod("instance", new Class[0]).invoke(null, new Object[0]);
-        	    handleClientMessage(message, (EntityPlayer)obj.getClass().getMethod("getClientPlayerEntity", new Class[0]).invoke(obj, new Object[0]));
-	        }
-	        catch (Exception e) 
-	        {
-		        e.printStackTrace();
-	        }
+                obj = Class.forName("cpw.mods.fml.client.FMLClientHandler").getMethod("instance", new Class[0]).invoke(null, new Object[0]);
+                handleClientMessage(message, (EntityPlayer) obj.getClass().getMethod("getClientPlayerEntity", new Class[0]).invoke(obj, new Object[0]));
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
         else
         {

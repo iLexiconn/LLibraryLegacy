@@ -30,12 +30,11 @@ import java.util.List;
 public abstract class GuiPickItem extends GuiScreen
 {
     public String title;
+    public ArrayList<ItemStack> itemsFiltered = Lists.newArrayList();
     private GuiScreen parentScreen;
     private GuiSlotItemStackList itemList;
     private GuiTextField textField;
     private ArrayList<ItemStack> items = Lists.newArrayList();
-    public ArrayList<ItemStack> itemsFiltered = Lists.newArrayList(); 
-    
     private int selectedIndex;
     private int listWidth;
 
@@ -43,7 +42,7 @@ public abstract class GuiPickItem extends GuiScreen
     {
         title = t;
         parentScreen = Minecraft.getMinecraft().currentScreen;
-        
+
         Minecraft mc = Minecraft.getMinecraft();
         ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
         int w = scaledresolution.getScaledWidth();
@@ -53,7 +52,7 @@ public abstract class GuiPickItem extends GuiScreen
         textField = new GuiTextField(0, fontRendererObj, 20, 30, 103, 12);
         textField.setMaxStringLength(40);
 
-        for (Item item : (Iterable<Item>)Item.itemRegistry)
+        for (Item item : (Iterable<Item>) Item.itemRegistry)
         {
             ItemStack itemstack = new ItemStack(item);
 
@@ -83,49 +82,49 @@ public abstract class GuiPickItem extends GuiScreen
             }
         }
     }
-    
+
     public void initGui()
     {
-    	super.initGui();
-    	
-    	for (ItemStack itemstack : items)
-    	{
+        super.initGui();
+
+        for (ItemStack itemstack : items)
+        {
             listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(StatCollector.translateToLocal(itemstack.getDisplayName())) + 30);
         }
-    	
+
         listWidth = Math.min(listWidth, 300);
-        
+
         if (textField != null)
         {
-        	textField.xPosition = 20 + listWidth / 2 - textField.width / 2;
+            textField.xPosition = 20 + listWidth / 2 - textField.width / 2;
             textField.yPosition = 30;
         }
-        
+
         buttonList.add(new GuiButton(0, 20, height - 40, listWidth, 20, "Select"));
-    	itemList = new GuiSlotItemStackList(this, items, listWidth);
-    	itemList.registerScrollButtons(buttonList, 7, 8);
+        itemList = new GuiSlotItemStackList(this, items, listWidth);
+        itemList.registerScrollButtons(buttonList, 7, 8);
     }
-    
+
     public abstract void onSelectEntry(ItemStack itemstack, EntityPlayer player);
-    
+
     protected void actionPerformed(GuiButton button)
     {
-    	int id = button.id;
-    	
-    	if (id == 0)
-    	{
-    		onSelectEntry(itemsFiltered.get(selectedIndex), Minecraft.getMinecraft().thePlayer);
-    	}
+        int id = button.id;
+
+        if (id == 0)
+        {
+            onSelectEntry(itemsFiltered.get(selectedIndex), Minecraft.getMinecraft().thePlayer);
+        }
     }
 
     protected void keyTyped(char c, int key)
     {
         Keyboard.enableRepeatEvents(true);
         textField.textboxKeyTyped(c, key);
-        
+
         if (key == Keyboard.KEY_ESCAPE)
         {
-        	mc.displayGuiScreen(parentScreen);
+            mc.displayGuiScreen(parentScreen);
         }
     }
 
@@ -136,61 +135,61 @@ public abstract class GuiPickItem extends GuiScreen
 
     protected void mouseClicked(int mouseX, int mouseY, int button) throws IOException
     {
-    	super.mouseClicked(mouseX, mouseY, button);
+        super.mouseClicked(mouseX, mouseY, button);
         textField.mouseClicked(mouseX, mouseY, button);
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-    	filterItemsBySearch();
-    	itemList.drawScreen(mouseX, mouseY, partialTicks);
-    	
-    	drawCenteredString(fontRendererObj, title, 20 + listWidth / 2, 15, 16777215);
+        filterItemsBySearch();
+        itemList.drawScreen(mouseX, mouseY, partialTicks);
+
+        drawCenteredString(fontRendererObj, title, 20 + listWidth / 2, 15, 16777215);
         textField.drawTextBox();
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     private void filterItemsBySearch()
     {
-    	itemsFiltered.clear();
-    	
-    	for (ItemStack itemstack : items)
-		{
-			try
-			{
-				String name = StatCollector.translateToLocal(itemstack.getDisplayName());
-				Item item = itemstack.getItem();
-				boolean tabEquals = false;
+        itemsFiltered.clear();
 
-				if (item != null)
-				{
-					for (CreativeTabs tab : item.getCreativeTabs())
-					{
-						if (tab != null)
-						{
-							tabEquals = StatCollector.translateToLocal(tab.getTranslatedTabLabel()).toLowerCase().contains(textField.getText().toLowerCase());
+        for (ItemStack itemstack : items)
+        {
+            try
+            {
+                String name = StatCollector.translateToLocal(itemstack.getDisplayName());
+                Item item = itemstack.getItem();
+                boolean tabEquals = false;
 
-							if (tabEquals)
-							{
-								break;
-							}
-						}
-					}
-				}
+                if (item != null)
+                {
+                    for (CreativeTabs tab : item.getCreativeTabs())
+                    {
+                        if (tab != null)
+                        {
+                            tabEquals = StatCollector.translateToLocal(tab.getTranslatedTabLabel()).toLowerCase().contains(textField.getText().toLowerCase());
 
-				if (name.toLowerCase().contains(textField.getText().toLowerCase()) || tabEquals)
-				{
-					itemsFiltered.add(itemstack);
-				}
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
-	}
+                            if (tabEquals)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
 
-	public void drawItemStack(int x, int y, ItemStack itemstack)
+                if (name.toLowerCase().contains(textField.getText().toLowerCase()) || tabEquals)
+                {
+                    itemsFiltered.add(itemstack);
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void drawItemStack(int x, int y, ItemStack itemstack)
     {
         RenderHelper.enableGUIStandardItemLighting();
         zLevel = 100f;
@@ -204,23 +203,23 @@ public abstract class GuiPickItem extends GuiScreen
         RenderHelper.disableStandardItemLighting();
     }
 
-	public void selectItemIndex(int var1)
-	{
-		selectedIndex = var1;
-	}
+    public void selectItemIndex(int var1)
+    {
+        selectedIndex = var1;
+    }
 
-	public boolean itemIndexSelected(int var1)
-	{
-		return selectedIndex == var1;
-	}
+    public boolean itemIndexSelected(int var1)
+    {
+        return selectedIndex == var1;
+    }
 
-	public FontRenderer getFontRenderer()
-	{
-		return fontRendererObj;
-	}
+    public FontRenderer getFontRenderer()
+    {
+        return fontRendererObj;
+    }
 
-	public Minecraft getMinecraftInstance()
-	{
-		return Minecraft.getMinecraft();
-	}
+    public Minecraft getMinecraftInstance()
+    {
+        return Minecraft.getMinecraft();
+    }
 }

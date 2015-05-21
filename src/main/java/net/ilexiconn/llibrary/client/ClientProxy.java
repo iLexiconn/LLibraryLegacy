@@ -26,8 +26,8 @@ public class ClientProxy extends ServerProxy
         FMLCommonHandler.instance().bus().register(new ClientEventHandler());
         MinecraftForge.EVENT_BUS.register(new GuiHelper());
         FMLCommonHandler.instance().bus().register(new GuiHelper());
-        
-        
+
+
         GuiHelper.addOverride(GuiMainMenu.class, new GuiLLibraryMainMenu());
     }
 

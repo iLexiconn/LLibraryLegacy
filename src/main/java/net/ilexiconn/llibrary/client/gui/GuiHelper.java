@@ -68,7 +68,7 @@ public class GuiHelper
                 long currentTime = System.nanoTime();
                 deltaU += (currentTime - initialTime) / timeU;
                 initialTime = currentTime;
-                
+
                 gui.width = event.gui.width;
                 gui.height = event.gui.height;
                 gui.overriddenScreen = event.gui;
@@ -85,33 +85,33 @@ public class GuiHelper
                     ticks = 0;
                     timer += 1000;
                 }
-                
+
                 gui.drawScreen(event.mouseX, event.mouseY, event.renderPartialTicks);
 
                 if (!gui.buttonList.isEmpty())
                 {
-                	List<GuiButton> buttonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, event.gui, "buttonList", "field_146292_n");
+                    List<GuiButton> buttonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, event.gui, "buttonList", "field_146292_n");
 
-                	for (GuiButton button : (List<GuiButton>) gui.buttonList)
-                	{
-                		for (int i = 0; i < buttonList.size(); ++i)
-                		{
-                			GuiButton button1 = buttonList.get(i);
+                    for (GuiButton button : (List<GuiButton>) gui.buttonList)
+                    {
+                        for (int i = 0; i < buttonList.size(); ++i)
+                        {
+                            GuiButton button1 = buttonList.get(i);
 
-                			if (button.id == button1.id)
-                			{
-                				buttonList.remove(button1);
-                			}
-                		}
-                	}
+                            if (button.id == button1.id)
+                            {
+                                buttonList.remove(button1);
+                            }
+                        }
+                    }
 
-                	buttonList.addAll(gui.buttonList);
-                	ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, event.gui, buttonList, "buttonList", "field_146292_n");
+                    buttonList.addAll(gui.buttonList);
+                    ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, event.gui, buttonList, "buttonList", "field_146292_n");
                 }
             }
         }
     }
-    
+
     @SubscribeEvent
     public void onButtonPressPre(GuiScreenEvent.ActionPerformedEvent.Pre event)
     {
@@ -119,7 +119,7 @@ public class GuiHelper
         {
             if (event.gui.getClass() == e.getValue())
             {
-            	e.getKey().actionPerformed(event.button);
+                e.getKey().actionPerformed(event.button);
             }
         }
     }
