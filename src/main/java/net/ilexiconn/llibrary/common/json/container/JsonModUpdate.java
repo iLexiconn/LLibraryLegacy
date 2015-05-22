@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class JsonModUpdate
 {
+    private String apiVersion;
     private String newestVersion;
     private Map<String, List<String>> versions;
     private String updateUrl;
@@ -15,6 +16,11 @@ public class JsonModUpdate
     public String name;
     public String currentVersion;
     public BufferedImage thumbnail;
+
+    public String getApiVersion()
+    {
+        return apiVersion;
+    }
 
     public String getNewestVersion()
     {
