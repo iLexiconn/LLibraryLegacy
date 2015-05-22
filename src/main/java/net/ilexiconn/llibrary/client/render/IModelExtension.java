@@ -3,7 +3,9 @@ package net.ilexiconn.llibrary.client.render;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 
 /**
  * Interface for rendering extra models to existing models.
@@ -32,7 +34,7 @@ public interface IModelExtension
      * @param partialTicks
      * @param entity
      */
-    void setRotationAngles(ModelBase model, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks, Entity entity);
+    void setRotationAngles(ModelBiped model, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks, Entity entity);
 
     /**
      * Render method called before rendering the parent model.
@@ -41,7 +43,7 @@ public interface IModelExtension
      * @param model        the parent model
      * @param partialTicks
      */
-    void preRender(Entity entity, ModelBase model, float partialTicks);
+    void preRender(EntityPlayer entity, ModelBase model, float partialTicks);
 
     /**
      * Render method called after rendering the parent model.
@@ -50,5 +52,9 @@ public interface IModelExtension
      * @param model        the parent model
      * @param partialTicks
      */
-    void postRender(Entity entity, ModelBase model, float partialTicks);
+    void postRender(EntityPlayer entity, ModelBase model, float partialTicks);
+
+    void preRenderFirstPerson(EntityPlayer entity, ModelBiped model);
+
+    void postRenderFirstPerson(EntityPlayer entity, ModelBiped model);
 }

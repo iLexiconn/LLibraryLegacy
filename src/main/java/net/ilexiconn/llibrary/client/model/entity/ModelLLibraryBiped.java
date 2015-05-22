@@ -7,6 +7,7 @@ import net.ilexiconn.llibrary.client.render.IModelExtension;
 import net.ilexiconn.llibrary.client.render.RenderHelper;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public final class ModelLLibraryBiped extends ModelBiped
         for (IModelExtension extension : modelExtensions)
         {
             extension.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
-            extension.preRender(entity, this, partialTicks);
+            extension.preRender((EntityPlayer) entity, this, partialTicks);
         }
 
         if (isChild)
@@ -67,7 +68,7 @@ public final class ModelLLibraryBiped extends ModelBiped
         for (IModelExtension extension : modelExtensions)
         {
             extension.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
-            extension.postRender(entity, this, partialTicks);
+            extension.postRender((EntityPlayer) entity, this, partialTicks);
         }
     }
 }
