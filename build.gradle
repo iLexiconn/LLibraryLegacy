@@ -41,18 +41,9 @@ processResources {
     }
 }
 
-jar {
-    manifest {
-        attributes 'FMLAT' : 'llibrary_at.cfg'
-    }
-}
-
 task devJar(type: Jar) {
     classifier = 'dev'
     from sourceSets.main.output
-    manifest {
-        attributes 'FMLAT' : 'llibrary-dev_at.cfg'
-    }
 }
 
 artifacts {

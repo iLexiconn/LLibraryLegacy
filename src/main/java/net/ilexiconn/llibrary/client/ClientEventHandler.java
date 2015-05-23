@@ -3,14 +3,9 @@ package net.ilexiconn.llibrary.client;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.client.gui.GuiSurvivalTab;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
-import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
-import net.ilexiconn.llibrary.common.survivaltab.TabHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.item.Item;
@@ -19,7 +14,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import org.lwjgl.opengl.GL11;
 
@@ -28,8 +22,6 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class ClientEventHandler
 {
-    public static int pageIndex = 0;
-
     @SubscribeEvent
     public void blockHighlight(DrawBlockHighlightEvent event)
     {
@@ -75,42 +67,6 @@ public class ClientEventHandler
         if (Minecraft.getMinecraft().gameSettings.advancedItemTooltips)
         {
             event.toolTip.add(EnumChatFormatting.DARK_GRAY + "" + Item.itemRegistry.getNameForObject(event.itemStack.getItem()));
-        }
-    }
-
-    @SubscribeEvent
-    public void initGui(GuiScreenEvent.InitGuiEvent.Post event)
-    {
-        for (SurvivalTab survivalTab : TabHelper.getSurvivalTabs())
-        {
-            if (survivalTab.getSurvivalTab().getContainerGuiClass() != null && survivalTab.getSurvivalTab().getContainerGuiClass().isInstance(event.gui))
-            {
-                int count = 2;
-
-                for (SurvivalTab tab : TabHelper.getSurvivalTabs())
-                {
-                    if (tab.getTabPage() == pageIndex)
-                    {
-                        event.buttonList.add(new GuiSurvivalTab(count, tab));
-                        count++;
-                    }
-                }
-            }
-        }
-
-        if (event.gui instanceof GuiContainer)
-        {
-            int tabCount = TabHelper.getSurvivalTabs().size();
-            if (tabCount > 12)
-            {
-                GuiButton previous = new GuiButton(101, ((GuiContainer) event.gui).guiLeft, ((GuiContainer) event.gui).guiTop - 50, 20, 20, "<");
-                previous.enabled = false;
-                GuiButton next = new GuiButton(102, ((GuiContainer) event.gui).guiLeft + ((GuiContainer) event.gui).xSize - 20, ((GuiContainer) event.gui).guiTop - 50, 20, 20, ">");
-                next.enabled = false;
-
-                event.buttonList.add(previous);
-                event.buttonList.add(next);
-            }
         }
     }
 }
