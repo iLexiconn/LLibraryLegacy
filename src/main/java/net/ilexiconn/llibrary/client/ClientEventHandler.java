@@ -9,6 +9,8 @@ import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.survivaltab.TabHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.item.Item;
@@ -26,6 +28,8 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class ClientEventHandler
 {
+    public static int pageIndex = 0;
+
     @SubscribeEvent
     public void blockHighlight(DrawBlockHighlightEvent event)
     {
@@ -85,9 +89,27 @@ public class ClientEventHandler
 
                 for (SurvivalTab tab : TabHelper.getSurvivalTabs())
                 {
-                    event.buttonList.add(new GuiSurvivalTab(count, tab));
-                    count++;
+                    if (tab.getTabPage() == pageIndex)
+                    {
+                        event.buttonList.add(new GuiSurvivalTab(count, tab));
+                        count++;
+                    }
                 }
+            }
+        }
+
+        if (event.gui instanceof GuiContainer)
+        {
+            int tabCount = TabHelper.getSurvivalTabs().size();
+            if (tabCount > 12)
+            {
+                GuiButton previous = new GuiButton(101, ((GuiContainer) event.gui).guiLeft, ((GuiContainer) event.gui).guiTop - 50, 20, 20, "<");
+                previous.enabled = false;
+                GuiButton next = new GuiButton(102, ((GuiContainer) event.gui).guiLeft + ((GuiContainer) event.gui).xSize - 20, ((GuiContainer) event.gui).guiTop - 50, 20, 20, ">");
+                next.enabled = false;
+
+                event.buttonList.add(previous);
+                event.buttonList.add(next);
             }
         }
     }

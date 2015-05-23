@@ -11,7 +11,7 @@ public class TabHelper
     static
     {
         registerSurvivalTab(new SurvivalTabInventory());
-        registerSurvivalTab(new SurvivalTabEnderChest());
+        for (int i = 0; i < 16; i++) registerSurvivalTab(new SurvivalTabEnderChest());
     }
 
     public static void registerSurvivalTab(ISurvivalTab survivalTab)
