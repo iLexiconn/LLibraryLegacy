@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.common.item;
 
+import net.ilexiconn.llibrary.common.nbt.NbtHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,14 +18,31 @@ import java.util.List;
  */
 public class ItemHelper
 {
+    /**
+     * Use NbtHelper.readStackFromNbt() instead.
+     *
+     * @param nbtTag
+     * @param name
+     * @return
+     */
+    @Deprecated
     public static ItemStack getStackFromNBT(NBTTagCompound nbtTag, String name)
     {
-        return ItemStack.loadItemStackFromNBT(nbtTag.getCompoundTag(name));
+        return NbtHelper.readStackFromNbt(nbtTag, name);
     }
 
+    /**
+     * Use NbtHelper.writeStackToNbt() instead.
+     *
+     * @param nbtTag
+     * @param name
+     * @param stack
+     * @return
+     */
+    @Deprecated
     public static void saveStackToNBT(NBTTagCompound nbtTag, String name, ItemStack stack)
     {
-        nbtTag.setTag(name, stack.writeToNBT(new NBTTagCompound()));
+        NbtHelper.writeStackToNbt(nbtTag, name, stack);
     }
 
     public static void removeRecipe(Block block)

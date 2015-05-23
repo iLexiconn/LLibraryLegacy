@@ -26,8 +26,14 @@ public final class RenderLLibraryPlayer extends RenderPlayer
     {
         List<IModelExtension> modelExtensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
 
-        for (IModelExtension modelExtension : modelExtensions) modelExtension.preRenderFirstPerson(player, modelBipedMain);
-        super.renderFirstPersonArm(player);
-        for (IModelExtension modelExtension : modelExtensions) modelExtension.postRenderFirstPerson(player, modelBipedMain);
+        if (modelExtensions != null)
+        {
+            for (IModelExtension modelExtension : modelExtensions)
+                modelExtension.preRenderFirstPerson(player, modelBipedMain);
+            super.renderFirstPersonArm(player);
+            for (IModelExtension modelExtension : modelExtensions)
+                modelExtension.postRenderFirstPerson(player, modelBipedMain);
+        }
+        else super.renderFirstPersonArm(player);
     }
 }
