@@ -40,6 +40,15 @@ public class SurvivalTab
         return tabIndex;
     }
 
+    public int getTabPage()
+    {
+        if (tabIndex > 11)
+        {
+            return ((tabIndex - 12) / 10) + 1;
+        }
+        return 0;
+    }
+
     /**
      * @return ISurvivalTab instance of this container
      * @see net.ilexiconn.llibrary.common.survivaltab.ISurvivalTab
