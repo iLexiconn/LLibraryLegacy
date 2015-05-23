@@ -2,6 +2,8 @@ package net.ilexiconn.llibrary.client.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.ilexiconn.llibrary.LLibrary;
+import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
 import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
@@ -76,7 +78,7 @@ public class GuiSurvivalTab extends GuiButton
         {
             if (mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass())
             {
-                survivalTabContainer.getSurvivalTab().openContainer(mc.thePlayer);
+                LLibrary.networkWrapper.sendToServer(new MessageLLibrarySurvivalTab(survivalTabContainer.getTabIndex()));
                 return true;
             }
 

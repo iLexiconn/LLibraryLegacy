@@ -2,6 +2,7 @@ package net.ilexiconn.llibrary.common.survivaltab;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -28,7 +29,7 @@ public interface ISurvivalTab
      *
      * @param player the player opening the gui
      */
-    void openContainer(EntityPlayer player);
+    void openContainer(Minecraft mc, EntityPlayer player);
 
     /**
      * @return class of the container gui.

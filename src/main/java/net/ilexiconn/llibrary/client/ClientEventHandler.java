@@ -79,7 +79,7 @@ public class ClientEventHandler
     {
         for (SurvivalTab survivalTab : TabHelper.getSurvivalTabs())
         {
-            if (survivalTab.getSurvivalTab().getContainerGuiClass().isInstance(event.gui))
+            if (survivalTab.getSurvivalTab().getContainerGuiClass() != null && survivalTab.getSurvivalTab().getContainerGuiClass().isInstance(event.gui))
             {
                 int count = 2;
 
