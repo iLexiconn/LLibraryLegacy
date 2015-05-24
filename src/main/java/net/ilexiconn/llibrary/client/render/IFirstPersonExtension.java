@@ -13,7 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 @SideOnly(Side.CLIENT)
 public interface IFirstPersonExtension extends IExtension
 {
-    void preRenderFirstPerson(EntityPlayer entity, ModelBiped model);
+    boolean preRenderFirstPerson(EntityPlayer entity, ModelBiped model);
 
     void postRenderFirstPerson(EntityPlayer entity, ModelBiped model);
 }

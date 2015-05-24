@@ -9,7 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
  */
 public interface IArrowStuckExtension extends IExtension
 {
-    void preRenderArrowsStuckInEntity(EntityLivingBase entity, float partialTicks);
+    boolean preRenderArrowsStuckInEntity(EntityLivingBase entity, float partialTicks);
 
     void postRenderArrowsStuckInEntity(EntityLivingBase entity, float partialTicks);
 }

@@ -31,10 +31,12 @@ public final class RenderLLibraryPlayer extends RenderPlayer
 
         if (modelExtensions != null)
         {
+            boolean flag = true;
             for (IExtension modelExtension : modelExtensions)
                 if (modelExtension instanceof IFirstPersonExtension)
-                    ((IFirstPersonExtension) modelExtension).preRenderFirstPerson(player, modelBipedMain);
-            super.renderFirstPersonArm(player);
+                    if (!((IFirstPersonExtension) modelExtension).preRenderFirstPerson(player, modelBipedMain))
+                        flag = false;
+            if (flag) super.renderFirstPersonArm(player);
             for (IExtension modelExtension : modelExtensions)
                 if (modelExtension instanceof IFirstPersonExtension)
                     ((IFirstPersonExtension) modelExtension).postRenderFirstPerson(player, modelBipedMain);
@@ -48,10 +50,12 @@ public final class RenderLLibraryPlayer extends RenderPlayer
 
         if (modelExtensions != null)
         {
+            boolean flag = true;
             for (IExtension modelExtension : modelExtensions)
                 if (modelExtension instanceof IArrowStuckExtension)
-                    ((IArrowStuckExtension) modelExtension).preRenderArrowsStuckInEntity(entity, partialTicks);
-            super.renderArrowsStuckInEntity(entity, partialTicks);
+                    if (!((IArrowStuckExtension) modelExtension).preRenderArrowsStuckInEntity(entity, partialTicks))
+                        flag = false;
+            if (flag) super.renderArrowsStuckInEntity(entity, partialTicks);
             for (IExtension modelExtension : modelExtensions)
                 if (modelExtension instanceof IArrowStuckExtension)
                     ((IArrowStuckExtension) modelExtension).postRenderArrowsStuckInEntity(entity, partialTicks);
