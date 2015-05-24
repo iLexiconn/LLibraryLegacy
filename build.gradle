@@ -55,6 +55,14 @@ task devJar(type: Jar) {
     }
 }
 
+task srcJar(type: Jar, dependsOn: classes) {
+    classifier = 'src'
+    from sourceSets.main.allSource
+	manifest {
+        attributes 'FMLAT' : 'llibrary-dev_at.cfg'
+    }
+}
+
 artifacts {
-    archives devJar
+    archives devJar, srcJar
 }
