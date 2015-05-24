@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.common.event;
+package net.ilexiconn.llibrary.common;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.ilexiconn.llibrary.common.entity.EntityHelper;

@@ -56,4 +56,9 @@ public class ClientProxy extends ServerProxy
 
         Minecraft.getMinecraft().displayGuiScreen(new GuiChangelog(mod, version, changelog));
     }
+
+    public EntityPlayer getClientPlayer()
+    {
+        return Minecraft.getMinecraft().thePlayer;
+    }
 }
