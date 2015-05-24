@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.client.render;
 
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.EntityLivingBase;
 
 /**
@@ -9,7 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
  */
 public interface IArrowStuckExtension extends IExtension
 {
-    boolean preRenderArrowsStuckInEntity(EntityLivingBase entity, float partialTicks);
+    boolean preRenderArrowsStuckInEntity(EntityLivingBase entity, RenderPlayer renderPlayer, float partialTicks);
 
-    void postRenderArrowsStuckInEntity(EntityLivingBase entity, float partialTicks);
+    void postRenderArrowsStuckInEntity(EntityLivingBase entity, RenderPlayer renderPlayer, float partialTicks);
 }

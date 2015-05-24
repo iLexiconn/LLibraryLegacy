@@ -34,12 +34,12 @@ public final class RenderLLibraryPlayer extends RenderPlayer
             boolean flag = true;
             for (IExtension modelExtension : modelExtensions)
                 if (modelExtension instanceof IFirstPersonExtension)
-                    if (!((IFirstPersonExtension) modelExtension).preRenderFirstPerson(player, modelBipedMain))
+                    if (!((IFirstPersonExtension) modelExtension).preRenderFirstPerson(player, this, modelBipedMain))
                         flag = false;
             if (flag) super.renderFirstPersonArm(player);
             for (IExtension modelExtension : modelExtensions)
                 if (modelExtension instanceof IFirstPersonExtension)
-                    ((IFirstPersonExtension) modelExtension).postRenderFirstPerson(player, modelBipedMain);
+                    ((IFirstPersonExtension) modelExtension).postRenderFirstPerson(player, this, modelBipedMain);
         }
         else super.renderFirstPersonArm(player);
     }
@@ -53,12 +53,12 @@ public final class RenderLLibraryPlayer extends RenderPlayer
             boolean flag = true;
             for (IExtension modelExtension : modelExtensions)
                 if (modelExtension instanceof IArrowStuckExtension)
-                    if (!((IArrowStuckExtension) modelExtension).preRenderArrowsStuckInEntity(entity, partialTicks))
+                    if (!((IArrowStuckExtension) modelExtension).preRenderArrowsStuckInEntity(entity, this, partialTicks))
                         flag = false;
             if (flag) super.renderArrowsStuckInEntity(entity, partialTicks);
             for (IExtension modelExtension : modelExtensions)
                 if (modelExtension instanceof IArrowStuckExtension)
-                    ((IArrowStuckExtension) modelExtension).postRenderArrowsStuckInEntity(entity, partialTicks);
+                    ((IArrowStuckExtension) modelExtension).postRenderArrowsStuckInEntity(entity, this, partialTicks);
         }
         else super.renderArrowsStuckInEntity(entity, partialTicks);
     }
