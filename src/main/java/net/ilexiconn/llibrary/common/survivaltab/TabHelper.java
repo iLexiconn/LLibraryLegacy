@@ -11,11 +11,15 @@ public class TabHelper
     static
     {
         registerSurvivalTab(new SurvivalTabInventory());
-        for (int i = 0; i < 16; i++) registerSurvivalTab(new SurvivalTabEnderChest());
     }
 
     public static void registerSurvivalTab(ISurvivalTab survivalTab)
     {
+        if (survivalTabs.size() > 11)
+        {
+            System.err.println("[LLibrary] Can't register more than 11 survival tabs! Not registering " + survivalTab.getClass().getCanonicalName());
+            return;
+        }
         survivalTabs.add(new SurvivalTab(survivalTabs.size(), survivalTab));
     }
 
