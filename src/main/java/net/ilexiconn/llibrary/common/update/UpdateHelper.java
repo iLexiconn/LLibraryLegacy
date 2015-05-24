@@ -23,26 +23,25 @@ public class UpdateHelper
      * <p/>
      * Example pastebin version file:
      * <p/>
-     *  {
-     *      "newestVersion": "9000",
-     *      "versions":
-     *      {
-     *          "0.1.0":
-     *          [
-     *              "Initial release"
-     *          ],
-     *          "9000":
-     *          [
-     *              "Added more awesomeness"
-     *          ]
-     *      },
-     *      "updateUrl": "http://ilexiconn.net",
-     *      "iconUrl": "http://ilexiconn.net/llibrary/data/llibrary_64.png"
-     *  }
+     * {
+     * "newestVersion": "9000",
+     * "versions":
+     * {
+     * "0.1.0":
+     * [
+     * "Initial release"
+     * ],
+     * "9000":
+     * [
+     * "Added more awesomeness"
+     * ]
+     * },
+     * "updateUrl": "http://ilexiconn.net",
+     * "iconUrl": "http://ilexiconn.net/llibrary/data/llibrary_64.png"
+     * }
      *
-     * @param mod        		the main mod instance
-     * @param url               the updater file
-     *
+     * @param mod the main mod instance
+     * @param url the updater file
      * @throws IOException
      */
     public static void registerUpdateChecker(Object mod, String url) throws IOException
@@ -50,8 +49,9 @@ public class UpdateHelper
         JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(url), JsonModUpdate.class);
         Class<?> modClass = mod.getClass();
 
-        if (!modClass.isAnnotationPresent(Mod.class)) throw new RuntimeException("Please register the updater in your main class.");
-        
+        if (!modClass.isAnnotationPresent(Mod.class))
+            throw new RuntimeException("Please register the updater in your main class.");
+
         Mod annotation = modClass.getAnnotation(Mod.class);
 
         try

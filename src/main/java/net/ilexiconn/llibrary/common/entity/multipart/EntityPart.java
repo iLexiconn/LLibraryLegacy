@@ -65,7 +65,6 @@ public class EntityPart extends Entity
                 parent.posZ + radius * Math.sin(parent.renderYawOffset * (Math.PI / 180f) + angleYaw),
                 0f, 0f);
 
-
         if (!worldObj.isRemote) collideWithNearbyEntities();
     }
 

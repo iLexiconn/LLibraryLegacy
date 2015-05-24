@@ -58,7 +58,7 @@ public class GuiCheckForUpdates extends GuiScreen
         {
             buttonList.add(new GuiButton(0, width / 2 - 100, height - 38, I18n.format("gui.cancel")));
         }
-        
+
         centerDoneButton();
     }
 
@@ -66,29 +66,29 @@ public class GuiCheckForUpdates extends GuiScreen
     {
         int j = 0;
         int k = 0;
-        
+
         for (int i = 0; i < buttonList.size(); ++i)
         {
-        	GuiButton button = (GuiButton)buttonList.get(i);
-        	int id = button.id;
-        	
-        	if (id == 0)
-        	{
-        		k = button.xPosition;
-        	}
-        	else if (id == 1)
-        	{
-        		j = button.xPosition + button.width;
-        	}
+            GuiButton button = (GuiButton) buttonList.get(i);
+            int id = button.id;
+
+            if (id == 0)
+            {
+                k = button.xPosition;
+            }
+            else if (id == 1)
+            {
+                j = button.xPosition + button.width;
+            }
         }
-        
+
         if (j > k)
         {
-        	((GuiButton)buttonList.get(0)).xPosition += j - k + 20;
+            ((GuiButton) buttonList.get(0)).xPosition += j - k + 20;
         }
-	}
+    }
 
-	protected void actionPerformed(GuiButton button)
+    protected void actionPerformed(GuiButton button)
     {
         int id = button.id;
 

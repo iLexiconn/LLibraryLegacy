@@ -117,7 +117,7 @@ public class WebHelper
             return null;
         }
     }
-    
+
     /**
      * Downloads an image from given URL.
      *
@@ -127,8 +127,8 @@ public class WebHelper
      */
     public static BufferedImage downloadImage(String imageURL) throws IOException
     {
-    	URL url = new URL(imageURL);
-		InputStream in = new BufferedInputStream(url.openStream());
-		return ImageIO.read(in);
+        URL url = new URL(imageURL);
+        InputStream in = new BufferedInputStream(url.openStream());
+        return ImageIO.read(in);
     }
 }

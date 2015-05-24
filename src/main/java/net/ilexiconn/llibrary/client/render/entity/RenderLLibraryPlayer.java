@@ -137,8 +137,10 @@ public final class RenderLLibraryPlayer extends RenderPlayer
                 {
                     NBTTagCompound nbttagcompound = itemstack.getTagCompound();
 
-                    if (nbttagcompound.hasKey("SkullOwner", 10)) gameprofile = NBTUtil.func_152459_a(nbttagcompound.getCompoundTag("SkullOwner"));
-                    else if (nbttagcompound.hasKey("SkullOwner", 8) && !StringUtils.isNullOrEmpty(nbttagcompound.getString("SkullOwner"))) gameprofile = new GameProfile(null, nbttagcompound.getString("SkullOwner"));
+                    if (nbttagcompound.hasKey("SkullOwner", 10))
+                        gameprofile = NBTUtil.func_152459_a(nbttagcompound.getCompoundTag("SkullOwner"));
+                    else if (nbttagcompound.hasKey("SkullOwner", 8) && !StringUtils.isNullOrEmpty(nbttagcompound.getString("SkullOwner")))
+                        gameprofile = new GameProfile(null, nbttagcompound.getString("SkullOwner"));
                 }
 
                 TileEntitySkullRenderer.field_147536_b.func_152674_a(-0.5f, 0f, -0.5f, 1, 180f, itemstack.getItemDamage(), gameprofile);
