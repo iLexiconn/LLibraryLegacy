@@ -3,11 +3,14 @@ package net.ilexiconn.llibrary.client.render.entity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.client.model.entity.ModelLLibraryBiped;
-import net.ilexiconn.llibrary.client.render.IModelExtension;
+import net.ilexiconn.llibrary.client.render.IArrowStuckExtension;
+import net.ilexiconn.llibrary.client.render.IExtension;
+import net.ilexiconn.llibrary.client.render.IFirstPersonExtension;
 import net.ilexiconn.llibrary.client.render.RenderHelper;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.List;
@@ -24,16 +27,35 @@ public final class RenderLLibraryPlayer extends RenderPlayer
 
     public void renderFirstPersonArm(EntityPlayer player)
     {
-        List<IModelExtension> modelExtensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
+        List<IExtension> modelExtensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
 
         if (modelExtensions != null)
         {
-            for (IModelExtension modelExtension : modelExtensions)
-                modelExtension.preRenderFirstPerson(player, modelBipedMain);
+            for (IExtension modelExtension : modelExtensions)
+                if (modelExtension instanceof IFirstPersonExtension)
+                    ((IFirstPersonExtension) modelExtension).preRenderFirstPerson(player, modelBipedMain);
             super.renderFirstPersonArm(player);
-            for (IModelExtension modelExtension : modelExtensions)
-                modelExtension.postRenderFirstPerson(player, modelBipedMain);
+            for (IExtension modelExtension : modelExtensions)
+                if (modelExtension instanceof IFirstPersonExtension)
+                    ((IFirstPersonExtension) modelExtension).postRenderFirstPerson(player, modelBipedMain);
         }
         else super.renderFirstPersonArm(player);
+    }
+
+    protected void renderArrowsStuckInEntity(EntityLivingBase entity, float partialTicks)
+    {
+        List<IExtension> modelExtensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
+
+        if (modelExtensions != null)
+        {
+            for (IExtension modelExtension : modelExtensions)
+                if (modelExtension instanceof IArrowStuckExtension)
+                    ((IArrowStuckExtension) modelExtension).preRenderArrowsStuckInEntity(entity, partialTicks);
+            super.renderArrowsStuckInEntity(entity, partialTicks);
+            for (IExtension modelExtension : modelExtensions)
+                if (modelExtension instanceof IArrowStuckExtension)
+                    ((IArrowStuckExtension) modelExtension).postRenderArrowsStuckInEntity(entity, partialTicks);
+        }
+        else super.renderArrowsStuckInEntity(entity, partialTicks);
     }
 }

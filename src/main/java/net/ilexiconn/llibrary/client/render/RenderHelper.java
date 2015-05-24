@@ -31,7 +31,7 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class RenderHelper
 {
-    private static Map<Class<? extends ModelBase>, List<IModelExtension>> modelExtensions = Maps.newHashMap();
+    private static Map<Class<? extends ModelBase>, List<IExtension>> modelExtensions = Maps.newHashMap();
 
     private static ResourceLocation glintTexture = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 
@@ -51,9 +51,9 @@ public class RenderHelper
      * @param modelClazz
      * @param modelExtension
      */
-    private static void registerModelExtension(Class<? extends ModelBase> modelClazz, IModelExtension modelExtension)
+    private static void registerModelExtension(Class<? extends ModelBase> modelClazz, IExtension modelExtension)
     {
-        List<IModelExtension> extensionsForModel = modelExtensions.get(modelClazz);
+        List<IExtension> extensionsForModel = modelExtensions.get(modelClazz);
 
         if (extensionsForModel == null)
         {
@@ -69,7 +69,7 @@ public class RenderHelper
      * @param clazz
      * @returns a list of ModelExtensions for the given model class.
      */
-    public static List<IModelExtension> getModelExtensionsFor(Class<? extends ModelBase> clazz)
+    public static List<IExtension> getModelExtensionsFor(Class<? extends ModelBase> clazz)
     {
         return modelExtensions.get(clazz);
     }

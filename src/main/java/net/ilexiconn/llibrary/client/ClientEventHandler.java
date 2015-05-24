@@ -95,21 +95,13 @@ public class ClientEventHandler
                         count++;
                     }
                 }
-            }
-        }
 
-        if (event.gui instanceof GuiContainer)
-        {
-            int tabCount = TabHelper.getSurvivalTabs().size();
-            if (tabCount > 12)
-            {
-                GuiButton previous = new GuiButton(101, ((GuiContainer) event.gui).guiLeft, ((GuiContainer) event.gui).guiTop - 50, 20, 20, "<");
-                previous.enabled = false;
-                GuiButton next = new GuiButton(102, ((GuiContainer) event.gui).guiLeft + ((GuiContainer) event.gui).xSize - 20, ((GuiContainer) event.gui).guiTop - 50, 20, 20, ">");
-                next.enabled = false;
-
-                event.buttonList.add(previous);
-                event.buttonList.add(next);
+                int tabCount = TabHelper.getSurvivalTabs().size();
+                if (tabCount > 12)
+                {
+                    event.buttonList.add(new GuiButton(101, ((GuiContainer) event.gui).guiLeft, ((GuiContainer) event.gui).guiTop - 50, 20, 20, "<"));
+                    event.buttonList.add(new GuiButton(102, ((GuiContainer) event.gui).guiLeft + ((GuiContainer) event.gui).xSize - 20, ((GuiContainer) event.gui).guiTop - 50, 20, 20, ">"));
+                }
             }
         }
     }

@@ -13,15 +13,8 @@ import net.minecraft.entity.player.EntityPlayer;
  * @author Gegy1000
  */
 @SideOnly(Side.CLIENT)
-public interface IModelExtension
+public interface IModelExtension extends IExtension
 {
-    /**
-     * Initialize the custom model(s).
-     *
-     * @param model the parent model
-     */
-    void init(ModelBase model);
-
     /**
      * Method to set the rotation angles for boxes before rendering.
      *
@@ -53,8 +46,4 @@ public interface IModelExtension
      * @param partialTicks
      */
     void postRender(EntityPlayer entity, ModelBase model, float partialTicks);
-
-    void preRenderFirstPerson(EntityPlayer entity, ModelBiped model);
-
-    void postRenderFirstPerson(EntityPlayer entity, ModelBiped model);
 }
