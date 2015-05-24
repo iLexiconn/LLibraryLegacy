@@ -90,6 +90,8 @@ public final class RenderLLibraryPlayer extends RenderPlayer
                 if (modelExtension instanceof IEquippedItemsExtension)
                     if (!((IEquippedItemsExtension) modelExtension).preRenderEquippedItems(player, this, partialTicks))
                         flag = false;
+            GL11.glColor3f(1f, 1f, 1f);
+            renderArrowsStuckInEntity(player, partialTicks);
             if (flag) renderEquippedItems(player, partialTicks, event);
             for (IExtension modelExtension : modelExtensions)
                 if (modelExtension instanceof IEquippedItemsExtension)
@@ -102,8 +104,6 @@ public final class RenderLLibraryPlayer extends RenderPlayer
 
     protected void renderEquippedItems(AbstractClientPlayer player, float partialTicks, RenderPlayerEvent.Specials.Pre event)
     {
-        GL11.glColor3f(1f, 1f, 1f);
-        renderArrowsStuckInEntity(player, partialTicks);
         ItemStack itemstack = player.inventory.armorItemInSlot(3);
 
         if (itemstack != null && event.renderHelmet)
