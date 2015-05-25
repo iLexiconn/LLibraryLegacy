@@ -8,7 +8,6 @@ import net.ilexiconn.llibrary.common.update.ChangelogHandler;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.BlockPos;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class CommandLLibrary extends CommandBase
 {
-    public String getName()
+    public String getCommandName()
     {
         return "llibrary";
     }
@@ -31,7 +30,12 @@ public class CommandLLibrary extends CommandBase
         return "/llibrary list OR /llibrary update <modid> OR /llibrary changelog <modid> <version>";
     }
 
-    public void execute(ICommandSender sender, String[] args) throws CommandException
+    public int getRequiredPermissionLevel()
+    {
+        return 0;
+    }
+
+    public void processCommand(ICommandSender sender, String[] args) throws WrongUsageException
     {
         List<JsonModUpdate> outdatedMods = VersionHandler.getOutdatedMods();
 
@@ -126,11 +130,6 @@ public class CommandLLibrary extends CommandBase
             }
         }
         throw new WrongUsageException(getCommandUsage(sender));
-    }
-
-    public int getRequiredPermissionLevel()
-    {
-        return 0;
     }
 
     public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)

@@ -50,7 +50,7 @@ public class UpdateHelper
         Class<?> modClass = mod.getClass();
 
         if (!modClass.isAnnotationPresent(Mod.class))
-            throw new RuntimeException("Please specify the class wit the @Mod annotation.");
+            throw new RuntimeException("Please register the updater in your main class.");
 
         Mod annotation = modClass.getAnnotation(Mod.class);
 

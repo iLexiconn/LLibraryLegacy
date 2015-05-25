@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.common.event;
+package net.ilexiconn.llibrary.common;
 
 import net.ilexiconn.llibrary.common.entity.EntityHelper;
 import net.ilexiconn.llibrary.common.entity.multipart.EntityPart;

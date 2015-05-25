@@ -1,6 +1,8 @@
 package net.ilexiconn.llibrary.client.gui;
 
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 
 public class GuiLLibraryMainMenu extends GuiOverride
 {
@@ -25,7 +27,13 @@ public class GuiLLibraryMainMenu extends GuiOverride
 
         if (id == 85)
         {
-            mc.displayGuiScreen(new GuiCheckForUpdates());
+            mc.displayGuiScreen(new GuiPickItem("test")
+            {
+                public void onSelectEntry(ItemStack itemstack, EntityPlayer player)
+                {
+                    mc.displayGuiScreen(this);
+                }
+            });
         }
     }
 }

@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -25,7 +26,7 @@ import java.util.Map;
 import static com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
 /**
- * Player skin tools, not stable.
+ * Player skin tools, not stable and only works in 1.7.10.
  *
  * @author iLexiconn
  */
@@ -91,7 +92,7 @@ public class TextureHelper
 
     public static boolean hasBackup(AbstractClientPlayer player)
     {
-        return new File("llibrary" + File.separator + "skin-backups" + File.separator + player.getDisplayNameString() + ".png").exists();
+        return new File("llibrary" + File.separator + "skin-backups" + File.separator + EntityPlayer.getUUID(player.getGameProfile()) + ".png").exists();
     }
 
     private static void backupPlayerSkin(AbstractClientPlayer entityPlayer)
@@ -100,7 +101,7 @@ public class TextureHelper
 
         File file = new File("llibrary" + File.separator + "skin-backups");
         file.mkdir();
-        File skinFile = new File(file, entityPlayer.getDisplayNameString() + ".png");
+        File skinFile = new File(file, EntityPlayer.getUUID(entityPlayer.getGameProfile()) + ".png");
         try
         {
             skinFile.createNewFile();
@@ -127,7 +128,7 @@ public class TextureHelper
 
     private static BufferedImage getOriginalPlayerSkin(AbstractClientPlayer entityPlayer)
     {
-        File file = new File("llibrary" + File.separator + "skin-backups" + File.separator + entityPlayer.getDisplayNameString() + ".png");
+        File file = new File("llibrary" + File.separator + "skin-backups" + File.separator + EntityPlayer.getUUID(entityPlayer.getGameProfile()) + ".png");
         BufferedImage bufferedImage = null;
 
         try

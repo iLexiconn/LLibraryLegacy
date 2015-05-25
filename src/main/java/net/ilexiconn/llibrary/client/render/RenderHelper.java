@@ -2,12 +2,12 @@ package net.ilexiconn.llibrary.client.render;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 import java.util.Map;
@@ -20,9 +20,8 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class RenderHelper
 {
-    private static Map<Class<? extends ModelBase>, List<IModelExtension>> modelExtensions = Maps.newHashMap();
-
-    private static ResourceLocation glintTexture = new ResourceLocation("textures/misc/enchanted_item_glint.png");
+    private static Map<Item, String> itemModels = Maps.newHashMap();
+    private static Map<Class<? extends ModelBase>, List<IExtension>> modelExtensions = Maps.newHashMap();
 
     /**
      * Registers the given IModelExtension.
@@ -40,9 +39,9 @@ public class RenderHelper
      * @param modelClazz
      * @param modelExtension
      */
-    private static void registerModelExtension(Class<? extends ModelBase> modelClazz, IModelExtension modelExtension)
+    private static void registerModelExtension(Class<? extends ModelBase> modelClazz, IExtension modelExtension)
     {
-        List<IModelExtension> extensionsForModel = modelExtensions.get(modelClazz);
+        List<IExtension> extensionsForModel = modelExtensions.get(modelClazz);
 
         if (extensionsForModel == null)
         {
@@ -58,16 +57,23 @@ public class RenderHelper
      * @param clazz
      * @returns a list of ModelExtensions for the given model class.
      */
-    public static List<IModelExtension> getModelExtensionsFor(Class<? extends ModelBase> clazz)
+    public static List<IExtension> getModelExtensionsFor(Class<? extends ModelBase> clazz)
     {
         return modelExtensions.get(clazz);
     }
 
-    private static void setColorFromInt(int color)
+    public static void registerModel(Block block, String name)
     {
-        float r = (color >> 16 & 255) / 255f;
-        float g = (color >> 8 & 255) / 255f;
-        float b = (color & 255) / 255f;
-        GL11.glColor4f(r, g, b, 1f);
+        registerModel(Item.getItemFromBlock(block), name);
+    }
+
+    public static void registerModel(Item item, String name)
+    {
+        itemModels.put(item, name);
+    }
+
+    public static Map<Item, String> getItemModels()
+    {
+        return itemModels;
     }
 }

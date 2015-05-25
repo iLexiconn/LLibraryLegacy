@@ -5,6 +5,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.creativetab.CreativeTabs;
@@ -13,15 +15,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemDoublePlant;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.lwjgl.opengl.GL11.*;
 
 /**
  * @author FiskFille
@@ -30,11 +34,12 @@ import java.util.List;
 public abstract class GuiPickItem extends GuiScreen
 {
     public String title;
-    public ArrayList<ItemStack> itemsFiltered = Lists.newArrayList();
     private GuiScreen parentScreen;
     private GuiSlotItemStackList itemList;
     private GuiTextField textField;
     private ArrayList<ItemStack> items = Lists.newArrayList();
+    public ArrayList<ItemStack> itemsFiltered = Lists.newArrayList();
+
     private int selectedIndex;
     private int listWidth;
 
@@ -113,6 +118,7 @@ public abstract class GuiPickItem extends GuiScreen
 
         if (id == 0)
         {
+            playPressSound(mc.getSoundHandler());
             onSelectEntry(itemsFiltered.get(selectedIndex), Minecraft.getMinecraft().thePlayer);
         }
     }
@@ -193,14 +199,21 @@ public abstract class GuiPickItem extends GuiScreen
     {
         RenderHelper.enableGUIStandardItemLighting();
         zLevel = 100f;
-        GL11.glEnable(2896);
-        GL11.glEnable(32826);
-        mc.getRenderItem().renderItemIntoGUI(itemstack, x, y);
-        mc.getRenderItem().renderItemOverlayIntoGUI(mc.fontRendererObj, itemstack, x, y, "");
-        GL11.glDisable(2896);
-        GL11.glEnable(3042);
+        mc.getRenderItem().zLevel = 100f;
+        glEnable(2896);
+        glEnable(32826);
+        itemRender.func_180450_b(itemstack, x, y);
+        itemRender.func_175030_a(fontRendererObj, itemstack, x, y);
+        glDisable(2896);
+        glEnable(3042);
+        mc.getRenderItem().zLevel = 0f;
         zLevel = 0f;
         RenderHelper.disableStandardItemLighting();
+    }
+
+    public void playPressSound(SoundHandler soundHandler)
+    {
+        soundHandler.playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1f));
     }
 
     public void selectItemIndex(int var1)

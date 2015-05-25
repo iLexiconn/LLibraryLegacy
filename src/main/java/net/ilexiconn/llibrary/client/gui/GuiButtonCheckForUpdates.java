@@ -18,10 +18,10 @@ import java.util.List;
 public class GuiButtonCheckForUpdates extends GuiButton
 {
     protected static final ResourceLocation buttonTextures = new ResourceLocation("llibrary:textures/gui/widgets.png");
-    public int screenWidth;
-    public int screenHeight;
     private boolean isHoveringOverButton;
     private int hoverTimer;
+    public int screenWidth;
+    public int screenHeight;
 
     public GuiButtonCheckForUpdates(int id, int x, int y)
     {
@@ -122,7 +122,7 @@ public class GuiButtonCheckForUpdates extends GuiButton
             for (int i2 = 0; i2 < text.size(); ++i2)
             {
                 String s1 = (String) text.get(i2);
-                font.drawStringWithShadow(s1, j2, k2, -1);
+                font.drawString(s1, j2, k2, -1);
 
                 if (i2 == 0)
                 {

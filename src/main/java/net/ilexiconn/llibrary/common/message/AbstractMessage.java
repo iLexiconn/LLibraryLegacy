@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.common.message;
 
+import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -9,23 +10,8 @@ public abstract class AbstractMessage<REQ extends AbstractMessage> implements IM
 {
     public IMessage onMessage(REQ message, MessageContext ctx)
     {
-        if (ctx.side.isClient())
-        {
-            Object obj = null;
-            try
-            {
-                obj = Class.forName("cpw.mods.fml.client.FMLClientHandler").getMethod("instance", new Class[0]).invoke(null, new Object[0]);
-                handleClientMessage(message, (EntityPlayer) obj.getClass().getMethod("getClientPlayerEntity", new Class[0]).invoke(obj, new Object[0]));
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-        else
-        {
-            handleServerMessage(message, ctx.getServerHandler().playerEntity);
-        }
+        if (ctx.side.isClient()) handleClientMessage(message, LLibrary.proxy.getClientPlayer());
+        else handleServerMessage(message, ctx.getServerHandler().playerEntity);
 
         return null;
     }

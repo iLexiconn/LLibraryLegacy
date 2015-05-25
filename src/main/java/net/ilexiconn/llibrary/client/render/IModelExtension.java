@@ -1,7 +1,9 @@
 package net.ilexiconn.llibrary.client.render;
 
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -11,15 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author Gegy1000
  */
 @SideOnly(Side.CLIENT)
-public interface IModelExtension
+public interface IModelExtension extends IExtension
 {
-    /**
-     * Initialize the custom model(s).
-     *
-     * @param model the parent model
-     */
-    void init(ModelBase model);
-
     /**
      * Method to set the rotation angles for boxes before rendering.
      *
@@ -32,7 +27,7 @@ public interface IModelExtension
      * @param partialTicks
      * @param entity
      */
-    void setRotationAngles(ModelBase model, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks, Entity entity);
+    void setRotationAngles(ModelBiped model, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks, Entity entity);
 
     /**
      * Render method called before rendering the parent model.
@@ -41,7 +36,7 @@ public interface IModelExtension
      * @param model        the parent model
      * @param partialTicks
      */
-    void preRender(Entity entity, ModelBase model, float partialTicks);
+    void preRender(EntityPlayer entity, ModelBase model, float partialTicks);
 
     /**
      * Render method called after rendering the parent model.
@@ -50,5 +45,5 @@ public interface IModelExtension
      * @param model        the parent model
      * @param partialTicks
      */
-    void postRender(Entity entity, ModelBase model, float partialTicks);
+    void postRender(EntityPlayer entity, ModelBase model, float partialTicks);
 }

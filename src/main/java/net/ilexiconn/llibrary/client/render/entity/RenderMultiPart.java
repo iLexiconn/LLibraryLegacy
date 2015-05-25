@@ -32,7 +32,7 @@ public abstract class RenderMultiPart extends RenderLiving
 
     public void doRender(IEntityMultiPart entity, double x, double y, double z, float rotationYaw, float partialTicks)
     {
-        if (Minecraft.getMinecraft().getRenderManager().isDebugBoundingBox())
+        if (Minecraft.getMinecraft().getRenderManager().func_178627_a())
         {
             GL11.glDepthMask(false);
             GL11.glDisable(GL11.GL_TEXTURE_2D);

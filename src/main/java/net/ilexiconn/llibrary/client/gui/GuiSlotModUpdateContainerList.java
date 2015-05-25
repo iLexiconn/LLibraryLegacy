@@ -69,7 +69,7 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
     }
 
     @Override
-    protected void drawSlot(int listIndex, int x, int y, int par4, Tessellator tessellator)
+    protected void drawSlot(int listIndex, int x, int y, int par4, Tessellator tesselator)
     {
         if (listIndex < parent.outdatedMods.size())
         {
@@ -113,13 +113,14 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
                     cachedLogoDimensions[listIndex].height *= scale;
                     int top = y - 1;
                     int offset = 21;
-                    WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-                    worldrenderer.startDrawingQuads();
-                    worldrenderer.addVertexWithUV(offset, top + cachedLogoDimensions[listIndex].height, 0, 0, 1);
-                    worldrenderer.addVertexWithUV(offset + cachedLogoDimensions[listIndex].width, top + cachedLogoDimensions[listIndex].height, 0, 1, 1);
-                    worldrenderer.addVertexWithUV(offset + cachedLogoDimensions[listIndex].width, top, 0, 1, 0);
-                    worldrenderer.addVertexWithUV(offset, top, 0, 0, 0);
-                    tessellator.draw();
+                    Tessellator tess = Tessellator.getInstance();
+                    WorldRenderer renderer = tess.getWorldRenderer();
+                    renderer.startDrawingQuads();
+                    renderer.addVertexWithUV(offset, top + cachedLogoDimensions[listIndex].height, 0, 0, 1);
+                    renderer.addVertexWithUV(offset + cachedLogoDimensions[listIndex].width, top + cachedLogoDimensions[listIndex].height, 0, 1, 1);
+                    renderer.addVertexWithUV(offset + cachedLogoDimensions[listIndex].width, top, 0, 1, 0);
+                    renderer.addVertexWithUV(offset, top, 0, 0, 0);
+                    tess.draw();
                 }
             }
         }

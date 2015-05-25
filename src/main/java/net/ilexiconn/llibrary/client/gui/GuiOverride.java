@@ -7,8 +7,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,6 @@ import java.util.Random;
 /**
  * @author FiskFille
  */
-@SideOnly(Side.CLIENT)
 public class GuiOverride extends GuiScreen
 {
     public Minecraft mc = Minecraft.getMinecraft();

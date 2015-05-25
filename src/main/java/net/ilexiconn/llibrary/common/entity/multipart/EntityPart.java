@@ -65,7 +65,6 @@ public class EntityPart extends Entity
                 parent.posZ + radius * Math.sin(parent.renderYawOffset * (Math.PI / 180f) + angleYaw),
                 0f, 0f);
 
-
         if (!worldObj.isRemote) collideWithNearbyEntities();
     }
 
@@ -81,7 +80,7 @@ public class EntityPart extends Entity
 
     public boolean attackEntityFrom(DamageSource source, float damage)
     {
-        return !isEntityInvulnerable(source) && parent.attackEntityFrom(source, damage * damageMultiplier);
+        return !func_180431_b(source) && parent.attackEntityFrom(source, damage * damageMultiplier);
     }
 
     public boolean isEntityEqual(Entity entity)
