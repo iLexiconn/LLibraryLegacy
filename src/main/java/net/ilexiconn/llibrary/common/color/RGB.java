@@ -23,4 +23,14 @@ public class RGB
 
         return false;
     }
+
+    public int hashCode()
+    {
+        int hash = 3;
+        hash = 53 * hash + r;
+        hash = 53 * hash + g;
+        hash = 53 * hash + b;
+        hash = 53 * hash + alpha;
+        return hash;
+    }
 }

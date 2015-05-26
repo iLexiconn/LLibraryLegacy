@@ -5,7 +5,8 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 
 /**
- * @author iChun
+ * @author      iChun
+ * @since       0.1.0
  */
 public class CubeInfo
 {

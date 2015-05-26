@@ -1,7 +1,15 @@
 package net.ilexiconn.llibrary.client.model.modelbase;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.util.MathHelper;
 
+/**
+ * @author      RafaMv0
+ * @author      BobMowzie
+ * @since       0.1.0
+ */
+@SideOnly(Side.CLIENT)
 public class ControlledAnimation
 {
     private double timer;

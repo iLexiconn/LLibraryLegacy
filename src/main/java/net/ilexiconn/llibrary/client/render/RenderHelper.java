@@ -26,19 +26,21 @@ import java.util.Map;
 /**
  * Render helper class for basic render operations and the IModelExtension.
  *
- * @author iLexiconn & Gegy1000
+ * @author      iLexiconn
+ * @author      Gegy1000
+ * @since       0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class RenderHelper
 {
     private static Map<Class<? extends ModelBase>, List<IExtension>> modelExtensions = Maps.newHashMap();
-
     private static ResourceLocation glintTexture = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 
     /**
-     * Registers the given IModelExtension.
+     * Registers the given {@link net.ilexiconn.llibrary.client.render.IModelExtension}.
      *
-     * @param modelExtension
+     * @see         net.ilexiconn.llibrary.client.render.IModelExtension
+     * @since       0.1.0
      */
     public static void registerModelExtension(IModelExtension modelExtension)
     {
@@ -46,10 +48,10 @@ public class RenderHelper
     }
 
     /**
-     * Registers the given IModelExtension to a specific model.
+     * Registers the given {@link net.ilexiconn.llibrary.client.render.IModelExtension} to a specific model.
      *
-     * @param modelClazz
-     * @param modelExtension
+     * @see         net.ilexiconn.llibrary.client.render.IModelExtension
+     * @since       0.1.0
      */
     private static void registerModelExtension(Class<? extends ModelBase> modelClazz, IExtension modelExtension)
     {
@@ -66,8 +68,9 @@ public class RenderHelper
     }
 
     /**
-     * @param clazz
-     * @returns a list of ModelExtensions for the given model class.
+     * @see         net.ilexiconn.llibrary.client.render.IModelExtension
+     * @return      a list of {@link net.ilexiconn.llibrary.client.render.IModelExtension} for the given model class.
+     * @since       0.1.0
      */
     public static List<IExtension> getModelExtensionsFor(Class<? extends ModelBase> clazz)
     {
@@ -75,9 +78,11 @@ public class RenderHelper
     }
 
     /**
-     * Renders the given ItemStack in 3D.
+     * Renders the given {@link net.minecraft.item.ItemStack} in 3D.
      *
-     * @param stack the ItemStack you want to render.
+     * @see         net.minecraft.item.ItemStack
+     * @param       stack the ItemStack you want to render.
+     * @since       0.1.0
      */
     public static void renderItemIn3d(ItemStack stack)
     {
@@ -140,7 +145,10 @@ public class RenderHelper
         GL11.glPopMatrix();
     }
 
-    private static void setColorFromInt(int color)
+    /**
+     * @since       0.2.0
+     */
+    public static void setColorFromInt(int color)
     {
         float r = (color >> 16 & 255) / 255f;
         float g = (color >> 8 & 255) / 255f;
@@ -148,6 +156,12 @@ public class RenderHelper
         GL11.glColor4f(r, g, b, 1f);
     }
 
+    /**
+     * Register a 3D item renderer for an {@link net.minecraft.item.Item}
+     *
+     * @see         net.minecraft.item.Item
+     * @since       0.1.0
+     */
     public static void registerItem3dRenderer(Item item, ModelBase model, ResourceLocation texture)
     {
         MinecraftForgeClient.registerItemRenderer(item, new Item3dRenderer(item, model, texture));

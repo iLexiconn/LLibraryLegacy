@@ -1,6 +1,8 @@
 package net.ilexiconn.llibrary.client.gui;
 
 import cpw.mods.fml.client.GuiScrollingList;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
@@ -12,46 +14,41 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+@SideOnly(Side.CLIENT)
 public class GuiSlotModUpdateContainerList extends GuiScrollingList
 {
     private GuiCheckForUpdates parent;
     private ResourceLocation[] cachedLogo;
     private Dimension[] cachedLogoDimensions;
-    private int offset;
 
     public GuiSlotModUpdateContainerList(GuiCheckForUpdates parent, int listWidth)
     {
         super(parent.getMinecraftInstance(), listWidth, parent.height, 20, parent.height - 45, 20, 34);
         this.parent = parent;
-        this.cachedLogo = new ResourceLocation[getSize()];
-        this.cachedLogoDimensions = new Dimension[getSize()];
+        cachedLogo = new ResourceLocation[getSize()];
+        cachedLogoDimensions = new Dimension[getSize()];
     }
 
-    @Override
     protected int getSize()
     {
         return parent.outdatedMods.size();
     }
 
-    @Override
-    protected void elementClicked(int var1, boolean var2)
+    protected void elementClicked(int index, boolean doubleClick)
     {
-        parent.selectItemIndex(var1);
+        parent.selectItemIndex(index);
     }
 
-    @Override
-    protected boolean isSelected(int var1)
+    protected boolean isSelected(int index)
     {
-        return parent.itemIndexSelected(var1);
+        return parent.itemIndexSelected(index);
     }
 
-    @Override
     protected void drawBackground()
     {
         parent.drawDefaultBackground();
     }
 
-    @Override
     protected int getContentHeight()
     {
         return (getSize()) * 34 + 1;
@@ -67,8 +64,7 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
         return top;
     }
 
-    @Override
-    protected void drawSlot(int listIndex, int x, int y, int par4, Tessellator tesselator)
+    protected void drawSlot(int listIndex, int x, int y, int par4, Tessellator tessellator)
     {
         if (listIndex < parent.outdatedMods.size())
         {
@@ -81,8 +77,7 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
                 parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.modid, listWidth - 10), left + i, y + 12, 0xCCCCCC);
                 parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.currentVersion, listWidth - 10), left + i, y + 22, 0xCCCCCC);
 
-
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                GL11.glColor4f(1f, 1f, 1f, 1f);
                 Minecraft mc = parent.getMinecraftInstance();
                 TextureManager tm = mc.getTextureManager();
 

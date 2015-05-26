@@ -1,8 +1,15 @@
 package net.ilexiconn.llibrary.client.model.modelbase;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 
+/**
+ * @author      BobMowzie
+ * @since       0.1.0
+ */
+@SideOnly(Side.CLIENT)
 public class MowzieModelRenderer extends ModelRenderer
 {
     public float initRotateAngleX;

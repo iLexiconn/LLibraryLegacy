@@ -1,20 +1,20 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiLabel;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
 
-/**
- * @author FiskFille
- */
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+@SideOnly(Side.CLIENT)
 public class GuiOverride extends GuiScreen
 {
     public Minecraft mc = Minecraft.getMinecraft();
@@ -22,14 +22,10 @@ public class GuiOverride extends GuiScreen
     public GuiScreen overriddenScreen;
 
     public List buttonList = new ArrayList();
-    private int eventButton;
-    private long lastMouseEvent;
-    private int field_146298_h;
 
     public void drawScreen(int mouseX, int mouseY, float partalTicks)
     {
         super.drawScreen(mouseX, mouseY, partalTicks);
-//		List buttonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, overriddenScreen, "buttonList", "field_146292_n");
         List labelList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, overriddenScreen, "labelList", "field_146293_o");
         int k1;
 
@@ -60,5 +56,6 @@ public class GuiOverride extends GuiScreen
 
     public void actionPerformed(GuiButton button)
     {
+
     }
 }

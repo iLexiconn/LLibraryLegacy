@@ -20,7 +20,7 @@ public enum EnumChatColor
 
     public String colorCode;
 
-    private EnumChatColor(String c)
+    EnumChatColor(String c)
     {
         colorCode = c;
     }

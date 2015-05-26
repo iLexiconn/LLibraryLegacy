@@ -12,9 +12,6 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-/**
- * @author FiskFille
- */
 @SideOnly(Side.CLIENT)
 public class GuiChangelog extends GuiScreen
 {

@@ -1,8 +1,11 @@
 package net.ilexiconn.llibrary.client.model.modelbase;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
+@SideOnly(Side.CLIENT)
 public class ChainBuffer
 {
     private int yawTimer;

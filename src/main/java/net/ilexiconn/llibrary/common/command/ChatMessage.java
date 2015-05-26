@@ -2,9 +2,6 @@ package net.ilexiconn.llibrary.common.command;
 
 import net.ilexiconn.llibrary.common.color.EnumChatColor;
 
-/**
- * @author FiskFille
- */
 public class ChatMessage
 {
     public String message;

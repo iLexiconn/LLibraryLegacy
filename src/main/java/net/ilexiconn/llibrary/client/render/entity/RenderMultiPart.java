@@ -12,9 +12,12 @@ import net.minecraft.entity.EntityLiving;
 import org.lwjgl.opengl.GL11;
 
 /**
- * Basic class for debugging entity classes with MultiParts
+ * Basic class for debugging entity classes with {@link net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart}.
  *
- * @author iLexiconn
+ * @see         net.ilexiconn.llibrary.common.entity.multipart.EntityPart
+ * @see         net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart
+ * @author      iLexiconn
+ * @since       0.1.0
  */
 @SideOnly(Side.CLIENT)
 public abstract class RenderMultiPart extends RenderLiving

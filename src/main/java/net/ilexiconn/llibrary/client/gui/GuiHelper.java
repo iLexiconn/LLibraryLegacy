@@ -1,8 +1,12 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -10,17 +14,15 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+import java.util.Map;
 
 /**
- * @author FiskFille
+ * Helper class for GUIs.
+ *
+ * @author      FiskFille
+ * @author      iLexiconn
+ * @since       0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class GuiHelper
@@ -30,15 +32,30 @@ public class GuiHelper
 
     private static long initialTime = System.nanoTime();
     private static double deltaU = 0;
-    private static int ticks = 0;
     private static long timer = System.currentTimeMillis();
     private Minecraft mc = Minecraft.getMinecraft();
 
+    /**
+     * A method for adding {@link net.ilexiconn.llibrary.client.gui.GuiOverride} to an existing {@link net.minecraft.client.gui.GuiScreen} or {@link net.minecraft.client.gui.inventory.GuiContainer}
+     * {@link net.ilexiconn.llibrary.client.gui.GuiOverride} classes may get added twice.
+     *
+     * @see       #getOverridesForGui(java.lang.Class)
+     * @see       net.ilexiconn.llibrary.client.gui.GuiOverride
+     * @since     0.1.0
+     */
     public static void addOverride(Class<? extends GuiScreen> clazz, GuiOverride gui)
     {
         overrideMap.put(gui, clazz);
     }
 
+    /**
+     * Get a list of all the overrides of a specific GUI class.
+     *
+     * @see       #addOverride(java.lang.Class, net.ilexiconn.llibrary.client.gui.GuiOverride)
+     * @see       net.ilexiconn.llibrary.client.gui.GuiOverride
+     * @return    the list with {@link net.ilexiconn.llibrary.client.gui.GuiOverride} instances
+     * @since     0.1.0
+     */
     public static List<GuiOverride> getOverridesForGui(Class<? extends GuiScreen> clazz)
     {
         List<GuiOverride> list = Lists.newArrayList();
@@ -54,6 +71,14 @@ public class GuiHelper
         return list;
     }
 
+    /**
+     * Get a list of all the overrides of all the GUI class.
+     *
+     * @see       #addOverride(java.lang.Class, net.ilexiconn.llibrary.client.gui.GuiOverride)
+     * @see       net.ilexiconn.llibrary.client.gui.GuiOverride
+     * @return    the list with {@link net.ilexiconn.llibrary.client.gui.GuiOverride} instances
+     * @since     0.1.0
+     */
     public static Map<GuiOverride, Class<? extends GuiScreen>> getOverrides()
     {
         return overrideMap;
@@ -78,13 +103,11 @@ public class GuiHelper
                 if (deltaU >= 1)
                 {
                     gui.updateScreen();
-                    ticks++;
                     deltaU--;
                 }
 
                 if (System.currentTimeMillis() - timer > 1000)
                 {
-                    ticks = 0;
                     timer += 1000;
                 }
 

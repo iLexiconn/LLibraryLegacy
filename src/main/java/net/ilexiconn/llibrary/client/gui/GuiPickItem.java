@@ -1,45 +1,28 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.collect.Lists;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDoublePlant;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import com.google.common.collect.Lists;
+import java.util.ArrayList;
+import java.util.List;
 
-import cpw.mods.fml.client.GuiSlotModList;
-import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-/**
- * @author FiskFille
- */
 @SideOnly(Side.CLIENT)
 public abstract class GuiPickItem extends GuiScreen
 {
@@ -105,7 +88,7 @@ public abstract class GuiPickItem extends GuiScreen
 
         for (ItemStack itemstack : items)
         {
-            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(StatCollector.translateToLocal(itemstack.getDisplayName())) + 30);
+            listWidth = Math.max(listWidth, fontRendererObj.getStringWidth(StatCollector.translateToLocal(itemstack.getDisplayName())) + 30);
         }
 
         listWidth = Math.min(listWidth, 300);
@@ -117,7 +100,7 @@ public abstract class GuiPickItem extends GuiScreen
         }
 
         buttonList.add(new GuiButton(0, 20, height - 40, listWidth, 20, "Select"));
-        itemList = new GuiSlotItemStackList(this, items, listWidth);
+        itemList = new GuiSlotItemStackList(this, listWidth);
         itemList.registerScrollButtons(buttonList, 7, 8);
     }
 
@@ -221,11 +204,6 @@ public abstract class GuiPickItem extends GuiScreen
         RenderHelper.disableStandardItemLighting();
     }
 
-    public void playClickSound(SoundHandler soundHandler)
-    {
-        soundHandler.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1f));
-    }
-
     public void selectItemIndex(int var1)
     {
         selectedIndex = var1;
@@ -234,15 +212,5 @@ public abstract class GuiPickItem extends GuiScreen
     public boolean itemIndexSelected(int var1)
     {
         return selectedIndex == var1;
-    }
-
-    public FontRenderer getFontRenderer()
-    {
-        return fontRendererObj;
-    }
-
-    public Minecraft getMinecraftInstance()
-    {
-        return Minecraft.getMinecraft();
     }
 }

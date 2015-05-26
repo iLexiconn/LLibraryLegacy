@@ -17,7 +17,7 @@ public class Render3dItemEvent extends Event
     public final float y;
     public final float z;
 
-    public Render3dItemEvent(Item t, ModelBase m, ResourceLocation r, float i, float j, float k)
+    private Render3dItemEvent(Item t, ModelBase m, ResourceLocation r, float i, float j, float k)
     {
         item = t;
         model = m;
@@ -26,5 +26,21 @@ public class Render3dItemEvent extends Event
         x = i;
         y = j;
         z = k;
+    }
+
+    public static class Pre extends Render3dItemEvent
+    {
+        public Pre(Item t, ModelBase m, ResourceLocation r, float i, float j, float k)
+        {
+            super(t, m, r, i, j, k);
+        }
+    }
+
+    public static class Post extends Render3dItemEvent
+    {
+        public Post(Item t, ModelBase m, ResourceLocation r, float i, float j, float k)
+        {
+            super(t, m, r, i, j, k);
+        }
     }
 }

@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
+import net.ilexiconn.llibrary.common.survivaltab.ICustomSurvivalTabTexture;
 import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
@@ -48,7 +49,8 @@ public class GuiSurvivalTab extends GuiButton
             int xTexPos = id == 2 || id == 8 ? 0 : 28;
             int ySize = survivalTabContainer.isTabInFirstRow() ? selected ? 29 : 32 : selected ? 26 : 32;
 
-            mc.renderEngine.bindTexture(texture);
+            if (survivalTabContainer.getSurvivalTab() instanceof ICustomSurvivalTabTexture) mc.renderEngine.bindTexture(((ICustomSurvivalTabTexture) survivalTabContainer.getSurvivalTab()).getTabTexture());
+            else mc.renderEngine.bindTexture(texture);
             drawTexturedModalRect(xPosition, yPosition, xTexPos, yTexPos, 28, ySize);
 
             if (!survivalTabContainer.isTabInFirstRow() && selected) yPosition -= 3;
@@ -80,10 +82,8 @@ public class GuiSurvivalTab extends GuiButton
                 LLibrary.networkWrapper.sendToServer(new MessageLLibrarySurvivalTab(survivalTabContainer.getTabIndex()));
                 return true;
             }
-
-            return false;
+            else return false;
         }
-
         else return false;
     }
 

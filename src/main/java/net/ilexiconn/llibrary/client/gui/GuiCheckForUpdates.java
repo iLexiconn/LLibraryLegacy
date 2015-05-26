@@ -2,6 +2,8 @@ package net.ilexiconn.llibrary.client.gui;
 
 import com.google.common.collect.Lists;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.update.ChangelogHandler;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
@@ -20,9 +22,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
-/**
- * @author FiskFille
- */
+@SideOnly(Side.CLIENT)
 public class GuiCheckForUpdates extends GuiScreen
 {
     public List<JsonModUpdate> outdatedMods;

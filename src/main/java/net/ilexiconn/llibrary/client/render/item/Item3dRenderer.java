@@ -54,7 +54,7 @@ public class Item3dRenderer implements IItemRenderer
                 glRotatef(180f, 0f, 1f, 0f);
                 renderBlock(0f, 1f, 0f);
                 break;
-            default: /** EQUIPPED **/
+            default:
                 renderBlock(0.5f, 1.5f, 0.5f);
                 break;
         }
@@ -65,12 +65,13 @@ public class Item3dRenderer implements IItemRenderer
         glPushMatrix();
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(texture);
 
-        if (!MinecraftForge.EVENT_BUS.post(new Render3dItemEvent(item, model, texture, x, y, z)))
+        if (!MinecraftForge.EVENT_BUS.post(new Render3dItemEvent.Pre(item, model, texture, x, y, z)))
         {
             glTranslatef(x, y, z);
             glScalef(-1f, -1f, 1f);
             model.render(null, 0f, 0f, 0f, 0f, 0f, 0.0625f);
         }
+        MinecraftForge.EVENT_BUS.post(new Render3dItemEvent.Post(item, model, texture, x, y, z));
 
         glPopMatrix();
     }
