@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.resources.I18n;
@@ -48,11 +49,11 @@ public class GuiSurvivalTab extends GuiButton
 
             boolean selected = mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass();
             xPosition = (mc.currentScreen.width / 2) - 88 + survivalTabContainer.getTabColumn() * 29;
-            yPosition = survivalTabContainer.isTabInFirstRow() ? mc.currentScreen.height / 2 - 112 : selected ? mc.currentScreen.height / 2 + 83 : mc.currentScreen.height / 2 + 79;
+            yPosition = survivalTabContainer.isTabInFirstRow() ? mc.currentScreen.height / 2 - ((GuiContainer) mc.currentScreen).ySize / 2 - 28 : selected ? mc.currentScreen.height / 2 + 83 : mc.currentScreen.height / 2 + 79;
 
             int yTexPos = survivalTabContainer.isTabInFirstRow() ? selected ? 0 : 32 : selected ? 66 : 96;
             int xTexPos = id == 2 || id == 8 ? 0 : 28;
-            int ySize = survivalTabContainer.isTabInFirstRow() ? selected ? 29 : 32 : selected ? 26 : 32;
+            int ySize = survivalTabContainer.isTabInFirstRow() ? selected ? 28 : 32 : selected ? 26 : 32;
 
             if (survivalTabContainer.getSurvivalTab() instanceof ICustomSurvivalTabTexture) mc.renderEngine.bindTexture(((ICustomSurvivalTabTexture) survivalTabContainer.getSurvivalTab()).getTabTexture());
             else mc.renderEngine.bindTexture(texture);
