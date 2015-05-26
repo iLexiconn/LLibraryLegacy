@@ -1,7 +1,9 @@
 package net.ilexiconn.llibrary.common.survivaltab;
 
 /**
- * @author iLexiconn
+ * @see         net.ilexiconn.llibrary.common.survivaltab.ISurvivalTab
+ * @author      iLexiconn
+ * @since       0.2.0
  */
 public class SurvivalTab
 {

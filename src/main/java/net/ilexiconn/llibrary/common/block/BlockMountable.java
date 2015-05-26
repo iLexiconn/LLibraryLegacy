@@ -9,6 +9,10 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+/**
+ * @author      iLexiconn
+ * @since       0.1.0
+ */
 public abstract class BlockMountable extends BlockContainer
 {
     private float mountPosX = 0.5f;

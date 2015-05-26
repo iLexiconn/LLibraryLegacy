@@ -9,6 +9,10 @@ import java.util.*;
 
 import static net.ilexiconn.llibrary.common.dictionary.WeaponDictionary.Type.*;
 
+/**
+ * @author      FiskFille
+ * @since       0.1.0
+ */
 public class WeaponDictionary
 {
     private static final int WEAPON_LIST_SIZE = 1024 * 10;

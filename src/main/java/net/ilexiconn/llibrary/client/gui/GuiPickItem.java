@@ -23,6 +23,10 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author      FiskFile
+ * @since       0.1.0
+ */
 @SideOnly(Side.CLIENT)
 public abstract class GuiPickItem extends GuiScreen
 {

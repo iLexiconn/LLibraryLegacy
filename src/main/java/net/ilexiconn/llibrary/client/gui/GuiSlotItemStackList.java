@@ -6,6 +6,10 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
+/**
+ * @author      FiskFile
+ * @since       0.1.0
+ */
 public class GuiSlotItemStackList extends GuiScrollingList
 {
     private GuiPickItem parent;

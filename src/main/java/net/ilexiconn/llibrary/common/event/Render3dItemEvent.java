@@ -6,6 +6,10 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * @author      iLexiconn
+ * @since       0.1.0
+ */
 @Cancelable
 public class Render3dItemEvent extends Event
 {
@@ -28,6 +32,10 @@ public class Render3dItemEvent extends Event
         z = k;
     }
 
+    /**
+     * @author      iLexiconn
+     * @since       0.2.0
+     */
     public static class Pre extends Render3dItemEvent
     {
         public Pre(Item t, ModelBase m, ResourceLocation r, float i, float j, float k)
@@ -36,6 +44,10 @@ public class Render3dItemEvent extends Event
         }
     }
 
+    /**
+     * @author      iLexiconn
+     * @since       0.2.0
+     */
     public static class Post extends Render3dItemEvent
     {
         public Post(Item t, ModelBase m, ResourceLocation r, float i, float j, float k)

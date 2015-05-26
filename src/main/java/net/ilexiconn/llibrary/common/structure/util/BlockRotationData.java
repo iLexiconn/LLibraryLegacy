@@ -7,7 +7,9 @@ import net.minecraft.init.Blocks;
 import java.util.Map;
 
 /**
- * @author coolAlias
+ * @see         net.ilexiconn.llibrary.common.structure.util.GenHelper
+ * @author      coolAlias
+ * @since       0.1.0
  */
 public class BlockRotationData
 {

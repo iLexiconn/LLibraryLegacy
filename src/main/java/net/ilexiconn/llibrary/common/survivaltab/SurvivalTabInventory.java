@@ -10,6 +10,11 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C0DPacketCloseWindow;
 
+/**
+ * @see         net.ilexiconn.llibrary.common.survivaltab.ISurvivalTab
+ * @author      iLexiconn
+ * @since       0.2.0
+ */
 public class SurvivalTabInventory implements ISurvivalTab
 {
     public ItemStack stack = new ItemStack(Items.diamond_sword);

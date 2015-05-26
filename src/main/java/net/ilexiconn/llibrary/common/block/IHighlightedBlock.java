@@ -18,7 +18,7 @@ import java.util.List;
 public interface IHighlightedBlock
 {
     /**
-     * @see net.minecraft.util.AxisAlignedBB
+     * @see         net.minecraft.util.AxisAlignedBB
      * @since       0.1.0
      */
     @SideOnly(Side.CLIENT)

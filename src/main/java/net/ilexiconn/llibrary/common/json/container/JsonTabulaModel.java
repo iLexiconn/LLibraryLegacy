@@ -4,8 +4,16 @@ import net.ilexiconn.llibrary.client.model.tabula.Animation;
 import net.ilexiconn.llibrary.client.model.tabula.CubeGroup;
 import net.ilexiconn.llibrary.client.model.tabula.CubeInfo;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
+/**
+ * Container class for {@link net.ilexiconn.llibrary.client.model.tabula.ModelJson}. Use {@link net.ilexiconn.llibrary.common.json.JsonHelper#parseTabulaModel(InputStream)} to get a new instance.
+ *
+ * @see         net.ilexiconn.llibrary.client.model.tabula.ModelJson
+ * @author      Gegy1000
+ * @since       0.1.0
+ */
 public class JsonTabulaModel
 {
     private int textureWidth = 64;

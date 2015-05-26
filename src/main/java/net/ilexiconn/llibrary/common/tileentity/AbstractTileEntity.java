@@ -6,6 +6,10 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
+/**
+ * @author      iLexiconn
+ * @since       0.1.0
+ */
 public abstract class AbstractTileEntity extends TileEntity
 {
     public Packet getDescriptionPacket()

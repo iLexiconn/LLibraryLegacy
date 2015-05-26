@@ -22,6 +22,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * @see         net.ilexiconn.llibrary.common.update.UpdateHelper
+ * @author      FiskFile
+ * @since       0.1.0
+ */
 @SideOnly(Side.CLIENT)
 public class GuiCheckForUpdates extends GuiScreen
 {

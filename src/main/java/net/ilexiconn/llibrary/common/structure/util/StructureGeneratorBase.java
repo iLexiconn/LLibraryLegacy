@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @author coolAlias
+ * @see         net.ilexiconn.llibrary.common.structure.util.GenHelper
+ * @author      coolAlias
+ * @since       0.1.0
  */
 public abstract class StructureGeneratorBase extends WorldGenerator
 {

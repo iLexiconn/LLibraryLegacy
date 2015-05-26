@@ -22,7 +22,8 @@ import java.util.List;
 /**
  * Utility methods useful for any sort of structure generation
  *
- * @author coolAlias
+ * @author      coolAlias
+ * @since       0.1.0
  */
 public class GenHelper
 {

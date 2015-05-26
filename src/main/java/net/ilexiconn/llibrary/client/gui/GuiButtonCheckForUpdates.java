@@ -14,6 +14,11 @@ import scala.actors.threadpool.Arrays;
 
 import java.util.List;
 
+/**
+ * @see         net.ilexiconn.llibrary.common.update.UpdateHelper
+ * @author      FiskFile
+ * @since       0.1.0
+ */
 @SideOnly(Side.CLIENT)
 public class GuiButtonCheckForUpdates extends GuiButton
 {

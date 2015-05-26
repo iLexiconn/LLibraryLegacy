@@ -4,7 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author coolAlias
+ * @see         net.ilexiconn.llibrary.common.structure.util.GenHelper
+ * @author      coolAlias
+ * @since       0.1.0
  */
 public class Structure
 {

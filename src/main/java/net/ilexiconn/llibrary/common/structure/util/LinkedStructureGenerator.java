@@ -8,6 +8,11 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @see         net.ilexiconn.llibrary.common.structure.util.GenHelper
+ * @author      coolAlias
+ * @since       0.1.0
+ */
 public class LinkedStructureGenerator
 {
     /**

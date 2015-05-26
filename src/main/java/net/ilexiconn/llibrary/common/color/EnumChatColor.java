@@ -1,5 +1,9 @@
 package net.ilexiconn.llibrary.common.color;
 
+/**
+ * @author      iLexiconn
+ * @since       0.1.0
+ */
 public enum EnumChatColor
 {
     BLACK("black"),

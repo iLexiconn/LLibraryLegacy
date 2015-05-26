@@ -14,12 +14,13 @@ import java.util.List;
 /**
  * Helper class to save ItemStacks to NBT, and removing item/block recipes.
  *
- * @author iLexiconn
+ * @author      iLexiconn
+ * @since       0.1.0
  */
 public class ItemHelper
 {
     /**
-     * Use NbtHelper.readStackFromNbt() instead.
+     * Use {@link net.ilexiconn.llibrary.common.nbt.NbtHelper#readStackFromNbt(NBTTagCompound, String)} instead.
      *
      * @param nbtTag
      * @param name
@@ -32,7 +33,7 @@ public class ItemHelper
     }
 
     /**
-     * Use NbtHelper.writeStackToNbt() instead.
+     * Use {@link net.ilexiconn.llibrary.common.nbt.NbtHelper#writeStackToNbt(NBTTagCompound, String, ItemStack)} instead.
      *
      * @param nbtTag
      * @param name

@@ -7,7 +7,8 @@ import java.util.Calendar;
  * NOTE: The time returned from the methods in this class are only snapshots of what it was
  * when the game was started.
  *
- * @author FiskFille
+ * @author      FiskFille
+ * @since       0.2.0
  */
 public class SystemTime
 {
