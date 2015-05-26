@@ -16,27 +16,18 @@ public class SurvivalTab
         survivalTab = tab;
     }
 
-    /**
-     * @return index % 6
-     */
     public int getTabColumn()
     {
         if (tabIndex > 11) return ((tabIndex - 12) % 10) % 5;
         return tabIndex % 6;
     }
 
-    /**
-     * @return tabIndex < 6
-     */
     public boolean isTabInFirstRow()
     {
         if (tabIndex > 11) return ((tabIndex - 12) % 10) < 5;
         return tabIndex < 6;
     }
 
-    /**
-     * @return tabIndex
-     */
     public int getTabIndex()
     {
         return tabIndex;

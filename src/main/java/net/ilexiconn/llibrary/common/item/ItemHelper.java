@@ -38,7 +38,6 @@ public class ItemHelper
      * @param nbtTag
      * @param name
      * @param stack
-     * @return
      */
     @Deprecated
     public static void saveStackToNBT(NBTTagCompound nbtTag, String name, ItemStack stack)

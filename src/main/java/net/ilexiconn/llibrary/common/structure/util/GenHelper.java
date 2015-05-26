@@ -31,7 +31,7 @@ public class GenHelper
      * Use this method to add an ItemStack to the first available slot in a TileEntity that
      * implements IInventory (and thus, by extension, ISidedInventory)
      *
-     * @return true if entire itemstack was added
+     * @return      true if entire itemstack was added
      */
     public static boolean addItemToTileInventory(World world, ItemStack itemstack, int x, int y, int z)
     {
@@ -90,7 +90,7 @@ public class GenHelper
      * Sets an entity's location so that it doesn't spawn inside of walls.
      * Automatically removes placeholder block at coordinates x/y/z.
      *
-     * @return false if no suitable location found
+     * @return      false if no suitable location found
      */
     public static boolean setEntityInStructure(World world, Entity entity, int x, int y, int z)
     {
@@ -154,7 +154,7 @@ public class GenHelper
     /**
      * Spawns an entity in the structure by using setEntityInStructure.
      *
-     * @return true if entity spawned without collision (entity will still spawn if false, but may be in a wall)
+     * @return      true if entity spawned without collision (entity will still spawn if false, but may be in a wall)
      */
     public static boolean spawnEntityInStructure(World world, Entity entity, int x, int y, int z)
     {
@@ -212,8 +212,8 @@ public class GenHelper
      * metadata stored in the block will no longer be available, but will be returned by this
      * method so it can be stored in a local variable for later use.
      *
-     * @param hanging Must be an instance of ItemHangingEntity, such as Item.painting
-     * @return Returns direction for further processing such as for ItemFrames, or -1 if no entity set
+     * @param       hanging Must be an instance of ItemHangingEntity, such as Item.painting
+     * @return      Returns direction for further processing such as for ItemFrames, or -1 if no entity set
      */
     public static int setHangingEntity(World world, ItemStack hanging, int x, int y, int z)
     {
@@ -251,7 +251,7 @@ public class GenHelper
     /**
      * Set's the itemstack contained in ItemFrame at x/y/z with default rotation.
      *
-     * @param direction Use the value returned from the setHangingEntity method
+     * @param       direction Use the value returned from the setHangingEntity method
      */
     public static void setItemFrameStack(World world, ItemStack itemstack, int x, int y, int z, int direction)
     {
@@ -261,8 +261,8 @@ public class GenHelper
     /**
      * Set's the itemstack contained in ItemFrame at x/y/z with specified rotation.
      *
-     * @param direction    Use the value returned from the setHangingEntity method
-     * @param itemRotation 0,1,2,3 starting at default and rotating 90 degrees clockwise
+     * @param       direction    Use the value returned from the setHangingEntity method
+     * @param       itemRotation 0,1,2,3 starting at default and rotating 90 degrees clockwise
      */
     public static void setItemFrameStack(World world, ItemStack itemstack, int x, int y, int z, int direction, int itemRotation)
     {
@@ -280,8 +280,8 @@ public class GenHelper
     /**
      * Sets the art for a painting at location x/y/z and sends a packet to update players.
      *
-     * @param direction Use the value returned from the setHangingEntity method
-     * @return false if 'name' didn't match any EnumArt values.
+     * @param       direction Use the value returned from the setHangingEntity method
+     * @return      false if 'name' didn't match any EnumArt values.
      */
     public static boolean setPaintingArt(World world, String name, int x, int y, int z, int direction)
     {
@@ -310,8 +310,8 @@ public class GenHelper
      * Adds text to a sign in the world. Use EnumChatFormatting to set colors. Text of more
      * than 15 characters per line will be truncated automatically.
      *
-     * @param text A String array of no more than 4 elements; additional elements will be ignored
-     * @return false if no sign tile entity was found at x/y/z
+     * @param       text A String array of no more than 4 elements; additional elements will be ignored
+     * @return      false if no sign tile entity was found at x/y/z
      */
     public static boolean setSignText(World world, String[] text, int x, int y, int z)
     {
@@ -348,10 +348,10 @@ public class GenHelper
     /**
      * Sets skull type and name for a TileEntitySkull at x/y/z
      *
-     * @param name Must be a valid player username
-     * @param type Type of skull: 0 Skeleton, 1 Wither Skeleton, 2 Zombie, 3 Human, 4 Creeper
-     * @param rot  Sets the rotation for the skull if positive value is used
-     * @return false if errors were encountered (i.e. incorrect tile entity at x/y/z)
+     * @param       name Must be a valid player username
+     * @param       type Type of skull: 0 Skeleton, 1 Wither Skeleton, 2 Zombie, 3 Human, 4 Creeper
+     * @param       rot  Sets the rotation for the skull if positive value is used
+     * @return      false if errors were encountered (i.e. incorrect tile entity at x/y/z)
      */
     public static boolean setSkullData(World world, String name, int type, int rot, int x, int y, int z)
     {
@@ -380,17 +380,17 @@ public class GenHelper
      * This method will return the correct metadata value for the block type based on
      * how it was rotated in the world, IF and ONLY IF you used the correct metadata
      * value to set the block's default orientation for your structure's default facing.
-     * <p/>
+     * <p>
      * If your structure's front faces EAST by default, for example, and you want a wall
      * sign out front greeting all your guests, you'd better use '5' as its metadata value
      * in your blockArray so it faces EAST as well.
-     * <p/>
+     * <p>
      * Please read the blockArray notes very carefully and test out your structure to make
      * sure everything is oriented how you thought it was.
      *
-     * @param rotations The number of rotations to apply
-     * @param block     The block being rotated
-     * @param origMeta  The block's original metadata value
+     * @param       rotations The number of rotations to apply
+     * @param       block     The block being rotated
+     * @param       origMeta  The block's original metadata value
      */
     public static int getMetadata(int rotations, Block block, int origMeta)
     {
