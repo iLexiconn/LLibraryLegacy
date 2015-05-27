@@ -2,10 +2,10 @@ package net.ilexiconn.llibrary.common.structure.util;
 
 /**
  * Stores all data needed for post-gen processing, specifically for custom 'hooks'
- *
- * @see         net.ilexiconn.llibrary.common.structure.util.GenHelper
- * @author      coolAlias
- * @since       0.1.0
+ * 
+ * @see net.ilexiconn.llibrary.common.structure.util.GenHelper
+ * @author coolAlias
+ * @since 0.1.0
  */
 public class BlockData
 {

@@ -29,10 +29,10 @@ import org.lwjgl.opengl.GL11;
 import java.util.List;
 
 /**
- * @see         net.ilexiconn.llibrary.client.render.RenderHelper
- * @author      iLexiconn
- * @author      Gegy1000
- * @since       0.1.0
+ * @see net.ilexiconn.llibrary.client.render.RenderHelper
+ * @author iLexiconn
+ * @author Gegy1000
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public final class RenderLLibraryPlayer extends RenderPlayer
@@ -55,12 +55,14 @@ public final class RenderLLibraryPlayer extends RenderPlayer
                 if (modelExtension instanceof IFirstPersonExtension)
                     if (!((IFirstPersonExtension) modelExtension).preRenderFirstPerson(player, this, modelBipedMain))
                         flag = false;
-            if (flag) super.renderFirstPersonArm(player);
+            if (flag)
+                super.renderFirstPersonArm(player);
             for (IExtension modelExtension : modelExtensions)
                 if (modelExtension instanceof IFirstPersonExtension)
                     ((IFirstPersonExtension) modelExtension).postRenderFirstPerson(player, this, modelBipedMain);
         }
-        else super.renderFirstPersonArm(player);
+        else
+            super.renderFirstPersonArm(player);
     }
 
     protected void renderArrowsStuckInEntity(EntityLivingBase entity, float partialTicks)
@@ -74,18 +76,21 @@ public final class RenderLLibraryPlayer extends RenderPlayer
                 if (modelExtension instanceof IArrowStuckExtension)
                     if (!((IArrowStuckExtension) modelExtension).preRenderArrowsStuckInEntity(entity, this, partialTicks))
                         flag = false;
-            if (flag) super.renderArrowsStuckInEntity(entity, partialTicks);
+            if (flag)
+                super.renderArrowsStuckInEntity(entity, partialTicks);
             for (IExtension modelExtension : modelExtensions)
                 if (modelExtension instanceof IArrowStuckExtension)
                     ((IArrowStuckExtension) modelExtension).postRenderArrowsStuckInEntity(entity, this, partialTicks);
         }
-        else super.renderArrowsStuckInEntity(entity, partialTicks);
+        else
+            super.renderArrowsStuckInEntity(entity, partialTicks);
     }
 
     protected void renderEquippedItems(AbstractClientPlayer player, float partialTicks)
     {
         RenderPlayerEvent.Specials.Pre event = new RenderPlayerEvent.Specials.Pre(player, this, partialTicks);
-        if (MinecraftForge.EVENT_BUS.post(event)) return;
+        if (MinecraftForge.EVENT_BUS.post(event))
+            return;
 
         List<IExtension> modelExtensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
 
@@ -98,12 +103,14 @@ public final class RenderLLibraryPlayer extends RenderPlayer
                         flag = false;
             GL11.glColor3f(1f, 1f, 1f);
             renderArrowsStuckInEntity(player, partialTicks);
-            if (flag) renderEquippedItems(player, partialTicks, event);
+            if (flag)
+                renderEquippedItems(player, partialTicks, event);
             for (IExtension modelExtension : modelExtensions)
                 if (modelExtension instanceof IEquippedItemsExtension)
                     ((IEquippedItemsExtension) modelExtension).postRenderEquippedItems(player, this, partialTicks);
         }
-        else renderEquippedItems(player, partialTicks, event);
+        else
+            renderEquippedItems(player, partialTicks, event);
 
         MinecraftForge.EVENT_BUS.post(new RenderPlayerEvent.Specials.Post(player, this, partialTicks));
     }
@@ -196,18 +203,22 @@ public final class RenderLLibraryPlayer extends RenderPlayer
             double cos = (double) (-MathHelper.cos(rotationYaw * (float) Math.PI / 180f));
             float yOffset = (float) y * 10f;
 
-            if (yOffset < -6f) yOffset = -6f;
-            if (yOffset > 32f) yOffset = 32f;
+            if (yOffset < -6f)
+                yOffset = -6f;
+            if (yOffset > 32f)
+                yOffset = 32f;
 
             float rotationX = (float) (x * sin + z * cos) * 100f;
             float rotationZ = (float) (x * cos - z * sin) * 100f;
 
-            if (rotationX < 0f) rotationX = 0f;
+            if (rotationX < 0f)
+                rotationX = 0f;
 
             float f8 = player.prevCameraYaw + (player.cameraYaw - player.prevCameraYaw) * partialTicks;
             yOffset += MathHelper.sin((player.prevDistanceWalkedModified + (player.distanceWalkedModified - player.prevDistanceWalkedModified) * partialTicks) * 6f) * 32f * f8;
 
-            if (player.isSneaking()) yOffset += 25f;
+            if (player.isSneaking())
+                yOffset += 25f;
 
             GL11.glRotatef(6f + rotationX / 2f + yOffset, 1f, 0f, 0f);
             GL11.glRotatef(rotationZ / 2f, 0f, 0f, 1f);
@@ -225,9 +236,11 @@ public final class RenderLLibraryPlayer extends RenderPlayer
             modelBipedMain.bipedRightArm.postRender(0.0625f);
             GL11.glTranslatef(-0.0625f, 0.4375f, 0.0625f);
 
-            if (player.fishEntity != null) stack = new ItemStack(Items.stick);
+            if (player.fishEntity != null)
+                stack = new ItemStack(Items.stick);
             EnumAction enumaction = null;
-            if (player.getItemInUseCount() > 0) enumaction = stack.getItemUseAction();
+            if (player.getItemInUseCount() > 0)
+                enumaction = stack.getItemUseAction();
 
             net.minecraftforge.client.IItemRenderer customRenderer = net.minecraftforge.client.MinecraftForgeClient.getItemRenderer(stack, net.minecraftforge.client.IItemRenderer.ItemRenderType.EQUIPPED);
             boolean is3d = (customRenderer != null && customRenderer.shouldUseRenderHelper(net.minecraftforge.client.IItemRenderer.ItemRenderType.EQUIPPED, stack, net.minecraftforge.client.IItemRenderer.ItemRendererHelper.BLOCK_3D));

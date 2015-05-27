@@ -11,10 +11,10 @@ import java.util.ArrayList;
 
 /**
  * Helper class to register a mod for automatic update checking.
- *
- * @author      FiskFille
- * @author      iLexiconn
- * @since       0.1.0
+ * 
+ * @author FiskFille
+ * @author iLexiconn
+ * @since 0.1.0
  */
 public class UpdateHelper
 {
@@ -25,26 +25,13 @@ public class UpdateHelper
      * <p>
      * Example pastebin version file:
      * <p>
-     * {
-     * "newestVersion": "9000",
-     * "versions":
-     * {
-     * "0.1.0":
-     * [
-     * "Initial release"
-     * ],
-     * "9000":
-     * [
-     * "Added more awesomeness"
-     * ]
-     * },
-     * "updateUrl": "http://ilexiconn.net",
-     * "iconUrl": "http://ilexiconn.net/llibrary/data/llibrary_64.png"
-     * }
-     *
-     * @param       mod the main mod instance
-     * @param       url the updater file
-     * @throws      java.io.IOException
+     * { "newestVersion": "9000", "versions": { "0.1.0": [ "Initial release" ], "9000": [ "Added more awesomeness" ] }, "updateUrl": "http://ilexiconn.net", "iconUrl": "http://ilexiconn.net/llibrary/data/llibrary_64.png" }
+     * 
+     * @param mod
+     *            the main mod instance
+     * @param url
+     *            the updater file
+     * @throws java.io.IOException
      */
     public static void registerUpdateChecker(Object mod, String url) throws IOException
     {

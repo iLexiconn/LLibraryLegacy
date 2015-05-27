@@ -5,16 +5,16 @@ import net.minecraft.util.IChatComponent;
 
 /**
  * Helper class for deserializing chat {@link net.minecraft.util.IChatComponent}.
- *
- * @see         net.minecraft.util.IChatComponent
- * @author      FiskFille
- * @since       0.1.0
+ * 
+ * @see net.minecraft.util.IChatComponent
+ * @author FiskFille
+ * @since 0.1.0
  */
 public class ChatHelper
 {
     /**
-     * @see         net.minecraft.util.IChatComponent
-     * @since       0.1.0
+     * @see net.minecraft.util.IChatComponent
+     * @since 0.1.0
      */
     public static void chatToFromJson(ICommandSender commandSender, String json)
     {
@@ -23,9 +23,9 @@ public class ChatHelper
     }
 
     /**
-     * @see         net.minecraft.util.IChatComponent
-     * @see         net.ilexiconn.llibrary.common.command.ChatMessage
-     * @since       0.1.0
+     * @see net.minecraft.util.IChatComponent
+     * @see net.ilexiconn.llibrary.common.command.ChatMessage
+     * @since 0.1.0
      */
     public static void chatTo(ICommandSender commandSender, ChatMessage... chatMessages)
     {

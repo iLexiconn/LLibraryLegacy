@@ -5,9 +5,9 @@ import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import java.util.List;
 
 /**
- * @author      FiskFille
- * @author      iLexiconn
- * @since       0.1.0
+ * @author FiskFille
+ * @author iLexiconn
+ * @since 0.1.0
  */
 public class ChangelogHandler
 {

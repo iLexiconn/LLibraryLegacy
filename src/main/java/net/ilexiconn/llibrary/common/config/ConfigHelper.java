@@ -11,11 +11,11 @@ import java.util.Map;
 
 /**
  * Helper class for registering {@link net.minecraftforge.common.config.Configuration} for a specific {@link cpw.mods.fml.common.Mod}
- *
- * @see         net.minecraftforge.common.config.Configuration
- * @see         cpw.mods.fml.common.Mod
- * @author      iLexiconn
- * @since       0.1.0
+ * 
+ * @see net.minecraftforge.common.config.Configuration
+ * @see cpw.mods.fml.common.Mod
+ * @author iLexiconn
+ * @since 0.1.0
  */
 public class ConfigHelper
 {
@@ -25,10 +25,10 @@ public class ConfigHelper
      * Register a {@link net.ilexiconn.llibrary.common.config.IConfigHandler} for a specific {@link cpw.mods.fml.common.Mod}
      * <p>
      * {@link net.ilexiconn.llibrary.common.config.IConfigHandler#loadConfig(Configuration)} will be called every time the user clicks on 'Done'
-     *
-     * @see         net.ilexiconn.llibrary.common.config.IConfigHandler
-     * @see         cpw.mods.fml.common.Mod
-     * @since       0.1.0
+     * 
+     * @see net.ilexiconn.llibrary.common.config.IConfigHandler
+     * @see cpw.mods.fml.common.Mod
+     * @since 0.1.0
      */
     public static void registerConfigHandler(String modid, File location, IConfigHandler configHandler)
     {
@@ -39,15 +39,17 @@ public class ConfigHelper
 
     public static ConfigContainer getConfigContainer(String modid)
     {
-        if (hasConfiguration(modid)) return configHandlers.get(modid);
-        else return null;
+        if (hasConfiguration(modid))
+            return configHandlers.get(modid);
+        else
+            return null;
     }
 
     /**
      * Check if the given {@link cpw.mods.fml.common.Mod} has a {@link net.ilexiconn.llibrary.common.config.IConfigHandler} container
-     *
-     * @see         cpw.mods.fml.common.Mod
-     * @since       0.1.0
+     * 
+     * @see cpw.mods.fml.common.Mod
+     * @since 0.1.0
      */
     public static boolean hasConfiguration(String modid)
     {
@@ -56,7 +58,8 @@ public class ConfigHelper
 
     public static void setProperty(String modid, String category, String name, String value, Property.Type type)
     {
-        if (!hasConfiguration(modid)) return;
+        if (!hasConfiguration(modid))
+            return;
         getConfigContainer(modid).getConfiguration().getCategory(category).put(name, new Property(name, value, type));
         FMLCommonHandler.instance().bus().post(new ConfigChangedEvent.OnConfigChangedEvent(modid, "", false, false));
     }

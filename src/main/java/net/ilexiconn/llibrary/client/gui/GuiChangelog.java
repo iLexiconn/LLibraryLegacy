@@ -13,9 +13,9 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 /**
- * @see         net.ilexiconn.llibrary.common.update.UpdateHelper
- * @author      FiskFile
- * @since       0.1.0
+ * @see net.ilexiconn.llibrary.common.update.UpdateHelper
+ * @author FiskFile
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class GuiChangelog extends GuiScreen

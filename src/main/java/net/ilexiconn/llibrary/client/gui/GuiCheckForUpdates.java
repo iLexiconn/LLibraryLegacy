@@ -23,9 +23,9 @@ import java.net.URI;
 import java.util.List;
 
 /**
- * @see         net.ilexiconn.llibrary.common.update.UpdateHelper
- * @author      FiskFile
- * @since       0.1.0
+ * @see net.ilexiconn.llibrary.common.update.UpdateHelper
+ * @author FiskFile
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class GuiCheckForUpdates extends GuiScreen
@@ -139,12 +139,12 @@ public class GuiCheckForUpdates extends GuiScreen
                 outdatedMods = Lists.newArrayList();
                 failed = true;
             }
-//			outdatedMods = Lists.newArrayList();
-//			
-//			for (int i = 0; i < 10; ++i)
-//			{
-//				outdatedMods.add(UpdateHelper.getModContainerById("llibrary"));
-//			}
+            // outdatedMods = Lists.newArrayList();
+            //
+            // for (int i = 0; i < 10; ++i)
+            // {
+            // outdatedMods.add(UpdateHelper.getModContainerById("llibrary"));
+            // }
 
             initGui();
         }

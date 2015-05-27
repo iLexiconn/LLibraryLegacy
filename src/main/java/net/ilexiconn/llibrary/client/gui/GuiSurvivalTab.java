@@ -22,9 +22,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @see         net.ilexiconn.llibrary.common.survivaltab.TabHelper
- * @author      iLexiconn
- * @since       0.2.0
+ * @see net.ilexiconn.llibrary.common.survivaltab.TabHelper
+ * @author iLexiconn
+ * @since 0.2.0
  */
 @SideOnly(Side.CLIENT)
 public class GuiSurvivalTab extends GuiButton
@@ -55,11 +55,14 @@ public class GuiSurvivalTab extends GuiButton
             int xTexPos = id == 2 || id == 8 ? 0 : 28;
             int ySize = survivalTabContainer.isTabInFirstRow() ? selected ? 28 : 32 : selected ? 26 : 32;
 
-            if (survivalTabContainer.getSurvivalTab() instanceof ICustomSurvivalTabTexture) mc.renderEngine.bindTexture(((ICustomSurvivalTabTexture) survivalTabContainer.getSurvivalTab()).getTabTexture());
-            else mc.renderEngine.bindTexture(texture);
+            if (survivalTabContainer.getSurvivalTab() instanceof ICustomSurvivalTabTexture)
+                mc.renderEngine.bindTexture(((ICustomSurvivalTabTexture) survivalTabContainer.getSurvivalTab()).getTabTexture());
+            else
+                mc.renderEngine.bindTexture(texture);
             drawTexturedModalRect(xPosition, yPosition, xTexPos, yTexPos, 28, ySize);
 
-            if (!survivalTabContainer.isTabInFirstRow() && selected) yPosition -= 3;
+            if (!survivalTabContainer.isTabInFirstRow() && selected)
+                yPosition -= 3;
 
             RenderHelper.enableGUIStandardItemLighting();
             zLevel = 100f;
@@ -88,9 +91,11 @@ public class GuiSurvivalTab extends GuiButton
                 LLibrary.networkWrapper.sendToServer(new MessageLLibrarySurvivalTab(survivalTabContainer.getTabIndex()));
                 return true;
             }
-            else return false;
+            else
+                return false;
         }
-        else return false;
+        else
+            return false;
     }
 
     public void drawHoveringText(String text, int mouseX, int mouseY)
@@ -109,15 +114,18 @@ public class GuiSurvivalTab extends GuiButton
                 String s = (String) object;
                 int width = font.getStringWidth(s);
 
-                if (width > topWidth) topWidth = width;
+                if (width > topWidth)
+                    topWidth = width;
             }
 
             int renderX = mouseX + 12;
             int renderY = mouseY - 12;
             int i1 = 8;
 
-            if (text.size() > 1) i1 += 2 + (text.size() - 1) * 10;
-            if (renderX + topWidth > width) renderX -= 28 + topWidth;
+            if (text.size() > 1)
+                i1 += 2 + (text.size() - 1) * 10;
+            if (renderX + topWidth > width)
+                renderX -= 28 + topWidth;
 
             zLevel = 300f;
             renderItem.zLevel = 300f;
@@ -143,7 +151,8 @@ public class GuiSurvivalTab extends GuiButton
                 String s1 = (String) text.get(letterIndex);
                 font.drawStringWithShadow(s1, renderX, renderY, -1);
 
-                if (letterIndex == 0) renderY += 2;
+                if (letterIndex == 0)
+                    renderY += 2;
 
                 renderY += 10;
             }

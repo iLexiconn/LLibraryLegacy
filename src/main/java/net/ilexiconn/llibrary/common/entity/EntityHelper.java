@@ -16,11 +16,11 @@ import java.util.Map;
 
 /**
  * Class for registering entities, removing entities and getting entities.
- *
- * @author      iLexiconn
- * @author      Gegy1000
- * @author      FiskFille
- * @since       0.1.0
+ * 
+ * @author iLexiconn
+ * @author Gegy1000
+ * @author FiskFille
+ * @since 0.1.0
  */
 public class EntityHelper
 {
@@ -146,7 +146,8 @@ public class EntityHelper
 
     private static int getUniqueEntityId()
     {
-        do startEntityId++;
+        do
+            startEntityId++;
         while (EntityList.getStringFromID(startEntityId) != null);
         return startEntityId;
     }
@@ -157,7 +158,7 @@ public class EntityHelper
 
         try
         {
-            entity = (Entity) entityClass.getConstructor(new Class[]{World.class}).newInstance(world);
+            entity = (Entity) entityClass.getConstructor(new Class[] { World.class }).newInstance(world);
         }
         catch (Exception e)
         {

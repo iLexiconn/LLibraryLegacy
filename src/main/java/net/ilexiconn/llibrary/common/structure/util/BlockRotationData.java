@@ -7,9 +7,9 @@ import net.minecraft.init.Blocks;
 import java.util.Map;
 
 /**
- * @see         net.ilexiconn.llibrary.common.structure.util.GenHelper
- * @author      coolAlias
- * @since       0.1.0
+ * @see net.ilexiconn.llibrary.common.structure.util.GenHelper
+ * @author coolAlias
+ * @since 0.1.0
  */
 public class BlockRotationData
 {
@@ -106,9 +106,11 @@ public class BlockRotationData
 
     /**
      * Maps a block to a specified rotation type. Allows custom blocks to rotate with structure.
-     *
-     * @param block        a valid block
-     * @param rotationType types predefined by enumerated type ROTATION
+     * 
+     * @param block
+     *            a valid block
+     * @param rotationType
+     *            types predefined by enumerated type ROTATION
      * @return false if a rotation type has already been specified for the given block
      */
     public static boolean registerCustomBlockRotation(Block block, Rotation rotationType)
@@ -118,10 +120,13 @@ public class BlockRotationData
 
     /**
      * Maps a block to a specified rotation type. Allows custom blocks to rotate with structure.
-     *
-     * @param block        a valid block
-     * @param rotationType types predefined by enumerated type ROTATION
-     * @param override     if true, will override the previously set rotation data for specified block
+     * 
+     * @param block
+     *            a valid block
+     * @param rotationType
+     *            types predefined by enumerated type ROTATION
+     * @param override
+     *            if true, will override the previously set rotation data for specified block
      * @return false if a rotation type has already been specified for the given block
      */
     public static boolean registerCustomBlockRotation(Block block, Rotation rotationType, boolean override)
@@ -129,8 +134,10 @@ public class BlockRotationData
         if (blockRotationData.containsKey(block))
         {
             System.err.println("[LLibrary] Block " + block + " already has a rotation type." + (override ? " Overriding previous data." : ""));
-            if (override) blockRotationData.remove(block);
-            else return false;
+            if (override)
+                blockRotationData.remove(block);
+            else
+                return false;
         }
 
         blockRotationData.put(block, rotationType);
@@ -148,8 +155,7 @@ public class BlockRotationData
          */
         ANVIL,
         /**
-         * 0x8 flags top, for which 0x1 flags the hinge direction;
-         * Facings (for bottom only): 0 - west, 1 - north, 2 - east, 3 - south, 0x4 flags door as open
+         * 0x8 flags top, for which 0x1 flags the hinge direction; Facings (for bottom only): 0 - west, 1 - north, 2 - east, 3 - south, 0x4 flags door as open
          */
         DOOR,
         /**
@@ -157,27 +163,19 @@ public class BlockRotationData
          */
         GENERIC,
         /**
-         * Most containers (chests, furnaces) use this, as well as pistons, ladders, and other things.
-         * Facings: 2 - north, 3 - south, 4 - west, 5 - east [for ladders and signs, they are attached to that side of the block]
+         * Most containers (chests, furnaces) use this, as well as pistons, ladders, and other things. Facings: 2 - north, 3 - south, 4 - west, 5 - east [for ladders and signs, they are attached to that side of the block]
          */
-        PISTON_CONTAINER,
-        QUARTZ,
-        RAIL,
-        REPEATER,
+        PISTON_CONTAINER, QUARTZ, RAIL, REPEATER,
         /**
-         * Marks the direction in which text / banners show. Increments are in 1/16 of a
-         * full circle, starting from south and moving clockwise as if looking at a compass.
-         * E.g., 0 is south, 1 is south-southwest, 2 is southwest, all the way up to 16 which is south-southeast
+         * Marks the direction in which text / banners show. Increments are in 1/16 of a full circle, starting from south and moving clockwise as if looking at a compass. E.g., 0 is south, 1 is south-southwest, 2 is southwest, all the way up to 16 which is south-southeast
          */
-        SIGNPOST,
-        SKULL,
+        SIGNPOST, SKULL,
         /**
          * Ascends to the: 0 - east, 1 - west, 2 - south, 3 - north; 0x4 flags inverted stairs
          */
         STAIRS,
         /**
-         * Attached to wall: 0 - south, 1 - north, 2 - east, 3 - west
-         * 0x4 flags trapdoor as open, 0x8 flags trapdoor as being in top half of block
+         * Attached to wall: 0 - south, 1 - north, 2 - east, 3 - west 0x4 flags trapdoor as open, 0x8 flags trapdoor as being in top half of block
          */
         TRAPDOOR,
         /**
@@ -185,20 +183,15 @@ public class BlockRotationData
          */
         VINE,
         /**
-         * Facings: 1 - east, 2 - west, 3 - south, 4 - north
-         * (button only: 0 - down, 5 - up)
+         * Facings: 1 - east, 2 - west, 3 - south, 4 - north (button only: 0 - down, 5 - up)
          */
         WALL_MOUNTED,
         /**
-         * Facings: 1 - east, 2 - west, 3 - south, 4 - north,
-         * 5 - north/south ground, 6 - east/west ground,
-         * 7 - north/south ceiling, 0 - east/west ceiling
-         * 0x8 flags power
+         * Facings: 1 - east, 2 - west, 3 - south, 4 - north, 5 - north/south ground, 6 - east/west ground, 7 - north/south ceiling, 0 - east/west ceiling 0x8 flags power
          */
         LEVER,
         /**
-         * 0-3 - wood type, 0x4 - east/west, 0x8 north/south;
-         * if neither 0x4 nor 0x8 are set, wood is up/down; if both are set, wood is all bark
+         * 0-3 - wood type, 0x4 - east/west, 0x8 north/south; if neither 0x4 nor 0x8 are set, wood is up/down; if both are set, wood is all bark
          */
         WOOD
     }

@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- * @author      iLexiconn
- * @since       0.1.0
+ * @author iLexiconn
+ * @since 0.1.0
  */
 public class JsonFactory
 {

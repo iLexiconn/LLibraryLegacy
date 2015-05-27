@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @see         net.ilexiconn.llibrary.common.structure.util.GenHelper
- * @author      coolAlias
- * @since       0.1.0
+ * @see net.ilexiconn.llibrary.common.structure.util.GenHelper
+ * @author coolAlias
+ * @since 0.1.0
  */
 public class LinkedStructureGenerator
 {
@@ -48,8 +48,7 @@ public class LinkedStructureGenerator
     }
 
     /**
-     * Specifies which 'StructureGenerator' class to use for generation, which in
-     * turn determines how custom hooks are handled
+     * Specifies which 'StructureGenerator' class to use for generation, which in turn determines how custom hooks are handled
      */
     public <T extends StructureGeneratorBase> void setGenerator(T generator)
     {
@@ -100,19 +99,20 @@ public class LinkedStructureGenerator
 
     private void addOffset(int x, int y, int z)
     {
-        offsets.add(new int[]{-z, y, x});
+        offsets.add(new int[] { -z, y, x });
     }
 
     /**
-     * Sets the offset values for the last structure added; x and z are switched to maintain
-     * +x moves forward, +z to right and -z to left relationships
+     * Sets the offset values for the last structure added; x and z are switched to maintain +x moves forward, +z to right and -z to left relationships
      */
     public void setLastOffset(int x, int y, int z)
     {
         if (!structures.isEmpty())
         {
-            if (offsets.size() < structures.size()) addOffset(x, y, z);
-            else offsets.set(offsets.size() - 1, new int[]{-z, y, x});
+            if (offsets.size() < structures.size())
+                addOffset(x, y, z);
+            else
+                offsets.set(offsets.size() - 1, new int[] { -z, y, x });
         }
     }
 
@@ -121,7 +121,8 @@ public class LinkedStructureGenerator
      */
     public void setLastRotation(int rot)
     {
-        if (!rots.isEmpty()) rots.set(rots.size() - 1, (byte) (rot % 4));
+        if (!rots.isEmpty())
+            rots.set(rots.size() - 1, (byte) (rot % 4));
     }
 
     /**
@@ -133,8 +134,7 @@ public class LinkedStructureGenerator
     }
 
     /**
-     * Generates all linked structures with overall orientation determined by player's facing or,
-     * if player is null, by the first structure's default facing
+     * Generates all linked structures with overall orientation determined by player's facing or, if player is null, by the first structure's default facing
      */
     public void generateLinkedStructures(EntityPlayer player, World world, Random random, int x, int y, int z)
     {
@@ -144,8 +144,10 @@ public class LinkedStructureGenerator
             System.err.println("[Library] Structure List and Offset List are not the same size, aborting generation.");
             return;
         }
-        if (gen == null) gen = new StructureGenerator();
-        if (player != null) gen.setPlayerFacing(player);
+        if (gen == null)
+            gen = new StructureGenerator();
+        if (player != null)
+            gen.setPlayerFacing(player);
         setOffsetFromRotation(player != null ? gen.getPlayerFacing() : -1);
         for (Structure structure : structures)
         {
@@ -157,8 +159,7 @@ public class LinkedStructureGenerator
     }
 
     /**
-     * Adjusts offsetX and offsetZ amounts to compensate for player facing or, if player
-     * was null (facing < 0), for number of manual rotations
+     * Adjusts offsetX and offsetZ amounts to compensate for player facing or, if player was null (facing < 0), for number of manual rotations
      */
     private void setOffsetFromRotation(int facing)
     {

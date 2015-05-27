@@ -10,8 +10,8 @@ import net.minecraft.util.MathHelper;
 import java.util.List;
 
 /**
- * @author      BobMowzie
- * @since       0.1.0
+ * @author BobMowzie
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class MowzieModelBase extends ModelBase
@@ -20,12 +20,14 @@ public class MowzieModelBase extends ModelBase
 
     protected void setInitPose()
     {
-        for (MowzieModelRenderer part : parts) part.setInitValuesToCurrentPose();
+        for (MowzieModelRenderer part : parts)
+            part.setInitValuesToCurrentPose();
     }
 
     protected void setToInitPose()
     {
-        for (MowzieModelRenderer part : parts) part.setCurrentPoseToInitValues();
+        for (MowzieModelRenderer part : parts)
+            part.setCurrentPoseToInitValues();
     }
 
     protected void addChildTo(ModelRenderer child, ModelRenderer parent)
@@ -65,34 +67,41 @@ public class MowzieModelBase extends ModelBase
 
     public float rotateBox(float speed, float degree, boolean invert, float offset, float weight, float f, float f1)
     {
-        if (invert) return -MathHelper.cos(f * speed + offset) * degree * f1 + weight * f1;
-        else return MathHelper.cos(f * speed + offset) * degree * f1 + weight * f1;
+        if (invert)
+            return -MathHelper.cos(f * speed + offset) * degree * f1 + weight * f1;
+        else
+            return MathHelper.cos(f * speed + offset) * degree * f1 + weight * f1;
     }
 
     public float moveBox(float speed, float degree, boolean bounce, float f, float f1)
     {
-        if (bounce) return -MathHelper.abs((MathHelper.sin(f * speed) * f1 * degree));
-        else return MathHelper.sin(f * speed) * f1 * degree - f1 * degree;
+        if (bounce)
+            return -MathHelper.abs((MathHelper.sin(f * speed) * f1 * degree));
+        else
+            return MathHelper.sin(f * speed) * f1 * degree - f1 * degree;
     }
 
     public void walk(MowzieModelRenderer box, float speed, float degree, boolean invert, float offset, float weight, float f, float f1)
     {
         int inverted = 1;
-        if (invert) inverted = -1;
+        if (invert)
+            inverted = -1;
         box.rotateAngleX += MathHelper.cos(f * speed + offset) * degree * inverted * f1 + weight * f1;
     }
 
     public void flap(MowzieModelRenderer box, float speed, float degree, boolean invert, float offset, float weight, float f, float f1)
     {
         int inverted = 1;
-        if (invert) inverted = -1;
+        if (invert)
+            inverted = -1;
         box.rotateAngleZ += MathHelper.cos(f * speed + offset) * degree * inverted * f1 + weight * f1;
     }
 
     public void bob(MowzieModelRenderer box, float speed, float degree, boolean bounce, float f, float f1)
     {
         float bob = (float) (Math.sin(f * speed) * f1 * degree - f1 * degree);
-        if (bounce) bob = (float) -Math.abs((Math.sin(f * speed) * f1 * degree));
+        if (bounce)
+            bob = (float) -Math.abs((Math.sin(f * speed) * f1 * degree));
         box.rotationPointY += bob;
     }
 

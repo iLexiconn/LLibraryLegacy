@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author      FiskFile
- * @since       0.1.0
+ * @author FiskFile
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public abstract class GuiPickItem extends GuiScreen

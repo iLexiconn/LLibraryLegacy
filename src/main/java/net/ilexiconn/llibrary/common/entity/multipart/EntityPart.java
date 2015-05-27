@@ -22,12 +22,18 @@ public class EntityPart extends Entity
     public float damageMultiplier;
 
     /**
-     * @param e     parent
-     * @param r     radius
-     * @param y     angle yaw
-     * @param o     y-offset
-     * @param sizeX collision box x-size
-     * @param sizeY collision box y-size
+     * @param e
+     *            parent
+     * @param r
+     *            radius
+     * @param y
+     *            angle yaw
+     * @param o
+     *            y-offset
+     * @param sizeX
+     *            collision box x-size
+     * @param sizeY
+     *            collision box y-size
      */
     public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY)
     {
@@ -35,13 +41,20 @@ public class EntityPart extends Entity
     }
 
     /**
-     * @param e     parent
-     * @param r     radius
-     * @param y     angle yaw
-     * @param o     y-offset
-     * @param sizeX collision box x-size
-     * @param sizeY collision box y-size
-     * @param d     damage multiplier
+     * @param e
+     *            parent
+     * @param r
+     *            radius
+     * @param y
+     *            angle yaw
+     * @param o
+     *            y-offset
+     * @param sizeX
+     *            collision box x-size
+     * @param sizeY
+     *            collision box y-size
+     * @param d
+     *            damage multiplier
      */
     public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY, float d)
     {
@@ -60,12 +73,10 @@ public class EntityPart extends Entity
     {
         super.onUpdate();
 
-        setLocationAndAngles(parent.posX + radius * Math.cos(parent.renderYawOffset * (Math.PI / 180f) + angleYaw),
-                parent.posY + offsetY,
-                parent.posZ + radius * Math.sin(parent.renderYawOffset * (Math.PI / 180f) + angleYaw),
-                0f, 0f);
+        setLocationAndAngles(parent.posX + radius * Math.cos(parent.renderYawOffset * (Math.PI / 180f) + angleYaw), parent.posY + offsetY, parent.posZ + radius * Math.sin(parent.renderYawOffset * (Math.PI / 180f) + angleYaw), 0f, 0f);
 
-        if (!worldObj.isRemote) collideWithNearbyEntities();
+        if (!worldObj.isRemote)
+            collideWithNearbyEntities();
     }
 
     public boolean canBeCollidedWith()

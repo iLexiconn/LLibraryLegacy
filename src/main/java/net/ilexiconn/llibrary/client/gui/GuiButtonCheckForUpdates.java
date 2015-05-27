@@ -15,9 +15,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @see         net.ilexiconn.llibrary.common.update.UpdateHelper
- * @author      FiskFile
- * @since       0.1.0
+ * @see net.ilexiconn.llibrary.common.update.UpdateHelper
+ * @author FiskFile
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class GuiButtonCheckForUpdates extends GuiButton
@@ -66,7 +66,7 @@ public class GuiButtonCheckForUpdates extends GuiButton
 
             if (hoverTimer >= 20)
             {
-                drawHoveringText(Arrays.asList(new String[]{I18n.format("gui.llibrary.updatecheck.desc")}), mouseX, mouseY, mc.fontRenderer);
+                drawHoveringText(Arrays.asList(new String[] { I18n.format("gui.llibrary.updatecheck.desc") }), mouseX, mouseY, mc.fontRenderer);
             }
         }
     }

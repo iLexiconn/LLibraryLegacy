@@ -21,17 +21,16 @@ import java.util.List;
 
 /**
  * Utility methods useful for any sort of structure generation
- *
- * @author      coolAlias
- * @since       0.1.0
+ * 
+ * @author coolAlias
+ * @since 0.1.0
  */
 public class GenHelper
 {
     /**
-     * Use this method to add an ItemStack to the first available slot in a TileEntity that
-     * implements IInventory (and thus, by extension, ISidedInventory)
-     *
-     * @return      true if entire itemstack was added
+     * Use this method to add an ItemStack to the first available slot in a TileEntity that implements IInventory (and thus, by extension, ISidedInventory)
+     * 
+     * @return true if entire itemstack was added
      */
     public static boolean addItemToTileInventory(World world, ItemStack itemstack, int x, int y, int z)
     {
@@ -87,14 +86,14 @@ public class GenHelper
     }
 
     /**
-     * Sets an entity's location so that it doesn't spawn inside of walls.
-     * Automatically removes placeholder block at coordinates x/y/z.
-     *
-     * @return      false if no suitable location found
+     * Sets an entity's location so that it doesn't spawn inside of walls. Automatically removes placeholder block at coordinates x/y/z.
+     * 
+     * @return false if no suitable location found
      */
     public static boolean setEntityInStructure(World world, Entity entity, int x, int y, int z)
     {
-        if (entity == null) return false;
+        if (entity == null)
+            return false;
 
         int i = 0;
         int iMax = (entity.width > 1f ? 16 : 4);
@@ -153,12 +152,13 @@ public class GenHelper
 
     /**
      * Spawns an entity in the structure by using setEntityInStructure.
-     *
-     * @return      true if entity spawned without collision (entity will still spawn if false, but may be in a wall)
+     * 
+     * @return true if entity spawned without collision (entity will still spawn if false, but may be in a wall)
      */
     public static boolean spawnEntityInStructure(World world, Entity entity, int x, int y, int z)
     {
-        if (world.isRemote || entity == null) return false;
+        if (world.isRemote || entity == null)
+            return false;
 
         boolean collided = setEntityInStructure(world, entity, x, y, z);
         world.spawnEntityInWorld(entity);
@@ -204,20 +204,16 @@ public class GenHelper
     }
 
     /**
-     * Places a hanging item entity in the world at the correct location and facing.
-     * Note that you MUST use a WALL_MOUNTED type block id (such as torch) for your custom
-     * block id's getRealBlockID return value in order for orientation to be correct.
-     * Coordinates x,y,z are the location of the block used to spawn the entity
-     * NOTE: Automatically removes the dummy block at x/y/z before placing the entity, so the
-     * metadata stored in the block will no longer be available, but will be returned by this
-     * method so it can be stored in a local variable for later use.
-     *
-     * @param       hanging Must be an instance of ItemHangingEntity, such as Item.painting
-     * @return      Returns direction for further processing such as for ItemFrames, or -1 if no entity set
+     * Places a hanging item entity in the world at the correct location and facing. Note that you MUST use a WALL_MOUNTED type block id (such as torch) for your custom block id's getRealBlockID return value in order for orientation to be correct. Coordinates x,y,z are the location of the block used to spawn the entity NOTE: Automatically removes the dummy block at x/y/z before placing the entity, so the metadata stored in the block will no longer be available, but will be returned by this method so it can be stored in a local variable for later use.
+     * 
+     * @param hanging
+     *            Must be an instance of ItemHangingEntity, such as Item.painting
+     * @return Returns direction for further processing such as for ItemFrames, or -1 if no entity set
      */
     public static int setHangingEntity(World world, ItemStack hanging, int x, int y, int z)
     {
-        if (hanging.getItem() == null || !(hanging.getItem() instanceof ItemHangingEntity)) return -1;
+        if (hanging.getItem() == null || !(hanging.getItem() instanceof ItemHangingEntity))
+            return -1;
 
         if (world.getBlockMetadata(x, y, z) < 1 || world.getBlockMetadata(x, y, z) > 5)
         {
@@ -225,7 +221,7 @@ public class GenHelper
             return -1;
         }
 
-        int[] metaToFacing = {5, 4, 3, 2};
+        int[] metaToFacing = { 5, 4, 3, 2 };
         int direction = metaToFacing[world.getBlockMetadata(x, y, z) - 1];
 
         world.setBlockToAir(x, y, z);
@@ -250,8 +246,9 @@ public class GenHelper
 
     /**
      * Set's the itemstack contained in ItemFrame at x/y/z with default rotation.
-     *
-     * @param       direction Use the value returned from the setHangingEntity method
+     * 
+     * @param direction
+     *            Use the value returned from the setHangingEntity method
      */
     public static void setItemFrameStack(World world, ItemStack itemstack, int x, int y, int z, int direction)
     {
@@ -260,9 +257,11 @@ public class GenHelper
 
     /**
      * Set's the itemstack contained in ItemFrame at x/y/z with specified rotation.
-     *
-     * @param       direction    Use the value returned from the setHangingEntity method
-     * @param       itemRotation 0,1,2,3 starting at default and rotating 90 degrees clockwise
+     * 
+     * @param direction
+     *            Use the value returned from the setHangingEntity method
+     * @param itemRotation
+     *            0,1,2,3 starting at default and rotating 90 degrees clockwise
      */
     public static void setItemFrameStack(World world, ItemStack itemstack, int x, int y, int z, int direction, int itemRotation)
     {
@@ -279,9 +278,10 @@ public class GenHelper
 
     /**
      * Sets the art for a painting at location x/y/z and sends a packet to update players.
-     *
-     * @param       direction Use the value returned from the setHangingEntity method
-     * @return      false if 'name' didn't match any EnumArt values.
+     * 
+     * @param direction
+     *            Use the value returned from the setHangingEntity method
+     * @return false if 'name' didn't match any EnumArt values.
      */
     public static boolean setPaintingArt(World world, String name, int x, int y, int z, int direction)
     {
@@ -307,11 +307,11 @@ public class GenHelper
     }
 
     /**
-     * Adds text to a sign in the world. Use EnumChatFormatting to set colors. Text of more
-     * than 15 characters per line will be truncated automatically.
-     *
-     * @param       text A String array of no more than 4 elements; additional elements will be ignored
-     * @return      false if no sign tile entity was found at x/y/z
+     * Adds text to a sign in the world. Use EnumChatFormatting to set colors. Text of more than 15 characters per line will be truncated automatically.
+     * 
+     * @param text
+     *            A String array of no more than 4 elements; additional elements will be ignored
+     * @return false if no sign tile entity was found at x/y/z
      */
     public static boolean setSignText(World world, String[] text, int x, int y, int z)
     {
@@ -327,7 +327,8 @@ public class GenHelper
                     System.err.println("[LLibrary] " + text[i] + " is too long to fit on a sign; maximum length is 15 characters.");
                     sign.signText[i] = text[i].substring(0, 15);
                 }
-                else sign.signText[i] = text[i];
+                else
+                    sign.signText[i] = text[i];
             }
 
             return true;
@@ -347,11 +348,14 @@ public class GenHelper
 
     /**
      * Sets skull type and name for a TileEntitySkull at x/y/z
-     *
-     * @param       name Must be a valid player username
-     * @param       type Type of skull: 0 Skeleton, 1 Wither Skeleton, 2 Zombie, 3 Human, 4 Creeper
-     * @param       rot  Sets the rotation for the skull if positive value is used
-     * @return      false if errors were encountered (i.e. incorrect tile entity at x/y/z)
+     * 
+     * @param name
+     *            Must be a valid player username
+     * @param type
+     *            Type of skull: 0 Skeleton, 1 Wither Skeleton, 2 Zombie, 3 Human, 4 Creeper
+     * @param rot
+     *            Sets the rotation for the skull if positive value is used
+     * @return false if errors were encountered (i.e. incorrect tile entity at x/y/z)
      */
     public static boolean setSkullData(World world, String name, int type, int rot, int x, int y, int z)
     {
@@ -367,7 +371,8 @@ public class GenHelper
 
             skull.func_152107_a(type);
 
-            if (rot > -1) skull.func_145903_a(rot % 16);
+            if (rot > -1)
+                skull.func_145903_a(rot % 16);
 
             return true;
         }
@@ -377,32 +382,31 @@ public class GenHelper
     }
 
     /**
-     * This method will return the correct metadata value for the block type based on
-     * how it was rotated in the world, IF and ONLY IF you used the correct metadata
-     * value to set the block's default orientation for your structure's default facing.
+     * This method will return the correct metadata value for the block type based on how it was rotated in the world, IF and ONLY IF you used the correct metadata value to set the block's default orientation for your structure's default facing.
      * <p>
-     * If your structure's front faces EAST by default, for example, and you want a wall
-     * sign out front greeting all your guests, you'd better use '5' as its metadata value
-     * in your blockArray so it faces EAST as well.
+     * If your structure's front faces EAST by default, for example, and you want a wall sign out front greeting all your guests, you'd better use '5' as its metadata value in your blockArray so it faces EAST as well.
      * <p>
-     * Please read the blockArray notes very carefully and test out your structure to make
-     * sure everything is oriented how you thought it was.
-     *
-     * @param       rotations The number of rotations to apply
-     * @param       block     The block being rotated
-     * @param       origMeta  The block's original metadata value
+     * Please read the blockArray notes very carefully and test out your structure to make sure everything is oriented how you thought it was.
+     * 
+     * @param rotations
+     *            The number of rotations to apply
+     * @param block
+     *            The block being rotated
+     * @param origMeta
+     *            The block's original metadata value
      */
     public static int getMetadata(int rotations, Block block, int origMeta)
     {
-        if (BlockRotationData.getBlockRotationType(block) == null) return origMeta;
+        if (BlockRotationData.getBlockRotationType(block) == null)
+            return origMeta;
 
         int meta = origMeta;
         int bitface;
         int tickDelay = (meta >> 2);// used by repeaters, comparators, etc.
-        int bit4 = (meta & 4);        // most commonly used for actual rotation
-        int bit8 = (meta & 8);        // usually 'on' or 'off' flag, but also top/bottom for doors
-        int bit9 = (meta >> 3);        // used by pistons for something, can't remember what...
-        int extra = (meta & ~3);    // used by doors for hinge orientation, I think
+        int bit4 = (meta & 4); // most commonly used for actual rotation
+        int bit8 = (meta & 8); // usually 'on' or 'off' flag, but also top/bottom for doors
+        int bit9 = (meta >> 3); // used by pistons for something, can't remember what...
+        int extra = (meta & ~3); // used by doors for hinge orientation, I think
 
         for (int i = 0; i < rotations; ++i)
         {
@@ -413,7 +417,8 @@ public class GenHelper
                     meta ^= 1;
                     break;
                 case DOOR:
-                    if (bit8 != 0) return meta;
+                    if (bit8 != 0)
+                        return meta;
                     meta = (bitface == 3 ? 0 : bitface + 1);
                     meta |= extra;
                     break;
@@ -422,16 +427,20 @@ public class GenHelper
                     break;
                 case PISTON_CONTAINER:
                     meta -= meta > 7 ? 8 : 0;
-                    if (meta > 1) meta = meta == 2 ? 5 : meta == 5 ? 3 : meta == 3 ? 4 : 2;
+                    if (meta > 1)
+                        meta = meta == 2 ? 5 : meta == 5 ? 3 : meta == 3 ? 4 : 2;
                     meta |= bit8 | bit9 << 3;
                     break;
                 case QUARTZ:
                     meta = meta == 3 ? 4 : meta == 4 ? 3 : meta;
                     break;
                 case RAIL:
-                    if (meta < 2) meta ^= 1;
-                    else if (meta < 6) meta = meta == 2 ? 5 : meta == 5 ? 3 : meta == 3 ? 4 : 2;
-                    else meta = meta == 9 ? 6 : meta + 1;
+                    if (meta < 2)
+                        meta ^= 1;
+                    else if (meta < 6)
+                        meta = meta == 2 ? 5 : meta == 5 ? 3 : meta == 3 ? 4 : 2;
+                    else
+                        meta = meta == 9 ? 6 : meta + 1;
                     break;
                 case REPEATER:
                     meta = (bitface == 3 ? 0 : bitface + 1) | (tickDelay << 2);
@@ -452,17 +461,22 @@ public class GenHelper
                     meta = meta == 1 ? 2 : meta == 2 ? 4 : meta == 4 ? 8 : 1;
                     break;
                 case WALL_MOUNTED:
-                    if (meta > 0 && meta < 5) meta = meta == 4 ? 1 : meta == 1 ? 3 : meta == 3 ? 2 : 4;
+                    if (meta > 0 && meta < 5)
+                        meta = meta == 4 ? 1 : meta == 1 ? 3 : meta == 3 ? 2 : 4;
                     break;
                 case LEVER:
                     meta -= meta > 7 ? 8 : 0;
-                    if (meta > 0 && meta < 5) meta = meta == 4 ? 1 : meta == 1 ? 3 : meta == 3 ? 2 : 4;
-                    else if (meta == 5 || meta == 6) meta = meta == 5 ? 6 : 5;
-                    else meta = meta == 7 ? 0 : 7;
+                    if (meta > 0 && meta < 5)
+                        meta = meta == 4 ? 1 : meta == 1 ? 3 : meta == 3 ? 2 : 4;
+                    else if (meta == 5 || meta == 6)
+                        meta = meta == 5 ? 6 : 5;
+                    else
+                        meta = meta == 7 ? 0 : 7;
                     meta |= bit8;
                     break;
                 case WOOD:
-                    if (meta > 4 && meta < 12) meta = meta < 8 ? meta + 4 : meta - 4;
+                    if (meta > 4 && meta < 12)
+                        meta = meta < 8 ? meta + 4 : meta - 4;
                     break;
                 default:
                     break;
@@ -473,14 +487,13 @@ public class GenHelper
     }
 
     /**
-     * Fixes blocks metadata after they've been placed in the world, specifically for blocks
-     * such as rails, furnaces, etc. whose orientation is automatically determined by the block
-     * when placed via the onBlockAdded method.
+     * Fixes blocks metadata after they've been placed in the world, specifically for blocks such as rails, furnaces, etc. whose orientation is automatically determined by the block when placed via the onBlockAdded method.
      */
     public static void setMetadata(World world, int x, int y, int z, int origMeta)
     {
         Block block = world.getBlock(x, y, z);
-        if (BlockRotationData.getBlockRotationType(block) == null) return;
+        if (BlockRotationData.getBlockRotationType(block) == null)
+            return;
 
         switch (BlockRotationData.getBlockRotationType(block))
         {
@@ -500,11 +513,6 @@ public class GenHelper
      */
     public static boolean materialsMatch(Block block1, Block block2)
     {
-        return (block1.getMaterial() == Material.grass && block2.getMaterial() == Material.ground) ||
-                (block1.getMaterial().isLiquid() && block2.getMaterial() == block1.getMaterial()) ||
-                (block1.getMaterial() == Material.ice && block2.getMaterial() == Material.water) ||
-                (block1.getMaterial() == Material.piston && block2.getMaterial() == Material.piston) ||
-                (block1 instanceof BlockRedstoneTorch && block2 instanceof BlockRedstoneTorch) ||
-                (block1 instanceof BlockRedstoneRepeater && block2 instanceof BlockRedstoneRepeater);
+        return (block1.getMaterial() == Material.grass && block2.getMaterial() == Material.ground) || (block1.getMaterial().isLiquid() && block2.getMaterial() == block1.getMaterial()) || (block1.getMaterial() == Material.ice && block2.getMaterial() == Material.water) || (block1.getMaterial() == Material.piston && block2.getMaterial() == Material.piston) || (block1 instanceof BlockRedstoneTorch && block2 instanceof BlockRedstoneTorch) || (block1 instanceof BlockRedstoneRepeater && block2 instanceof BlockRedstoneRepeater);
     }
 }

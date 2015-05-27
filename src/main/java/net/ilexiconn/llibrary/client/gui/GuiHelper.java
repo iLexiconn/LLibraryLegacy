@@ -19,10 +19,10 @@ import java.util.Map;
 
 /**
  * Helper class for GUIs.
- *
- * @author      FiskFille
- * @author      iLexiconn
- * @since       0.1.0
+ * 
+ * @author FiskFille
+ * @author iLexiconn
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class GuiHelper
@@ -36,12 +36,11 @@ public class GuiHelper
     private Minecraft mc = Minecraft.getMinecraft();
 
     /**
-     * A method for adding {@link net.ilexiconn.llibrary.client.gui.GuiOverride} to an existing {@link net.minecraft.client.gui.GuiScreen} or {@link net.minecraft.client.gui.inventory.GuiContainer}
-     * {@link net.ilexiconn.llibrary.client.gui.GuiOverride} classes may get added twice.
-     *
-     * @see       #getOverridesForGui(java.lang.Class)
-     * @see       net.ilexiconn.llibrary.client.gui.GuiOverride
-     * @since     0.1.0
+     * A method for adding {@link net.ilexiconn.llibrary.client.gui.GuiOverride} to an existing {@link net.minecraft.client.gui.GuiScreen} or {@link net.minecraft.client.gui.inventory.GuiContainer} {@link net.ilexiconn.llibrary.client.gui.GuiOverride} classes may get added twice.
+     * 
+     * @see #getOverridesForGui(java.lang.Class)
+     * @see net.ilexiconn.llibrary.client.gui.GuiOverride
+     * @since 0.1.0
      */
     public static void addOverride(Class<? extends GuiScreen> clazz, GuiOverride gui)
     {
@@ -50,11 +49,11 @@ public class GuiHelper
 
     /**
      * Get a list of all the overrides of a specific GUI class.
-     *
-     * @see       #addOverride(java.lang.Class, net.ilexiconn.llibrary.client.gui.GuiOverride)
-     * @see       net.ilexiconn.llibrary.client.gui.GuiOverride
-     * @return    the list with {@link net.ilexiconn.llibrary.client.gui.GuiOverride} instances
-     * @since     0.1.0
+     * 
+     * @see #addOverride(java.lang.Class, net.ilexiconn.llibrary.client.gui.GuiOverride)
+     * @see net.ilexiconn.llibrary.client.gui.GuiOverride
+     * @return the list with {@link net.ilexiconn.llibrary.client.gui.GuiOverride} instances
+     * @since 0.1.0
      */
     public static List<GuiOverride> getOverridesForGui(Class<? extends GuiScreen> clazz)
     {
@@ -73,11 +72,11 @@ public class GuiHelper
 
     /**
      * Get a list of all the overrides of all the GUI class.
-     *
-     * @see       #addOverride(java.lang.Class, net.ilexiconn.llibrary.client.gui.GuiOverride)
-     * @see       net.ilexiconn.llibrary.client.gui.GuiOverride
-     * @return    the list with {@link net.ilexiconn.llibrary.client.gui.GuiOverride} instances
-     * @since     0.1.0
+     * 
+     * @see #addOverride(java.lang.Class, net.ilexiconn.llibrary.client.gui.GuiOverride)
+     * @see net.ilexiconn.llibrary.client.gui.GuiOverride
+     * @return the list with {@link net.ilexiconn.llibrary.client.gui.GuiOverride} instances
+     * @since 0.1.0
      */
     public static Map<GuiOverride, Class<? extends GuiScreen>> getOverrides()
     {

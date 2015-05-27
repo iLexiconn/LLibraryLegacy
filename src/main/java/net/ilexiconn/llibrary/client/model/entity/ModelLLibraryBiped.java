@@ -14,9 +14,9 @@ import org.lwjgl.opengl.GL11;
 import java.util.List;
 
 /**
- * @see         net.ilexiconn.llibrary.client.render.RenderHelper
- * @author      Gegy1000
- * @since       0.1.0
+ * @see net.ilexiconn.llibrary.client.render.RenderHelper
+ * @author Gegy1000
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public final class ModelLLibraryBiped extends ModelBiped
@@ -24,15 +24,17 @@ public final class ModelLLibraryBiped extends ModelBiped
     public ModelLLibraryBiped()
     {
         List<IExtension> extensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
-        if (extensions != null) for (IExtension extension : extensions)
-            extension.init(this);
+        if (extensions != null)
+            for (IExtension extension : extensions)
+                extension.init(this);
     }
 
     public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
     {
         List<IExtension> modelExtensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
 
-        if (modelExtensions == null) modelExtensions = Lists.newArrayList();
+        if (modelExtensions == null)
+            modelExtensions = Lists.newArrayList();
 
         setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
 

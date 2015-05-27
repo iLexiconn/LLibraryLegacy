@@ -21,7 +21,7 @@ public class ClientProxy extends ServerProxy
 {
     public static RenderLLibraryPlayer renderCustomPlayer;
 
-	public void preInit()
+    public void preInit()
     {
         super.preInit();
 

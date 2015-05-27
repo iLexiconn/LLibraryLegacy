@@ -10,8 +10,8 @@ import java.util.*;
 import static net.ilexiconn.llibrary.common.dictionary.WeaponDictionary.Type.*;
 
 /**
- * @author      FiskFille
- * @since       0.1.0
+ * @author FiskFille
+ * @since 0.1.0
  */
 public class WeaponDictionary
 {
@@ -57,9 +57,10 @@ public class WeaponDictionary
 
     /**
      * Returns a list of weapons registered with a specific type
-     *
-     * @param       type the Type to look for
-     * @return      a list of weapons of the specified type, null if there are none
+     * 
+     * @param type
+     *            the Type to look for
+     * @return a list of weapons of the specified type, null if there are none
      */
     public static Item[] getWeaponsForType(Type type)
     {
@@ -73,9 +74,10 @@ public class WeaponDictionary
 
     /**
      * Gets a list of Types that a specific weapon is registered with
-     *
-     * @param       item the weapon to check
-     * @return      the list of types, null if there are none
+     * 
+     * @param item
+     *            the weapon to check
+     * @return the list of types, null if there are none
      */
     public static Type[] getTypesForWeapon(Item item)
     {
@@ -91,10 +93,10 @@ public class WeaponDictionary
 
     /**
      * Checks to see if two weapons are registered as having the same type
-     *
-     * @param       itemA
-     * @param       itemB
-     * @return      returns true if a common type is found, false otherwise
+     * 
+     * @param itemA
+     * @param itemB
+     * @return returns true if a common type is found, false otherwise
      */
     public static boolean areWeaponsEquivalent(Item itemA, Item itemB)
     {
@@ -213,53 +215,15 @@ public class WeaponDictionary
     public enum Type
     {
         /* Generic types which a weapon can be */
-        SWORD,
-        AXE,
-        PICKAXE,
-        SHOVEL,
-        NUNCHUCKS,
-        SPEAR,
-        WAND,
-        BOW,
-        HALBERD,
-        GUN,
-        MACE,
-        HAMMER,
-        SICLE,
-        SCYTHE,
-        KIFE,
-        CLAW,
-        GLOVE,
-        WHIP,
-        BOOMERANG,
+        SWORD, AXE, PICKAXE, SHOVEL, NUNCHUCKS, SPEAR, WAND, BOW, HALBERD, GUN, MACE, HAMMER, SICLE, SCYTHE, KIFE, CLAW, GLOVE, WHIP, BOOMERANG,
 
-        SHARP,
-        DULL,
-        LIGHT,
-        HEAVY,
+        SHARP, DULL, LIGHT, HEAVY,
 
-        RANGED,
-        MELEE,
-        MELEE_RANGED,
-        THROWABLE,
+        RANGED, MELEE, MELEE_RANGED, THROWABLE,
 
+        MAGICAL, EXPLOSIVE, FIERY, WATERY, ICY, ELECTRICAL, DEATHLY, PLANT_Y, EARTHLY, WINDY, ENDER, POISONED,
 
-        MAGICAL,
-        EXPLOSIVE,
-        FIERY,
-        WATERY,
-        ICY,
-        ELECTRICAL,
-        DEATHLY,
-        PLANT_Y,
-        EARTHLY,
-        WINDY,
-        ENDER,
-        POISONED,
-
-        FUTURISTIC,
-        MEDIEVAL,
-        MODERN;
+        FUTURISTIC, MEDIEVAL, MODERN;
 
         private List<Type> subTags;
 
@@ -269,21 +233,15 @@ public class WeaponDictionary
         }
 
         /**
-         * Retrieves a Type value by name,
-         * if one does not exist already it creates one.
-         * This can be used as interm measure for modders to
-         * add there own category of Biome.
+         * Retrieves a Type value by name, if one does not exist already it creates one. This can be used as interm measure for modders to add there own category of Biome.
          * <p>
-         * There are NO naming conventions besides:
-         * MUST be all upper case (enforced by name.toUpper())
-         * NO Special characters. {Unenforced, just don't be a pain, if it becomes a issue I WILL
-         * make this RTE with no worry about backwards compatibility}
+         * There are NO naming conventions besides: MUST be all upper case (enforced by name.toUpper()) NO Special characters. {Unenforced, just don't be a pain, if it becomes a issue I WILL make this RTE with no worry about backwards compatibility}
          * <p>
-         * Note: For performance sake, the return value of this function SHOULD be cached.
-         * Two calls with the same name SHOULD return the same value.
-         *
-         * @param       name The name of this Type
-         * @return      An instance of Type for this name.
+         * Note: For performance sake, the return value of this function SHOULD be cached. Two calls with the same name SHOULD return the same value.
+         * 
+         * @param name
+         *            The name of this Type
+         * @return An instance of Type for this name.
          */
         public static Type getType(String name, Type... subTypes)
         {
@@ -297,7 +255,7 @@ public class WeaponDictionary
                 }
             }
 
-            Type ret = EnumHelper.addEnum(Type.class, name, new Class[]{Type[].class}, new Object[]{subTypes});
+            Type ret = EnumHelper.addEnum(Type.class, name, new Class[] { Type[].class }, new Object[] { subTypes });
 
             if (ret.ordinal() >= typeInfoList.length)
             {

@@ -7,9 +7,9 @@ import net.minecraft.util.MathHelper;
 import java.util.Random;
 
 /**
- * @author      RafaMv0
- * @author      BobMowzie
- * @since       0.1.0
+ * @author RafaMv0
+ * @author BobMowzie
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class IntermittentAnimation
@@ -50,8 +50,10 @@ public class IntermittentAnimation
     {
         timer = (double) time;
 
-        if (timer > duration) timer = duration;
-        else if (timer < 0) timer = 0;
+        if (timer > duration)
+            timer = duration;
+        else if (timer < 0)
+            timer = 0;
     }
 
     public void resetTimer()
@@ -63,22 +65,28 @@ public class IntermittentAnimation
     {
         if (!runInterval)
         {
-            if (timer < duration && timer > 0d) timer += inverter;
+            if (timer < duration && timer > 0d)
+                timer += inverter;
             else
             {
-                if (timer >= duration) timer = duration;
-                else if (timer <= 0d) timer = 0d;
+                if (timer >= duration)
+                    timer = duration;
+                else if (timer <= 0d)
+                    timer = 0d;
                 timerInterval = 0d;
                 runInterval = true;
             }
         }
         else
         {
-            if (timerInterval < intervalDuration) timerInterval++;
+            if (timerInterval < intervalDuration)
+                timerInterval++;
             else
             {
-                if (inverter > 0 && random.nextInt(returnChance) == 0) inverter = -1;
-                if (inverter < 0 && random.nextInt(goChance) == 0) inverter = 1;
+                if (inverter > 0 && random.nextInt(returnChance) == 0)
+                    inverter = -1;
+                if (inverter < 0 && random.nextInt(goChance) == 0)
+                    inverter = 1;
                 timer += inverter;
                 runInterval = false;
             }
@@ -87,7 +95,8 @@ public class IntermittentAnimation
 
     public void stopAnimation()
     {
-        if (timer > 0d) timer--;
+        if (timer > 0d)
+            timer--;
         else
         {
             timer = 0d;
@@ -99,7 +108,8 @@ public class IntermittentAnimation
 
     public void stopAnimation(int time)
     {
-        if (timer - time > 0d) timer -= time;
+        if (timer - time > 0d)
+            timer -= time;
         else
         {
             timer = 0d;
@@ -118,8 +128,10 @@ public class IntermittentAnimation
     {
         if (timer > 0d)
         {
-            if (timer < duration) return (float) (1d / (1d + Math.exp(4d - 8d * (timer / duration))));
-            else return 1f;
+            if (timer < duration)
+                return (float) (1d / (1d + Math.exp(4d - 8d * (timer / duration))));
+            else
+                return 1f;
         }
         return 0f;
     }

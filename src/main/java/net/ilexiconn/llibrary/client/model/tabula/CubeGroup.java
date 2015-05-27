@@ -5,8 +5,8 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 
 /**
- * @author      iChun
- * @since       0.1.0
+ * @author iChun
+ * @since 0.1.0
  */
 public class CubeGroup
 {
@@ -21,4 +21,3 @@ public class CubeGroup
 
     public String identifier;
 }
-

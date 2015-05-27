@@ -1,9 +1,9 @@
 package net.ilexiconn.llibrary.common.survivaltab;
 
 /**
- * @see         net.ilexiconn.llibrary.common.survivaltab.ISurvivalTab
- * @author      iLexiconn
- * @since       0.2.0
+ * @see net.ilexiconn.llibrary.common.survivaltab.ISurvivalTab
+ * @author iLexiconn
+ * @since 0.2.0
  */
 public class SurvivalTab
 {
@@ -18,13 +18,15 @@ public class SurvivalTab
 
     public int getTabColumn()
     {
-        if (tabIndex > 11) return ((tabIndex - 12) % 10) % 5;
+        if (tabIndex > 11)
+            return ((tabIndex - 12) % 10) % 5;
         return tabIndex % 6;
     }
 
     public boolean isTabInFirstRow()
     {
-        if (tabIndex > 11) return ((tabIndex - 12) % 10) < 5;
+        if (tabIndex > 11)
+            return ((tabIndex - 12) % 10) < 5;
         return tabIndex < 6;
     }
 

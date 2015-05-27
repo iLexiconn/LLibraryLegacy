@@ -7,9 +7,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 /**
- * @see         net.ilexiconn.llibrary.common.block.BlockMountable
- * @author      iLexiconn
- * @since       0.1.0
+ * @see net.ilexiconn.llibrary.common.block.BlockMountable
+ * @author iLexiconn
+ * @since 0.1.0
  */
 public class EntityMountableBlock extends Entity
 {
@@ -39,10 +39,12 @@ public class EntityMountableBlock extends Entity
 
     public boolean interactFirst(EntityPlayer player)
     {
-        if (riddenByEntity != null && riddenByEntity instanceof EntityPlayer && riddenByEntity != player) return true;
+        if (riddenByEntity != null && riddenByEntity instanceof EntityPlayer && riddenByEntity != player)
+            return true;
         else
         {
-            if (!worldObj.isRemote) player.mountEntity(this);
+            if (!worldObj.isRemote)
+                player.mountEntity(this);
             return true;
         }
     }
@@ -50,7 +52,8 @@ public class EntityMountableBlock extends Entity
     public void onEntityUpdate()
     {
         worldObj.theProfiler.startSection("entityBaseTick");
-        if (riddenByEntity == null || riddenByEntity.isDead) setDead();
+        if (riddenByEntity == null || riddenByEntity.isDead)
+            setDead();
         else if (worldObj.getBlock(blockPosX, blockPosY, blockPosZ) != block)
             interactFirst((EntityPlayer) riddenByEntity);
         ticksExisted++;
