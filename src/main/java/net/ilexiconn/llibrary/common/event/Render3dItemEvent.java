@@ -7,8 +7,8 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * @author iLexiconn
- * @since 0.1.0
+ * @author      iLexiconn
+ * @since       0.1.0
  */
 @Cancelable
 public class Render3dItemEvent extends Event
@@ -33,8 +33,8 @@ public class Render3dItemEvent extends Event
     }
 
     /**
-     * @author iLexiconn
-     * @since 0.2.0
+     * @author      iLexiconn
+     * @since       0.2.0
      */
     public static class Pre extends Render3dItemEvent
     {
@@ -45,8 +45,8 @@ public class Render3dItemEvent extends Event
     }
 
     /**
-     * @author iLexiconn
-     * @since 0.2.0
+     * @author      iLexiconn
+     * @since       0.2.0
      */
     public static class Post extends Render3dItemEvent
     {

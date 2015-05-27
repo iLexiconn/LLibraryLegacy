@@ -3,8 +3,8 @@ package net.ilexiconn.llibrary.common.time;
 import net.minecraft.world.World;
 
 /**
- * @author FiskFille
- * @since 0.2.0
+ * @author      FiskFille
+ * @since       0.2.0
  */
 public class Time
 {

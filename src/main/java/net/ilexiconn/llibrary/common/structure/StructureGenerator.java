@@ -5,11 +5,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 /**
- * This class is responsible for handling custom block hooks used in your block arrays, though currently it is here only as a place-holder.
- * 
- * @see net.ilexiconn.llibrary.common.structure.util.GenHelper
- * @author coolAlias
- * @since 0.1.0
+ * This class is responsible for handling custom block hooks used in your block arrays,
+ * though currently it is here only as a place-holder.
+ *
+ * @see         net.ilexiconn.llibrary.common.structure.util.GenHelper
+ * @author      coolAlias
+ * @since       0.1.0
  */
 public class StructureGenerator extends StructureGeneratorBase
 {

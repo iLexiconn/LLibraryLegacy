@@ -11,9 +11,9 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 
 /**
- * @see net.ilexiconn.llibrary.common.item.IArmorModelReceiver
- * @author iLexiconn
- * @since 0.1.0
+ * @see         net.ilexiconn.llibrary.common.item.IArmorModelReceiver
+ * @author      iLexiconn
+ * @since       0.1.0
  */
 public class ItemModelledArmor extends ItemArmor
 {

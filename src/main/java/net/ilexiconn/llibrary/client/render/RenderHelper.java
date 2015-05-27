@@ -25,10 +25,10 @@ import java.util.Map;
 
 /**
  * Render helper class for basic render operations and the IModelExtension.
- * 
- * @author iLexiconn
- * @author Gegy1000
- * @since 0.1.0
+ *
+ * @author      iLexiconn
+ * @author      Gegy1000
+ * @since       0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class RenderHelper
@@ -38,9 +38,9 @@ public class RenderHelper
 
     /**
      * Registers the given {@link net.ilexiconn.llibrary.client.render.IModelExtension}.
-     * 
-     * @see net.ilexiconn.llibrary.client.render.IModelExtension
-     * @since 0.1.0
+     *
+     * @see         net.ilexiconn.llibrary.client.render.IModelExtension
+     * @since       0.1.0
      */
     public static void registerModelExtension(IModelExtension modelExtension)
     {
@@ -49,9 +49,9 @@ public class RenderHelper
 
     /**
      * Registers the given {@link net.ilexiconn.llibrary.client.render.IModelExtension} to a specific model.
-     * 
-     * @see net.ilexiconn.llibrary.client.render.IModelExtension
-     * @since 0.1.0
+     *
+     * @see         net.ilexiconn.llibrary.client.render.IModelExtension
+     * @since       0.1.0
      */
     private static void registerModelExtension(Class<? extends ModelBase> modelClazz, IExtension modelExtension)
     {
@@ -68,9 +68,9 @@ public class RenderHelper
     }
 
     /**
-     * @see net.ilexiconn.llibrary.client.render.IModelExtension
-     * @return a list of {@link net.ilexiconn.llibrary.client.render.IModelExtension} for the given model class.
-     * @since 0.1.0
+     * @see         net.ilexiconn.llibrary.client.render.IModelExtension
+     * @return      a list of {@link net.ilexiconn.llibrary.client.render.IModelExtension} for the given model class.
+     * @since       0.1.0
      */
     public static List<IExtension> getModelExtensionsFor(Class<? extends ModelBase> clazz)
     {
@@ -79,11 +79,10 @@ public class RenderHelper
 
     /**
      * Renders the given {@link net.minecraft.item.ItemStack} in 3D.
-     * 
-     * @see net.minecraft.item.ItemStack
-     * @param stack
-     *            the ItemStack you want to render.
-     * @since 0.1.0
+     *
+     * @see         net.minecraft.item.ItemStack
+     * @param       stack the ItemStack you want to render.
+     * @since       0.1.0
      */
     public static void renderItemIn3d(ItemStack stack)
     {
@@ -150,7 +149,7 @@ public class RenderHelper
     }
 
     /**
-     * @since 0.2.0
+     * @since       0.2.0
      */
     public static void setColorFromInt(int color)
     {
@@ -162,9 +161,9 @@ public class RenderHelper
 
     /**
      * Register a 3D item renderer for an {@link net.minecraft.item.Item}
-     * 
-     * @see net.minecraft.item.Item
-     * @since 0.1.0
+     *
+     * @see         net.minecraft.item.Item
+     * @since       0.1.0
      */
     public static void registerItem3dRenderer(Item item, ModelBase model, ResourceLocation texture)
     {

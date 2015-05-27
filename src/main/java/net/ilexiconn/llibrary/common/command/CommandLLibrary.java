@@ -18,8 +18,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @author FiskFille
- * @since 0.1.0
+ * @author      FiskFille
+ * @since       0.1.0
  */
 public class CommandLLibrary extends CommandBase
 {

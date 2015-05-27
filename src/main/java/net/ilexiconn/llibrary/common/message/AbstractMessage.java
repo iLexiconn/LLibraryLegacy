@@ -7,8 +7,8 @@ import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.entity.player.EntityPlayer;
 
 /**
- * @author iLexiconn
- * @since 0.1.0
+ * @author      iLexiconn
+ * @since       0.1.0
  */
 public abstract class AbstractMessage<REQ extends AbstractMessage> implements IMessage, IMessageHandler<REQ, IMessage>
 {

@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 /**
- * @author FiskFile
- * @since 0.1.0
+ * @author      FiskFile
+ * @since       0.1.0
  */
 public class GuiSlotItemStackList extends GuiScrollingList
 {

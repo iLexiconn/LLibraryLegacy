@@ -10,8 +10,8 @@ import net.minecraft.util.MathHelper;
 import java.util.List;
 
 /**
- * @author BobMowzie
- * @since 0.1.0
+ * @author      BobMowzie
+ * @since       0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class MowzieModelBase extends ModelBase

@@ -1,8 +1,8 @@
 package net.ilexiconn.llibrary.common.color;
 
 /**
- * @author RafaMv0
- * @since 0.1.0
+ * @author      RafaMv0
+ * @since       0.1.0
  */
 public class RGB
 {

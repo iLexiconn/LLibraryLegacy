@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @see net.ilexiconn.llibrary.common.structure.util.GenHelper
- * @author coolAlias
- * @since 0.1.0
+ * @see         net.ilexiconn.llibrary.common.structure.util.GenHelper
+ * @author      coolAlias
+ * @since       0.1.0
  */
 public class Structure
 {
@@ -63,7 +63,8 @@ public class Structure
     }
 
     /**
-     * Sets the default direction the structure is facing. This side will always face the player unless you manually rotate the structure with the rotateStructureFacing() method.
+     * Sets the default direction the structure is facing. This side will always face the player
+     * unless you manually rotate the structure with the rotateStructureFacing() method.
      */
     public final void setFacing(int f)
     {
@@ -139,7 +140,11 @@ public class Structure
     }
 
     /**
-     * This is how much the structure should be offset from default; i.e. sets the values that should be passed in to StructureGeneratorBase.setDefaultOffset. Used, for example, if your structure's front door is not in the center, but a few blocks to the left and you want the door to spawn in front of the player, or if your structure should always be spawned in the air, etc.
+     * This is how much the structure should be offset from default; i.e. sets the values
+     * that should be passed in to StructureGeneratorBase.setDefaultOffset. Used, for
+     * example, if your structure's front door is not in the center, but a few blocks
+     * to the left and you want the door to spawn in front of the player, or if your
+     * structure should always be spawned in the air, etc.
      */
     public final void setStructureOffset(int x, int y, int z)
     {

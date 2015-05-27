@@ -22,9 +22,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @see net.ilexiconn.llibrary.common.survivaltab.TabHelper
- * @author iLexiconn
- * @since 0.2.0
+ * @see         net.ilexiconn.llibrary.common.survivaltab.TabHelper
+ * @author      iLexiconn
+ * @since       0.2.0
  */
 @SideOnly(Side.CLIENT)
 public class GuiSurvivalTab extends GuiButton

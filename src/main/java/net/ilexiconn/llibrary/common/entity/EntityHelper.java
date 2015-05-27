@@ -16,11 +16,11 @@ import java.util.Map;
 
 /**
  * Class for registering entities, removing entities and getting entities.
- * 
- * @author iLexiconn
- * @author Gegy1000
- * @author FiskFille
- * @since 0.1.0
+ *
+ * @author      iLexiconn
+ * @author      Gegy1000
+ * @author      FiskFille
+ * @since       0.1.0
  */
 public class EntityHelper
 {

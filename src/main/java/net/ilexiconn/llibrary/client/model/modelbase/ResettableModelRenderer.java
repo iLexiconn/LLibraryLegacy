@@ -6,9 +6,9 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 
 /**
- * @author RafaMv0
- * @author BobMowzie
- * @since 0.1.0
+ * @author      RafaMv0
+ * @author      BobMowzie
+ * @since       0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class ResettableModelRenderer extends ModelRenderer

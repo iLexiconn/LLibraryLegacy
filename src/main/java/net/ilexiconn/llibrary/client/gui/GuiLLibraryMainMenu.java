@@ -5,9 +5,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiButton;
 
 /**
- * @see net.ilexiconn.llibrary.client.gui.GuiHelper
- * @author FiskFile
- * @since 0.1.0
+ * @see         net.ilexiconn.llibrary.client.gui.GuiHelper
+ * @author      FiskFile
+ * @since       0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class GuiLLibraryMainMenu extends GuiOverride

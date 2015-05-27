@@ -3,10 +3,12 @@ package net.ilexiconn.llibrary.common.time;
 import java.util.Calendar;
 
 /**
- * Helper class for getting time and date for the current system. NOTE: The time returned from the methods in this class are only snapshots of what it was when the game was started.
- * 
- * @author FiskFille
- * @since 0.2.0
+ * Helper class for getting time and date for the current system.
+ * NOTE: The time returned from the methods in this class are only snapshots of what it was
+ * when the game was started.
+ *
+ * @author      FiskFille
+ * @since       0.2.0
  */
 public class SystemTime
 {

@@ -7,8 +7,8 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 /**
- * @author iLexiconn
- * @since 0.1.0
+ * @author      iLexiconn
+ * @since       0.1.0
  */
 public abstract class AbstractTileEntity extends TileEntity
 {

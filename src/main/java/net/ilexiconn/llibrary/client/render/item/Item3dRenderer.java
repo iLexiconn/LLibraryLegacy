@@ -14,9 +14,9 @@ import net.minecraftforge.common.MinecraftForge;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
- * @see net.ilexiconn.llibrary.client.render.RenderHelper
- * @author iLexiconn
- * @since 0.1.0
+ * @see         net.ilexiconn.llibrary.client.render.RenderHelper
+ * @author      iLexiconn
+ * @since       0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class Item3dRenderer implements IItemRenderer

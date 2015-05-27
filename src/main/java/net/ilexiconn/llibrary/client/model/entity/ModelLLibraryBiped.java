@@ -14,9 +14,9 @@ import org.lwjgl.opengl.GL11;
 import java.util.List;
 
 /**
- * @see net.ilexiconn.llibrary.client.render.RenderHelper
- * @author Gegy1000
- * @since 0.1.0
+ * @see         net.ilexiconn.llibrary.client.render.RenderHelper
+ * @author      Gegy1000
+ * @since       0.1.0
  */
 @SideOnly(Side.CLIENT)
 public final class ModelLLibraryBiped extends ModelBiped

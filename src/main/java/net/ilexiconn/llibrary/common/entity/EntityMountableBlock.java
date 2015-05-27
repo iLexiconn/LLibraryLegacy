@@ -7,9 +7,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 /**
- * @see net.ilexiconn.llibrary.common.block.BlockMountable
- * @author iLexiconn
- * @since 0.1.0
+ * @see         net.ilexiconn.llibrary.common.block.BlockMountable
+ * @author      iLexiconn
+ * @since       0.1.0
  */
 public class EntityMountableBlock extends Entity
 {
