@@ -5,8 +5,8 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 /**
- * @author      iLexiconn
- * @since       0.2.0
+ * @author iLexiconn
+ * @since 0.2.0
  */
 public class TabHelper
 {

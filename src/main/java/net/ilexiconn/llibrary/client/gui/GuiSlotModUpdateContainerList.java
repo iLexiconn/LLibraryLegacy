@@ -15,9 +15,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * @see         net.ilexiconn.llibrary.common.update.UpdateHelper
- * @author      FiskFile
- * @since       0.1.0
+ * @author FiskFile
+ * @see net.ilexiconn.llibrary.common.update.UpdateHelper
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class GuiSlotModUpdateContainerList extends GuiScrollingList

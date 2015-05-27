@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * Helper class to parse <a href="http://pastebin.com">Pastebin.com</a> pastes and read files from given URL
  *
- * @author      Gegy1000
- * @author      jglrxavpok
- * @author      FiskFille
+ * @author Gegy1000
+ * @author jglrxavpok
+ * @author FiskFille
  */
 public class WebHelper
 {
@@ -22,9 +22,9 @@ public class WebHelper
     /**
      * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin.com</a> line by line.
      *
-     * @param           pasteId The ID of the paste
-     * @return          The lines of the paste as a list
-     * @throws          java.io.IOException Thrown if there are problems while reading
+     * @param pasteId The ID of the paste
+     * @return The lines of the paste as a list
+     * @throws java.io.IOException Thrown if there are problems while reading
      */
     public static List<String> readPastebinAsList(String pasteId) throws IOException
     {
@@ -34,9 +34,9 @@ public class WebHelper
     /**
      * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin.com</a>
      *
-     * @param           pasteId The ID of the paste
-     * @return          The content of the paste
-     * @throws          java.io.IOException Thrown if there are problems while reading
+     * @param pasteId The ID of the paste
+     * @return The content of the paste
+     * @throws java.io.IOException Thrown if there are problems while reading
      */
     public static String readPastebin(String pasteId) throws IOException
     {
@@ -46,9 +46,9 @@ public class WebHelper
     /**
      * Downloads a text file from given URL line by line.
      *
-     * @param           urlString The URL to download from
-     * @return          The different lines of the file from first to last
-     * @throws          java.io.IOException Thrown if there are problems reading the file.
+     * @param urlString The URL to download from
+     * @return The different lines of the file from first to last
+     * @throws java.io.IOException Thrown if there are problems reading the file.
      */
     public static List<String> downloadTextFileList(String urlString) throws IOException
     {
@@ -68,9 +68,9 @@ public class WebHelper
     /**
      * Downloads a text file from given URL.
      *
-     * @param           urlString The URL to download from
-     * @return          The content of the file, as a String
-     * @throws          java.io.IOException Thrown if there are problems reading the file.
+     * @param urlString The URL to download from
+     * @return The content of the file, as a String
+     * @throws java.io.IOException Thrown if there are problems reading the file.
      */
     public static String downloadTextFile(String urlString) throws IOException
     {
@@ -90,9 +90,9 @@ public class WebHelper
     /**
      * Downloads a file from given URL.
      *
-     * @param           rawURL The URL to download the file from
-     * @return          A byte array containing all the content of the file
-     * @throws          java.io.IOException Thrown in case there are problems reading the file
+     * @param rawURL The URL to download the file from
+     * @return A byte array containing all the content of the file
+     * @throws java.io.IOException Thrown in case there are problems reading the file
      */
     public static byte[] download(String rawURL) throws IOException
     {
@@ -118,9 +118,9 @@ public class WebHelper
     /**
      * Downloads an image from given URL.
      *
-     * @param           imageURL The URL to download the image from
-     * @return          A BufferedImage object downloaded from the given URL
-     * @throws          java.io.IOException Thrown in case there are problems downloading the file
+     * @param imageURL The URL to download the image from
+     * @return A BufferedImage object downloaded from the given URL
+     * @throws java.io.IOException Thrown in case there are problems downloading the file
      */
     public static BufferedImage downloadImage(String imageURL) throws IOException
     {

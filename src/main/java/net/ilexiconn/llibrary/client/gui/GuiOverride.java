@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @see         net.ilexiconn.llibrary.client.gui.GuiHelper
- * @author      FiskFile
- * @since       0.1.0
+ * @author FiskFile
+ * @see net.ilexiconn.llibrary.client.gui.GuiHelper
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class GuiOverride extends GuiScreen

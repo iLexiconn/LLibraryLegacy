@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author      FiskFille
- * @author      iLexiconn
- * @since       0.1.0
+ * @author FiskFille
+ * @author iLexiconn
+ * @since 0.1.0
  */
 public class VersionHandler
 {

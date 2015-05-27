@@ -7,13 +7,13 @@ import java.util.Calendar;
  * NOTE: The time returned from the methods in this class are only snapshots of what it was
  * when the game was started.
  *
- * @author      FiskFille
- * @since       0.2.0
+ * @author FiskFille
+ * @since 0.2.0
  */
 public class SystemTime
 {
-    private static String[] monthNames = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-    private static String[] weekDayNames = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+    private static String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    private static String[] weekDayNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     private static Calendar c = Calendar.getInstance();
 

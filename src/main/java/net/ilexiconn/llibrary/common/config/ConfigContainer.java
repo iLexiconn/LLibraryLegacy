@@ -5,9 +5,9 @@ import net.minecraftforge.common.config.Configuration;
 /**
  * Container class for {@link net.minecraftforge.common.config.Configuration}
  *
- * @see         net.minecraftforge.common.config.Configuration
- * @author      iLexiconn
- * @since       0.1.0
+ * @author iLexiconn
+ * @see net.minecraftforge.common.config.Configuration
+ * @since 0.1.0
  */
 public class ConfigContainer
 {
@@ -21,8 +21,8 @@ public class ConfigContainer
     }
 
     /**
-     * @see         net.ilexiconn.llibrary.common.config.IConfigHandler
-     * @since       0.1.0
+     * @see net.ilexiconn.llibrary.common.config.IConfigHandler
+     * @since 0.1.0
      */
     public IConfigHandler getConfigHandler()
     {
@@ -30,8 +30,8 @@ public class ConfigContainer
     }
 
     /**
-     * @see         net.minecraftforge.common.config.Configuration
-     * @since       0.1.0
+     * @see net.minecraftforge.common.config.Configuration
+     * @since 0.1.0
      */
     public Configuration getConfiguration()
     {

@@ -7,9 +7,9 @@ import net.minecraft.util.MathHelper;
 import java.util.Random;
 
 /**
- * @author      RafaMv0
- * @author      BobMowzie
- * @since       0.1.0
+ * @author RafaMv0
+ * @author BobMowzie
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class IntermittentAnimation

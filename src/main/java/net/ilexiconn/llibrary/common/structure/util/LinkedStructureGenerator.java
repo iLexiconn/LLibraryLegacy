@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @see         net.ilexiconn.llibrary.common.structure.util.GenHelper
- * @author      coolAlias
- * @since       0.1.0
+ * @author coolAlias
+ * @see net.ilexiconn.llibrary.common.structure.util.GenHelper
+ * @since 0.1.0
  */
 public class LinkedStructureGenerator
 {
@@ -100,7 +100,7 @@ public class LinkedStructureGenerator
 
     private void addOffset(int x, int y, int z)
     {
-        offsets.add(new int[] { -z, y, x });
+        offsets.add(new int[]{-z, y, x});
     }
 
     /**
@@ -114,7 +114,7 @@ public class LinkedStructureGenerator
             if (offsets.size() < structures.size())
                 addOffset(x, y, z);
             else
-                offsets.set(offsets.size() - 1, new int[] { -z, y, x });
+                offsets.set(offsets.size() - 1, new int[]{-z, y, x});
         }
     }
 

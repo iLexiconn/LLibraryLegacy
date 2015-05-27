@@ -11,13 +11,13 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * @see         net.ilexiconn.llibrary.common.update.UpdateHelper
- * @author      FiskFile
- * @since       0.1.0
+ * @author FiskFile
+ * @see net.ilexiconn.llibrary.common.update.UpdateHelper
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class GuiButtonCheckForUpdates extends GuiButton
@@ -66,7 +66,7 @@ public class GuiButtonCheckForUpdates extends GuiButton
 
             if (hoverTimer >= 20)
             {
-                drawHoveringText(Arrays.asList(new String[] { I18n.format("gui.llibrary.updatecheck.desc") }), mouseX, mouseY, mc.fontRenderer);
+                drawHoveringText(Collections.singletonList(I18n.format("gui.llibrary.updatecheck.desc")), mouseX, mouseY, mc.fontRenderer);
             }
         }
     }

@@ -10,35 +10,35 @@ import net.minecraft.item.ItemStack;
 /**
  * Interface for custom survival tabs, register with {@link net.ilexiconn.llibrary.common.survivaltab.TabHelper#registerSurvivalTab(ISurvivalTab)}
  *
- * @author      iLexiconn
- * @since       0.2.0
+ * @author iLexiconn
+ * @since 0.2.0
  */
 public interface ISurvivalTab
 {
     /**
-     * @return      unlocalized name string
-     * @since       0.2.0
+     * @return unlocalized name string
+     * @since 0.2.0
      */
     String getTabName();
 
     /**
-     * @return      itemstack with item or block to be displayed
-     * @since       0.2.0
+     * @return itemstack with item or block to be displayed
+     * @since 0.2.0
      */
     ItemStack getTabIcon();
 
     /**
      * Called when the survival tab is clicked.
      *
-     * @param       player the player opening the gui
-     * @since       0.2.0
+     * @param player the player opening the gui
+     * @since 0.2.0
      */
     void openContainer(Minecraft mc, EntityPlayer player);
 
     /**
-     * @return      class of the container gui.
-     * @see         net.minecraft.client.gui.inventory.GuiContainer
-     * @since       0.2.0
+     * @return class of the container gui.
+     * @see net.minecraft.client.gui.inventory.GuiContainer
+     * @since 0.2.0
      */
     @SideOnly(Side.CLIENT)
     Class<? extends GuiContainer> getContainerGuiClass();

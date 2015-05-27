@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * Helper class to save ItemStacks to NBT, and removing item/block recipes.
  *
- * @author      iLexiconn
- * @since       0.1.0
+ * @author iLexiconn
+ * @since 0.1.0
  */
 public class ItemHelper
 {

@@ -6,8 +6,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
 /**
- * @author      RafaMv0
- * @since       0.1.0
+ * @author RafaMv0
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class ChainBuffer

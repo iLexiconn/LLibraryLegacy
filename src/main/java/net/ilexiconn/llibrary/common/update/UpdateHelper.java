@@ -12,9 +12,9 @@ import java.util.ArrayList;
 /**
  * Helper class to register a mod for automatic update checking.
  *
- * @author      FiskFille
- * @author      iLexiconn
- * @since       0.1.0
+ * @author FiskFille
+ * @author iLexiconn
+ * @since 0.1.0
  */
 public class UpdateHelper
 {
@@ -22,9 +22,9 @@ public class UpdateHelper
 
     /**
      * Register the main mod class for automatic update checking.
-     * <p>
+     * <p/>
      * Example pastebin version file:
-     * <p>
+     * <p/>
      * {
      * "newestVersion": "9000",
      * "versions":
@@ -42,9 +42,9 @@ public class UpdateHelper
      * "iconUrl": "http://ilexiconn.net/llibrary/data/llibrary_64.png"
      * }
      *
-     * @param       mod the main mod instance
-     * @param       url the updater file
-     * @throws      java.io.IOException
+     * @param mod the main mod instance
+     * @param url the updater file
+     * @throws java.io.IOException
      */
     public static void registerUpdateChecker(Object mod, String url) throws IOException
     {

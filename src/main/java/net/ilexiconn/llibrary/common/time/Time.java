@@ -3,8 +3,8 @@ package net.ilexiconn.llibrary.common.time;
 import net.minecraft.world.World;
 
 /**
- * @author      FiskFille
- * @since       0.2.0
+ * @author FiskFille
+ * @since 0.2.0
  */
 public class Time
 {
@@ -42,7 +42,7 @@ public class Time
 
     public String toString()
     {
-        Object[] aobject = { hours, minutes, seconds, ticks };
+        Object[] aobject = {hours, minutes, seconds, ticks};
         return String.format("%sh %smin %ss %st", aobject);
     }
 

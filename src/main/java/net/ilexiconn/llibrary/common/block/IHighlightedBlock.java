@@ -11,15 +11,15 @@ import java.util.List;
 /**
  * Interface for {@link net.minecraft.block.Block}, implement to render all {@link net.minecraft.util.AxisAlignedBB} in a list.
  *
- * @see         net.minecraft.util.AxisAlignedBB
- * @author      iLexiconn
- * @since       0.1.0
+ * @author iLexiconn
+ * @see net.minecraft.util.AxisAlignedBB
+ * @since 0.1.0
  */
 public interface IHighlightedBlock
 {
     /**
-     * @see         net.minecraft.util.AxisAlignedBB
-     * @since       0.1.0
+     * @see net.minecraft.util.AxisAlignedBB
+     * @since 0.1.0
      */
     @SideOnly(Side.CLIENT)
     List<AxisAlignedBB> getHighlightedBoxes(World world, int x, int y, int z, EntityPlayer player);

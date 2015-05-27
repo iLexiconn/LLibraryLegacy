@@ -7,10 +7,10 @@ import java.util.Map;
 /**
  * Container class for {@link net.ilexiconn.llibrary.common.update.UpdateHelper}
  *
- * @see         net.ilexiconn.llibrary.common.update.UpdateHelper
- * @author      iLexiconn
- * @author      FiskFille
- * @since       0.1.0
+ * @author iLexiconn
+ * @author FiskFille
+ * @see net.ilexiconn.llibrary.common.update.UpdateHelper
+ * @since 0.1.0
  */
 public class JsonModUpdate
 {
