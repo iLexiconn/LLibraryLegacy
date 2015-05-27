@@ -19,7 +19,9 @@ import net.minecraftforge.common.MinecraftForge;
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends ServerProxy
 {
-    public void preInit()
+    public static RenderLLibraryPlayer renderCustomPlayer;
+
+	public void preInit()
     {
         super.preInit();
 
@@ -35,7 +37,8 @@ public class ClientProxy extends ServerProxy
     {
         super.postInit();
 
-        RenderManager.instance.entityRenderMap.put(EntityPlayer.class, new RenderLLibraryPlayer());
+        renderCustomPlayer = new RenderLLibraryPlayer();
+        RenderManager.instance.entityRenderMap.put(EntityPlayer.class, renderCustomPlayer);
     }
 
     public void openChangelogGui(JsonModUpdate mod, String version)
