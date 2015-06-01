@@ -13,6 +13,7 @@ import net.ilexiconn.llibrary.common.update.ChangelogHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -31,6 +32,19 @@ public class ClientProxy extends ServerProxy
         FMLCommonHandler.instance().bus().register(new GuiHelper());
 
         GuiHelper.addOverride(GuiMainMenu.class, new GuiLLibraryMainMenu());
+
+        KeyBinding[] internalKeybindings = Minecraft.getMinecraft().gameSettings.keyBindings;
+        KeyBinding targetKeybinding = Minecraft.getMinecraft().gameSettings.keyBindScreenshot;
+        ClientEventHandler.screenshotKeyBinding = new KeyBinding(targetKeybinding.getKeyDescription(), targetKeybinding.getKeyCode(), targetKeybinding.getKeyCategory());
+        for (int i = 0; i < internalKeybindings.length; ++i)
+        {
+            KeyBinding kb = internalKeybindings[i];
+            if (kb.getKeyDescription().equals(targetKeybinding.getKeyDescription()))
+            {
+                internalKeybindings[i] = ClientEventHandler.screenshotKeyBinding;
+                targetKeybinding.setKeyCode(-1);
+            }
+        }
     }
 
     public void postInit()

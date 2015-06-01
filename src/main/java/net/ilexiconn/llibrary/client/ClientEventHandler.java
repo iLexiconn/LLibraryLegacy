@@ -1,7 +1,9 @@
 package net.ilexiconn.llibrary.client;
 
-import java.util.List;
-
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.client.gui.GuiSurvivalTab;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
@@ -14,6 +16,7 @@ import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.AxisAlignedBB;
@@ -24,18 +27,16 @@ import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-
+import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class ClientEventHandler
 {
+    public static KeyBinding screenshotKeyBinding;
     private RenderPlayer prevRenderPlayer;
-
     private Minecraft mc = Minecraft.getMinecraft();
 
     @SubscribeEvent
@@ -130,6 +131,15 @@ public class ClientEventHandler
                     count++;
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onKeyInput(InputEvent.KeyInputEvent event)
+    {
+        if (ClientEventHandler.screenshotKeyBinding.isPressed())
+        {
+            ScreenshotHelper.takeScreenshot();
         }
     }
 }
