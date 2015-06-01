@@ -5,8 +5,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.shader.Framebuffer;
+import net.minecraft.event.ClickEvent;
+import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
+import net.minecraft.util.StatCollector;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
@@ -112,7 +115,7 @@ public class ScreenshotHelper implements Runnable
         {
             ssDir.mkdirs();
             ImageIO.write(image, "png", ssFile);
-            FMLClientHandler.instance().getClient().thePlayer.addChatComponentMessage(new ChatComponentText("Saved screenshot as ").appendSibling(new ChatComponentText(ssFile.getName()).setChatStyle(new ChatStyle().setUnderlined(true))));
+            FMLClientHandler.instance().getClient().thePlayer.addChatComponentMessage(new ChatComponentText("Saved screenshot as ").appendSibling(new ChatComponentText(ssFile.getName()).setChatStyle(new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, ssDir.getAbsolutePath())).setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentText(StatCollector.translateToLocal("gui.llibrary.screenshot")))).setUnderlined(true))));
         }
         catch (IOException e)
         {
