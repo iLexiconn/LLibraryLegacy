@@ -21,6 +21,12 @@ import java.nio.IntBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Class used to replace the default screenshot behaviour.
+ *
+ * @author iLexiconn
+ * @since 0.2.0
+ */
 public class ScreenshotHelper implements Runnable
 {
     private static IntBuffer pixelBuffer;
@@ -109,7 +115,8 @@ public class ScreenshotHelper implements Runnable
 
         File ssDir = new File("screenshots");
         File ssFile = new File("screenshots", captureTime + ".png");
-        for (int iterator = 0; ssFile.exists(); ssFile = new File("screenshots", captureTime + "_" + iterator + ".png")) ++iterator;
+        for (int iterator = 0; ssFile.exists(); ssFile = new File("screenshots", captureTime + "_" + iterator + ".png"))
+            ++iterator;
 
         try
         {

@@ -30,19 +30,15 @@ public class ClientProxy extends ServerProxy
         FMLCommonHandler.instance().bus().register(new ClientEventHandler());
         MinecraftForge.EVENT_BUS.register(new GuiHelper());
         FMLCommonHandler.instance().bus().register(new GuiHelper());
-
+        ClientEventHandler.screenshotKeyBinding = new KeyBinding(Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyDescription(), Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCode(), Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCategory());
         GuiHelper.addOverride(GuiMainMenu.class, new GuiLLibraryMainMenu());
 
-        KeyBinding[] internalKeybindings = Minecraft.getMinecraft().gameSettings.keyBindings;
-        KeyBinding targetKeybinding = Minecraft.getMinecraft().gameSettings.keyBindScreenshot;
-        ClientEventHandler.screenshotKeyBinding = new KeyBinding(targetKeybinding.getKeyDescription(), targetKeybinding.getKeyCode(), targetKeybinding.getKeyCategory());
-        for (int i = 0; i < internalKeybindings.length; ++i)
+        for (int i = 0; i < Minecraft.getMinecraft().gameSettings.keyBindings.length; ++i)
         {
-            KeyBinding kb = internalKeybindings[i];
-            if (kb.getKeyDescription().equals(targetKeybinding.getKeyDescription()))
+            if (Minecraft.getMinecraft().gameSettings.keyBindings[i] == Minecraft.getMinecraft().gameSettings.keyBindScreenshot)
             {
-                internalKeybindings[i] = ClientEventHandler.screenshotKeyBinding;
-                targetKeybinding.setKeyCode(-1);
+                Minecraft.getMinecraft().gameSettings.keyBindings[i] = ClientEventHandler.screenshotKeyBinding;
+                Minecraft.getMinecraft().gameSettings.keyBindScreenshot.setKeyCode(-1);
             }
         }
     }
