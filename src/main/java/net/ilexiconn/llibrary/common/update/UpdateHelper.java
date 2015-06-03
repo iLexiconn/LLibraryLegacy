@@ -22,9 +22,9 @@ public class UpdateHelper
 
     /**
      * Register the main mod class for automatic update checking.
-     * <p/>
+     * <p>
      * Example pastebin version file:
-     * <p/>
+     * <p>
      * {
      * "newestVersion": "9000",
      * "versions":

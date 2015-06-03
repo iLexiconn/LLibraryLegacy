@@ -23,7 +23,7 @@ public class ConfigHelper
 
     /**
      * Register a {@link net.ilexiconn.llibrary.common.config.IConfigHandler} for a specific {@link cpw.mods.fml.common.Mod}
-     * <p/>
+     * <p>
      * {@link net.ilexiconn.llibrary.common.config.IConfigHandler#loadConfig(Configuration)} will be called every time the user clicks on 'Done'
      *
      * @see net.ilexiconn.llibrary.common.config.IConfigHandler

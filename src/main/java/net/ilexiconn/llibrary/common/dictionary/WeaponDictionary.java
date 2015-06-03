@@ -235,12 +235,12 @@ public class WeaponDictionary
          * if one does not exist already it creates one.
          * This can be used as interm measure for modders to
          * add there own category of Biome.
-         * <p/>
+         * <p>
          * There are NO naming conventions besides:
          * MUST be all upper case (enforced by name.toUpper())
          * NO Special characters. {Unenforced, just don't be a pain, if it becomes a issue I WILL
          * make this RTE with no worry about backwards compatibility}
-         * <p/>
+         * <p>
          * Note: For performance sake, the return value of this function SHOULD be cached.
          * Two calls with the same name SHOULD return the same value.
          *

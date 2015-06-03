@@ -385,11 +385,11 @@ public class GenHelper
      * This method will return the correct metadata value for the block type based on
      * how it was rotated in the world, IF and ONLY IF you used the correct metadata
      * value to set the block's default orientation for your structure's default facing.
-     * <p/>
+     * <p>
      * If your structure's front faces EAST by default, for example, and you want a wall
      * sign out front greeting all your guests, you'd better use '5' as its metadata value
      * in your blockArray so it faces EAST as well.
-     * <p/>
+     * <p>
      * Please read the blockArray notes very carefully and test out your structure to make
      * sure everything is oriented how you thought it was.
      *
