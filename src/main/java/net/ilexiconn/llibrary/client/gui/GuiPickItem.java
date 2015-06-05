@@ -5,9 +5,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,20 +16,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemDoublePlant;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.lwjgl.opengl.GL11.*;
-
 /**
- * @author FiskFille
+ * @author FiskFile
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public abstract class GuiPickItem extends GuiScreen
@@ -94,7 +94,7 @@ public abstract class GuiPickItem extends GuiScreen
 
         for (ItemStack itemstack : items)
         {
-            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(StatCollector.translateToLocal(itemstack.getDisplayName())) + 30);
+            listWidth = Math.max(listWidth, fontRendererObj.getStringWidth(StatCollector.translateToLocal(itemstack.getDisplayName())) + 30);
         }
 
         listWidth = Math.min(listWidth, 300);
@@ -106,7 +106,7 @@ public abstract class GuiPickItem extends GuiScreen
         }
 
         buttonList.add(new GuiButton(0, 20, height - 40, listWidth, 20, "Select"));
-        itemList = new GuiSlotItemStackList(this, items, listWidth);
+        itemList = new GuiSlotItemStackList(this, listWidth);
         itemList.registerScrollButtons(buttonList, 7, 8);
     }
 
@@ -118,7 +118,6 @@ public abstract class GuiPickItem extends GuiScreen
 
         if (id == 0)
         {
-            playPressSound(mc.getSoundHandler());
             onSelectEntry(itemsFiltered.get(selectedIndex), Minecraft.getMinecraft().thePlayer);
         }
     }
@@ -199,21 +198,16 @@ public abstract class GuiPickItem extends GuiScreen
     {
         RenderHelper.enableGUIStandardItemLighting();
         zLevel = 100f;
-        mc.getRenderItem().zLevel = 100f;
-        glEnable(2896);
-        glEnable(32826);
+        itemRender.zLevel = 100f;
+        GL11.glEnable(2896);
+        GL11.glEnable(32826);
         itemRender.func_180450_b(itemstack, x, y);
         itemRender.func_175030_a(fontRendererObj, itemstack, x, y);
-        glDisable(2896);
-        glEnable(3042);
-        mc.getRenderItem().zLevel = 0f;
+        GL11.glDisable(2896);
+        GL11.glEnable(3042);
+        itemRender.zLevel = 0f;
         zLevel = 0f;
         RenderHelper.disableStandardItemLighting();
-    }
-
-    public void playPressSound(SoundHandler soundHandler)
-    {
-        soundHandler.playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1f));
     }
 
     public void selectItemIndex(int var1)
@@ -224,15 +218,5 @@ public abstract class GuiPickItem extends GuiScreen
     public boolean itemIndexSelected(int var1)
     {
         return selectedIndex == var1;
-    }
-
-    public FontRenderer getFontRenderer()
-    {
-        return fontRendererObj;
-    }
-
-    public Minecraft getMinecraftInstance()
-    {
-        return Minecraft.getMinecraft();
     }
 }

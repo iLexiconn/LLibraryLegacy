@@ -15,11 +15,12 @@ import java.util.List;
  * Helper class to save ItemStacks to NBT, and removing item/block recipes.
  *
  * @author iLexiconn
+ * @since 0.1.0
  */
 public class ItemHelper
 {
     /**
-     * Use NbtHelper.readStackFromNbt() instead.
+     * Use {@link net.ilexiconn.llibrary.common.nbt.NbtHelper#readStackFromNbt(NBTTagCompound, String)} instead.
      *
      * @param nbtTag
      * @param name
@@ -32,12 +33,11 @@ public class ItemHelper
     }
 
     /**
-     * Use NbtHelper.writeStackToNbt() instead.
+     * Use {@link net.ilexiconn.llibrary.common.nbt.NbtHelper#writeStackToNbt(NBTTagCompound, String, ItemStack)} instead.
      *
      * @param nbtTag
      * @param name
      * @param stack
-     * @return
      */
     @Deprecated
     public static void saveStackToNBT(NBTTagCompound nbtTag, String name, ItemStack stack)
@@ -58,7 +58,8 @@ public class ItemHelper
         while (iterator.hasNext())
         {
             ItemStack stack = iterator.next().getRecipeOutput();
-            if (stack != null && stack.getItem() == item) iterator.remove();
+            if (stack != null && stack.getItem() == item)
+                iterator.remove();
         }
     }
 }

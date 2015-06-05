@@ -18,7 +18,8 @@ public class ServerEventHandler
     {
         if (event.entityLiving instanceof IEntityMultiPart)
         {
-            for (EntityPart part : ((IEntityMultiPart) event.entityLiving).getParts()) part.onUpdate();
+            for (EntityPart part : ((IEntityMultiPart) event.entityLiving).getParts())
+                part.onUpdate();
         }
     }
 

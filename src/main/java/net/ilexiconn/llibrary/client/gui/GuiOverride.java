@@ -7,14 +7,19 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /**
- * @author FiskFille
+ * @author FiskFile
+ * @see net.ilexiconn.llibrary.client.gui.GuiHelper
+ * @since 0.1.0
  */
+@SideOnly(Side.CLIENT)
 public class GuiOverride extends GuiScreen
 {
     public Minecraft mc = Minecraft.getMinecraft();
@@ -22,14 +27,10 @@ public class GuiOverride extends GuiScreen
     public GuiScreen overriddenScreen;
 
     public List buttonList = new ArrayList();
-    private int eventButton;
-    private long lastMouseEvent;
-    private int field_146298_h;
 
     public void drawScreen(int mouseX, int mouseY, float partalTicks)
     {
         super.drawScreen(mouseX, mouseY, partalTicks);
-//		List buttonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, overriddenScreen, "buttonList", "field_146292_n");
         List labelList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, overriddenScreen, "labelList", "field_146293_o");
         int k1;
 
@@ -60,5 +61,6 @@ public class GuiOverride extends GuiScreen
 
     public void actionPerformed(GuiButton button)
     {
+
     }
 }

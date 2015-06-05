@@ -1,7 +1,6 @@
 package net.ilexiconn.llibrary.client.gui;
 
 import com.google.common.collect.Lists;
-
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.update.ChangelogHandler;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
@@ -12,7 +11,8 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -21,8 +21,11 @@ import java.net.URI;
 import java.util.List;
 
 /**
- * @author FiskFille
+ * @author FiskFile
+ * @see net.ilexiconn.llibrary.common.update.UpdateHelper
+ * @since 0.1.0
  */
+@SideOnly(Side.CLIENT)
 public class GuiCheckForUpdates extends GuiScreen
 {
     public List<JsonModUpdate> outdatedMods;
@@ -67,9 +70,9 @@ public class GuiCheckForUpdates extends GuiScreen
         int j = 0;
         int k = 0;
 
-        for (int i = 0; i < buttonList.size(); ++i)
+        for (Object obj : buttonList)
         {
-            GuiButton button = (GuiButton) buttonList.get(i);
+            GuiButton button = (GuiButton) obj;
             int id = button.id;
 
             if (id == 0)
@@ -134,12 +137,12 @@ public class GuiCheckForUpdates extends GuiScreen
                 outdatedMods = Lists.newArrayList();
                 failed = true;
             }
-//			outdatedMods = Lists.newArrayList();
-//			
-//			for (int i = 0; i < 10; ++i)
-//			{
-//				outdatedMods.add(UpdateHelper.getModContainerById("llibrary"));
-//			}
+            //			outdatedMods = Lists.newArrayList();
+            //			
+            //			for (int i = 0; i < 10; ++i)
+            //			{
+            //				outdatedMods.add(UpdateHelper.getModContainerById("llibrary"));
+            //			}
 
             initGui();
         }

@@ -1,7 +1,15 @@
 package net.ilexiconn.llibrary.client.model.modelbase;
 
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+/**
+ * @author RafaMv0
+ * @author BobMowzie
+ * @since 0.1.0
+ */
+@SideOnly(Side.CLIENT)
 public class ControlledAnimation
 {
     private double timer;
@@ -28,8 +36,10 @@ public class ControlledAnimation
     {
         timer = (double) time;
 
-        if (timer > duration) timer = duration;
-        else if (timer < 0) timer = 0;
+        if (timer > duration)
+            timer = duration;
+        else if (timer < 0)
+            timer = 0;
     }
 
     public void resetTimer()
@@ -39,24 +49,30 @@ public class ControlledAnimation
 
     public void increaseTimer()
     {
-        if (timer < duration) timer++;
+        if (timer < duration)
+            timer++;
     }
 
     public void increaseTimer(int time)
     {
-        if (timer + (double) time < duration) timer += (double) time;
-        else timer = duration;
+        if (timer + (double) time < duration)
+            timer += (double) time;
+        else
+            timer = duration;
     }
 
     public void decreaseTimer()
     {
-        if (timer > 0d) timer--;
+        if (timer > 0d)
+            timer--;
     }
 
     public void decreaseTimer(int time)
     {
-        if (timer - (double) time > 0d) timer -= (double) time;
-        else timer = 0.0D;
+        if (timer - (double) time > 0d)
+            timer -= (double) time;
+        else
+            timer = 0.0D;
     }
 
     public float getAnimationFraction()
@@ -68,8 +84,10 @@ public class ControlledAnimation
     {
         if (timer > 0d)
         {
-            if (timer < duration) return (float) (1d / (1d + Math.exp(4d - 8d * (timer / duration))));
-            else return 1f;
+            if (timer < duration)
+                return (float) (1d / (1d + Math.exp(4d - 8d * (timer / duration))));
+            else
+                return 1f;
         }
         return 0f;
     }

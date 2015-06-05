@@ -4,16 +4,29 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.IChatComponent;
 
 /**
+ * Helper class for deserializing chat {@link net.minecraft.util.IChatComponent}.
+ *
  * @author FiskFille
+ * @see net.minecraft.util.IChatComponent
+ * @since 0.1.0
  */
 public class ChatHelper
 {
-    public static void chatToFromJSON(ICommandSender commandSender, String json)
+    /**
+     * @see net.minecraft.util.IChatComponent
+     * @since 0.1.0
+     */
+    public static void chatToFromJson(ICommandSender commandSender, String json)
     {
         IChatComponent ichatcomponent = IChatComponent.Serializer.jsonToComponent(json);
         commandSender.addChatMessage(ichatcomponent);
     }
 
+    /**
+     * @see net.minecraft.util.IChatComponent
+     * @see net.ilexiconn.llibrary.common.command.ChatMessage
+     * @since 0.1.0
+     */
     public static void chatTo(ICommandSender commandSender, ChatMessage... chatMessages)
     {
         String json = "{text:\"\",extra:[";
@@ -24,6 +37,6 @@ public class ChatHelper
         }
 
         json += "]}";
-        chatToFromJSON(commandSender, json);
+        chatToFromJson(commandSender, json);
     }
 }

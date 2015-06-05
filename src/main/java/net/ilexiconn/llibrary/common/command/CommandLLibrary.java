@@ -8,6 +8,7 @@ import net.ilexiconn.llibrary.common.update.ChangelogHandler;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.BlockPos;
@@ -18,6 +19,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * @author FiskFille
+ * @since 0.1.0
+ */
 public class CommandLLibrary extends CommandBase
 {
     public String getCommandName()
@@ -35,7 +40,7 @@ public class CommandLLibrary extends CommandBase
         return 0;
     }
 
-    public void processCommand(ICommandSender sender, String[] args) throws WrongUsageException
+    public void processCommand(ICommandSender sender, String[] args) throws CommandException
     {
         List<JsonModUpdate> outdatedMods = VersionHandler.getOutdatedMods();
 

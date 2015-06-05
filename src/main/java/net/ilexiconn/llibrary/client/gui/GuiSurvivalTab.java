@@ -2,10 +2,13 @@ package net.ilexiconn.llibrary.client.gui;
 
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
+import net.ilexiconn.llibrary.common.survivaltab.ICustomSurvivalTabTexture;
 import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -17,6 +20,11 @@ import org.lwjgl.opengl.GL11;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author iLexiconn
+ * @see net.ilexiconn.llibrary.common.survivaltab.TabHelper
+ * @since 0.2.0
+ */
 @SideOnly(Side.CLIENT)
 public class GuiSurvivalTab extends GuiButton
 {
@@ -39,16 +47,20 @@ public class GuiSurvivalTab extends GuiButton
 
             boolean selected = mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass();
             xPosition = (mc.currentScreen.width / 2) - 88 + survivalTabContainer.getTabColumn() * 29;
-            yPosition = survivalTabContainer.isTabInFirstRow() ? mc.currentScreen.height / 2 - 112 : selected ? mc.currentScreen.height / 2 + 83 : mc.currentScreen.height / 2 + 79;
+            yPosition = survivalTabContainer.isTabInFirstRow() ? mc.currentScreen.height / 2 - ((GuiContainer) mc.currentScreen).ySize / 2 - 28 : selected ? mc.currentScreen.height / 2 + 83 : mc.currentScreen.height / 2 + 79;
 
             int yTexPos = survivalTabContainer.isTabInFirstRow() ? selected ? 0 : 32 : selected ? 66 : 96;
             int xTexPos = id == 2 || id == 8 ? 0 : 28;
-            int ySize = survivalTabContainer.isTabInFirstRow() ? selected ? 29 : 32 : selected ? 26 : 32;
+            int ySize = survivalTabContainer.isTabInFirstRow() ? selected ? 28 : 32 : selected ? 26 : 32;
 
-            mc.renderEngine.bindTexture(texture);
+            if (survivalTabContainer.getSurvivalTab() instanceof ICustomSurvivalTabTexture)
+                mc.renderEngine.bindTexture(((ICustomSurvivalTabTexture) survivalTabContainer.getSurvivalTab()).getTabTexture());
+            else
+                mc.renderEngine.bindTexture(texture);
             drawTexturedModalRect(xPosition, yPosition, xTexPos, yTexPos, 28, ySize);
 
-            if (!survivalTabContainer.isTabInFirstRow() && selected) yPosition -= 3;
+            if (!survivalTabContainer.isTabInFirstRow() && selected)
+                yPosition -= 3;
 
             RenderHelper.enableGUIStandardItemLighting();
             zLevel = 100f;
@@ -77,11 +89,11 @@ public class GuiSurvivalTab extends GuiButton
                 LLibrary.networkWrapper.sendToServer(new MessageLLibrarySurvivalTab(survivalTabContainer.getTabIndex()));
                 return true;
             }
-
-            return false;
+            else
+                return false;
         }
-
-        else return false;
+        else
+            return false;
     }
 
     public void drawHoveringText(String text, int mouseX, int mouseY)
@@ -100,15 +112,18 @@ public class GuiSurvivalTab extends GuiButton
                 String s = (String) object;
                 int width = font.getStringWidth(s);
 
-                if (width > topWidth) topWidth = width;
+                if (width > topWidth)
+                    topWidth = width;
             }
 
             int renderX = mouseX + 12;
             int renderY = mouseY - 12;
             int i1 = 8;
 
-            if (text.size() > 1) i1 += 2 + (text.size() - 1) * 10;
-            if (renderX + topWidth > width) renderX -= 28 + topWidth;
+            if (text.size() > 1)
+                i1 += 2 + (text.size() - 1) * 10;
+            if (renderX + topWidth > width)
+                renderX -= 28 + topWidth;
 
             zLevel = 300f;
             Minecraft.getMinecraft().getRenderItem().zLevel = 300f;
@@ -134,7 +149,8 @@ public class GuiSurvivalTab extends GuiButton
                 String s1 = (String) text.get(letterIndex);
                 font.drawString(s1, renderX, renderY, -1);
 
-                if (letterIndex == 0) renderY += 2;
+                if (letterIndex == 0)
+                    renderY += 2;
 
                 renderY += 10;
             }
@@ -142,5 +158,10 @@ public class GuiSurvivalTab extends GuiButton
             zLevel = 0f;
             Minecraft.getMinecraft().getRenderItem().zLevel = 0f;
         }
+    }
+
+    public void playPressSound(SoundHandler soundHandlerIn)
+    {
+
     }
 }

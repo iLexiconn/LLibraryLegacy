@@ -4,19 +4,23 @@ package net.ilexiconn.llibrary.common.content;
  * Interface to handle the content of a mod, activated by a ContentHandlerList.
  *
  * @author iLexiconn
- * @see ContentHandlerList
+ * @see net.ilexiconn.llibrary.common.content.ContentHelper
+ * @since 0.1.0
  */
 public interface IContentHandler
 {
     /**
-     * Initializing the items/blocks/entities/etc
+     * Initialize the items/blocks/entities/etc.
+     *
+     * @since 0.1.0
      */
     void init();
 
     /**
-     * Registering the content to the game.
+     * Register the content to the game.
      *
-     * @throws Exception
+     * @throws java.lang.Exception
+     * @since 0.1.0
      */
     void gameRegistry() throws Exception;
 }

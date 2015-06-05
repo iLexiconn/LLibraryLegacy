@@ -60,12 +60,10 @@ public class EntityPart extends Entity
     {
         super.onUpdate();
 
-        setLocationAndAngles(parent.posX + radius * Math.cos(parent.renderYawOffset * (Math.PI / 180f) + angleYaw),
-                parent.posY + offsetY,
-                parent.posZ + radius * Math.sin(parent.renderYawOffset * (Math.PI / 180f) + angleYaw),
-                0f, 0f);
+        setLocationAndAngles(parent.posX + radius * Math.cos(parent.renderYawOffset * (Math.PI / 180f) + angleYaw), parent.posY + offsetY, parent.posZ + radius * Math.sin(parent.renderYawOffset * (Math.PI / 180f) + angleYaw), 0f, 0f);
 
-        if (!worldObj.isRemote) collideWithNearbyEntities();
+        if (!worldObj.isRemote)
+            collideWithNearbyEntities();
     }
 
     public boolean canBeCollidedWith()
@@ -80,7 +78,7 @@ public class EntityPart extends Entity
 
     public boolean attackEntityFrom(DamageSource source, float damage)
     {
-        return !func_180431_b(source) && parent.attackEntityFrom(source, damage * damageMultiplier);
+        return parent.attackEntityFrom(source, damage * damageMultiplier);
     }
 
     public boolean isEntityEqual(Entity entity)

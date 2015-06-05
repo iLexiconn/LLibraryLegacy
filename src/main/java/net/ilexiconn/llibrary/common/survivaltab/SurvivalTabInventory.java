@@ -10,6 +10,11 @@ import net.minecraft.network.play.client.C0DPacketCloseWindow;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/**
+ * @author iLexiconn
+ * @see net.ilexiconn.llibrary.common.survivaltab.ISurvivalTab
+ * @since 0.2.0
+ */
 public class SurvivalTabInventory implements ISurvivalTab
 {
     public ItemStack stack = new ItemStack(Items.diamond_sword);

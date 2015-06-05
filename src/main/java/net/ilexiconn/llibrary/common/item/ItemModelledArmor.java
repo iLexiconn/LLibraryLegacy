@@ -9,6 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/**
+ * @author iLexiconn
+ * @see net.ilexiconn.llibrary.common.item.IArmorModelReceiver
+ * @since 0.1.0
+ */
 public class ItemModelledArmor extends ItemArmor
 {
     @SideOnly(Side.CLIENT)
@@ -39,8 +44,10 @@ public class ItemModelledArmor extends ItemArmor
     public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot)
     {
         int type = ((ItemArmor) itemStack.getItem()).armorType;
-        if (type == 1 || type == 3) armorModel = armorModelReceiver.getArmorModel(0);
-        else armorModel = armorModelReceiver.getArmorModel(1);
+        if (type == 1 || type == 3)
+            armorModel = armorModelReceiver.getArmorModel(0);
+        else
+            armorModel = armorModelReceiver.getArmorModel(1);
 
         if (armorModel != null)
         {

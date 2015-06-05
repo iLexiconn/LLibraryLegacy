@@ -2,6 +2,8 @@ package net.ilexiconn.llibrary.common.survivaltab;
 
 /**
  * @author iLexiconn
+ * @see net.ilexiconn.llibrary.common.survivaltab.ISurvivalTab
+ * @since 0.2.0
  */
 public class SurvivalTab
 {
@@ -14,30 +16,32 @@ public class SurvivalTab
         survivalTab = tab;
     }
 
-    /**
-     * @return index % 6
-     */
     public int getTabColumn()
     {
-        if (tabIndex > 11) return ((tabIndex - 12) % 10) % 5;
+        if (tabIndex > 11)
+            return ((tabIndex - 12) % 10) % 5;
         return tabIndex % 6;
     }
 
-    /**
-     * @return tabIndex < 6
-     */
     public boolean isTabInFirstRow()
     {
-        if (tabIndex > 11) return ((tabIndex - 12) % 10) < 5;
+        if (tabIndex > 11)
+            return ((tabIndex - 12) % 10) < 5;
         return tabIndex < 6;
     }
 
-    /**
-     * @return tabIndex
-     */
     public int getTabIndex()
     {
         return tabIndex;
+    }
+
+    public int getTabPage()
+    {
+        if (tabIndex > 11)
+        {
+            return ((tabIndex - 12) / 10) + 1;
+        }
+        return 0;
     }
 
     /**

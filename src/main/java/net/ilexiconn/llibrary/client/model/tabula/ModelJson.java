@@ -8,6 +8,8 @@ import net.ilexiconn.llibrary.client.model.modelbase.MowzieModelRenderer;
 import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -16,7 +18,9 @@ import java.util.Map.Entry;
 
 /**
  * @author gegy1000
+ * @since 0.1.0
  */
+@SideOnly(Side.CLIENT)
 public class ModelJson extends MowzieModelBase
 {
     private JsonTabulaModel tabulaModel;
@@ -77,9 +81,12 @@ public class ModelJson extends MowzieModelBase
     }
 
     /**
-     * Sets the model's various rotation angles. For bipeds, par1 and par2 are used for animating the movement of arms
-     * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
+     * Sets the model's various rotation angles. For bipeds, limbSwing and limbSwingAmount are used for animating the movement of arms
+     * and legs, where limbSwing represents the time(so that arms and legs swing back and forth) and limbSwingAmount represents how
      * "far" arms and legs can swing at most.
+     *
+     * @see net.minecraft.entity.Entity
+     * @since 0.1.0
      */
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, Entity entity)
     {
@@ -133,6 +140,14 @@ public class ModelJson extends MowzieModelBase
         }
     }
 
+    /**
+     * Starts an animation with the id from the Tabula model.
+     *
+     * @see net.ilexiconn.llibrary.client.model.tabula.ModelJson
+     * @see net.ilexiconn.llibrary.client.model.tabula.Animation
+     * @see net.ilexiconn.llibrary.client.model.tabula.AnimationComponent
+     * @since 0.1.0
+     */
     public void startAnimation(int id)
     {
         if (playingAnimation == null)
@@ -156,6 +171,14 @@ public class ModelJson extends MowzieModelBase
         }
     }
 
+    /**
+     * Stop all current running animations.
+     *
+     * @see net.ilexiconn.llibrary.client.model.tabula.ModelJson
+     * @see net.ilexiconn.llibrary.client.model.tabula.Animation
+     * @see net.ilexiconn.llibrary.client.model.tabula.AnimationComponent
+     * @since 0.1.0
+     */
     public void stopAnimation()
     {
         playingAnimation = null;
@@ -178,7 +201,6 @@ public class ModelJson extends MowzieModelBase
                         componentTimer = component.length;
                     }
 
-                    //TODO more?
                     animating.rotationPointX += component.posChange[0] / component.length * componentTimer;
                     animating.rotationPointY += component.posChange[1] / component.length * componentTimer;
                     animating.rotationPointZ += component.posChange[2] / component.length * componentTimer;
@@ -210,7 +232,7 @@ public class ModelJson extends MowzieModelBase
         MowzieModelRenderer cube = new MowzieModelRenderer(this, cubeInfo.txOffset[0], cubeInfo.txOffset[1]);
         cube.setRotationPoint((float) cubeInfo.position[0], (float) cubeInfo.position[1], (float) cubeInfo.position[2]);
         cube.addBox((float) cubeInfo.offset[0], (float) cubeInfo.offset[1], (float) cubeInfo.offset[2], cubeInfo.dimensions[0], cubeInfo.dimensions[1], cubeInfo.dimensions[2], 0.0F);
-        cube.rotateAngleX = (float) Math.toRadians((float) cubeInfo.rotation[0]); //TODO Conversion?
+        cube.rotateAngleX = (float) Math.toRadians((float) cubeInfo.rotation[0]);
         cube.rotateAngleY = (float) Math.toRadians((float) cubeInfo.rotation[1]);
         cube.rotateAngleZ = (float) Math.toRadians((float) cubeInfo.rotation[2]);
 

@@ -8,6 +8,7 @@ import java.util.Calendar;
  * when the game was started.
  *
  * @author FiskFille
+ * @since 0.2.0
  */
 public class SystemTime
 {

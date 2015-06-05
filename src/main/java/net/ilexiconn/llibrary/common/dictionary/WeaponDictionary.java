@@ -9,6 +9,10 @@ import java.util.*;
 
 import static net.ilexiconn.llibrary.common.dictionary.WeaponDictionary.Type.*;
 
+/**
+ * @author FiskFille
+ * @since 0.1.0
+ */
 public class WeaponDictionary
 {
     private static final int WEAPON_LIST_SIZE = 1024 * 10;
@@ -209,53 +213,15 @@ public class WeaponDictionary
     public enum Type
     {
         /* Generic types which a weapon can be */
-        SWORD,
-        AXE,
-        PICKAXE,
-        SHOVEL,
-        NUNCHUCKS,
-        SPEAR,
-        WAND,
-        BOW,
-        HALBERD,
-        GUN,
-        MACE,
-        HAMMER,
-        SICLE,
-        SCYTHE,
-        KIFE,
-        CLAW,
-        GLOVE,
-        WHIP,
-        BOOMERANG,
+        SWORD, AXE, PICKAXE, SHOVEL, NUNCHUCKS, SPEAR, WAND, BOW, HALBERD, GUN, MACE, HAMMER, SICLE, SCYTHE, KIFE, CLAW, GLOVE, WHIP, BOOMERANG,
 
-        SHARP,
-        DULL,
-        LIGHT,
-        HEAVY,
+        SHARP, DULL, LIGHT, HEAVY,
 
-        RANGED,
-        MELEE,
-        MELEE_RANGED,
-        THROWABLE,
+        RANGED, MELEE, MELEE_RANGED, THROWABLE,
 
+        MAGICAL, EXPLOSIVE, FIERY, WATERY, ICY, ELECTRICAL, DEATHLY, PLANT_Y, EARTHLY, WINDY, ENDER, POISONED,
 
-        MAGICAL,
-        EXPLOSIVE,
-        FIERY,
-        WATERY,
-        ICY,
-        ELECTRICAL,
-        DEATHLY,
-        PLANT_Y,
-        EARTHLY,
-        WINDY,
-        ENDER,
-        POISONED,
-
-        FUTURISTIC,
-        MEDIEVAL,
-        MODERN;
+        FUTURISTIC, MEDIEVAL, MODERN;
 
         private List<Type> subTags;
 
@@ -269,12 +235,12 @@ public class WeaponDictionary
          * if one does not exist already it creates one.
          * This can be used as interm measure for modders to
          * add there own category of Biome.
-         * <p/>
+         * <p>
          * There are NO naming conventions besides:
          * MUST be all upper case (enforced by name.toUpper())
          * NO Special characters. {Unenforced, just don't be a pain, if it becomes a issue I WILL
          * make this RTE with no worry about backwards compatibility}
-         * <p/>
+         * <p>
          * Note: For performance sake, the return value of this function SHOULD be cached.
          * Two calls with the same name SHOULD return the same value.
          *

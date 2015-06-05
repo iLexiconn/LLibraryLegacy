@@ -13,21 +13,28 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
+/**
+ * @author Gegy1000
+ * @see net.ilexiconn.llibrary.client.render.RenderHelper
+ * @since 0.1.0
+ */
 @SideOnly(Side.CLIENT)
 public final class ModelLLibraryBiped extends ModelBiped
 {
     public ModelLLibraryBiped()
     {
         List<IExtension> extensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
-        if (extensions != null) for (IExtension extension : extensions)
-            extension.init(this);
+        if (extensions != null)
+            for (IExtension extension : extensions)
+                extension.init(this);
     }
 
     public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
     {
         List<IExtension> modelExtensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
 
-        if (modelExtensions == null) modelExtensions = Lists.newArrayList();
+        if (modelExtensions == null)
+            modelExtensions = Lists.newArrayList();
 
         setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
 
@@ -76,7 +83,6 @@ public final class ModelLLibraryBiped extends ModelBiped
             if (extension instanceof IModelExtension)
             {
                 IModelExtension modelExtension = (IModelExtension) extension;
-                modelExtension.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
                 modelExtension.postRender((EntityPlayer) entity, this, partialTicks);
             }
         }

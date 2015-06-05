@@ -3,6 +3,10 @@ package net.ilexiconn.llibrary.common.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ * @author iLexiconn
+ * @since 0.1.0
+ */
 public class JsonFactory
 {
     private static Gson gson = new Gson();

@@ -1,21 +1,21 @@
 package net.ilexiconn.llibrary.client.render;
 
 import net.minecraft.client.model.ModelBase;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Interface for rendering extra models to existing models.
  *
- * @author iLexiconn, Gegy1000
+ * @author iLexiconn
+ * @author Gegy1000
+ * @since 0.2.0
  */
-@SideOnly(Side.CLIENT)
 public interface IExtension
 {
     /**
      * Initialize the custom model(s).
      *
      * @param model the parent model
+     * @since 0.2.0
      */
     void init(ModelBase model);
 }

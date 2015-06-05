@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author FiskFille, iLexiconn
+ * @author FiskFille
+ * @author iLexiconn
+ * @since 0.1.0
  */
 public class VersionHandler
 {
@@ -18,7 +20,8 @@ public class VersionHandler
         List<JsonModUpdate> outdatedMods = Lists.newArrayList();
 
         for (JsonModUpdate mod : UpdateHelper.modList)
-            if (!mod.getNewestVersion().equals(mod.currentVersion)) outdatedMods.add(mod);
+            if (!mod.getNewestVersion().equals(mod.currentVersion))
+                outdatedMods.add(mod);
 
         VersionHandler.outdatedMods = outdatedMods;
         return outdatedMods;

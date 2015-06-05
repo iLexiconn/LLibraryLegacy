@@ -10,10 +10,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-import scala.actors.threadpool.Arrays;
 
+import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author FiskFile
+ * @see net.ilexiconn.llibrary.common.update.UpdateHelper
+ * @since 0.1.0
+ */
 @SideOnly(Side.CLIENT)
 public class GuiButtonCheckForUpdates extends GuiButton
 {
@@ -61,7 +66,7 @@ public class GuiButtonCheckForUpdates extends GuiButton
 
             if (hoverTimer >= 20)
             {
-                drawHoveringText(Arrays.asList(new String[]{I18n.format("gui.llibrary.updatecheck.desc")}), mouseX, mouseY, mc.fontRendererObj);
+                drawHoveringText(Collections.singletonList(I18n.format("gui.llibrary.updatecheck.desc")), mouseX, mouseY, mc.fontRendererObj);
             }
         }
     }

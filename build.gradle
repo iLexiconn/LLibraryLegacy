@@ -22,7 +22,7 @@ group = "net.ilexiconn.llibrary"
 archivesBaseName = "LLibrary"
 
 minecraft {
-    version = "1.8-11.14.1.1410"
+    version = "1.8-11.14.2.1433"
     runDir = "minecraft"
     replace '${version}', project.version
 }

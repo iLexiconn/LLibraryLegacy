@@ -1,56 +1,54 @@
 package net.ilexiconn.llibrary.client.gui;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.client.GuiScrollingList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-
+/**
+ * @author FiskFile
+ * @since 0.1.0
+ */
+@SideOnly(Side.CLIENT)
 public class GuiSlotItemStackList extends GuiScrollingList
 {
     private GuiPickItem parent;
-    private ArrayList<ItemStack> items;
 
-    public GuiSlotItemStackList(GuiPickItem parent, ArrayList<ItemStack> items, int listWidth)
+    public GuiSlotItemStackList(GuiPickItem parent, int listWidth)
     {
-        super(parent.getMinecraftInstance(), listWidth, parent.height, 55, parent.height - 45, 20, 18);
+        super(Minecraft.getMinecraft(), listWidth, parent.height, 55, parent.height - 45, 20, 18);
         this.parent = parent;
-        this.items = items;
     }
 
-    @Override
     protected int getSize()
     {
         return parent.itemsFiltered.size();
     }
 
-    @Override
-    protected void elementClicked(int var1, boolean var2)
+    protected void elementClicked(int index, boolean doubleClick)
     {
-        this.parent.selectItemIndex(var1);
+        parent.selectItemIndex(index);
     }
 
-    @Override
-    protected boolean isSelected(int var1)
+    protected boolean isSelected(int index)
     {
-        return this.parent.itemIndexSelected(var1);
+        return parent.itemIndexSelected(index);
     }
 
-    @Override
     protected void drawBackground()
     {
-        this.parent.drawDefaultBackground();
+        parent.drawDefaultBackground();
     }
 
-    @Override
     protected int getContentHeight()
     {
         return (getSize()) * 18 + 1;
     }
 
-    @Override
-    protected void drawSlot(int listIndex, int x, int y, int par4, Tessellator tesselator)
+    protected void drawSlot(int listIndex, int x, int y, int par4, Tessellator tessellator)
     {
         if (listIndex < parent.itemsFiltered.size())
         {
@@ -58,7 +56,7 @@ public class GuiSlotItemStackList extends GuiScrollingList
 
             if (itemstack != null)
             {
-                parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(StatCollector.translateToLocal(itemstack.getDisplayName()), listWidth - 10), left + 22, y + 3, 0xFFFFFF);
+                Minecraft.getMinecraft().fontRendererObj.drawString(Minecraft.getMinecraft().fontRendererObj.trimStringToWidth(StatCollector.translateToLocal(itemstack.getDisplayName()), listWidth - 10), left + 22, y + 3, 0xFFFFFF);
                 parent.drawItemStack(left + 1, y - 1, itemstack);
             }
         }

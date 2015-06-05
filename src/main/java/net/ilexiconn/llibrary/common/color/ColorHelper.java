@@ -5,9 +5,11 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- * Color helper for Minecraft guis.
+ * Color helper for Minecraft GUIs.
  *
- * @author RafaMv, Gegy1000
+ * @author RafaMv
+ * @author Gegy1000
+ * @since 0.1.0
  */
 public class ColorHelper
 {
@@ -15,6 +17,8 @@ public class ColorHelper
 
     /**
      * Searches a color based on alpha, red, blue, and green parameters.
+     *
+     * @since 0.1.0
      */
     public static int getColorInt(int r, int g, int b, int a)
     {
@@ -36,10 +40,14 @@ public class ColorHelper
                 blue = color >> 8 & 255;
                 green = color & 255;
 
-                if (alpha < a) color += 50000;
-                else if (red < r) color += 500;
-                else if (blue < g) color += 25;
-                else color += 1;
+                if (alpha < a)
+                    color += 50000;
+                else if (red < r)
+                    color += 500;
+                else if (blue < g)
+                    color += 25;
+                else
+                    color += 1;
             }
         }
         else

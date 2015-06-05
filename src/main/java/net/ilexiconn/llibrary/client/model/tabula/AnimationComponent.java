@@ -2,6 +2,12 @@ package net.ilexiconn.llibrary.client.model.tabula;
 
 import java.util.ArrayList;
 
+/**
+ * Container for Tabula animation components.
+ *
+ * @author Gegy1000
+ * @since 0.1.0
+ */
 public class AnimationComponent
 {
     public double[] posChange = new double[3];
@@ -25,4 +31,3 @@ public class AnimationComponent
 
     public String identifier;
 }
-

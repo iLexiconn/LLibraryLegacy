@@ -12,7 +12,9 @@ import java.util.ArrayList;
 /**
  * Helper class to register a mod for automatic update checking.
  *
- * @author FiskFille, iLexiconn
+ * @author FiskFille
+ * @author iLexiconn
+ * @since 0.1.0
  */
 public class UpdateHelper
 {
@@ -20,9 +22,9 @@ public class UpdateHelper
 
     /**
      * Register the main mod class for automatic update checking.
-     * <p/>
+     * <p>
      * Example pastebin version file:
-     * <p/>
+     * <p>
      * {
      * "newestVersion": "9000",
      * "versions":
@@ -42,7 +44,7 @@ public class UpdateHelper
      *
      * @param mod the main mod instance
      * @param url the updater file
-     * @throws IOException
+     * @throws java.io.IOException
      */
     public static void registerUpdateChecker(Object mod, String url) throws IOException
     {
@@ -50,7 +52,7 @@ public class UpdateHelper
         Class<?> modClass = mod.getClass();
 
         if (!modClass.isAnnotationPresent(Mod.class))
-            throw new RuntimeException("Please register the updater in your main class.");
+            return;
 
         Mod annotation = modClass.getAnnotation(Mod.class);
 

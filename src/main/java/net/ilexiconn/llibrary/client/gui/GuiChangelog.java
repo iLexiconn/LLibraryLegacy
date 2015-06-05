@@ -14,7 +14,9 @@ import org.lwjgl.opengl.GL11;
 import java.io.IOException;
 
 /**
- * @author FiskFille
+ * @author FiskFile
+ * @see net.ilexiconn.llibrary.common.update.UpdateHelper
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public class GuiChangelog extends GuiScreen

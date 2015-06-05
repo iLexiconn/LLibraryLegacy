@@ -8,6 +8,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * Interface for custom modelled armor items.
  *
  * @author iLexiconn
+ * @see net.ilexiconn.llibrary.common.item.ItemModelledArmor
+ * @since 0.1.0
  */
 public interface IArmorModelReceiver
 {
@@ -18,6 +20,7 @@ public interface IArmorModelReceiver
      *
      * @param pass the current render pass
      * @return the armor model
+     * @since 0.1.0
      */
     @SideOnly(Side.CLIENT)
     ModelBiped getArmorModel(int pass);
@@ -26,6 +29,7 @@ public interface IArmorModelReceiver
      * Get the string path to the texture.
      *
      * @return the texture path
+     * @since 0.1.0
      */
     String getModelTextureName();
 }

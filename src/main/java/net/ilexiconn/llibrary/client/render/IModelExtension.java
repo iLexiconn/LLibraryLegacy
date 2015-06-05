@@ -8,9 +8,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * Interface for rendering extra models to existing models.
+ * Interface for rendering extra models to {@link net.minecraft.client.model.ModelBiped}.
  *
  * @author Gegy1000
+ * @see net.minecraft.client.model.ModelBiped
+ * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
 public interface IModelExtension extends IExtension
@@ -18,32 +20,25 @@ public interface IModelExtension extends IExtension
     /**
      * Method to set the rotation angles for boxes before rendering.
      *
-     * @param model
-     * @param limbSwing
-     * @param limbSwingAmount
-     * @param rotationFloat
-     * @param rotationYaw
-     * @param rotationPitch
-     * @param partialTicks
-     * @param entity
+     * @since 0.1.0
      */
     void setRotationAngles(ModelBiped model, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks, Entity entity);
 
     /**
      * Render method called before rendering the parent model.
      *
-     * @param entity       the parent entity
-     * @param model        the parent model
-     * @param partialTicks
+     * @param entity the parent entity
+     * @param model  the parent model
+     * @since 0.1.0
      */
     void preRender(EntityPlayer entity, ModelBase model, float partialTicks);
 
     /**
      * Render method called after rendering the parent model.
      *
-     * @param entity       the parent entity
-     * @param model        the parent model
-     * @param partialTicks
+     * @param entity the parent entity
+     * @param model  the parent model
+     * @since 0.1.0
      */
     void postRender(EntityPlayer entity, ModelBase model, float partialTicks);
 }

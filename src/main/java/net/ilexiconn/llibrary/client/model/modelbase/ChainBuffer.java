@@ -2,7 +2,14 @@ package net.ilexiconn.llibrary.client.model.modelbase;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+/**
+ * @author RafaMv0
+ * @since 0.1.0
+ */
+@SideOnly(Side.CLIENT)
 public class ChainBuffer
 {
     private int yawTimer;
@@ -44,7 +51,8 @@ public class ChainBuffer
                     yawTimer = 0;
                 }
             }
-            else yawTimer++;
+            else
+                yawTimer++;
         }
         else if (yawVariation < -0.7f * angleDecrement)
         {
@@ -57,7 +65,8 @@ public class ChainBuffer
                     yawTimer = 0;
                 }
             }
-            else yawTimer++;
+            else
+                yawTimer++;
         }
 
         for (int i = 0; i < yawArray.length; i++)
@@ -80,7 +89,8 @@ public class ChainBuffer
                     pitchTimer = 0;
                 }
             }
-            else pitchTimer++;
+            else
+                pitchTimer++;
         }
         else if (pitchVariation < -0.7f * angleDecrement)
         {
@@ -93,7 +103,8 @@ public class ChainBuffer
                     pitchTimer = 0;
                 }
             }
-            else pitchTimer++;
+            else
+                pitchTimer++;
         }
 
         for (int i = 0; i < pitchArray.length; i++)
@@ -116,7 +127,8 @@ public class ChainBuffer
                     yawTimer = 0;
                 }
             }
-            else yawTimer++;
+            else
+                yawTimer++;
         }
         else if (yawVariation < -0.7f * angleDecrement)
         {
@@ -129,7 +141,8 @@ public class ChainBuffer
                     yawTimer = 0;
                 }
             }
-            else yawTimer++;
+            else
+                yawTimer++;
         }
 
         for (int i = 0; i < yawArray.length; i++)
@@ -152,7 +165,8 @@ public class ChainBuffer
                     pitchTimer = 0;
                 }
             }
-            else pitchTimer++;
+            else
+                pitchTimer++;
         }
         else if (pitchVariation < -0.7f * angleDecrement)
         {
@@ -165,7 +179,8 @@ public class ChainBuffer
                     pitchTimer = 0;
                 }
             }
-            else pitchTimer++;
+            else
+                pitchTimer++;
         }
 
         for (int i = 0; i < pitchArray.length; i++)
@@ -175,14 +190,18 @@ public class ChainBuffer
     public void applyChainSwingBuffer(MowzieModelRenderer[] boxes)
     {
         if (boxes.length == yawArray.length)
-            for (int i = 0; i < boxes.length; i++) boxes[i].rotateAngleY += yawArray[i];
-        else System.err.println("[LLibrary] Wrong array length being used in the buffer! (Y axis)");
+            for (int i = 0; i < boxes.length; i++)
+                boxes[i].rotateAngleY += yawArray[i];
+        else
+            System.err.println("[LLibrary] Wrong array length being used in the buffer! (Y axis)");
     }
 
     public void applyChainWaveBuffer(MowzieModelRenderer[] boxes)
     {
         if (boxes.length == pitchArray.length)
-            for (int i = 0; i < boxes.length; i++) boxes[i].rotateAngleX += pitchArray[i];
-        else System.out.println("[LLibrary] Wrong array length being used in the buffer! (X axis)");
+            for (int i = 0; i < boxes.length; i++)
+                boxes[i].rotateAngleX += pitchArray[i];
+        else
+            System.out.println("[LLibrary] Wrong array length being used in the buffer! (X axis)");
     }
 }

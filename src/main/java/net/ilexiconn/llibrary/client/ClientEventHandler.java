@@ -1,6 +1,8 @@
 package net.ilexiconn.llibrary.client;
 
 import net.ilexiconn.llibrary.client.gui.GuiSurvivalTab;
+import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
+import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
 import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.survivaltab.TabHelper;
@@ -8,12 +10,18 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.item.Item;
-import net.minecraft.util.*;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -23,6 +31,39 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class ClientEventHandler
 {
+    public static KeyBinding screenshotKeyBinding;
+    private RenderPlayer prevRenderPlayer;
+    private Minecraft mc = Minecraft.getMinecraft();
+
+    @SubscribeEvent
+    public void onRenderPlayerPost(RenderPlayerEvent.Specials.Post event)
+    {
+        if (event.entityPlayer == mc.thePlayer)
+        {
+            if (prevRenderPlayer != null)
+            {
+                mc.getRenderManager().entityRenderMap.put(event.entityPlayer.getClass(), prevRenderPlayer);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onRenderPlayerPre(RenderPlayerEvent.Pre event)
+    {
+        EntityPlayer player = event.entityPlayer;
+
+        if (mc.thePlayer == player)
+        {
+            Render entityRenderObject = mc.getRenderManager().getEntityRenderObject(event.entityPlayer);
+
+            if (!(entityRenderObject instanceof RenderLLibraryPlayer))
+            {
+                prevRenderPlayer = (RenderPlayer) entityRenderObject;
+                mc.getRenderManager().entityRenderMap.put(player.getClass(), ClientProxy.renderCustomPlayer);
+            }
+        }
+    }
+
     @SubscribeEvent
     public void blockHighlight(DrawBlockHighlightEvent event)
     {
@@ -33,7 +74,7 @@ public class ClientEventHandler
 
             if (block instanceof IHighlightedBlock)
             {
-                List<AxisAlignedBB> bounds = ((IHighlightedBlock) block).getHighlightedBoxes(event.player.worldObj, blockPos, event.player);
+                List<AxisAlignedBB> bounds = ((IHighlightedBlock) block).getHighlightedBoxes(event.player.worldObj, blockPos, event.player.worldObj.getBlockState(blockPos), event.player);
 
                 BlockPos pos = event.player.getPosition();
 
@@ -60,15 +101,6 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent
-    public void itemTooltip(ItemTooltipEvent event)
-    {
-        if (Minecraft.getMinecraft().gameSettings.advancedItemTooltips)
-        {
-            event.toolTip.add(EnumChatFormatting.DARK_GRAY + "" + Item.itemRegistry.getNameForObject(event.itemStack.getItem()));
-        }
-    }
-
-    @SubscribeEvent
     public void initGui(GuiScreenEvent.InitGuiEvent.Post event)
     {
         for (SurvivalTab survivalTab : TabHelper.getSurvivalTabs())
@@ -83,6 +115,15 @@ public class ClientEventHandler
                     count++;
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onKeyInput(InputEvent.KeyInputEvent event)
+    {
+        if (ClientEventHandler.screenshotKeyBinding.isPressed())
+        {
+            ScreenshotHelper.takeScreenshot();
         }
     }
 }
