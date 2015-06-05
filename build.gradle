@@ -24,6 +24,7 @@ archivesBaseName = "LLibrary"
 minecraft {
     version = "1.8-11.14.2.1433"
     runDir = "minecraft"
+	mappings = "snapshot_20141130"
     replace '${version}', project.version
 }
 
