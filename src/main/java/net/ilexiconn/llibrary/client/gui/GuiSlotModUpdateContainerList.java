@@ -119,7 +119,7 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
                     renderer.addVertexWithUV(offset + cachedLogoDimensions[listIndex].width, top + cachedLogoDimensions[listIndex].height, 0, 1, 1);
                     renderer.addVertexWithUV(offset + cachedLogoDimensions[listIndex].width, top, 0, 1, 0);
                     renderer.addVertexWithUV(offset, top, 0, 0, 0);
-                    renderer.draw();
+                    tessellator.draw();
                 }
             }
         }

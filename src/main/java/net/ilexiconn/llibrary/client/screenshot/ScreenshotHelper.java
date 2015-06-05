@@ -84,7 +84,7 @@ public class ScreenshotHelper implements Runnable
         }
 
         ScreenshotHelper.pixelBuffer.get(ScreenshotHelper.pixelValues);
-        TextureUtil.func_147953_a(ScreenshotHelper.pixelValues, screenshotWidth, screenshotHeight);
+        TextureUtil.processPixelValues(ScreenshotHelper.pixelValues, screenshotWidth, screenshotHeight);
         int[] pixelCopy = new int[ScreenshotHelper.pixelValues.length];
         System.arraycopy(ScreenshotHelper.pixelValues, 0, pixelCopy, 0, ScreenshotHelper.pixelValues.length);
         ScreenshotHelper.saveScreenshotAsync(screenshotWidth, screenshotHeight, pixelCopy, frameBuffer);

@@ -201,8 +201,8 @@ public abstract class GuiPickItem extends GuiScreen
         itemRender.zLevel = 100f;
         GL11.glEnable(2896);
         GL11.glEnable(32826);
-        itemRender.func_180450_b(itemstack, x, y);
-        itemRender.func_175030_a(fontRendererObj, itemstack, x, y);
+        itemRender.renderItemAndEffectIntoGUI(itemstack, x, y);
+        itemRender.renderItemOverlayIntoGUI(fontRendererObj, itemstack, x, y, null);
         GL11.glDisable(2896);
         GL11.glEnable(3042);
         itemRender.zLevel = 0f;

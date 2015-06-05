@@ -69,7 +69,7 @@ public class ClientEventHandler
     {
         if (event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
-            BlockPos blockPos = event.target.func_178782_a();
+            BlockPos blockPos = event.target.getBlockPos();
             Block block = event.player.worldObj.getBlockState(blockPos).getBlock();
 
             if (block instanceof IHighlightedBlock)

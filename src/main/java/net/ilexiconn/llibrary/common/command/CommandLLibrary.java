@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class CommandLLibrary extends CommandBase
 {
-    public String getCommandName()
+    public String getName()
     {
         return "llibrary";
     }
@@ -40,7 +40,7 @@ public class CommandLLibrary extends CommandBase
         return 0;
     }
 
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void execute(ICommandSender sender, String[] args) throws CommandException
     {
         List<JsonModUpdate> outdatedMods = VersionHandler.getOutdatedMods();
 

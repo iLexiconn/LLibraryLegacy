@@ -65,12 +65,8 @@ public class GuiSurvivalTab extends GuiButton
             RenderHelper.enableGUIStandardItemLighting();
             zLevel = 100f;
             mc.getRenderItem().zLevel = 100f;
-            GL11.glEnable(2896);
-            GL11.glEnable(32826);
-            mc.getRenderItem().func_180450_b(stackIcon, xPosition + 6, yPosition + 8);
-            mc.getRenderItem().func_175030_a(mc.fontRendererObj, stackIcon, xPosition + 6, yPosition + 8);
-            GL11.glDisable(2896);
-            GL11.glEnable(3042);
+            mc.getRenderItem().renderItemAndEffectIntoGUI(stackIcon, xPosition + 6, yPosition + 8);
+            mc.getRenderItem().renderItemOverlayIntoGUI(mc.fontRendererObj, stackIcon, xPosition + 6, yPosition + 8, null);
             mc.getRenderItem().zLevel = 0f;
             zLevel = 0f;
             RenderHelper.disableStandardItemLighting();

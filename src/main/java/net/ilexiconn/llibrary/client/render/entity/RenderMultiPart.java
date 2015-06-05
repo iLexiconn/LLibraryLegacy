@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLiving;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -36,7 +35,7 @@ public abstract class RenderMultiPart extends RenderLiving
 
     public void doRender(IEntityMultiPart entity, double x, double y, double z, float rotationYaw, float partialTicks)
     {
-        if (renderManager.func_178634_b())
+        if (renderManager.isDebugBoundingBox())
         {
             GL11.glDepthMask(false);
             GL11.glDisable(GL11.GL_TEXTURE_2D);
