@@ -19,7 +19,7 @@ public class ServerProxy
 
         try
         {
-            UpdateHelper.registerUpdateChecker(LLibrary.instance, "https://github.com/iLexiconn/LLibrary/raw/1.8/versions.txt");
+            UpdateHelper.registerUpdateChecker(LLibrary.instance, "https://github.com/iLexiconn/LLibrary/raw/1.8/versions.json");
         }
         catch (IOException e)
         {
