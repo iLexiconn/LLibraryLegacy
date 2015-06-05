@@ -1,0 +1,20 @@
+{
+    "newestVersion": "0.2.0-1.8",
+    "versions":
+    {
+        "0.1.0-1.8":
+        [
+            "Initial 1.8 release"
+        ],
+	"0.2.0-1.8":
+        [
+            "Added survival tabs",
+            "Added IClientOnlyHandler for IContentHandler",
+            "Added ScreenshotHelper",
+            "Fixed crash for users without Scala",
+            "Fixed Optifine crash when overriding the player model"
+        ]
+    },
+    "updateUrl": "https://bitly.com/llibrary",
+    "iconUrl": "http://i.imgur.com/N2CJ80g.png"
+}
