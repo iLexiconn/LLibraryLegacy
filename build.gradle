@@ -63,6 +63,11 @@ task srcJar(type: Jar, dependsOn: classes) {
     }
 }
 
+task docJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'doc'
+    from javadoc.destinationDir
+}
+
 artifacts {
-    archives devJar, srcJar
+    archives devJar, srcJar, docJar
 }
