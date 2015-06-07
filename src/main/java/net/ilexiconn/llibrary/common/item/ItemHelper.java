@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
 
 import java.util.Iterator;
 import java.util.List;
@@ -61,5 +63,23 @@ public class ItemHelper
             if (stack != null && stack.getItem() == item)
                 iterator.remove();
         }
+    }
+
+    /**
+     * removes the item from all the world generated chests
+     * @param item
+     */
+    public static void removeItemFromChests(ItemStack item)
+    {
+        ChestGenHooks.removeItem(ChestGenHooks.STRONGHOLD_CORRIDOR, item);
+        ChestGenHooks.removeItem(ChestGenHooks.VILLAGE_BLACKSMITH, item);
+        ChestGenHooks.removeItem(ChestGenHooks.PYRAMID_JUNGLE_DISPENSER, item);
+        ChestGenHooks.removeItem(ChestGenHooks.DUNGEON_CHEST, item);
+        ChestGenHooks.removeItem(ChestGenHooks.STRONGHOLD_LIBRARY, item);
+        ChestGenHooks.removeItem(ChestGenHooks.BONUS_CHEST, item);
+        ChestGenHooks.removeItem(ChestGenHooks.PYRAMID_DESERT_CHEST, item);
+        ChestGenHooks.removeItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST, item);
+        ChestGenHooks.removeItem(ChestGenHooks.STRONGHOLD_CROSSING, item);
+        ChestGenHooks.removeItem(ChestGenHooks.MINESHAFT_CORRIDOR, item);
     }
 }
