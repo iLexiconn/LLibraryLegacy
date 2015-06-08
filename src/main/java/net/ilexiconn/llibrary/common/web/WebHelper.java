@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,118 +15,156 @@ import java.util.List;
  * @author Gegy1000
  * @author jglrxavpok
  * @author FiskFille
+ * @author iLexiconn
+ * @since 0.1.0
  */
 public class WebHelper
 {
     private static String pastebinURLPrefix = "http://pastebin.com/raw.php?i=";
 
     /**
-     * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin.com</a> line by line.
+     * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin</a> line by line.
      *
-     * @param pasteId The ID of the paste
+     * @param pasteIds An array of paste IDs, data from the first working ID will be used
      * @return The lines of the paste as a list
-     * @throws java.io.IOException Thrown if there are problems while reading
      */
-    public static List<String> readPastebinAsList(String pasteId) throws IOException
+    public static List<String> readPastebinAsList(String... pasteIds)
     {
-        return downloadTextFileList(pastebinURLPrefix + pasteId);
+        for (int i = 0; i < pasteIds.length; i++) pasteIds[i] = pastebinURLPrefix + pasteIds[i];
+        return downloadTextFileList(pasteIds);
     }
 
     /**
-     * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin.com</a>
+     * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin</a>
      *
-     * @param pasteId The ID of the paste
+     * @param pasteIds An array of paste IDs, data from the first working ID will be used
      * @return The content of the paste
-     * @throws java.io.IOException Thrown if there are problems while reading
      */
-    public static String readPastebin(String pasteId) throws IOException
+    public static String readPastebin(String... pasteIds)
     {
-        return downloadTextFile(pastebinURLPrefix + pasteId);
+        for (int i = 0; i < pasteIds.length; i++) pasteIds[i] = pastebinURLPrefix + pasteIds[i];
+        return downloadTextFile(pasteIds);
     }
 
     /**
      * Downloads a text file from given URL line by line.
      *
-     * @param urlString The URL to download from
+     * @param urlStrings An array of links, receive data from the first working URL in the array
      * @return The different lines of the file from first to last
-     * @throws java.io.IOException Thrown if there are problems reading the file.
      */
-    public static List<String> downloadTextFileList(String urlString) throws IOException
+    public static List<String> downloadTextFileList(String... urlStrings)
     {
-        List<String> text = Lists.newArrayList();
+        for (String urlString : urlStrings)
+        {
+            try
+            {
+                List<String> text = Lists.newArrayList();
 
-        URL url = new URL(urlString);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        String currentLine;
+                URL url = new URL(urlString);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                String currentLine;
 
-        while ((currentLine = reader.readLine()) != null)
-            text.add(currentLine);
-        reader.close();
+                while ((currentLine = reader.readLine()) != null)
+                    text.add(currentLine);
+                reader.close();
 
-        return text;
+                return text;
+            }
+            catch (IOException e)
+            {
+                System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+            }
+        }
+        System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
+        return null;
     }
 
     /**
      * Downloads a text file from given URL.
      *
-     * @param urlString The URL to download from
+     * @param urlStrings An array of links, receive data from the first working URL in the array
      * @return The content of the file, as a String
-     * @throws java.io.IOException Thrown if there are problems reading the file.
      */
-    public static String downloadTextFile(String urlString) throws IOException
+    public static String downloadTextFile(String... urlStrings)
     {
-        String text = "";
+        for (String urlString : urlStrings)
+        {
+            try
+            {
+                String text = "";
 
-        URL url = new URL(urlString);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        String currentLine;
+                URL url = new URL(urlString);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                String currentLine;
 
-        while ((currentLine = reader.readLine()) != null)
-            text += currentLine + "\r\n";
-        reader.close();
+                while ((currentLine = reader.readLine()) != null)
+                    text += currentLine + "\r\n";
+                reader.close();
 
-        return text;
+                return text;
+            }
+            catch (IOException e)
+            {
+                System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+            }
+        }
+        System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
+        return null;
     }
 
     /**
      * Downloads a file from given URL.
      *
-     * @param rawURL The URL to download the file from
+     * @param urlStrings An array of links, receive data from the first working URL in the array
      * @return A byte array containing all the content of the file
-     * @throws java.io.IOException Thrown in case there are problems reading the file
      */
-    public static byte[] download(String rawURL) throws IOException
+    public static byte[] download(String... urlStrings)
     {
-        URL url = new URL(rawURL);
-        try
+        for (String urlString : urlStrings)
         {
-            InputStream in = url.openStream();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            byte[] buffer = new byte[4096];
-            int i;
-            while ((i = in.read(buffer)) != -1)
-                baos.write(buffer, 0, i);
-            baos.flush();
-            return baos.toByteArray();
+            try
+            {
+                URL url = new URL(urlString);
+                InputStream in = url.openStream();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                byte[] buffer = new byte[4096];
+                int k;
+                while ((k = in.read(buffer)) != -1)
+                    baos.write(buffer, 0, k);
+                baos.flush();
+                return baos.toByteArray();
+            }
+            catch (IOException e)
+            {
+                System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+            }
         }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
+        System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
+        return null;
     }
 
     /**
      * Downloads an image from given URL.
      *
-     * @param imageURL The URL to download the image from
+     * @param urlStrings An array of links, receive data from the first working URL in the array
      * @return A BufferedImage object downloaded from the given URL
-     * @throws java.io.IOException Thrown in case there are problems downloading the file
      */
-    public static BufferedImage downloadImage(String imageURL) throws IOException
+    public static BufferedImage downloadImage(String... urlStrings)
     {
-        URL url = new URL(imageURL);
-        InputStream in = new BufferedInputStream(url.openStream());
-        return ImageIO.read(in);
+        for (String urlString : urlStrings)
+        {
+            try
+            {
+                URL url = new URL(urlString);
+                InputStream in = new BufferedInputStream(url.openStream());
+                return ImageIO.read(in);
+            }
+            catch (IOException e)
+            {
+                System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+            }
+        }
+        System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
+        return null;
     }
 }

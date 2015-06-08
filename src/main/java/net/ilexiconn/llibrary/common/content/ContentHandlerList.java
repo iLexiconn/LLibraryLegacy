@@ -1,5 +1,7 @@
 package net.ilexiconn.llibrary.common.content;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -38,6 +40,32 @@ public class ContentHandlerList extends ArrayList<IContentHandler>
     @Deprecated
     public void init()
     {
-        ContentHelper.init(toArray(new DummyContentHandler[size()]));
+        for (IContentHandler contentHandler : this)
+        {
+            if (contentHandler instanceof IClientOnlyHandler && FMLCommonHandler.instance().getEffectiveSide().isClient())
+            {
+                try
+                {
+                    contentHandler.init();
+                    contentHandler.gameRegistry();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                try
+                {
+                    contentHandler.init();
+                    contentHandler.gameRegistry();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 
 import java.util.Iterator;
@@ -27,6 +26,7 @@ public class ItemHelper
      * @param nbtTag
      * @param name
      * @return
+     * @since 0.1.0
      */
     @Deprecated
     public static ItemStack getStackFromNBT(NBTTagCompound nbtTag, String name)
@@ -40,6 +40,7 @@ public class ItemHelper
      * @param nbtTag
      * @param name
      * @param stack
+     * @since 0.1.0
      */
     @Deprecated
     public static void saveStackToNBT(NBTTagCompound nbtTag, String name, ItemStack stack)
@@ -67,7 +68,9 @@ public class ItemHelper
 
     /**
      * removes the item from all the world generated chests
+     *
      * @param item
+     * @since 0.2.1
      */
     public static void removeItemFromChests(ItemStack item)
     {

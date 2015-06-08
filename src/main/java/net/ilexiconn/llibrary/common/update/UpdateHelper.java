@@ -56,17 +56,10 @@ public class UpdateHelper
 
         Mod annotation = modClass.getAnnotation(Mod.class);
 
-        try
-        {
-            json.modid = annotation.modid();
-            json.currentVersion = annotation.version();
-            json.name = annotation.name();
-            json.thumbnail = WebHelper.downloadImage(json.getIconUrl());
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        json.modid = annotation.modid();
+        json.currentVersion = annotation.version();
+        json.name = annotation.name();
+        json.thumbnail = WebHelper.downloadImage(json.getIconUrl());
 
         modList.add(json);
     }
