@@ -7,6 +7,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.client.gui.GuiSurvivalTab;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
+import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.survivaltab.TabHelper;
 import net.minecraft.block.Block;
@@ -137,7 +138,7 @@ public class ClientEventHandler
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event)
     {
-        if (ClientEventHandler.screenshotKeyBinding.isPressed())
+        if (LLibraryConfigHandler.threadedScreenshots && ClientEventHandler.screenshotKeyBinding.isPressed())
         {
             ScreenshotHelper.takeScreenshot();
         }

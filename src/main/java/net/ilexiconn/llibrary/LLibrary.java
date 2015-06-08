@@ -29,7 +29,7 @@ public class LLibrary
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("llibrary");
         networkWrapper.registerMessage(MessageLLibrarySurvivalTab.class, MessageLLibrarySurvivalTab.class, 0, Side.SERVER);
 
-        proxy.preInit();
+        proxy.preInit(event.getSuggestedConfigurationFile());
     }
 
     @Mod.EventHandler
