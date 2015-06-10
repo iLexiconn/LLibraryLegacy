@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.client.render.entity;
 
 import com.mojang.authlib.GameProfile;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.client.model.entity.ModelLLibraryBiped;
@@ -20,10 +21,12 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
+
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -323,6 +326,44 @@ public final class RenderLLibraryPlayer extends RenderPlayer
             }
 
             GL11.glPopMatrix();
+        }
+    }
+
+    protected void rotateCorpse(EntityLivingBase entity, float p_77043_2_, float p_77043_3_, float p_77043_4_)
+    {
+        GL11.glRotatef(180.0F - p_77043_3_, 0.0F, 1.0F, 0.0F);
+
+        if (entity.deathTime > 0)
+        {
+            float f3 = ((float)entity.deathTime + p_77043_4_ - 1.0F) / 20.0F * 1.6F;
+            f3 = MathHelper.sqrt_float(f3);
+
+            if (f3 > 1.0F)
+            {
+                f3 = 1.0F;
+            }
+
+            GL11.glRotatef(f3 * this.getDeathMaxRotation(entity), 0.0F, 0.0F, 1.0F);
+        }
+        else
+        {
+            String s = EnumChatFormatting.getTextWithoutFormattingCodes(entity.getCommandSenderName());
+
+            if(entity.getUniqueID().toString().equals("c3ed4d52-fb4f-4964-ba1b-9cda2453741e"))
+            {
+                int ticksExisted = entity.ticksExisted * 5 % 360;
+                
+                GL11.glTranslatef(0.0F, 1, 0.0F);
+                GL11.glRotatef(ticksExisted, 1, 0, 0);
+                
+                GL11.glTranslatef(0.0F, -1.0F, 0.0F);
+            }
+            
+            if ((s.equals("Dinnerbone") || s.equals("Grumm")) && (!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).getHideCape()))
+            {
+                GL11.glTranslatef(0.0F, entity.height + 0.1F, 0.0F);
+                GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
+            }
         }
     }
 }
