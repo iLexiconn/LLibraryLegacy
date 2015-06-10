@@ -193,9 +193,9 @@ public class SkullHelper
         return createMojangSkull("Present2");
     }
 
-    public static ItemStack getTNT1Skull()
+    public static ItemStack getTNTSkull()
     {
-        return createMojangSkull("TNT1");
+        return createMojangSkull("TNT");
     }
 
     public static ItemStack getTNT2Skull()
@@ -260,7 +260,7 @@ public class SkullHelper
 
     public static ItemStack[] getMojangSkulls()
     {
-        return new ItemStack[] { getAlexSkull(), getArrowDownSkull(), getArrowLeftSkull(), getArrowRightSkull(), getArrowUpSkull(), getBlazeSkull(), getCactusSkull(), getCakeSkull(), getCaveSpiderSkull(), getChickenSkull(), getCoconutBSkull(), getCoconutGSkull(), getCowSkull(), getEndermanSkull(), getExclamationSkull(), getGhastSkull(), getGolemSkull(), getHerobrineSkull(), getLavaSlimeSkull(), getMelonSkull(), getMooshroomCowSkull(), getOakLogSkull(), getOcelotSkull(), getPigSkull(), getPigZombieSkull(), getPresent1Skull(), getPresent2Skull(), getQuestionSkull(), getSheepSkull(), getSlimeSkull(), getSpiderSkull(), getSquidSkull(), getTNT1Skull(), getTNT2Skull(), getVillagerSkull() };
+        return new ItemStack[] { getAlexSkull(), getArrowDownSkull(), getArrowLeftSkull(), getArrowRightSkull(), getArrowUpSkull(), getBlazeSkull(), getCactusSkull(), getCakeSkull(), getCaveSpiderSkull(), getChickenSkull(), getCoconutBSkull(), getCoconutGSkull(), getCowSkull(), getEndermanSkull(), getExclamationSkull(), getGhastSkull(), getGolemSkull(), getHerobrineSkull(), getLavaSlimeSkull(), getMelonSkull(), getMooshroomCowSkull(), getOakLogSkull(), getOcelotSkull(), getPigSkull(), getPigZombieSkull(), getPresent1Skull(), getPresent2Skull(), getQuestionSkull(), getSheepSkull(), getSlimeSkull(), getSpiderSkull(), getSquidSkull(), getTNTSkull(), getTNT2Skull(), getVillagerSkull() };
     }
 
     public static ItemStack createMojangSkull(String mojangSkullType)
