@@ -1,17 +1,18 @@
 package net.ilexiconn.llibrary.client;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
+import net.ilexiconn.llibrary.client.gui.GuiLLibraryContainerCreative;
 import net.ilexiconn.llibrary.client.gui.GuiSurvivalTab;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
+import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.survivaltab.TabHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.entity.Render;
@@ -25,13 +26,17 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
+
 import org.lwjgl.opengl.GL11;
 
-import java.util.List;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ClientEventHandler
@@ -141,6 +146,15 @@ public class ClientEventHandler
         if (LLibraryConfigHandler.threadedScreenshots && ClientEventHandler.screenshotKeyBinding.isPressed())
         {
             ScreenshotHelper.takeScreenshot();
+        }
+    }
+    
+    @SubscribeEvent
+    public void onGuiOpen(GuiOpenEvent event)
+    {
+        if(event.gui instanceof GuiContainerCreative && !(event.gui instanceof GuiLLibraryContainerCreative))
+        {
+            event.gui = new GuiLLibraryContainerCreative(ClientProxy.mc.thePlayer);
         }
     }
 }

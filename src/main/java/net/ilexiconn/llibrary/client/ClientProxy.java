@@ -14,6 +14,7 @@ import net.ilexiconn.llibrary.common.update.ChangelogHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,7 +25,8 @@ import java.io.File;
 public class ClientProxy extends ServerProxy
 {
     public static RenderLLibraryPlayer renderCustomPlayer;
-
+    public static Minecraft mc = Minecraft.getMinecraft();
+    
     public void preInit(File config)
     {
         super.preInit(config);
@@ -37,13 +39,16 @@ public class ClientProxy extends ServerProxy
 
         if (LLibraryConfigHandler.threadedScreenshots)
         {
-            ClientEventHandler.screenshotKeyBinding = new KeyBinding(Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyDescription(), Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCode(), Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCategory());
-            for (int i = 0; i < Minecraft.getMinecraft().gameSettings.keyBindings.length; ++i)
+            GameSettings gameSettings = mc.gameSettings;
+            
+            ClientEventHandler.screenshotKeyBinding = new KeyBinding(gameSettings.keyBindScreenshot.getKeyDescription(), gameSettings.keyBindScreenshot.getKeyCode(), gameSettings.keyBindScreenshot.getKeyCategory());
+           
+            for (int i = 0; i < gameSettings.keyBindings.length; ++i)
             {
-                if (Minecraft.getMinecraft().gameSettings.keyBindings[i] == Minecraft.getMinecraft().gameSettings.keyBindScreenshot)
+                if (gameSettings.keyBindings[i] == gameSettings.keyBindScreenshot)
                 {
-                    Minecraft.getMinecraft().gameSettings.keyBindings[i] = ClientEventHandler.screenshotKeyBinding;
-                    Minecraft.getMinecraft().gameSettings.keyBindScreenshot.setKeyCode(-1);
+                    gameSettings.keyBindings[i] = ClientEventHandler.screenshotKeyBinding;
+                    gameSettings.keyBindScreenshot.setKeyCode(-1);
                 }
             }
         }
@@ -70,11 +75,11 @@ public class ClientProxy extends ServerProxy
             e.printStackTrace();
         }
 
-        Minecraft.getMinecraft().displayGuiScreen(new GuiChangelog(mod, version, changelog));
+        mc.displayGuiScreen(new GuiChangelog(mod, version, changelog));
     }
 
     public EntityPlayer getClientPlayer()
     {
-        return Minecraft.getMinecraft().thePlayer;
+        return mc.thePlayer;
     }
 }

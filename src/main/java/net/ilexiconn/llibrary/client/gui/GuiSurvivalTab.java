@@ -64,6 +64,7 @@ public class GuiSurvivalTab extends GuiButton
                 mc.renderEngine.bindTexture(((ICustomSurvivalTabTexture) survivalTabContainer.getSurvivalTab()).getTabTexture());
             else
                 mc.renderEngine.bindTexture(texture);
+            
             drawTexturedModalRect(xPosition, yPosition, xTexPos, yTexPos, 28, ySize);
 
             if (!survivalTabContainer.isTabInFirstRow() && selected)

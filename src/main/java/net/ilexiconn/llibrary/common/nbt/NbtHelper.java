@@ -20,6 +20,7 @@ public class NbtHelper
     public static void writeInventoryToNbt(NBTTagCompound compound, IInventory inventory)
     {
         NBTTagList items = new NBTTagList();
+        
         for (byte slot = 0; slot < inventory.getSizeInventory(); slot++)
         {
             ItemStack stack = inventory.getStackInSlot(slot);
@@ -31,6 +32,7 @@ public class NbtHelper
                 items.appendTag(item);
             }
         }
+        
         compound.setTag("inventory", items);
     }
 
@@ -43,6 +45,7 @@ public class NbtHelper
     public static void readInventoryFromNbt(NBTTagCompound compound, IInventory inventory)
     {
         NBTTagList items = compound.getTagList("inventory", 10);
+        
         for (int i = 0; i < items.tagCount(); i++)
         {
             NBTTagCompound item = items.getCompoundTagAt(i);
