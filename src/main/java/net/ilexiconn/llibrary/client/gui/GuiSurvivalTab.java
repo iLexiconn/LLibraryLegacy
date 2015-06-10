@@ -55,6 +55,11 @@ public class GuiSurvivalTab extends GuiButton
             int xTexPos = id == 2 || id == 8 ? 0 : 28;
             int ySize = survivalTabContainer.isTabInFirstRow() ? selected ? 28 : 32 : selected ? 26 : 32;
 
+            if(mc.thePlayer.getActivePotionEffects().size() > 0)
+            {
+            	xPosition += 60;
+            }
+            
             if (survivalTabContainer.getSurvivalTab() instanceof ICustomSurvivalTabTexture)
                 mc.renderEngine.bindTexture(((ICustomSurvivalTabTexture) survivalTabContainer.getSurvivalTab()).getTabTexture());
             else
