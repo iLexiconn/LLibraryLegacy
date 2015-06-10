@@ -139,12 +139,12 @@ public class GuiCheckForUpdates extends GuiScreen
                 outdatedMods = Lists.newArrayList();
                 failed = true;
             }
-            //			outdatedMods = Lists.newArrayList();
-            //			
-            //			for (int i = 0; i < 10; ++i)
-            //			{
-            //				outdatedMods.add(UpdateHelper.getModContainerById("llibrary"));
-            //			}
+            // outdatedMods = Lists.newArrayList();
+            //
+            // for (int i = 0; i < 10; ++i)
+            // {
+            // outdatedMods.add(UpdateHelper.getModContainerById("llibrary"));
+            // }
 
             initGui();
         }

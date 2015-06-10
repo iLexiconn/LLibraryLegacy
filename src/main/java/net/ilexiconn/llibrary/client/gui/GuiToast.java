@@ -37,7 +37,8 @@ public class GuiToast extends Gui
         {
             FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
             int opacity = (int) (time * 256f / 25f);
-            if (opacity > 255) opacity = 255;
+            if (opacity > 255)
+                opacity = 255;
 
             if (opacity > 0)
             {

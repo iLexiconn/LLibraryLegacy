@@ -5,7 +5,7 @@ import net.minecraft.util.IChatComponent;
 
 /**
  * Helper class for deserializing chat {@link net.minecraft.util.IChatComponent}.
- *
+ * 
  * @author FiskFille
  * @see net.minecraft.util.IChatComponent
  * @since 0.1.0

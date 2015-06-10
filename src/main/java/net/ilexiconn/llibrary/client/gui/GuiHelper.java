@@ -22,7 +22,7 @@ import java.util.Map;
 
 /**
  * Helper class for GUIs.
- *
+ * 
  * @author FiskFille
  * @author iLexiconn
  * @since 0.1.0
@@ -40,9 +40,8 @@ public class GuiHelper
     private Minecraft mc = Minecraft.getMinecraft();
 
     /**
-     * A method for adding {@link net.ilexiconn.llibrary.client.gui.GuiOverride} to an existing {@link net.minecraft.client.gui.GuiScreen} or {@link net.minecraft.client.gui.inventory.GuiContainer}
-     * {@link net.ilexiconn.llibrary.client.gui.GuiOverride} classes may get added twice.
-     *
+     * A method for adding {@link net.ilexiconn.llibrary.client.gui.GuiOverride} to an existing {@link net.minecraft.client.gui.GuiScreen} or {@link net.minecraft.client.gui.inventory.GuiContainer} {@link net.ilexiconn.llibrary.client.gui.GuiOverride} classes may get added twice.
+     * 
      * @see #getOverridesForGui(java.lang.Class)
      * @see net.ilexiconn.llibrary.client.gui.GuiOverride
      * @since 0.1.0
@@ -54,19 +53,20 @@ public class GuiHelper
 
     /**
      * Display a toast notification with the given text.
-     *
+     * 
      * @since 0.2.1
      */
     public static void createToast(int x, int y, String... text)
     {
         int stringWidth = 0;
-        for (String s : text) stringWidth = Math.max(stringWidth, Minecraft.getMinecraft().fontRenderer.getStringWidth(s));
+        for (String s : text)
+            stringWidth = Math.max(stringWidth, Minecraft.getMinecraft().fontRenderer.getStringWidth(s));
         toasts.add(new GuiToast(x, y, stringWidth + 10, stringWidth * 3, text));
     }
 
     /**
      * Get a list of all the overrides of a specific GUI class.
-     *
+     * 
      * @return the list with {@link net.ilexiconn.llibrary.client.gui.GuiOverride} instances
      * @see #addOverride(java.lang.Class, net.ilexiconn.llibrary.client.gui.GuiOverride)
      * @see net.ilexiconn.llibrary.client.gui.GuiOverride
@@ -89,7 +89,7 @@ public class GuiHelper
 
     /**
      * Get a list of all the overrides of all the GUI class.
-     *
+     * 
      * @return the list with {@link net.ilexiconn.llibrary.client.gui.GuiOverride} instances
      * @see #addOverride(java.lang.Class, net.ilexiconn.llibrary.client.gui.GuiOverride)
      * @see net.ilexiconn.llibrary.client.gui.GuiOverride
@@ -201,7 +201,8 @@ public class GuiHelper
             {
                 GuiToast toast = iterator.next();
                 toast.time--;
-                if (toast.time <= 0) iterator.remove();
+                if (toast.time <= 0)
+                    iterator.remove();
             }
         }
     }

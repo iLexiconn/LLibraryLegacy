@@ -1,6 +1,5 @@
 package net.ilexiconn.llibrary.common;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.ilexiconn.llibrary.common.entity.EntityHelper;
 import net.ilexiconn.llibrary.common.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart;
@@ -8,6 +7,7 @@ import net.ilexiconn.llibrary.common.update.UpdateCheckerThread;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ServerEventHandler
 {

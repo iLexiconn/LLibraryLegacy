@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * Container class for {@link net.ilexiconn.llibrary.common.update.UpdateHelper}
- *
+ * 
  * @author iLexiconn
  * @author FiskFille
  * @see net.ilexiconn.llibrary.common.update.UpdateHelper

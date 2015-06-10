@@ -85,13 +85,19 @@ public abstract class StructureGeneratorBase extends WorldGenerator
 
     /**
      * Constructor for one line setting of all variables necessary to generate structure
-     *
-     * @param entity          Direction player is facing
-     * @param blocks          The structure's blockArray
-     * @param structureFacing The direction in which the structure faces
-     * @param offX            Amount to offset the structure's location along the east-west axis
-     * @param offY            Amount to offset the structure's location along the vertical axis
-     * @param offZ            Amount to offset the structure's location along the north-south axis
+     * 
+     * @param entity
+     *            Direction player is facing
+     * @param blocks
+     *            The structure's blockArray
+     * @param structureFacing
+     *            The direction in which the structure faces
+     * @param offX
+     *            Amount to offset the structure's location along the east-west axis
+     * @param offY
+     *            Amount to offset the structure's location along the vertical axis
+     * @param offZ
+     *            Amount to offset the structure's location along the north-south axis
      */
     public StructureGeneratorBase(Entity entity, int[][][][] blocks, int structureFacing, int offX, int offY, int offZ)
     {
@@ -104,19 +110,23 @@ public abstract class StructureGeneratorBase extends WorldGenerator
 
     /**
      * Allows the use of block ids greater than 4095 as custom 'hooks' to trigger onCustomBlockAdded
-     *
-     * @param fakeID      ID you use to identify your 'event'. Absolute value must be greater than 4095
-     * @param customData1 Custom data may be used to subtype events for given fakeID
-     *                    Returns the real id of the block to spawn in the world; must be smaller or equal to 4095
+     * 
+     * @param fakeID
+     *            ID you use to identify your 'event'. Absolute value must be greater than 4095
+     * @param customData1
+     *            Custom data may be used to subtype events for given fakeID Returns the real id of the block to spawn in the world; must be smaller or equal to 4095
      */
     public abstract int getRealBlockID(int fakeID, int customData1);
 
     /**
      * A custom 'hook' to allow setting of tile entities, spawning entities, etc.
-     *
-     * @param fakeID      The custom identifier used to distinguish between types
-     * @param customData1 Custom data which can be used to subtype events for given fakeID
-     * @param customData2 Additional custom data
+     * 
+     * @param fakeID
+     *            The custom identifier used to distinguish between types
+     * @param customData1
+     *            Custom data which can be used to subtype events for given fakeID
+     * @param customData2
+     *            Additional custom data
      */
     public abstract void onCustomBlockAdded(World world, int x, int y, int z, int fakeID, int customData1, int customData2);
 
@@ -129,8 +139,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     }
 
     /**
-     * Sets the direction in which the player is facing. The structure will be generated
-     * opposite of player view (so player will be looking at front when finished)
+     * Sets the direction in which the player is facing. The structure will be generated opposite of player view (so player will be looking at front when finished)
      */
     public final void setPlayerFacing(Entity entity)
     {
@@ -141,8 +150,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     }
 
     /**
-     * Sets the default direction the structure is facing. This side will always face the player
-     * unless you manually rotate the structure with the rotateStructureFacing() method.
+     * Sets the default direction the structure is facing. This side will always face the player unless you manually rotate the structure with the rotateStructureFacing() method.
      */
     public final void setStructureFacing(int facing)
     {
@@ -150,8 +158,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     }
 
     /**
-     * This will manually rotate the structure's facing 90 degrees clockwise.
-     * Note that a different side will now face the player when generated.
+     * This will manually rotate the structure's facing 90 degrees clockwise. Note that a different side will now face the player when generated.
      */
     public final void rotateStructureFacing()
     {
@@ -224,9 +231,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     }
 
     /**
-     * Overwrites current Structure information with passed in structure
-     * Sets structure facing to the default facing of the structure
-     * Does NOT set offset for the structure
+     * Overwrites current Structure information with passed in structure Sets structure facing to the default facing of the structure Does NOT set offset for the structure
      */
     public final void setStructure(Structure structure)
     {
@@ -241,8 +246,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     }
 
     /**
-     * Overwrites current Structure information with passed in structure and rotates it
-     * a number of times starting from its default facing
+     * Overwrites current Structure information with passed in structure and rotates it a number of times starting from its default facing
      */
     public final void setStructureWithRotation(Structure structure, int rotations)
     {
@@ -293,8 +297,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     }
 
     /**
-     * Sets the amount by which to offset the structure's generated location in the world.
-     * For advanced users only. Recommended to use setDefaultOffset() methods instead.
+     * Sets the amount by which to offset the structure's generated location in the world. For advanced users only. Recommended to use setDefaultOffset() methods instead.
      */
     public final void setOffset(int offX, int offY, int offZ)
     {
@@ -304,9 +307,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     }
 
     /**
-     * Call this only after setting the blockArray and immediately before generation.
-     * Sets a default offset amount that will keep the entire structure's boundaries
-     * from overlapping with the position spawned at, so it will never spawn on the player.
+     * Call this only after setting the blockArray and immediately before generation. Sets a default offset amount that will keep the entire structure's boundaries from overlapping with the position spawned at, so it will never spawn on the player.
      */
     public final void setDefaultOffset()
     {
@@ -314,14 +315,12 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     }
 
     /**
-     * Sets offsets such that the structure always generates in front of the player,
-     * regardless of structure facing, offset by parameters x/y/z.
-     * Only call this method immediately before generation.
-     * NOTE: If your structures y=0 layer has an area smaller than another part of the structure,
-     * setting default offset will not work correctly.
-     *
-     * @param x Positive value spawns structure further away from player, negative closer to or behind
-     * @param z Positive value spawns structure more to the right, negative to the left
+     * Sets offsets such that the structure always generates in front of the player, regardless of structure facing, offset by parameters x/y/z. Only call this method immediately before generation. NOTE: If your structures y=0 layer has an area smaller than another part of the structure, setting default offset will not work correctly.
+     * 
+     * @param x
+     *            Positive value spawns structure further away from player, negative closer to or behind
+     * @param z
+     *            Positive value spawns structure more to the right, negative to the left
      */
     public final void setDefaultOffset(int x, int y, int z)
     {
@@ -389,8 +388,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     }
 
     /**
-     * Generates each consecutive blockArray in the current list at location posX, posZ,
-     * with posY incremented by the height of each previously generated blockArray.
+     * Generates each consecutive blockArray in the current list at location posX, posZ, with posY incremented by the height of each previously generated blockArray.
      */
     public final boolean generate(World world, Random random, int posX, int posY, int posZ)
     {
@@ -491,8 +489,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     }
 
     /**
-     * Handles setting block with fakeID at x/y/z in world.
-     * Arguments should be those retrieved from blockArray
+     * Handles setting block with fakeID at x/y/z in world. Arguments should be those retrieved from blockArray
      */
     private void setBlockAt(World world, int fakeID, int realID, int meta, int customData1, int customData2, int x, int y, int z)
     {
@@ -522,8 +519,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     }
 
     /**
-     * Removes block at x/y/z and cleans up any items/entities that may be left behind
-     * Returns false if realID is mismatched with world's blockID at x/y/z
+     * Removes block at x/y/z and cleans up any items/entities that may be left behind Returns false if realID is mismatched with world's blockID at x/y/z
      */
     private boolean removeBlockAt(World world, int fakeID, int realID, int x, int y, int z, int rotations)
     {

@@ -5,7 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 
 /**
  * Interface for overriding {@link net.minecraft.client.renderer.entity.RenderPlayer#renderArrowsStuckInEntity(net.minecraft.entity.EntityLivingBase, float)}.
- *
+ * 
  * @author iLexiconn
  * @see net.minecraft.client.renderer.entity.RenderPlayer
  * @see net.minecraft.client.renderer.entity.RenderPlayer#renderArrowsStuckInEntity(net.minecraft.entity.EntityLivingBase, float)

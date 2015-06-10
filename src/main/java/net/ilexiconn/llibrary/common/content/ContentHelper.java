@@ -11,7 +11,8 @@ import cpw.mods.fml.common.FMLCommonHandler;
 public class ContentHelper
 {
     /**
-     * @param contentHandlers the list of {@link net.ilexiconn.llibrary.common.content.IContentHandler} to initialize.
+     * @param contentHandlers
+     *            the list of {@link net.ilexiconn.llibrary.common.content.IContentHandler} to initialize.
      * @since 0.2.0
      */
     public static void init(IContentHandler... contentHandlers)

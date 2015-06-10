@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 
 /**
  * Interface for overriding {@link net.minecraft.client.renderer.entity.RenderPlayer#renderEquippedItems(net.minecraft.client.entity.AbstractClientPlayer, float)}.
- *
+ * 
  * @author iLexiconn
  * @see net.minecraft.client.renderer.entity.RenderPlayer
  * @see net.minecraft.client.renderer.entity.RenderPlayer#renderEquippedItems(net.minecraft.client.entity.AbstractClientPlayer, float)

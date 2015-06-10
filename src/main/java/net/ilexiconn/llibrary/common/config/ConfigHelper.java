@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * Helper class for registering {@link net.minecraftforge.common.config.Configuration} for a specific {@link cpw.mods.fml.common.Mod}
- *
+ * 
  * @author iLexiconn
  * @see net.minecraftforge.common.config.Configuration
  * @see cpw.mods.fml.common.Mod
@@ -25,7 +25,7 @@ public class ConfigHelper
      * Register a {@link net.ilexiconn.llibrary.common.config.IConfigHandler} for a specific {@link cpw.mods.fml.common.Mod}
      * <p>
      * {@link net.ilexiconn.llibrary.common.config.IConfigHandler#loadConfig(Configuration)} will be called every time the user clicks on 'Done'
-     *
+     * 
      * @see net.ilexiconn.llibrary.common.config.IConfigHandler
      * @see cpw.mods.fml.common.Mod
      * @since 0.1.0
@@ -47,7 +47,7 @@ public class ConfigHelper
 
     /**
      * Check if the given {@link cpw.mods.fml.common.Mod} has a {@link net.ilexiconn.llibrary.common.config.IConfigHandler} container
-     *
+     * 
      * @see cpw.mods.fml.common.Mod
      * @since 0.1.0
      */
