@@ -33,7 +33,6 @@ public class WebHelper
     {
         for (int i = 0; i < pasteIds.length; i++)
             pasteIds[i] = pastebinURLPrefix + pasteIds[i];
-        
         return downloadTextFileList(pasteIds);
     }
 
@@ -115,7 +114,6 @@ public class WebHelper
                 System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
-        
         System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
         return null;
     }
@@ -148,7 +146,6 @@ public class WebHelper
                 System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
-        
         System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
         return null;
     }
@@ -175,7 +172,6 @@ public class WebHelper
                 System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
-        
         System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
         return null;
     }
