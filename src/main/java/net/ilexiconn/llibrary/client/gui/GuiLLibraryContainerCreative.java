@@ -799,7 +799,7 @@ public class GuiLLibraryContainerCreative extends InventoryEffectRenderer
 
             if (creativetabs1.getTabIndex() != selectedTabIndex)
             {
-                this.drawTab(creativetabs1);
+                this.func_147051_a(creativetabs1);
             }
         }
 
@@ -808,12 +808,12 @@ public class GuiLLibraryContainerCreative extends InventoryEffectRenderer
             if (creativetabs != CreativeTabs.tabAllSearch)
             {
                 this.mc.getTextureManager().bindTexture(field_147061_u);
-                drawTab(CreativeTabs.tabAllSearch);
+                func_147051_a(CreativeTabs.tabAllSearch);
             }
             if (creativetabs != CreativeTabs.tabInventory)
             {
                 this.mc.getTextureManager().bindTexture(field_147061_u);
-                drawTab(CreativeTabs.tabInventory);
+                func_147051_a(CreativeTabs.tabInventory);
             }
         }
 
@@ -839,7 +839,7 @@ public class GuiLLibraryContainerCreative extends InventoryEffectRenderer
             }
         }
 
-        this.drawTab(creativetabs);
+        this.func_147051_a(creativetabs);
 
         if (creativetabs == CreativeTabs.tabInventory)
         {
@@ -926,7 +926,7 @@ public class GuiLLibraryContainerCreative extends InventoryEffectRenderer
         }
     }
 
-    protected void drawTab(CreativeTabs creativeTab)
+    protected void func_147051_a(CreativeTabs creativeTab)
     {
         boolean selected = creativeTab.getTabIndex() == selectedTabIndex;
         boolean firstRow = creativeTab.isTabInFirstRow();

@@ -1,7 +1,6 @@
 package net.ilexiconn.llibrary.common.creativetab;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
@@ -9,8 +8,10 @@ public class CreativeTabTest extends CreativeTabs implements ITexturedCreativeTa
 {
     public CreativeTabTest()
     {
-        super("llibrarytest");
+        super("test");
     }
+
+    public static final CreativeTabTest test = new CreativeTabTest();
 
     @Override
     public ResourceLocation getCustomIcon()
@@ -21,6 +22,6 @@ public class CreativeTabTest extends CreativeTabs implements ITexturedCreativeTa
     @Override
     public Item getTabIconItem()
     {
-        return Items.baked_potato;
+        return null;
     }
 }
