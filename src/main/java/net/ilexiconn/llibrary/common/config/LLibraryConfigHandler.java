@@ -8,6 +8,6 @@ public class LLibraryConfigHandler implements IConfigHandler
 
     public void loadConfig(Configuration config)
     {
-        threadedScreenshots = config.getBoolean("threadedScreenshots", Configuration.CATEGORY_GENERAL, true, "Enable threaded screenshots. Disable this is you experience crashes. (Restart required)");
+        threadedScreenshots = config.getBoolean("threadedScreenshots", Configuration.CATEGORY_GENERAL, true, "Enable threaded screenshots. Disable this if you experience crashes. (Restart required)");
     }
 }
