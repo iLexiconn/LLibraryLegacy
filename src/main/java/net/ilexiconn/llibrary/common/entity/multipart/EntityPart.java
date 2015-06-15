@@ -3,6 +3,7 @@ package net.ilexiconn.llibrary.common.entity.multipart;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public class EntityPart extends Entity
     public float offsetY;
 
     public float damageMultiplier;
+
+    public boolean solid;
 
     /**
      * @param e
@@ -58,6 +61,29 @@ public class EntityPart extends Entity
      */
     public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY, float d)
     {
+        this(e, r, y, o, sizeX, sizeY, d, false);
+    }
+
+    /**
+     * @param e
+     *            parent
+     * @param r
+     *            radius
+     * @param y
+     *            angle yaw
+     * @param o
+     *            y-offset
+     * @param sizeX
+     *            collision box x-size
+     * @param sizeY
+     *            collision box y-size
+     * @param d
+     *            damage multiplier
+     * @param s
+     *            solid
+     */
+    public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY, float d, boolean s)
+    {
         super(e.worldObj);
         setSize(sizeX, sizeY);
         parent = e;
@@ -67,6 +93,8 @@ public class EntityPart extends Entity
         offsetY = o;
 
         damageMultiplier = d;
+
+        solid = s;
     }
 
     public void onUpdate()
@@ -77,11 +105,6 @@ public class EntityPart extends Entity
 
         if (!worldObj.isRemote)
             collideWithNearbyEntities();
-    }
-
-    public boolean canBeCollidedWith()
-    {
-        return true;
     }
 
     public boolean canBePushed()
@@ -112,6 +135,21 @@ public class EntityPart extends Entity
     public void writeEntityToNBT(NBTTagCompound nbtTag)
     {
 
+    }
+
+    public AxisAlignedBB getCollisionBox(Entity entity)
+    {
+        return solid ? entity.boundingBox : null;
+    }
+
+    public AxisAlignedBB getBoundingBox()
+    {
+        return solid ? boundingBox : null;
+    }
+
+    public boolean canBeCollidedWith()
+    {
+        return true;
     }
 
     public void collideWithNearbyEntities()
