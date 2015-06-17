@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * ArrayList to handle IContentHandlers. Use {@link net.ilexiconn.llibrary.common.content.ContentHelper} instead.
+ * ArrayList to handle IContentHandlers. Use {@link net.ilexiconn.llibrary.common.content.ContentHelper} instead. This class will be removed in 0.4.0.
  * 
  * @author iLexiconn
  * @see net.ilexiconn.llibrary.common.content.IContentHandler
