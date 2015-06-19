@@ -55,9 +55,9 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Calculates the relative positions and rotations easily.
-     * <p/>
+     * <p>
      * Note: When parenting a chain of boxes, such as a head to a neck to a body, the end of the chain should start first. In this case the head should be parented to the neck before parenting the neck to the body.
-     * <p/>
+     * <p>
      * Some corrections and adjustments to the rotation point may be needed.
      * 
      * @param child
@@ -84,7 +84,7 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Rotates a box to face where the entity is looking.
-     * <p/>
+     * <p>
      * Note: Just keep f3 and f4 from the setRotationAngles() method.
      * 
      * @param f
@@ -102,7 +102,7 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Returns a float that can be used to rotate boxes.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
      * 
      * @param speed
@@ -130,7 +130,7 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Returns a float that can be used to move boxes.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
      * 
      * @param speed
@@ -154,7 +154,7 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Rotates a box back and forth (rotateAngleX). Useful for arms and legs.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
      * 
      * @param box
@@ -184,7 +184,7 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Rotates a box up and down (rotateAngleZ). Useful for wings and ears.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
      * 
      * @param box
@@ -214,7 +214,7 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Rotates a box side to side (rotateAngleY).
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
      * 
      * @param box
@@ -244,7 +244,7 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Moves a box up and down (rotationPointY). Useful for bodies.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
      * 
      * @param box
@@ -270,7 +270,7 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Swings a chain of parented boxes back and forth (rotateAngleY). Useful for tails.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
      * 
      * @param boxes
@@ -296,7 +296,7 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Swings a chain of parented boxes up and down (rotateAngleX). Useful for tails.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
      * 
      * @param boxes
@@ -322,7 +322,7 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Flaps a chain of parented boxes up and down (rotateAngleZ). Useful for tails.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
      * 
      * @param boxes
