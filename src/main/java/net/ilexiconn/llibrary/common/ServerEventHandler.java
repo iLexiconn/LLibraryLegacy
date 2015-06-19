@@ -3,10 +3,12 @@ package net.ilexiconn.llibrary.common;
 import net.ilexiconn.llibrary.common.entity.EntityHelper;
 import net.ilexiconn.llibrary.common.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart;
+import net.ilexiconn.llibrary.common.save.SaveHelper;
 import net.ilexiconn.llibrary.common.update.UpdateCheckerThread;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ServerEventHandler
@@ -44,4 +46,22 @@ public class ServerEventHandler
             event.setCanceled(true);
         }
     }
+    
+    @SubscribeEvent
+	public void onWorldLoad(WorldEvent.Load event)
+    {
+		if(!event.world.isRemote)
+		{			
+			SaveHelper.load(event.world.getSaveHandler(), event.world);
+		}
+	}
+
+	@SubscribeEvent
+	public void onWorldSave(WorldEvent.Save event)
+	{
+		if(!event.world.isRemote)
+		{
+			SaveHelper.save(event.world.getSaveHandler(), event.world);
+		}		
+	}
 }
