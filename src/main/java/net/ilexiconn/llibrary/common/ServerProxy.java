@@ -1,6 +1,8 @@
 package net.ilexiconn.llibrary.common;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.ilexiconn.llibrary.LLibrary;
+import net.ilexiconn.llibrary.client.ClientEventHandler;
 import net.ilexiconn.llibrary.common.config.ConfigHelper;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.entity.EntityHelper;
@@ -18,6 +20,7 @@ public class ServerProxy
     public void preInit(File config)
     {
         MinecraftForge.EVENT_BUS.register(new ServerEventHandler());
+        FMLCommonHandler.instance().bus().register(new ServerEventHandler());
         EntityHelper.registerEntity("mountableBlock", EntityMountableBlock.class);
         ConfigHelper.registerConfigHandler("llibrary", config, new LLibraryConfigHandler());
 

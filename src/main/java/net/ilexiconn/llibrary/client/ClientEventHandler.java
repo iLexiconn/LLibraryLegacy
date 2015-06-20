@@ -1,17 +1,26 @@
 package net.ilexiconn.llibrary.client;
 
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.ilexiconn.llibrary.client.gui.GuiHelper;
+import net.ilexiconn.llibrary.client.gui.GuiOverride;
 import net.ilexiconn.llibrary.client.gui.GuiSurvivalTab;
+import net.ilexiconn.llibrary.client.gui.GuiToast;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
+import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.survivaltab.TabHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.entity.Render;
@@ -26,12 +35,14 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public class ClientEventHandler
@@ -39,6 +50,10 @@ public class ClientEventHandler
     public static KeyBinding screenshotKeyBinding;
     private RenderPlayer prevRenderPlayer;
     private Minecraft mc = Minecraft.getMinecraft();
+    private static final double timeU = 1000000000 / 20;
+    private long initialTime = System.nanoTime();
+    private double deltaU = 0;
+    private long timer = System.currentTimeMillis();
 
     @SubscribeEvent
     public void onRenderPlayerPost(RenderPlayerEvent.Specials.Post event)
@@ -141,6 +156,113 @@ public class ClientEventHandler
         if (LLibraryConfigHandler.threadedScreenshots && ClientEventHandler.screenshotKeyBinding.isPressed())
         {
             ScreenshotHelper.takeScreenshot();
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onDrawScreen(GuiScreenEvent.DrawScreenEvent.Post event)
+    {
+        for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : GuiHelper.getOverrides().entrySet())
+        {
+            if (event.gui.getClass() == e.getValue())
+            {
+                GuiOverride gui = e.getKey();
+                long currentTime = System.nanoTime();
+                deltaU += (currentTime - initialTime) / timeU;
+                initialTime = currentTime;
+
+                gui.width = event.gui.width;
+                gui.height = event.gui.height;
+                gui.overriddenScreen = event.gui;
+
+                if (deltaU >= 1)
+                {
+                    gui.updateScreen();
+                    deltaU--;
+                }
+
+                if (System.currentTimeMillis() - timer > 1000)
+                {
+                    timer += 1000;
+                }
+
+                gui.drawScreen(event.mouseX, event.mouseY, event.renderPartialTicks);
+
+                if (!gui.buttonList.isEmpty())
+                {
+                    List<GuiButton> buttonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, event.gui, "buttonList", "field_146292_n");
+
+                    for (GuiButton button : (List<GuiButton>) gui.buttonList)
+                    {
+                        for (int i = 0; i < buttonList.size(); ++i)
+                        {
+                            GuiButton button1 = buttonList.get(i);
+
+                            if (button.id == button1.id)
+                            {
+                                buttonList.remove(button1);
+                            }
+                        }
+                    }
+
+                    buttonList.addAll(gui.buttonList);
+                    ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, event.gui, buttonList, "buttonList", "field_146292_n");
+                }
+            }
+        }
+
+        for (GuiToast toast : GuiHelper.getToasts())
+        {
+            toast.drawToast();
+        }
+    }
+
+    @SubscribeEvent
+    public void onRenderGameOverlay(RenderGameOverlayEvent.Post event)
+    {
+        for (GuiToast toast : GuiHelper.getToasts())
+        {
+            toast.drawToast();
+        }
+    }
+
+    @SubscribeEvent
+    public void onButtonPress(GuiScreenEvent.ActionPerformedEvent.Pre event)
+    {
+        for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : GuiHelper.getOverrides().entrySet())
+        {
+            if (event.gui.getClass() == e.getValue())
+            {
+                e.getKey().actionPerformed(event.button);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onInitGui(GuiScreenEvent.InitGuiEvent.Pre event)
+    {
+        for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : GuiHelper.getOverrides().entrySet())
+        {
+            if (event.gui.getClass() == e.getValue())
+            {
+                e.getKey().setWorldAndResolution(mc, event.gui.width, event.gui.height);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event)
+    {
+        if (event.phase == TickEvent.Phase.END)
+        {
+            Iterator<GuiToast> iterator = GuiHelper.getToasts().iterator();
+            while (iterator.hasNext())
+            {
+                GuiToast toast = iterator.next();
+                toast.time--;
+                if (toast.time <= 0)
+                    iterator.remove();
+            }
         }
     }
 }
