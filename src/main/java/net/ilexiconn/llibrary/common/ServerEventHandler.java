@@ -1,6 +1,9 @@
 package net.ilexiconn.llibrary.common;
 
+import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.ilexiconn.llibrary.common.config.ConfigContainer;
+import net.ilexiconn.llibrary.common.config.ConfigHelper;
 import net.ilexiconn.llibrary.common.entity.EntityHelper;
 import net.ilexiconn.llibrary.common.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart;
@@ -62,6 +65,20 @@ public class ServerEventHandler
         if (!event.world.isRemote)
         {
             SaveHelper.save(event.world.getSaveHandler(), event.world);
+        }
+    }
+
+    @SubscribeEvent
+    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
+    {
+        if (ConfigHelper.hasConfiguration(event.modID))
+        {
+            ConfigContainer container = ConfigHelper.getConfigContainer(event.modID);
+            if (container != null)
+            {
+                container.getConfigHandler().loadConfig(container.getConfiguration());
+                container.getConfiguration().save();
+            }
         }
     }
 }
