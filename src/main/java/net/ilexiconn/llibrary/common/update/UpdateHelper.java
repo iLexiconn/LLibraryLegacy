@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  * Helper class to register a mod for automatic update checking.
- *
+ * 
  * @author FiskFille
  * @author iLexiconn
  * @since 0.1.0
@@ -25,25 +25,12 @@ public class UpdateHelper
      * <p>
      * Example pastebin version file:
      * <p>
-     * {
-     * "newestVersion": "9000",
-     * "versions":
-     * {
-     * "0.1.0":
-     * [
-     * "Initial release"
-     * ],
-     * "9000":
-     * [
-     * "Added more awesomeness"
-     * ]
-     * },
-     * "updateUrl": "http://ilexiconn.net",
-     * "iconUrl": "http://ilexiconn.net/llibrary/data/llibrary_64.png"
-     * }
-     *
-     * @param mod the main mod instance
-     * @param url the updater file
+     * { "newestVersion": "9000", "versions": { "0.1.0": [ "Initial release" ], "9000": [ "Added more awesomeness" ] }, "updateUrl": "http://ilexiconn.net", "iconUrl": "http://ilexiconn.net/llibrary/data/llibrary_64.png" }
+     * 
+     * @param mod
+     *            the main mod instance
+     * @param url
+     *            the updater file
      * @throws java.io.IOException
      */
     public static void registerUpdateChecker(Object mod, String url) throws IOException
@@ -56,17 +43,10 @@ public class UpdateHelper
 
         Mod annotation = modClass.getAnnotation(Mod.class);
 
-        try
-        {
-            json.modid = annotation.modid();
-            json.currentVersion = annotation.version();
-            json.name = annotation.name();
-            json.thumbnail = WebHelper.downloadImage(json.getIconUrl());
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        json.modid = annotation.modid();
+        json.currentVersion = annotation.version();
+        json.name = annotation.name();
+        json.thumbnail = WebHelper.downloadImage(json.getIconUrl());
 
         modList.add(json);
     }

@@ -18,7 +18,6 @@ public class ItemModelledArmor extends ItemArmor
 {
     @SideOnly(Side.CLIENT)
     private ModelBiped armorModel;
-
     private IArmorModelReceiver armorModelReceiver;
 
     public ItemModelledArmor(String name, ArmorMaterial material, int armorType, IArmorModelReceiver receiver)

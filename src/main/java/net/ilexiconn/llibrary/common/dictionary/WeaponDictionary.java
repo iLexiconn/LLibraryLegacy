@@ -57,8 +57,9 @@ public class WeaponDictionary
 
     /**
      * Returns a list of weapons registered with a specific type
-     *
-     * @param type the Type to look for
+     * 
+     * @param type
+     *            the Type to look for
      * @return a list of weapons of the specified type, null if there are none
      */
     public static Item[] getWeaponsForType(Type type)
@@ -73,8 +74,9 @@ public class WeaponDictionary
 
     /**
      * Gets a list of Types that a specific weapon is registered with
-     *
-     * @param item the weapon to check
+     * 
+     * @param item
+     *            the weapon to check
      * @return the list of types, null if there are none
      */
     public static Type[] getTypesForWeapon(Item item)
@@ -91,7 +93,7 @@ public class WeaponDictionary
 
     /**
      * Checks to see if two weapons are registered as having the same type
-     *
+     * 
      * @param itemA
      * @param itemB
      * @return returns true if a common type is found, false otherwise
@@ -231,20 +233,14 @@ public class WeaponDictionary
         }
 
         /**
-         * Retrieves a Type value by name,
-         * if one does not exist already it creates one.
-         * This can be used as interm measure for modders to
-         * add there own category of Biome.
+         * Retrieves a Type value by name, if one does not exist already it creates one. This can be used as interm measure for modders to add there own category of Biome.
          * <p>
-         * There are NO naming conventions besides:
-         * MUST be all upper case (enforced by name.toUpper())
-         * NO Special characters. {Unenforced, just don't be a pain, if it becomes a issue I WILL
-         * make this RTE with no worry about backwards compatibility}
+         * There are NO naming conventions besides: MUST be all upper case (enforced by name.toUpper()) NO Special characters. {Unenforced, just don't be a pain, if it becomes a issue I WILL make this RTE with no worry about backwards compatibility}
          * <p>
-         * Note: For performance sake, the return value of this function SHOULD be cached.
-         * Two calls with the same name SHOULD return the same value.
-         *
-         * @param name The name of this Type
+         * Note: For performance sake, the return value of this function SHOULD be cached. Two calls with the same name SHOULD return the same value.
+         * 
+         * @param name
+         *            The name of this Type
          * @return An instance of Type for this name.
          */
         public static Type getType(String name, Type... subTypes)
@@ -259,7 +255,7 @@ public class WeaponDictionary
                 }
             }
 
-            Type ret = EnumHelper.addEnum(Type.class, name, new Class[]{Type[].class}, new Object[]{subTypes});
+            Type ret = EnumHelper.addEnum(Type.class, name, new Class[] { Type[].class }, new Object[] { subTypes });
 
             if (ret.ordinal() >= typeInfoList.length)
             {

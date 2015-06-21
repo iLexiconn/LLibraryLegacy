@@ -1,5 +1,7 @@
 package net.ilexiconn.llibrary.common;
 
+import net.ilexiconn.llibrary.common.config.ConfigContainer;
+import net.ilexiconn.llibrary.common.config.ConfigHelper;
 import net.ilexiconn.llibrary.common.entity.EntityHelper;
 import net.ilexiconn.llibrary.common.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart;
@@ -9,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ServerEventHandler
@@ -46,22 +49,36 @@ public class ServerEventHandler
             event.setCanceled(true);
         }
     }
-    
-    @SubscribeEvent
-	public void onWorldLoad(WorldEvent.Load event)
-    {
-		if(!event.world.isRemote)
-		{			
-			SaveHelper.load(event.world.getSaveHandler(), event.world);
-		}
-	}
 
-	@SubscribeEvent
-	public void onWorldSave(WorldEvent.Save event)
-	{
-		if(!event.world.isRemote)
-		{
-			SaveHelper.save(event.world.getSaveHandler(), event.world);
-		}		
-	}
+    @SubscribeEvent
+    public void onWorldLoad(WorldEvent.Load event)
+    {
+        if (!event.world.isRemote)
+        {
+            SaveHelper.load(event.world.getSaveHandler(), event.world);
+        }
+    }
+
+    @SubscribeEvent
+    public void onWorldSave(WorldEvent.Save event)
+    {
+        if (!event.world.isRemote)
+        {
+            SaveHelper.save(event.world.getSaveHandler(), event.world);
+        }
+    }
+
+    @SubscribeEvent
+    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
+    {
+        if (ConfigHelper.hasConfiguration(event.modID))
+        {
+            ConfigContainer container = ConfigHelper.getConfigContainer(event.modID);
+            if (container != null)
+            {
+                container.getConfigHandler().loadConfig(container.getConfiguration());
+                container.getConfiguration().save();
+            }
+        }
+    }
 }

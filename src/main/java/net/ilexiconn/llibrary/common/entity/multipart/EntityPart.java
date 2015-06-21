@@ -22,12 +22,18 @@ public class EntityPart extends Entity
     public float damageMultiplier;
 
     /**
-     * @param e     parent
-     * @param r     radius
-     * @param y     angle yaw
-     * @param o     y-offset
-     * @param sizeX collision box x-size
-     * @param sizeY collision box y-size
+     * @param e
+     *            parent
+     * @param r
+     *            radius
+     * @param y
+     *            angle yaw
+     * @param o
+     *            y-offset
+     * @param sizeX
+     *            collision box x-size
+     * @param sizeY
+     *            collision box y-size
      */
     public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY)
     {
@@ -35,13 +41,20 @@ public class EntityPart extends Entity
     }
 
     /**
-     * @param e     parent
-     * @param r     radius
-     * @param y     angle yaw
-     * @param o     y-offset
-     * @param sizeX collision box x-size
-     * @param sizeY collision box y-size
-     * @param d     damage multiplier
+     * @param e
+     *            parent
+     * @param r
+     *            radius
+     * @param y
+     *            angle yaw
+     * @param o
+     *            y-offset
+     * @param sizeX
+     *            collision box x-size
+     * @param sizeY
+     *            collision box y-size
+     * @param d
+     *            damage multiplier
      */
     public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY, float d)
     {
@@ -66,11 +79,6 @@ public class EntityPart extends Entity
             collideWithNearbyEntities();
     }
 
-    public boolean canBeCollidedWith()
-    {
-        return true;
-    }
-
     public boolean canBePushed()
     {
         return true;
@@ -78,7 +86,7 @@ public class EntityPart extends Entity
 
     public boolean attackEntityFrom(DamageSource source, float damage)
     {
-        return parent.attackEntityFrom(source, damage * damageMultiplier);
+        return !isEntityInvulnerable(source) && parent.attackEntityFrom(source, damage * damageMultiplier);
     }
 
     public boolean isEntityEqual(Entity entity)
@@ -99,6 +107,11 @@ public class EntityPart extends Entity
     public void writeEntityToNBT(NBTTagCompound nbtTag)
     {
 
+    }
+
+    public boolean canBeCollidedWith()
+    {
+        return true;
     }
 
     public void collideWithNearbyEntities()

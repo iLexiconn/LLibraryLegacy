@@ -8,3 +8,9 @@ out/
 .project
 .settings/
 bin/
+saves/
+config/
+options.txt
+logs/
+screenshots/
+usernamecache.json

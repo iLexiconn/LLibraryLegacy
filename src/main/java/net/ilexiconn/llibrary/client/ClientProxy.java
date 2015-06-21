@@ -5,6 +5,7 @@ import net.ilexiconn.llibrary.client.gui.GuiHelper;
 import net.ilexiconn.llibrary.client.gui.GuiLLibraryMainMenu;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.common.ServerProxy;
+import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.update.ChangelogHandler;
 import net.minecraft.client.Minecraft;
@@ -16,28 +17,31 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.File;
+
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends ServerProxy
 {
     public static RenderLLibraryPlayer renderCustomPlayer;
 
-    public void preInit()
+    public void preInit(File config)
     {
-        super.preInit();
+        super.preInit(config);
 
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
         FMLCommonHandler.instance().bus().register(new ClientEventHandler());
-        MinecraftForge.EVENT_BUS.register(new GuiHelper());
-        FMLCommonHandler.instance().bus().register(new GuiHelper());
-        ClientEventHandler.screenshotKeyBinding = new KeyBinding(Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyDescription(), Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCode(), Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCategory());
         GuiHelper.addOverride(GuiMainMenu.class, new GuiLLibraryMainMenu());
 
-        for (int i = 0; i < Minecraft.getMinecraft().gameSettings.keyBindings.length; ++i)
+        if (LLibraryConfigHandler.threadedScreenshots)
         {
-            if (Minecraft.getMinecraft().gameSettings.keyBindings[i] == Minecraft.getMinecraft().gameSettings.keyBindScreenshot)
+            ClientEventHandler.screenshotKeyBinding = new KeyBinding(Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyDescription(), Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCode(), Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCategory());
+            for (int i = 0; i < Minecraft.getMinecraft().gameSettings.keyBindings.length; ++i)
             {
-                Minecraft.getMinecraft().gameSettings.keyBindings[i] = ClientEventHandler.screenshotKeyBinding;
-                Minecraft.getMinecraft().gameSettings.keyBindScreenshot.setKeyCode(-1);
+                if (Minecraft.getMinecraft().gameSettings.keyBindings[i] == Minecraft.getMinecraft().gameSettings.keyBindScreenshot)
+                {
+                    Minecraft.getMinecraft().gameSettings.keyBindings[i] = ClientEventHandler.screenshotKeyBinding;
+                    Minecraft.getMinecraft().gameSettings.keyBindScreenshot.setKeyCode(-1);
+                }
             }
         }
     }

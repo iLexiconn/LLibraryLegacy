@@ -17,12 +17,12 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.2.0-1.8"
+version = "0.3.0-1.8"
 group = "net.ilexiconn.llibrary"
 archivesBaseName = "LLibrary"
 
 minecraft {
-    version = "1.8-11.14.2.1433"
+    version = "1.8-11.14.3.1450"
     runDir = "minecraft"
 	mappings = "snapshot_20141130"
     replace '${version}', project.version
