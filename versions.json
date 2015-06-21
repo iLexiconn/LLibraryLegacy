@@ -1,5 +1,5 @@
 {
-    "newestVersion": "0.2.0-1.7.10",
+    "newestVersion": "0.3.0-1.7.10",
     "versions":
     {
         "0.1.0-1.7.10":
@@ -13,6 +13,24 @@
             "Added ScreenshotHelper",
             "Fixed crash for users without Scala",
             "Fixed Optifine crash when overriding the player model"
+        ],
+        "0.3.0-1.7.10":
+        [
+            "Added world save helper",
+            "Added enchantment helper",
+            "Added generated chests helper",
+            "Added toast notifications",
+            "Added timed content handler",
+            "Added option to disable threaded screenshots",
+            "Added more structure gen methods",
+            "Added option for solid entity multiparts",
+            "Added skull helper",
+            "Added biome helper",
+            "Added more animation methods",
+            "Fixed crash for 0.1.0 mods",
+            "Fixed survival tab offset",
+            "Fixed webhelper crash",
+            "Updated forge"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",
