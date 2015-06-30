@@ -37,6 +37,9 @@ public class UpdateHelper
     {
         JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(url), JsonModUpdate.class);
         Class<?> modClass = mod.getClass();
+        
+        if (json == null)
+            return;
 
         if (!modClass.isAnnotationPresent(Mod.class))
             return;
