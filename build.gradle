@@ -56,7 +56,7 @@ task devJar(type: Jar) {
 }
 
 task srcJar(type: Jar, dependsOn: classes) {
-    classifier = 'src'
+    classifier = 'sources'
     from sourceSets.main.allSource
 	manifest {
         attributes 'FMLAT' : 'llibrary-dev_at.cfg'
@@ -64,7 +64,7 @@ task srcJar(type: Jar, dependsOn: classes) {
 }
 
 task docJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'doc'
+    classifier = 'javadoc'
     from javadoc.destinationDir
 }
 
