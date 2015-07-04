@@ -1,7 +1,6 @@
 package net.ilexiconn.llibrary.common.structure.util;
 
 import com.mojang.authlib.GameProfile;
-import com.sun.istack.internal.NotNull;
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneRepeater;
@@ -561,7 +560,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Sets the direction in which the player is facing. The structure will be generated
      * opposite of player view (so player will be looking at front when finished)
      */
-    public final void setPlayerFacing(@NotNull Entity entity)
+    public final void setPlayerFacing(Entity entity)
     {
         facing = MathHelper.floor_double((double) ((entity.rotationYaw * 4F) / 360f) + 0.5D) & 3;
     }
@@ -654,7 +653,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Sets structure facing to the default facing of the structure
      * Does NOT set offset for the structure
      */
-    public final void setStructure(@NotNull Structure structure)
+    public final void setStructure(Structure structure)
     {
         if (structure != null)
         {
@@ -668,7 +667,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Overwrites current Structure information with passed in structure and rotates it
      * a number of times starting from its default facing
      */
-    public final void setStructureWithRotation(@NotNull Structure structure, int rotations)
+    public final void setStructureWithRotation(Structure structure, int rotations)
     {
         setStructure(structure);
         manualRotations = 0;
