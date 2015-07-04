@@ -141,7 +141,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      *
      * @param fakeID      ID you use to identify your 'event'. Absolute value must be greater than 4095
      * @param customData1 Custom data may be used to subtype events for given fakeID
-     *                    Returns the real id of the block to spawn in the world; must be <= 4095
+     *                    Returns the real id of the block to spawn in the world; must be less or equal to 4095
      */
     public abstract int getRealBlockID(int fakeID, int customData1);
 
