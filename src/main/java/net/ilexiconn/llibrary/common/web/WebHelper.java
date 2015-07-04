@@ -24,6 +24,84 @@ public class WebHelper
 
     /**
      * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin</a> line by line.
+     *
+     * @param pasteId
+     *            An array of paste IDs, data from the first working ID will be used
+     * @return The lines of the paste as a list
+     */
+    @Deprecated
+    public static List<String> readPastebinAsList(String pasteId)
+    {
+        return readPastebinAsList(pasteId, "");
+    }
+
+    /**
+     * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin</a>
+     *
+     * @param pasteId
+     *            An array of paste IDs, data from the first working ID will be used
+     * @return The content of the paste
+     */
+    @Deprecated
+    public static String readPastebin(String pasteId)
+    {
+        return readPastebin(pasteId, "");
+    }
+
+    /**
+     * Downloads a text file from given URL line by line.
+     *
+     * @param urlString
+     *            An array of links, receive data from the first working URL in the array
+     * @return The different lines of the file from first to last
+     */
+    @Deprecated
+    public static List<String> downloadTextFileList(String urlString)
+    {
+        return downloadTextFileList(urlString, "");
+    }
+
+    /**
+     * Downloads a text file from given URL.
+     *
+     * @param urlString
+     *            An array of links, receive data from the first working URL in the array
+     * @return The content of the file, as a String
+     */
+    @Deprecated
+    public static String downloadTextFile(String urlString)
+    {
+        return downloadTextFile(urlString, "");
+    }
+
+    /**
+     * Downloads a file from given URL.
+     *
+     * @param urlString
+     *            An array of links, receive data from the first working URL in the array
+     * @return A byte array containing all the content of the file
+     */
+    @Deprecated
+    public static byte[] download(String urlString)
+    {
+        return download(urlString, "");
+    }
+
+    /**
+     * Downloads an image from given URL.
+     *
+     * @param urlString
+     *            An array of links, receive data from the first working URL in the array
+     * @return A BufferedImage object downloaded from the given URL
+     */
+    @Deprecated
+    public static BufferedImage downloadImage(String urlString)
+    {
+        return downloadImage(urlString, "");
+    }
+
+    /**
+     * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin</a> line by line.
      * 
      * @param pasteIds
      *            An array of paste IDs, data from the first working ID will be used
@@ -61,23 +139,26 @@ public class WebHelper
     {
         for (String urlString : urlStrings)
         {
-            try
+            if (urlString.equals("") && !urlString.equals(pastebinURLPrefix))
             {
-                List<String> text = Lists.newArrayList();
+                try
+                {
+                    List<String> text = Lists.newArrayList();
 
-                URL url = new URL(urlString);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-                String currentLine;
+                    URL url = new URL(urlString);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                    String currentLine;
 
-                while ((currentLine = reader.readLine()) != null)
-                    text.add(currentLine);
-                reader.close();
+                    while ((currentLine = reader.readLine()) != null)
+                        text.add(currentLine);
+                    reader.close();
 
-                return text;
-            }
-            catch (IOException e)
-            {
-                System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                    return text;
+                }
+                catch (IOException e)
+                {
+                    System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                }
             }
         }
         System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
@@ -95,23 +176,26 @@ public class WebHelper
     {
         for (String urlString : urlStrings)
         {
-            try
+            if (urlString.equals("") && !urlString.equals(pastebinURLPrefix))
             {
-                String text = "";
+                try
+                {
+                    String text = "";
 
-                URL url = new URL(urlString);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-                String currentLine;
+                    URL url = new URL(urlString);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                    String currentLine;
 
-                while ((currentLine = reader.readLine()) != null)
-                    text += currentLine + "\r\n";
-                reader.close();
+                    while ((currentLine = reader.readLine()) != null)
+                        text += currentLine + "\r\n";
+                    reader.close();
 
-                return text;
-            }
-            catch (IOException e)
-            {
-                System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                    return text;
+                }
+                catch (IOException e)
+                {
+                    System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                }
             }
         }
         System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
@@ -129,21 +213,24 @@ public class WebHelper
     {
         for (String urlString : urlStrings)
         {
-            try
+            if (urlString.equals("") && !urlString.equals(pastebinURLPrefix))
             {
-                URL url = new URL(urlString);
-                InputStream in = url.openStream();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                byte[] buffer = new byte[4096];
-                int k;
-                while ((k = in.read(buffer)) != -1)
-                    baos.write(buffer, 0, k);
-                baos.flush();
-                return baos.toByteArray();
-            }
-            catch (IOException e)
-            {
-                System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                try
+                {
+                    URL url = new URL(urlString);
+                    InputStream in = url.openStream();
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int k;
+                    while ((k = in.read(buffer)) != -1)
+                        baos.write(buffer, 0, k);
+                    baos.flush();
+                    return baos.toByteArray();
+                }
+                catch (IOException e)
+                {
+                    System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                }
             }
         }
         System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
@@ -161,15 +248,18 @@ public class WebHelper
     {
         for (String urlString : urlStrings)
         {
-            try
+            if (urlString.equals("") && !urlString.equals(pastebinURLPrefix))
             {
-                URL url = new URL(urlString);
-                InputStream in = new BufferedInputStream(url.openStream());
-                return ImageIO.read(in);
-            }
-            catch (IOException e)
-            {
-                System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                try
+                {
+                    URL url = new URL(urlString);
+                    InputStream in = new BufferedInputStream(url.openStream());
+                    return ImageIO.read(in);
+                }
+                catch (IOException e)
+                {
+                    System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                }
             }
         }
         System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));

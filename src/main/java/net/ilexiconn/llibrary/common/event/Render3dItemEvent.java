@@ -5,6 +5,7 @@ import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.IItemRenderer;
 
 /**
  * @author iLexiconn
@@ -16,16 +17,18 @@ public class Render3dItemEvent extends Event
     public final Item item;
     public final ModelBase model;
     public final ResourceLocation texture;
+    public final IItemRenderer.ItemRenderType type;
 
     public final float x;
     public final float y;
     public final float z;
 
-    private Render3dItemEvent(Item t, ModelBase m, ResourceLocation r, float i, float j, float k)
+    private Render3dItemEvent(Item t, ModelBase m, ResourceLocation r, IItemRenderer.ItemRenderType e, float i, float j, float k)
     {
         item = t;
         model = m;
         texture = r;
+        type = e;
 
         x = i;
         y = j;
@@ -38,9 +41,9 @@ public class Render3dItemEvent extends Event
      */
     public static class Pre extends Render3dItemEvent
     {
-        public Pre(Item t, ModelBase m, ResourceLocation r, float i, float j, float k)
+        public Pre(Item t, ModelBase m, ResourceLocation r, IItemRenderer.ItemRenderType e, float i, float j, float k)
         {
-            super(t, m, r, i, j, k);
+            super(t, m, r, e, i, j, k);
         }
     }
 
@@ -50,9 +53,9 @@ public class Render3dItemEvent extends Event
      */
     public static class Post extends Render3dItemEvent
     {
-        public Post(Item t, ModelBase m, ResourceLocation r, float i, float j, float k)
+        public Post(Item t, ModelBase m, ResourceLocation r, IItemRenderer.ItemRenderType e, float i, float j, float k)
         {
-            super(t, m, r, i, j, k);
+            super(t, m, r, e, i, j, k);
         }
     }
 }

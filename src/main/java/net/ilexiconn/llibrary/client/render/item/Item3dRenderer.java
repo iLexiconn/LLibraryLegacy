@@ -47,36 +47,36 @@ public class Item3dRenderer implements IItemRenderer
         switch (type)
         {
             case ENTITY:
-                renderBlock(0f, 1.5f, 0f);
+                renderBlock(0f, 1.5f, 0f, type);
                 break;
             case EQUIPPED:
-                renderBlock(0.5f, 1.5f, 0.5f);
+                renderBlock(0.5f, 1.5f, 0.5f, type);
                 break;
             case EQUIPPED_FIRST_PERSON:
-                renderBlock(0.5f, 1.5f, 0.5f);
+                renderBlock(0.5f, 1.5f, 0.5f, type);
                 break;
             case INVENTORY:
                 glRotatef(180f, 0f, 1f, 0f);
-                renderBlock(0f, 1f, 0f);
+                renderBlock(0f, 1f, 0f, type);
                 break;
             default:
-                renderBlock(0.5f, 1.5f, 0.5f);
+                renderBlock(0.5f, 1.5f, 0.5f, type);
                 break;
         }
     }
 
-    public void renderBlock(float x, float y, float z)
+    public void renderBlock(float x, float y, float z, ItemRenderType type)
     {
         glPushMatrix();
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(texture);
 
-        if (!MinecraftForge.EVENT_BUS.post(new Render3dItemEvent.Pre(item, model, texture, x, y, z)))
+        if (!MinecraftForge.EVENT_BUS.post(new Render3dItemEvent.Pre(item, model, texture, type, x, y, z)))
         {
             glTranslatef(x, y, z);
             glScalef(-1f, -1f, 1f);
             model.render(null, 0f, 0f, 0f, 0f, 0f, 0.0625f);
         }
-        MinecraftForge.EVENT_BUS.post(new Render3dItemEvent.Post(item, model, texture, x, y, z));
+        MinecraftForge.EVENT_BUS.post(new Render3dItemEvent.Post(item, model, texture, type, x, y, z));
 
         glPopMatrix();
     }
