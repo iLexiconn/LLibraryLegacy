@@ -68,7 +68,7 @@ public class UpdateHelper
         json.modid = annotation.modid();
         json.currentVersion = annotation.version();
         json.name = annotation.name();
-        json.thumbnail = WebHelper.downloadImage(json.getIconUrl(), "");
+        json.thumbnail = WebHelper.downloadImage(json.getIconUrl());
 
         modList.add(json);
     }
