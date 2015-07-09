@@ -1,5 +1,5 @@
 {
-    "newestVersion": "0.3.0-1.7.10",
+    "newestVersion": "0.3.2-1.7.10",
     "versions":
     {
         "0.1.0-1.7.10":
@@ -31,6 +31,15 @@
             "Fixed survival tab offset",
             "Fixed webhelper crash",
             "Updated forge"
+        ],
+        "0.3.1-1.7.10":
+        [
+            "Fixed crashes compiled with LLibrary <= 0.2.0",
+            "Added 'type' parameter to render 3d event"
+        ],
+        "0.3.2-1.7.10":
+        [
+            "Fixed WebHelper error"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",
