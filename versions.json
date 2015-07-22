@@ -40,6 +40,10 @@
         "0.3.2-1.7.10":
         [
             "Fixed WebHelper error"
+        ],
+        "0.3.2-1.7.10":
+        [
+            "Added data array variable to render 3d event"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",
