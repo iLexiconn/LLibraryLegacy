@@ -11,50 +11,50 @@ import org.apache.logging.log4j.Level;
  */
 public class LoggerHelper
 {
-    public String modid;
+    private String modid;
 
     public LoggerHelper(String modid)
     {
         this.modid = modid;
     }
 
-    public void sendLog(Level logLevel, Object object)
+    private void log(Level logLevel, Object object)
     {
         FMLLog.log(modid, logLevel, String.valueOf(object));
     }
 
     public void debug(Object object)
     {
-        sendLog(Level.DEBUG, object);
+        log(Level.DEBUG, object);
     }
 
     public void error(Object object)
     {
-        sendLog(Level.ERROR, object);
+        log(Level.ERROR, object);
     }
 
     public void fatal(Object object)
     {
-        sendLog(Level.FATAL, object);
+        log(Level.FATAL, object);
     }
 
     public void info(Object object)
     {
-        sendLog(Level.INFO, object);
+        log(Level.INFO, object);
     }
 
     public void off(Object object)
     {
-        sendLog(Level.OFF, object);
+        log(Level.OFF, object);
     }
 
     public void trace(Object object)
     {
-        sendLog(Level.TRACE, object);
+        log(Level.TRACE, object);
     }
 
     public void warn(Object object)
     {
-        sendLog(Level.WARN, object);
+        log(Level.WARN, object);
     }
 }
