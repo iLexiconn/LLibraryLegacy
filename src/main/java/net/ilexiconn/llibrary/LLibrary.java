@@ -10,6 +10,7 @@ import net.ilexiconn.llibrary.common.command.CommandLLibrary;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.ilexiconn.llibrary.common.content.InitializationState;
+import net.ilexiconn.llibrary.common.log.LoggerHelper;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
 import net.minecraft.crash.CrashReport;
@@ -24,6 +25,8 @@ public class LLibrary
 
     @SidedProxy(serverSide = "net.ilexiconn.llibrary.common.ServerProxy", clientSide = "net.ilexiconn.llibrary.client.ClientProxy")
     public static ServerProxy proxy;
+
+    public static LoggerHelper logger = new LoggerHelper("llibrary");
 
     public static SimpleNetworkWrapper networkWrapper;
 
@@ -78,7 +81,7 @@ public class LLibrary
                 }
                 catch (Exception e)
                 {
-                    System.out.println(CrashReport.makeCrashReport(e, "Failed to register update checker for mod " + message.getSender()).getCompleteReport());
+                    LLibrary.logger.info(CrashReport.makeCrashReport(e, "Failed to register update checker for mod " + message.getSender()).getCompleteReport());
                 }
             }
         }

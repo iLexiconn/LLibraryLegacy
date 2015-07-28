@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.common.web;
 
 import com.google.common.collect.Lists;
+import net.ilexiconn.llibrary.LLibrary;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -140,10 +141,10 @@ public class WebHelper
             }
             catch (IOException e)
             {
-                System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                LLibrary.logger.error("Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
-        System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
+        LLibrary.logger.error("None of the given urls worked! " + Arrays.toString(urlStrings));
         return null;
     }
 
@@ -173,10 +174,10 @@ public class WebHelper
             }
             catch (IOException e)
             {
-                System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                LLibrary.logger.error("Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
-        System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
+        LLibrary.logger.error("None of the given urls worked! " + Arrays.toString(urlStrings));
         return null;
     }
 
@@ -204,10 +205,10 @@ public class WebHelper
             }
             catch (IOException e)
             {
-                System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                LLibrary.logger.error("Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
-        System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
+        LLibrary.logger.error("None of the given urls worked! " + Arrays.toString(urlStrings));
         return null;
     }
 
@@ -229,10 +230,10 @@ public class WebHelper
             }
             catch (IOException e)
             {
-                System.err.println("[LLibrary] Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                LLibrary.logger.error("Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
-        System.err.println("[LLibrary] None of the given urls worked! " + Arrays.toString(urlStrings));
+        LLibrary.logger.error("None of the given urls worked! " + Arrays.toString(urlStrings));
         return null;
     }
 }

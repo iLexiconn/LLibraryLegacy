@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.common.structure.util;
 
 import com.google.common.collect.Maps;
+import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
@@ -133,7 +134,7 @@ public class BlockRotationData
     {
         if (blockRotationData.containsKey(block))
         {
-            System.err.println("[LLibrary] Block " + block + " already has a rotation type." + (override ? " Overriding previous data." : ""));
+            LLibrary.logger.error("Block " + block + " already has a rotation type." + (override ? " Overriding previous data." : ""));
             if (override)
                 blockRotationData.remove(block);
             else

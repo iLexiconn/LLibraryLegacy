@@ -2,6 +2,7 @@ package net.ilexiconn.llibrary.common.structure.util;
 
 import com.mojang.authlib.GameProfile;
 import cpw.mods.fml.common.FMLCommonHandler;
+import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneRepeater;
 import net.minecraft.block.BlockRedstoneTorch;
@@ -204,13 +205,13 @@ public abstract class StructureGeneratorBase extends WorldGenerator
 
         if (tile == null || !(tile instanceof IInventory))
         {
-            System.out.println("[LLibrary] Tile Entity at " + x + "/" + y + "/" + z + " is " + (tile != null ? "not an IInventory" : "null"));
+            LLibrary.logger.info("Tile Entity at " + x + "/" + y + "/" + z + " is " + (tile != null ? "not an IInventory" : "null"));
             return false;
         }
 
         if (itemstack.stackSize < 1)
         {
-            System.out.println("[LLibrary] Trying to add ItemStack of size 0 to Tile Inventory");
+            LLibrary.logger.info("Trying to add ItemStack of size 0 to Tile Inventory");
             return false;
         }
 
@@ -478,7 +479,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                         }
                         else
                         {
-                            System.out.println("[LLibrary] Attempt to send packet to all around without a server instance available");
+                            LLibrary.logger.info("Attempt to send packet to all around without a server instance available");
                         }
                         return true;
                     }
@@ -896,7 +897,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                     {
                         if (Math.abs(realID) > 4095)
                         {
-                            System.err.println("[LLibrary] Invalid block ID. Initial ID: " + fakeID + ", returned id from getRealID: " + realID);
+                            LLibrary.logger.error("Invalid block ID. Initial ID: " + fakeID + ", returned id from getRealID: " + realID);
                             continue;
                         }
 
@@ -995,7 +996,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
 
             if (Math.abs(realID) > 4095)
             {
-                System.err.println("[LLibrary] Invalid block ID. Initial ID: " + fakeID + ", returned id from getRealID: " + realID);
+                LLibrary.logger.error("Invalid block ID. Initial ID: " + fakeID + ", returned id from getRealID: " + realID);
                 continue;
             }
 
