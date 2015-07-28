@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.client.model.modelbase;
 
+import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -193,7 +194,7 @@ public class ChainBuffer
             for (int i = 0; i < boxes.length; i++)
                 boxes[i].rotateAngleY += yawArray[i];
         else
-            System.err.println("[LLibrary] Wrong array length being used in the buffer! (Y axis)");
+            LLibrary.logger.error("Wrong array length being used in the buffer! (Y axis)");
     }
 
     public void applyChainWaveBuffer(MowzieModelRenderer[] boxes)
@@ -202,6 +203,6 @@ public class ChainBuffer
             for (int i = 0; i < boxes.length; i++)
                 boxes[i].rotateAngleX += pitchArray[i];
         else
-            System.out.println("[LLibrary] Wrong array length being used in the buffer! (X axis)");
+            LLibrary.logger.error("Wrong array length being used in the buffer! (X axis)");
     }
 }

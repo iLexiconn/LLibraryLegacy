@@ -5,6 +5,7 @@ import net.ilexiconn.llibrary.common.command.CommandLLibrary;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.ilexiconn.llibrary.common.content.InitializationState;
+import net.ilexiconn.llibrary.common.log.LoggerHelper;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -28,6 +29,8 @@ public class LLibrary
     public static ServerProxy proxy;
 
     public static SimpleNetworkWrapper networkWrapper;
+
+    public static LoggerHelper logger = new LoggerHelper("llibrary");
 
     @Mod.EventHandler
     private void preInit(FMLPreInitializationEvent event)

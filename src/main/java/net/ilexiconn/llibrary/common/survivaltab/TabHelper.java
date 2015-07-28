@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.common.survivaltab;
 
 import com.google.common.collect.Lists;
+import net.ilexiconn.llibrary.LLibrary;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class TabHelper
     {
         if (survivalTabs.size() > 11)
         {
-            System.err.println("[LLibrary] Can't register more than 11 survival tabs! Not registering " + survivalTab.getClass().getCanonicalName());
+            LLibrary.logger.error("Can't register more than 11 survival tabs! Not registering " + survivalTab.getClass().getCanonicalName());
             return;
         }
         survivalTabs.add(new SurvivalTab(survivalTabs.size(), survivalTab));
