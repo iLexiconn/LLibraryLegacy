@@ -1,11 +1,7 @@
 package net.ilexiconn.llibrary;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
@@ -15,6 +11,8 @@ import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.ilexiconn.llibrary.common.content.InitializationState;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
+import net.ilexiconn.llibrary.common.update.UpdateHelper;
+import net.minecraft.crash.CrashReport;
 
 import java.util.Map;
 
@@ -62,5 +60,27 @@ public class LLibrary
     public void serverStart(FMLServerStartingEvent event)
     {
         event.registerServerCommand(new CommandLLibrary());
+    }
+
+    @Mod.EventHandler
+    public void messageReceived(FMLInterModComms.IMCEvent event)
+    {
+        for (FMLInterModComms.IMCMessage message : event.getMessages())
+        {
+            if (message.key.equalsIgnoreCase("update-checker") && message.isStringMessage())
+            {
+                try
+                {
+                    ModContainer modContainer = null;
+                    for (ModContainer mod : Loader.instance().getModList()) if (mod.getModId().equals(message.getSender())) modContainer = mod;
+                    if (modContainer == null) throw new Exception();
+                    UpdateHelper.registerUpdateChecker(modContainer, message.getStringValue());
+                }
+                catch (Exception e)
+                {
+                    System.out.println(CrashReport.makeCrashReport(e, "Failed to register update checker for mod " + message.getSender()).getCompleteReport());
+                }
+            }
+        }
     }
 }

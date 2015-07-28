@@ -1,5 +1,5 @@
 {
-    "newestVersion": "0.3.2-1.7.10",
+    "newestVersion": "0.3.4-1.7.10",
     "versions":
     {
         "0.1.0-1.7.10":
@@ -44,6 +44,12 @@
         "0.3.3-1.7.10":
         [
             "Added data array variable to render 3d event"
+        ],
+        "0.3.4-1.7.10":
+        [
+            "Added IMC support for update checkers",
+            "Fixed other update checker bugs",
+            "Fixed development version number"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",

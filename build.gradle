@@ -31,7 +31,7 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-version = config.mod_version + "-" + project.buildnumber
+version = config.mod_version + '-' + config.minecraft_version
 group = config.mod_group
 archivesBaseName = config.mod_name
 
