@@ -3,7 +3,7 @@ package net.ilexiconn.llibrary.common.animation;
 import java.util.Random;
 
 import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.common.message.MessageIntemittentAnimation;
+import net.ilexiconn.llibrary.common.message.MessageLLibraryIntemittentAnimation;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
@@ -135,7 +135,7 @@ public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEnti
                 if (rand.nextInt(startProbability) == 0)
                 {
                     start();
-                    LLibrary.networkWrapper.sendToDimension(new MessageIntemittentAnimation(entity, id), entity.dimension);
+                    LLibrary.networkWrapper.sendToDimension(new MessageLLibraryIntemittentAnimation(entity, id), entity.dimension);
                 }
             }
         }

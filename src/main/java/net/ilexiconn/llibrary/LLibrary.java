@@ -1,11 +1,7 @@
 package net.ilexiconn.llibrary;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
@@ -14,8 +10,11 @@ import net.ilexiconn.llibrary.common.command.CommandLLibrary;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.ilexiconn.llibrary.common.content.InitializationState;
-import net.ilexiconn.llibrary.common.message.MessageIntemittentAnimation;
+import net.ilexiconn.llibrary.common.log.LoggerHelper;
+import net.ilexiconn.llibrary.common.message.MessageLLibraryIntemittentAnimation;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
+import net.ilexiconn.llibrary.common.update.UpdateHelper;
+import net.minecraft.crash.CrashReport;
 
 import java.util.Map;
 
@@ -28,6 +27,8 @@ public class LLibrary
     @SidedProxy(serverSide = "net.ilexiconn.llibrary.common.ServerProxy", clientSide = "net.ilexiconn.llibrary.client.ClientProxy")
     public static ServerProxy proxy;
 
+    public static LoggerHelper logger = new LoggerHelper("llibrary");
+
     public static SimpleNetworkWrapper networkWrapper;
 
     @Mod.EventHandler
@@ -35,7 +36,7 @@ public class LLibrary
     {
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("llibrary");
         networkWrapper.registerMessage(MessageLLibrarySurvivalTab.class, MessageLLibrarySurvivalTab.class, 0, Side.SERVER);
-        networkWrapper.registerMessage(MessageIntemittentAnimation.class, MessageIntemittentAnimation.class, 1, Side.CLIENT);
+        networkWrapper.registerMessage(MessageLLibraryIntemittentAnimation.class, MessageLLibraryIntemittentAnimation.class, 1, Side.CLIENT);
 
         proxy.preInit(event.getSuggestedConfigurationFile());
     }
@@ -64,5 +65,27 @@ public class LLibrary
     public void serverStart(FMLServerStartingEvent event)
     {
         event.registerServerCommand(new CommandLLibrary());
+    }
+
+    @Mod.EventHandler
+    public void messageReceived(FMLInterModComms.IMCEvent event)
+    {
+        for (FMLInterModComms.IMCMessage message : event.getMessages())
+        {
+            if (message.key.equalsIgnoreCase("update-checker") && message.isStringMessage())
+            {
+                try
+                {
+                    ModContainer modContainer = null;
+                    for (ModContainer mod : Loader.instance().getModList()) if (mod.getModId().equals(message.getSender())) modContainer = mod;
+                    if (modContainer == null) throw new Exception();
+                    UpdateHelper.registerUpdateChecker(modContainer, message.getStringValue());
+                }
+                catch (Exception e)
+                {
+                    LLibrary.logger.info(CrashReport.makeCrashReport(e, "Failed to register update checker for mod " + message.getSender()).getCompleteReport());
+                }
+            }
+        }
     }
 }

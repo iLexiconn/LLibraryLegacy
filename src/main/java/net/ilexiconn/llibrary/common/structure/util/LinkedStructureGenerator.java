@@ -1,10 +1,12 @@
 package net.ilexiconn.llibrary.common.structure.util;
 
 import com.google.common.collect.Lists;
+import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.common.structure.StructureGenerator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -141,7 +143,7 @@ public class LinkedStructureGenerator
         int i = 0;
         if (structures.size() != offsets.size() || structures.size() != rots.size())
         {
-            System.err.println("[Library] Structure List and Offset List are not the same size, aborting generation.");
+            LLibrary.logger.error("Structure List and Offset List are not the same size, aborting generation.");
             return;
         }
         if (gen == null)

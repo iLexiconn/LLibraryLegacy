@@ -8,16 +8,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class MessageIntemittentAnimation extends AbstractMessage<MessageIntemittentAnimation>
+public class MessageLLibraryIntemittentAnimation extends AbstractMessage<MessageLLibraryIntemittentAnimation>
 {
     private int entityId;
     private byte intermittentAnimationId;
 
-    public MessageIntemittentAnimation()
+    public MessageLLibraryIntemittentAnimation()
     {
     }
 
-    public MessageIntemittentAnimation(Entity entity, byte intermittentAnimationId)
+    public MessageLLibraryIntemittentAnimation(Entity entity, byte intermittentAnimationId)
     {
         entityId = entity.getEntityId();
         this.intermittentAnimationId = intermittentAnimationId;
@@ -38,7 +38,7 @@ public class MessageIntemittentAnimation extends AbstractMessage<MessageIntemitt
     }
 
     @Override
-    public void handleClientMessage(MessageIntemittentAnimation message, EntityPlayer player)
+    public void handleClientMessage(MessageLLibraryIntemittentAnimation message, EntityPlayer player)
     {
         Entity entity = Minecraft.getMinecraft().theWorld.getEntityByID(message.entityId);
         if (entity instanceof IntermittentAnimatableEntity)
@@ -48,7 +48,7 @@ public class MessageIntemittentAnimation extends AbstractMessage<MessageIntemitt
     }
 
     @Override
-    public void handleServerMessage(MessageIntemittentAnimation message, EntityPlayer player)
+    public void handleServerMessage(MessageLLibraryIntemittentAnimation message, EntityPlayer player)
     {
     }
 }

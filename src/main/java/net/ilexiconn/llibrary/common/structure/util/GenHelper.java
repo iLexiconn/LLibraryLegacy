@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.common.structure.util;
 
+import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneRepeater;
 import net.minecraft.block.BlockRedstoneTorch;
@@ -37,13 +38,13 @@ public class GenHelper
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile == null || !(tile instanceof IInventory))
         {
-            System.err.println("[LLibrary] Tile Entity at " + x + "/" + y + "/" + z + " is " + (tile != null ? "not an IInventory" : "null"));
+            LLibrary.logger.error("Tile Entity at " + x + "/" + y + "/" + z + " is " + (tile != null ? "not an IInventory" : "null"));
             return false;
         }
 
         if (itemstack.stackSize < 1)
         {
-            System.err.println("[LLibrary] Trying to add ItemStack of size 0 to Tile Inventory");
+            LLibrary.logger.error("Trying to add ItemStack of size 0 to Tile Inventory");
             return false;
         }
 
@@ -107,20 +108,20 @@ public class GenHelper
             if (i == 4 && entity.isEntityInsideOpaqueBlock() && entity.width > 1f)
             {
                 entity.setLocationAndAngles(x, y, z, 90f, 0f);
-                System.out.println("[LLibrary] Large entity; rotating 90 degrees");
+                LLibrary.logger.info("Large entity; rotating 90 degrees");
             }
             else if (i == 8 && entity.isEntityInsideOpaqueBlock() && entity.width > 1f)
             {
                 entity.setLocationAndAngles(x, y, z, 180f, 0f);
-                System.out.println("[LLibrary] Large entity; rotating 180 degrees");
+                LLibrary.logger.info("Large entity; rotating 180 degrees");
             }
             else if (i == 12 && entity.isEntityInsideOpaqueBlock() && entity.width > 1f)
             {
                 entity.setLocationAndAngles(x, y, z, 270f, 0f);
-                System.out.println("[LLibrary] Large entity; rotating 270 degrees");
+                LLibrary.logger.info("Large entity; rotating 270 degrees");
             }
 
-            System.out.println("[LLibrary] Entity inside opaque block at " + entity.posX + "/" + entity.posY + "/" + entity.posZ);
+            LLibrary.logger.info("Entity inside opaque block at " + entity.posX + "/" + entity.posY + "/" + entity.posZ);
 
             switch (i % 4)
             {
@@ -142,7 +143,7 @@ public class GenHelper
         }
         if (entity.isEntityInsideOpaqueBlock())
         {
-            System.err.println("[LLibrary] Failed to set entity in open space. Returning to default position.");
+            LLibrary.logger.error("Failed to set entity in open space. Returning to default position.");
             entity.setPosition(entity.posX + 0.5D, entity.posY, entity.posZ + 0.5D);
             return false;
         }
@@ -162,7 +163,7 @@ public class GenHelper
 
         boolean collided = setEntityInStructure(world, entity, x, y, z);
         world.spawnEntityInWorld(entity);
-        System.out.println("[LLibrary] Spawned entity at " + entity.posX + "/" + entity.posY + "/" + entity.posZ);
+        LLibrary.logger.info("Spawned entity at " + entity.posX + "/" + entity.posY + "/" + entity.posZ);
         return collided;
     }
 
@@ -217,7 +218,7 @@ public class GenHelper
 
         if (world.getBlockMetadata(x, y, z) < 1 || world.getBlockMetadata(x, y, z) > 5)
         {
-            System.err.println("[LLibrary] Hanging entity has invalid metadata of " + world.getBlockMetadata(x, y, z) + ". Valid values are 1,2,3,4");
+            LLibrary.logger.error("Hanging entity has invalid metadata of " + world.getBlockMetadata(x, y, z) + ". Valid values are 1,2,3,4");
             return -1;
         }
 
@@ -299,10 +300,10 @@ public class GenHelper
                         return true;
                     }
                 }
-                System.err.println("[LLibrary] " + name + " does not match any values in EnumArt; unable to set painting art.");
+                LLibrary.logger.error(name + " does not match any values in EnumArt; unable to set painting art.");
             }
         }
-        System.err.println("[LLibrary] No EntityPainting was found at " + x + "/" + y + "/" + z);
+        LLibrary.logger.error("No EntityPainting was found at " + x + "/" + y + "/" + z);
         return false;
     }
 
@@ -321,10 +322,10 @@ public class GenHelper
             for (int i = 0; i < sign.signText.length && i < text.length; ++i)
             {
                 if (text[i] == null)
-                    System.err.println("[LLibrary] Uninitialized String element while setting sign text at index " + i);
+                    LLibrary.logger.error("Uninitialized String element while setting sign text at index " + i);
                 else if (text[i].length() > 15)
                 {
-                    System.err.println("[LLibrary] " + text[i] + " is too long to fit on a sign; maximum length is 15 characters.");
+                    LLibrary.logger.error(text[i] + " is too long to fit on a sign; maximum length is 15 characters.");
                     sign.signText[i] = text[i].substring(0, 15);
                 }
                 else
@@ -334,7 +335,7 @@ public class GenHelper
             return true;
         }
 
-        System.err.println("[LLibrary] No TileEntitySign was found at " + x + "/" + y + "/" + z);
+        LLibrary.logger.error("No TileEntitySign was found at " + x + "/" + y + "/" + z);
         return false;
     }
 
@@ -365,7 +366,7 @@ public class GenHelper
         {
             if (type > 4 || type < 0)
             {
-                System.err.println("[LLibrary] Custom data value " + type + " not valid for skulls. Valid values are 0 to 4.");
+                LLibrary.logger.error("Custom data value " + type + " not valid for skulls. Valid values are 0 to 4.");
                 type = 0;
             }
 
@@ -377,7 +378,7 @@ public class GenHelper
             return true;
         }
 
-        System.err.println("[LLibrary] No TileEntitySkull found at " + x + "/" + y + "/" + z);
+        LLibrary.logger.error("No TileEntitySkull found at " + x + "/" + y + "/" + z);
         return false;
     }
 
