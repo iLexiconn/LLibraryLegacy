@@ -14,6 +14,7 @@ import net.ilexiconn.llibrary.common.command.CommandLLibrary;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.ilexiconn.llibrary.common.content.InitializationState;
+import net.ilexiconn.llibrary.common.message.MessageIntemittentAnimation;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
 
 import java.util.Map;
@@ -34,6 +35,7 @@ public class LLibrary
     {
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("llibrary");
         networkWrapper.registerMessage(MessageLLibrarySurvivalTab.class, MessageLLibrarySurvivalTab.class, 0, Side.SERVER);
+        networkWrapper.registerMessage(MessageIntemittentAnimation.class, MessageIntemittentAnimation.class, 1, Side.CLIENT);
 
         proxy.preInit(event.getSuggestedConfigurationFile());
     }
