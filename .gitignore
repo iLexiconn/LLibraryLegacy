@@ -14,3 +14,5 @@ options.txt
 logs/
 screenshots/
 usernamecache.json
+eclipse/
+src/test/
