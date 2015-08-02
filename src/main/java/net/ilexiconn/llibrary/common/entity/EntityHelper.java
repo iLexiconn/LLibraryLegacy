@@ -2,6 +2,7 @@ package net.ilexiconn.llibrary.common.entity;
 
 import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.LLibrary;
+import net.ilexiconn.llibrary.common.item.SpawnEgg;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -20,6 +21,7 @@ import java.util.Map;
  * @author iLexiconn
  * @author Gegy1000
  * @author FiskFille
+ * @author Ry_dog101
  * @since 0.1.0
  */
 public class EntityHelper
@@ -73,6 +75,19 @@ public class EntityHelper
         int entityId = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId, primaryColor, secondaryColor);
         EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
+    }
+
+    public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int primaryColor, int secondaryColor, SpawnEgg spawnEgg)
+    {
+        int entityId = EntityRegistry.findGlobalUniqueEntityId();
+        EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId, primaryColor, secondaryColor);
+        EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
+        addSpawnEgg(entityClass, entityName, entityId, primaryColor, secondaryColor, spawnEgg);
+    }
+
+    public static void addSpawnEgg(Class<? extends Entity> entityClass, String entityName, int id, int background, int forground, SpawnEgg spawnEgg)
+    {
+        net.ilexiconn.llibrary.common.entity.List.addToList(entityClass, entityName, id, background, forground, spawnEgg);
     }
 
     public static void removeLivingEntity(Class<? extends EntityLiving> clazz)
