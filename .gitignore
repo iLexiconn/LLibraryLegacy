@@ -7,10 +7,3 @@ out/
 .classpath
 .project
 .settings/
-bin/
-saves/
-config/
-options.txt
-logs/
-screenshots/
-usernamecache.json
