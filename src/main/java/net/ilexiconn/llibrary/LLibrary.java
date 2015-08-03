@@ -7,12 +7,13 @@ import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.ilexiconn.llibrary.common.content.InitializationState;
 import net.ilexiconn.llibrary.common.log.LoggerHelper;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
+import net.ilexiconn.llibrary.common.update.UpdateHelper;
+import net.minecraft.crash.CrashReport;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -65,5 +66,27 @@ public class LLibrary
     public void serverStart(FMLServerStartingEvent event)
     {
         event.registerServerCommand(new CommandLLibrary());
+    }
+
+    @Mod.EventHandler
+    public void messageReceived(FMLInterModComms.IMCEvent event)
+    {
+        for (FMLInterModComms.IMCMessage message : event.getMessages())
+        {
+            if (message.key.equalsIgnoreCase("update-checker") && message.isStringMessage())
+            {
+                try
+                {
+                    ModContainer modContainer = null;
+                    for (ModContainer mod : Loader.instance().getModList()) if (mod.getModId().equals(message.getSender())) modContainer = mod;
+                    if (modContainer == null) throw new Exception();
+                    UpdateHelper.registerUpdateChecker(modContainer, message.getStringValue());
+                }
+                catch (Exception e)
+                {
+                    LLibrary.logger.info(CrashReport.makeCrashReport(e, "Failed to register update checker for mod " + message.getSender()).getCompleteReport());
+                }
+            }
+        }
     }
 }

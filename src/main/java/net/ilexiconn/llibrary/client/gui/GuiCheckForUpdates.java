@@ -36,6 +36,8 @@ public class GuiCheckForUpdates extends GuiScreen
     private int loadingTimer;
     private boolean failed = false;
 
+    private GuiButton buttonUpdate;
+
     public void initGui()
     {
         buttonList.clear();
@@ -55,7 +57,7 @@ public class GuiCheckForUpdates extends GuiScreen
             listWidth = Math.min(listWidth, 200);
             modList = new GuiSlotModUpdateContainerList(this, listWidth);
             modList.registerScrollButtons(buttonList, 7, 8);
-            buttonList.add(new GuiButton(1, 20, height - 38, listWidth, 20, I18n.format("gui.llibrary.updatecheck.update")));
+            buttonList.add(buttonUpdate = new GuiButton(1, 20, height - 38, listWidth, 20, I18n.format("gui.llibrary.updatecheck.update")));
         }
         else
         {
@@ -167,6 +169,7 @@ public class GuiCheckForUpdates extends GuiScreen
         }
         else if (outdatedMods.isEmpty())
         {
+            buttonList.remove(buttonUpdate);
             if (failed)
             {
                 drawCenteredString(fontRendererObj, EnumChatFormatting.RED + I18n.format("gui.llibrary.updatecheck.fail"), i, j - 30, 0xffffff);

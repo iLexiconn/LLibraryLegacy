@@ -5,6 +5,7 @@ import net.ilexiconn.llibrary.common.json.JsonFactory;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.web.WebHelper;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ModContainer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class UpdateHelper
      *            the updater file
      * @throws java.io.IOException
      */
+    @Deprecated
     public static void registerUpdateChecker(Object mod, String url) throws IOException
     {
         JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(url), JsonModUpdate.class);
@@ -46,6 +48,54 @@ public class UpdateHelper
         json.modid = annotation.modid();
         json.currentVersion = annotation.version();
         json.name = annotation.name();
+        json.thumbnail = WebHelper.downloadImage(json.getIconUrl());
+
+        modList.add(json);
+    }
+
+    /**
+     * Register the main mod class for automatic update checking.
+     * <p>
+     * Example pastebin version file:
+     * <p>
+     * { "newestVersion": "9000", "versions": { "0.1.0": [ "Initial release" ], "9000": [ "Added more awesomeness" ] }, "updateUrl": "http://ilexiconn.net", "iconUrl": "http://ilexiconn.net/llibrary/data/llibrary_64.png" }
+     *
+     * @param mod
+     *            the modcontainer instance
+     * @param url
+     *            the updater file
+     * @throws java.io.IOException
+     */
+    @Deprecated
+    public static void registerUpdateChecker(ModContainer mod, String url) throws IOException
+    {
+        registerUpdateChecker(mod, new String[]{url});
+    }
+
+    /**
+     * Register the main mod class for automatic update checking.
+     * <p>
+     * Example pastebin version file:
+     * <p>
+     * { "newestVersion": "9000", "versions": { "0.1.0": [ "Initial release" ], "9000": [ "Added more awesomeness" ] }, "updateUrl": "http://ilexiconn.net", "iconUrl": "http://ilexiconn.net/llibrary/data/llibrary_64.png" }
+     *
+     * @param mod
+     *            the modcontainer instance
+     * @param urls
+     *            the updater file
+     * @throws java.io.IOException
+     */
+    @Deprecated
+    public static void registerUpdateChecker(ModContainer mod, String[] urls) throws IOException
+    {
+        JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(urls), JsonModUpdate.class);
+
+        if (json == null)
+            return;
+
+        json.modid = mod.getModId();
+        json.currentVersion = mod.getVersion();
+        json.name = mod.getName();
         json.thumbnail = WebHelper.downloadImage(json.getIconUrl());
 
         modList.add(json);
