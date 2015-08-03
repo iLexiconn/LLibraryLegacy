@@ -36,10 +36,10 @@
         [
             "Skipped 4 versions(?)",
             "Fixed update url",
-            "Added custom spawn egg helpers (Thnks to Ry_dog10)",
+            "Added custom spawn egg helpers (Thanks to Ry_dog10)",
             "Added IMC update checker support",
-            "Added LoggerHelper (thanks to Ry_dog101)",
-            "Fixed MountableBlock crash (thanks to Ry_dog101)"
+            "Added LoggerHelper (Thanks to Ry_dog101)",
+            "Fixed MountableBlock crash (Thanks to Ry_dog101)"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",
