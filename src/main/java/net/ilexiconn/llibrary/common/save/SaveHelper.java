@@ -37,7 +37,7 @@ public class SaveHelper
 
 	public static void load(net.minecraft.world.storage.ISaveHandler saveHandler, World world)
 	{
-		if((world.provider.dimensionId == 0))
+		if((world.provider.getDimensionId() == 0))
 		{
 			for(ISaveHandler handler : saveHandlers)
 			{
@@ -128,7 +128,7 @@ public class SaveHelper
 
 	public static void save(net.minecraft.world.storage.ISaveHandler saveHandler, World world)
 	{
-		if((world.provider.dimensionId == 0))
+		if((world.provider.getDimensionId() == 0))
 		{
 			for(ISaveHandler handler : saveHandlers)
 			{
