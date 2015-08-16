@@ -1,5 +1,5 @@
 {
-    "newestVersion": "0.3.0-1.8",
+    "newestVersion": "0.3.5-1.8",
     "versions":
     {
         "0.1.0-1.8":
@@ -31,6 +31,15 @@
             "Fixed survival tab offset",
             "Fixed webhelper crash",
             "Updated forge"
+        ],
+        "0.3.5-1.8":
+        [
+            "Skipped 4 versions(?)",
+            "Fixed update url",
+            "Added custom spawn egg helpers (Thanks to Ry_dog10)",
+            "Added IMC update checker support",
+            "Added LoggerHelper (Thanks to Ry_dog101)",
+            "Fixed MountableBlock crash (Thanks to Ry_dog101)"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",
