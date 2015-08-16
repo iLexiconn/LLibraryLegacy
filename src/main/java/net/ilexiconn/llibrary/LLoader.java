@@ -3,28 +3,16 @@ package net.ilexiconn.llibrary;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import net.ilexiconn.llibrary.common.crash.CrashReport;
+import net.ilexiconn.llibrary.common.log.LoggerHelper;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
-import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import net.minecraftforge.fml.relauncher.IFMLCallHook;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
-import sun.misc.URLClassPath;
-import sun.net.util.URLUtil;
 
-import javax.swing.*;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import java.awt.*;
-import java.awt.Dialog.ModalityType;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
@@ -36,28 +24,30 @@ import java.util.zip.ZipFile;
 
 /**
  * For autodownloading stuff.
- * This is really unoriginal, mostly ripped off ChickenBones who ripped it off from FML, credits to cpw
+ * This is really unoriginal, mostly ripped off ChickenBones who ripped it off from FML, credits to cpw.
  *
  * @author Ry_dog101
  * @author iLexiconn
  */
+@IFMLLoadingPlugin.Name("LLoader")
 public class LLoader implements IFMLLoadingPlugin, IFMLCallHook
 {
+    public LoggerHelper logger = new LoggerHelper("LLoader");
+
     public ByteBuffer downloadBuffer = ByteBuffer.allocateDirect(1 << 23);
     public File modsDir;
     public File modsDirVersion;
     public File llibraryData;
-    public DownloadDialog downloadMonitor;
-    public JDialog popupWindow;
+    public Thread pokeThread;
 
     public void load()
     {
-        String mcVer = (String) FMLInjectionData.data()[4];
+        String mcVersion = (String) FMLInjectionData.data()[4];
         File mcDir = (File) FMLInjectionData.data()[6];
 
         modsDir = new File(mcDir, "mods");
-        modsDirVersion = new File(mcDir, "mods/" + mcVer);
-        llibraryData = new File(mcDir, "llibrary/data/" + mcVer);
+        modsDirVersion = new File(mcDir, "mods/" + mcVersion);
+        llibraryData = new File(mcDir, "llibrary/data/" + mcVersion);
         if (!modsDirVersion.exists())
             modsDirVersion.mkdirs();
         if (!llibraryData.exists())
@@ -106,14 +96,12 @@ public class LLoader implements IFMLLoadingPlugin, IFMLCallHook
         return list;
     }
 
-    /**
-     * Scan list of files for jar/zip files with a downloads.json
-     * But also get Mod Name from Mods mcmod.info file
-     */
     public void scanForJson()
     {
         try
         {
+            logger.info("Searching " + modsDir.getAbsolutePath() + " for download configurations");
+            logger.info("Also searching " + modsDirVersion.getAbsolutePath() + " for download configurations");
             for (File file : files())
             {
                 if (file.getName().endsWith(".jar") || file.getName().endsWith(".zip"))
@@ -125,21 +113,21 @@ public class LLoader implements IFMLLoadingPlugin, IFMLCallHook
                     if (info != null)
                         modName = new JsonParser().parse(new InputStreamReader(zip.getInputStream(info))).getAsJsonArray().get(0).getAsJsonObject().get("name").getAsString();
                     if (e != null)
-                        loadJson(new InputStreamReader(zip.getInputStream(e)), modName, zip.getName());
+                    {
+                        logger.info("Found downloads.json file in " + file.getName());
+                        loadJson(new InputStreamReader(zip.getInputStream(e)), modName);
+                    }
                     zip.close();
                 }
             }
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            logger.error(CrashReport.makeCrashReport(e, "Failed searching for download configurations"));
         }
     }
 
-    /**
-     * Load the downloads.json file and get name, url and target for download files
-     */
-    public void loadJson(InputStreamReader input, String modName, String modFile)
+    public void loadJson(InputStreamReader input, String modName)
     {
         try
         {
@@ -150,119 +138,41 @@ public class LLoader implements IFMLLoadingPlugin, IFMLCallHook
             JsonArray obj = new JsonParser().parse(in).getAsJsonArray();
             for (int i = 0; i < obj.size(); i++)
             {
-                String downloadName = obj.get(i).getAsJsonObject().get("name").getAsString();
                 String downloadURL = obj.get(i).getAsJsonObject().get("url").getAsString();
                 String downloadTarget = obj.get(i).getAsJsonObject().get("target").getAsString();
-                download(downloadURL, downloadTarget, downloadName, modName, new File(modFile));
+                logger.info("Downloading data for mod " + modName);
+                download(downloadURL, downloadTarget, modName);
             }
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            logger.error(CrashReport.makeCrashReport(e, "Failed parsing the download configuration for mod " + modName));
         }
     }
 
-    /**
-     * Checks if file about to be downloaded exists or not. But also checks if older version exists (File with same Base Name)
-     *
-     * @param target download target file name
-     * @param name   download file Base Name
-     * @return whether file exists or not
-     */
-    public boolean checkExisting(String target, String name)
-    {
-        for (File file : files())
-        {
-            if (file.getName().contains(name) && !file.getName().equals(target))
-            {
-                delete(file);
-                return true;
-            }
-            if (file.getName().equals(target))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Deletes files in necessary
-     *
-     * @param target file to delete
-     */
-    public void delete(File target)
-    {
-        if (target.delete())
-            return;
-
-        if (!target.delete())
-        {
-            target.deleteOnExit();
-            String msg = "LLoader was unable to delete file " + target.getPath() + " the game will now try to delete it on exit. If this dialog appears again, delete it manually.";
-            System.err.println(msg);
-            if (!GraphicsEnvironment.isHeadless())
-                JOptionPane.showMessageDialog(null, msg, "An update error has occured", JOptionPane.ERROR_MESSAGE);
-
-            System.exit(1);
-        }
-    }
-
-    /**
-     * Used to get everything ready for downloading files
-     *
-     * @param url     URL to download file from
-     * @param target  Where to download file to
-     * @param name    Base name of download file
-     * @param modName Name of mod requiring the file
-     */
-    public void download(String url, String target, String name, String modName, File modFile)
+    public void download(String url, String target, String modName)
     {
         File libFile = new File(llibraryData, target);
         try
         {
-            if (!checkExisting(target, name))
-                return;
-
-            if (FMLLaunchHandler.side().isClient())
-                downloadMonitor = new DownloadDialog();
-
-            popupWindow = downloadMonitor.makeDialog();
-            downloadMonitor.getFileName(target);
-            downloadMonitor.getModName(modName);
             URL libDownload = new URL(url);
-            System.out.format("Downloading file %s\n", libDownload.toString());
+            logger.info("Downloading file " + libDownload.toString());
             URLConnection connection = libDownload.openConnection();
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
             connection.setRequestProperty("User-Agent", "LLoader Downloader");
             int sizeGuess = connection.getContentLength();
-            download(connection.getInputStream(), sizeGuess, libFile);
-            System.out.println("Download complete");
+            download(connection.getInputStream(), sizeGuess, libFile, modName);
+            logger.info("Download complete");
         }
         catch (Exception e)
         {
             libFile.delete();
-            if (downloadMonitor.shouldStopIt())
-            {
-                System.err.println("You have stopped the downloading operation before it could complete");
-                System.err.println("So we're going to remove " + modName + " from the Classpath to stop it from breaking things");
-                removeClasspath(modFile);
-            }
-            downloadMonitor.showErrorDialog(libFile.getName(), url);
-            throw new RuntimeException("A download error occured", e);
+            logger.error(CrashReport.makeCrashReport(e, "Failed downloading data for mod " + modName));
         }
     }
 
-    /**
-     * Used to do the actual downloading of files
-     *
-     * @param is        InputStream of file to be downloaded
-     * @param sizeGuess Estimate of file size
-     * @param target    Where the downloaded file should be saved
-     * @throws Exception
-     */
-    public void download(InputStream is, int sizeGuess, File target) throws Exception
+    public void download(InputStream is, int sizeGuess, File target, String modName) throws Exception
     {
         try
         {
@@ -273,52 +183,33 @@ public class LLoader implements IFMLLoadingPlugin, IFMLCallHook
 
             int bytesRead, fullLength = 0;
 
-            downloadMonitor.resetProgress(sizeGuess);
-            downloadMonitor.setPokeThread(Thread.currentThread());
+            setPokeThread(Thread.currentThread());
             byte[] smallBuffer = new byte[1024];
             while ((bytesRead = is.read(smallBuffer)) >= 0)
             {
                 downloadBuffer.put(smallBuffer, 0, bytesRead);
                 fullLength += bytesRead;
-                if (downloadMonitor.shouldStopIt()) break;
-                downloadMonitor.updateProgress(fullLength);
             }
             is.close();
-            downloadMonitor.setPokeThread(null);
+            setPokeThread(null);
             downloadBuffer.limit(fullLength);
             downloadBuffer.position(0);
         }
         catch (InterruptedIOException e)
         {
             Thread.interrupted();
-            throw new Exception("Stop");
+            logger.error(CrashReport.makeCrashReport(e, "Failed downloading data for mod " + modName));
         }
 
-        try
-        {
-            if (!target.exists())
-                target.createNewFile();
+        if (!target.exists())
+            target.createNewFile();
 
-            downloadBuffer.position(0);
-            FileOutputStream fos = new FileOutputStream(target);
-            fos.getChannel().write(downloadBuffer);
-            fos.close();
-        }
-        finally
-        {
-            if (popupWindow != null)
-            {
-                popupWindow.setVisible(false);
-                popupWindow.dispose();
-            }
-        }
+        downloadBuffer.position(0);
+        FileOutputStream fos = new FileOutputStream(target);
+        fos.getChannel().write(downloadBuffer);
+        fos.close();
     }
 
-    /**
-     * Used to add downloaded files to the Classpath
-     *
-     * @param target file to be added to Classpath
-     */
     public void addClasspath(String target)
     {
         try
@@ -327,179 +218,12 @@ public class LLoader implements IFMLLoadingPlugin, IFMLCallHook
         }
         catch (MalformedURLException e)
         {
-            throw new RuntimeException(e);
+            logger.error(CrashReport.makeCrashReport(e, "Failed adding file " + target + " to the classpath"));
         }
     }
 
-    public void removeClasspath(File mod)
+    public void setPokeThread(Thread currentThread)
     {
-        if (mod.delete())
-            return;
-
-        try
-        {
-            ClassLoader classLoader = LLoader.class.getClassLoader();
-            URL url = mod.toURI().toURL();
-            Field ucp = URLClassLoader.class.getDeclaredField("ucp");
-            Field loaders = URLClassPath.class.getDeclaredField("loaders");
-            Field lmap = URLClassPath.class.getDeclaredField("lmap");
-            ucp.setAccessible(true);
-            loaders.setAccessible(true);
-            lmap.setAccessible(true);
-
-            URLClassPath urlClassPath = (URLClassPath) ucp.get(classLoader);
-            Closeable loader = ((Map<String, Closeable>) lmap.get(urlClassPath)).remove(URLUtil.urlNoFragString(url));
-            if (loader != null)
-            {
-                loader.close();
-                ((List<?>) loaders.get(urlClassPath)).remove(loader);
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public class DownloadDialog extends JOptionPane
-    {
-        public boolean stopIt;
-        public Thread pokeThread;
-        public JDialog container;
-        public JTextField modName;
-        public JTextField fileName;
-        public JProgressBar progress;
-
-        public Box makeProgressPanel()
-        {
-            Box box = Box.createVerticalBox();
-            box.add(Box.createRigidArea(new Dimension(0, 10)));
-            modName = new JTextField("modName");
-            modName.setEditable(false);
-            box.add(modName);
-            box.add(Box.createRigidArea(new Dimension(0, 10)));
-            fileName = new JTextField("file");
-            fileName.setEditable(false);
-            box.add(fileName);
-            box.add(Box.createRigidArea(new Dimension(0, 10)));
-            progress = new JProgressBar(0, 100);
-            progress.setStringPainted(true);
-            box.add(progress);
-            box.add(Box.createRigidArea(new Dimension(0, 30)));
-            return box;
-        }
-
-        public JDialog makeDialog()
-        {
-            try
-            {
-                if (container != null)
-                    return container;
-
-                setMessage(makeProgressPanel());
-                setOptions(new Object[]{"Stop"});
-                addPropertyChangeListener(new PropertyChangeListener()
-                {
-                    public void propertyChange(PropertyChangeEvent evt)
-                    {
-                        if (evt.getSource() == DownloadDialog.this && evt.getPropertyName().equals(VALUE_PROPERTY))
-                        {
-                            requestClose("This will stop minecraft from launching\nAre you sure you want to do this?");
-                        }
-                    }
-                });
-                container = new JDialog(null, "LLoader", ModalityType.MODELESS);
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                container.setResizable(false);
-                container.setLocationRelativeTo(null);
-                container.add(this);
-                updateUI();
-                container.pack();
-                container.setMinimumSize(container.getPreferredSize());
-                container.setVisible(true);
-                container.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-                container.addWindowListener(new WindowAdapter()
-                {
-                    public void windowClosing(WindowEvent e)
-                    {
-                        requestClose("Closing this window will stop minecraft from launching\nAre you sure you wish to do this?");
-                    }
-                });
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-            return container;
-        }
-
-        public void requestClose(String message)
-        {
-            int shouldClose = JOptionPane.showConfirmDialog(container, message, "Are you sure you want to stop?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (shouldClose == JOptionPane.YES_OPTION)
-                container.dispose();
-
-            stopIt = true;
-            if (pokeThread != null)
-                pokeThread.interrupt();
-        }
-
-        public void resetProgress(int sizeGuess)
-        {
-            if (progress != null)
-                progress.getModel().setRangeProperties(0, 0, 0, sizeGuess, false);
-        }
-
-        public void updateProgress(int fullLength)
-        {
-            if (progress != null)
-                progress.getModel().setValue(fullLength);
-        }
-
-        public void getModName(String mod)
-        {
-            if (modName != null)
-                modName.setText(mod);
-        }
-
-        public void getFileName(String file)
-        {
-            if (fileName != null)
-                fileName.setText(file);
-        }
-
-        public void setPokeThread(Thread currentThread)
-        {
-            this.pokeThread = currentThread;
-        }
-
-        public boolean shouldStopIt()
-        {
-            return stopIt;
-        }
-
-        public void showErrorDialog(String name, String url)
-        {
-            JEditorPane ep = new JEditorPane("text/html", "<html>LLoader was unable to download required library " + name + "<br>Check your internet connection and try restarting or download it manually from<br><a href=\"" + url + "\">" + url + "</a> and put it in your mods folder</html>");
-
-            ep.setEditable(false);
-            ep.setOpaque(false);
-            ep.addHyperlinkListener(new HyperlinkListener()
-            {
-                public void hyperlinkUpdate(HyperlinkEvent event)
-                {
-                    try
-                    {
-                        if (event.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED))
-                            Desktop.getDesktop().browse(event.getURL().toURI());
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            JOptionPane.showMessageDialog(null, ep, "A download error has occured", JOptionPane.ERROR_MESSAGE);
-        }
+        pokeThread = currentThread;
     }
 }
