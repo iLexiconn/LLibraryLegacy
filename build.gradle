@@ -44,7 +44,7 @@ processResources {
 
 jar {
     manifest {
-        attributes 'FMLCorePlugin' : 'net.ilexiconn.llibrary.core.LLoader'
+        attributes 'FMLCorePlugin' : 'net.ilexiconn.llibrary.LLoader'
         attributes 'FMLCorePluginContainsFMLMod' : 'true'
         attributes 'FMLAT' : 'llibrary_at.cfg'
     }
@@ -54,22 +54,24 @@ task devJar(type: Jar) {
     classifier = 'dev'
     from sourceSets.main.output
     manifest {
-        attributes 'FMLCorePlugin' : 'net.ilexiconn.llibrary.core.LLoader'
+        attributes 'FMLCorePlugin' : 'net.ilexiconn.llibrary.LLoader'
         attributes 'FMLCorePluginContainsFMLMod' : 'true'
         attributes 'FMLAT' : 'llibrary-dev_at.cfg'
     }
 }
 
 task srcJar(type: Jar, dependsOn: classes) {
-    classifier = 'src'
+    classifier = 'sources'
     from sourceSets.main.allSource
 	manifest {
+        attributes 'FMLCorePlugin' : 'net.ilexiconn.llibrary.LLoader'
+        attributes 'FMLCorePluginContainsFMLMod' : 'true'
         attributes 'FMLAT' : 'llibrary-dev_at.cfg'
     }
 }
 
 task docJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'doc'
+    classifier = 'javadoc'
     from javadoc.destinationDir
 }
 

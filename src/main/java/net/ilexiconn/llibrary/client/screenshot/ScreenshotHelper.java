@@ -23,7 +23,7 @@ import java.util.Date;
 
 /**
  * Class used to replace the default screenshot behaviour.
- * 
+ *
  * @author iLexiconn
  * @since 0.2.0
  */

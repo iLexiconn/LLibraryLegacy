@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Interface for custom survival tabs, register with {@link net.ilexiconn.llibrary.common.survivaltab.TabHelper#registerSurvivalTab(ISurvivalTab)}
- * 
+ *
  * @author iLexiconn
  * @since 0.2.0
  */
@@ -29,9 +29,8 @@ public interface ISurvivalTab
 
     /**
      * Called when the survival tab is clicked.
-     * 
-     * @param player
-     *            the player opening the gui
+     *
+     * @param player the player opening the gui
      * @since 0.2.0
      */
     void openContainer(Minecraft mc, EntityPlayer player);

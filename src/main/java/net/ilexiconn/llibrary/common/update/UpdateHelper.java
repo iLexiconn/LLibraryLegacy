@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Helper class to register a mod for automatic update checking.
- * 
+ *
  * @author FiskFille
  * @author iLexiconn
  * @since 0.1.0
@@ -23,15 +23,13 @@ public class UpdateHelper
 
     /**
      * Register the main mod class for automatic update checking.
-     * <p>
+     * <p/>
      * Example pastebin version file:
-     * <p>
+     * <p/>
      * { "newestVersion": "9000", "versions": { "0.1.0": [ "Initial release" ], "9000": [ "Added more awesomeness" ] }, "updateUrl": "http://ilexiconn.net", "iconUrl": "http://ilexiconn.net/llibrary/data/llibrary_64.png" }
-     * 
-     * @param mod
-     *            the main mod instance
-     * @param url
-     *            the updater file
+     *
+     * @param mod the main mod instance
+     * @param url the updater file
      * @throws java.io.IOException
      */
     @Deprecated
@@ -55,15 +53,13 @@ public class UpdateHelper
 
     /**
      * Register the main mod class for automatic update checking.
-     * <p>
+     * <p/>
      * Example pastebin version file:
-     * <p>
+     * <p/>
      * { "newestVersion": "9000", "versions": { "0.1.0": [ "Initial release" ], "9000": [ "Added more awesomeness" ] }, "updateUrl": "http://ilexiconn.net", "iconUrl": "http://ilexiconn.net/llibrary/data/llibrary_64.png" }
      *
-     * @param mod
-     *            the modcontainer instance
-     * @param url
-     *            the updater file
+     * @param mod the modcontainer instance
+     * @param url the updater file
      * @throws java.io.IOException
      */
     @Deprecated
@@ -74,15 +70,13 @@ public class UpdateHelper
 
     /**
      * Register the main mod class for automatic update checking.
-     * <p>
+     * <p/>
      * Example pastebin version file:
-     * <p>
+     * <p/>
      * { "newestVersion": "9000", "versions": { "0.1.0": [ "Initial release" ], "9000": [ "Added more awesomeness" ] }, "updateUrl": "http://ilexiconn.net", "iconUrl": "http://ilexiconn.net/llibrary/data/llibrary_64.png" }
      *
-     * @param mod
-     *            the modcontainer instance
-     * @param urls
-     *            the updater file
+     * @param mod  the modcontainer instance
+     * @param urls the updater file
      * @throws java.io.IOException
      */
     @Deprecated

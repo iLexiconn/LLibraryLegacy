@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * Class for registering entities, removing entities and getting entities.
- * 
+ *
  * @author iLexiconn
  * @author Gegy1000
  * @author FiskFille
@@ -173,7 +173,7 @@ public class EntityHelper
 
         try
         {
-            entity = (Entity) entityClass.getConstructor(new Class[] { World.class }).newInstance(world);
+            entity = (Entity) entityClass.getConstructor(new Class[]{World.class}).newInstance(world);
         }
         catch (Exception e)
         {

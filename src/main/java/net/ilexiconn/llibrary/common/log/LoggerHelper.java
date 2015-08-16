@@ -1,7 +1,6 @@
 package net.ilexiconn.llibrary.common.log;
 
 import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.Level;
 
 /**

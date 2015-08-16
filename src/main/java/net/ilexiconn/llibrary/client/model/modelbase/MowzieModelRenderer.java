@@ -32,12 +32,10 @@ public class MowzieModelRenderer extends ModelRenderer
     public float scaleX = 1.0F;
     public float scaleY = 1.0F;
     public float scaleZ = 1.0F;
-
-    private boolean compiled;
-    private int displayList;
-
     public ModelRenderer parent;
     public boolean hasInitPose;
+    private boolean compiled;
+    private int displayList;
 
     public MowzieModelRenderer(ModelBase modelBase, String name)
     {

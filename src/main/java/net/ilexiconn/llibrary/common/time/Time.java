@@ -42,7 +42,7 @@ public class Time
 
     public String toString()
     {
-        Object[] aobject = { hours, minutes, seconds, ticks };
+        Object[] aobject = {hours, minutes, seconds, ticks};
         return String.format("%sh %smin %ss %st", aobject);
     }
 

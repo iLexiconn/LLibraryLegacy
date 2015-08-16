@@ -1,7 +1,5 @@
 package net.ilexiconn.llibrary.common.item;
 
-import java.util.Iterator;
-
 import net.ilexiconn.llibrary.common.entity.List;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.*;
@@ -14,6 +12,8 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Iterator;
 
 /**
  * @author Ry_dog101
@@ -28,26 +28,6 @@ public class SpawnEgg extends ItemMonsterPlacer
         this.setCreativeTab(creativeTab);
         this.creativeTab = creativeTab;
         this.setUnlocalizedName("spawnEgg");
-    }
-
-    public String getItemStackDisplayName(ItemStack itemStack)
-    {
-        String s = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
-        String s1 = List.entities.get(itemStack.getMetadata()).entityName;
-
-        if (s1 != null)
-        {
-            s = s + " " + StatCollector.translateToLocal("entity." + s1 + ".name");
-        }
-
-        return s;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack itemStack, int renderPass)
-    {
-        List.Entities entityegginfo = List.entities.get(Integer.valueOf(itemStack.getMetadata()));
-        return entityegginfo != null ? (renderPass == 0 ? entityegginfo.background : entityegginfo.forground) : 16777215;
     }
 
     /**
@@ -74,7 +54,7 @@ public class SpawnEgg extends ItemMonsterPlacer
                     entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
                     entityliving.rotationYawHead = entityliving.rotationYaw;
                     entityliving.renderYawOffset = entityliving.rotationYaw;
-                    entityliving.func_180482_a(world.getDifficultyForLocation(new BlockPos(entityliving)), (IEntityLivingData)null);
+                    entityliving.func_180482_a(world.getDifficultyForLocation(new BlockPos(entityliving)), (IEntityLivingData) null);
                     world.spawnEntityInWorld(entity);
                     entityliving.playLivingSound();
                 }
@@ -82,6 +62,26 @@ public class SpawnEgg extends ItemMonsterPlacer
 
             return entity;
         }
+    }
+
+    public String getItemStackDisplayName(ItemStack itemStack)
+    {
+        String s = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
+        String s1 = List.entities.get(itemStack.getMetadata()).entityName;
+
+        if (s1 != null)
+        {
+            s = s + " " + StatCollector.translateToLocal("entity." + s1 + ".name");
+        }
+
+        return s;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getColorFromItemStack(ItemStack itemStack, int renderPass)
+    {
+        List.Entities entityegginfo = List.entities.get(Integer.valueOf(itemStack.getMetadata()));
+        return entityegginfo != null ? (renderPass == 0 ? entityegginfo.background : entityegginfo.forground) : 16777215;
     }
 
     /**

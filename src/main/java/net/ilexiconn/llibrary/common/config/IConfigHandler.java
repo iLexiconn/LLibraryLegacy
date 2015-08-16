@@ -4,7 +4,7 @@ import net.minecraftforge.common.config.Configuration;
 
 /**
  * Interface for loading configs using {@link net.ilexiconn.llibrary.common.config.ConfigHelper}
- * 
+ *
  * @author iLexiconn
  * @see net.ilexiconn.llibrary.common.config.ConfigHelper
  * @see net.minecraftforge.common.config.Configuration

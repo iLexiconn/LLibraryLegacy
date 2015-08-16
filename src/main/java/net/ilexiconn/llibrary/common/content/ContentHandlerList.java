@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 /**
  * ArrayList to handle IContentHandlers. Use {@link net.ilexiconn.llibrary.common.content.ContentHelper} instead. This class will be removed in 0.4.0.
- * 
+ *
  * @author iLexiconn
  * @see net.ilexiconn.llibrary.common.content.IContentHandler
  * @since 0.1.0
@@ -17,9 +17,8 @@ public class ContentHandlerList extends ArrayList<IContentHandler>
 {
     /**
      * Create a new list with IContentHandlers. Use {@link net.ilexiconn.llibrary.common.content.ContentHelper#init(IContentHandler...)} instead.
-     * 
-     * @param contentHandlers
-     *            the list of IContentHandlers
+     *
+     * @param contentHandlers the list of IContentHandlers
      * @return a new instance of the list
      * @see net.ilexiconn.llibrary.common.content.IContentHandler
      * @since 0.1.0
@@ -34,7 +33,7 @@ public class ContentHandlerList extends ArrayList<IContentHandler>
 
     /**
      * Initialize all the IContentHandlers in this list. Use {@link net.ilexiconn.llibrary.common.content.ContentHelper#init(IContentHandler...)} instead.
-     * 
+     *
      * @see net.ilexiconn.llibrary.common.content.IContentHandler
      * @since 0.1.0
      */

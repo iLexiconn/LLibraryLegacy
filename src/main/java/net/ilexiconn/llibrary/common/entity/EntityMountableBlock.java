@@ -48,7 +48,8 @@ public class EntityMountableBlock extends Entity
 
     public void onEntityUpdate()
     {
-        if (!worldObj.isRemote) {
+        if (!worldObj.isRemote)
+        {
             worldObj.theProfiler.startSection("entityBaseTick");
             if (riddenByEntity == null || riddenByEntity.isDead)
                 setDead();

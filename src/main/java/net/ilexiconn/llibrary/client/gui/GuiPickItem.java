@@ -34,12 +34,11 @@ import java.util.List;
 public abstract class GuiPickItem extends GuiScreen
 {
     public String title;
+    public ArrayList<ItemStack> itemsFiltered = Lists.newArrayList();
     private GuiScreen parentScreen;
     private GuiSlotItemStackList itemList;
     private GuiTextField textField;
     private ArrayList<ItemStack> items = Lists.newArrayList();
-    public ArrayList<ItemStack> itemsFiltered = Lists.newArrayList();
-
     private int selectedIndex;
     private int listWidth;
 

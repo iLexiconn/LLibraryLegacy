@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Helper class to save ItemStacks to NBT, and removing item/block recipes.
- * 
+ *
  * @author iLexiconn
  * @since 0.1.0
  */
@@ -22,7 +22,7 @@ public class ItemHelper
 {
     /**
      * Use {@link net.ilexiconn.llibrary.common.nbt.NbtHelper#readStackFromNbt(NBTTagCompound, String)} instead.
-     * 
+     *
      * @param nbtTag
      * @param name
      * @return
@@ -36,7 +36,7 @@ public class ItemHelper
 
     /**
      * Use {@link net.ilexiconn.llibrary.common.nbt.NbtHelper#writeStackToNbt(NBTTagCompound, String, ItemStack)} instead.
-     * 
+     *
      * @param nbtTag
      * @param name
      * @param stack
@@ -68,7 +68,7 @@ public class ItemHelper
 
     /**
      * removes the item from all the world generated chests
-     * 
+     *
      * @param item
      * @since 0.2.1
      */
