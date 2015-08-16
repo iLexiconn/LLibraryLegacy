@@ -43,12 +43,12 @@ import java.util.zip.ZipFile;
  */
 public class LLoader implements IFMLLoadingPlugin, IFMLCallHook
 {
-    private static ByteBuffer downloadBuffer = ByteBuffer.allocateDirect(1 << 23);
-    private static File modsDir;
-    private static File modsDirVersion;
-    private static File llibraryData;
-    private static DownloadDialog downloadMonitor;
-    private static JDialog popupWindow;
+    public ByteBuffer downloadBuffer = ByteBuffer.allocateDirect(1 << 23);
+    public File modsDir;
+    public File modsDirVersion;
+    public File llibraryData;
+    public DownloadDialog downloadMonitor;
+    public JDialog popupWindow;
 
     public void load()
     {
@@ -319,7 +319,7 @@ public class LLoader implements IFMLLoadingPlugin, IFMLCallHook
      *
      * @param target file to be added to Classpath
      */
-    public static void addClasspath(String target)
+    public void addClasspath(String target)
     {
         try
         {
@@ -331,7 +331,7 @@ public class LLoader implements IFMLLoadingPlugin, IFMLCallHook
         }
     }
 
-    public static void removeClasspath(File mod)
+    public void removeClasspath(File mod)
     {
         if (mod.delete())
             return;
@@ -361,7 +361,7 @@ public class LLoader implements IFMLLoadingPlugin, IFMLCallHook
         }
     }
 
-    public static class DownloadDialog extends JOptionPane
+    public class DownloadDialog extends JOptionPane
     {
         public boolean stopIt;
         public Thread pokeThread;
