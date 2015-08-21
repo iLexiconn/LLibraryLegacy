@@ -40,7 +40,7 @@ public class CommandLLibrary extends CommandBase
         return 0;
     }
 
-    public void execute(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(ICommandSender sender, String[] args) throws CommandException
     {
         List<JsonModUpdate> outdatedMods = VersionHandler.getOutdatedMods();
 
