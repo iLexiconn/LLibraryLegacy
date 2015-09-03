@@ -223,7 +223,7 @@ public class WeaponDictionary
 
         MAGICAL, EXPLOSIVE, FIERY, WATERY, ICY, ELECTRICAL, DEATHLY, PLANT_Y, EARTHLY, WINDY, ENDER, POISONED,
 
-        FUTURISTIC, MEDIEVAL, MODERN;
+        FUTURISTIC, MEDIEVAL, ANCIENT, MODERN;
 
         private List<Type> subTags;
 
