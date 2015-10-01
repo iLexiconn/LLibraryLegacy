@@ -20,6 +20,7 @@ public class ServerProxy
         FMLCommonHandler.instance().bus().register(new ServerEventHandler());
         EntityHelper.registerEntity("mountableBlock", EntityMountableBlock.class);
         ConfigHelper.registerConfigHandler("llibrary", config, new LLibraryConfigHandler());
+
         FMLInterModComms.sendMessage("llibrary", "update-checker", "https://github.com/iLexiconn/LLibrary/raw/1.8/versions.json");
     }
 
@@ -36,5 +37,10 @@ public class ServerProxy
     public EntityPlayer getClientPlayer()
     {
         return null;
+    }
+
+    public float getPartialTicks()
+    {
+        return 0f;
     }
 }

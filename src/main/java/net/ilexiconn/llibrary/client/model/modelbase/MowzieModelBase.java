@@ -44,7 +44,7 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Resets the rotate angles and rotation points to its original value if they were saved before. Note: Call this at the beginning of setRotationAngles.
-     *
+     * 
      * @see #setInitPose() method in MowzieModelBase class.
      */
     public void setToInitPose()
@@ -55,13 +55,15 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Calculates the relative positions and rotations easily.
-     * <p/>
+     * <p>
      * Note: When parenting a chain of boxes, such as a head to a neck to a body, the end of the chain should start first. In this case the head should be parented to the neck before parenting the neck to the body.
-     * <p/>
+     * <p>
      * Some corrections and adjustments to the rotation point may be needed.
-     *
-     * @param child  is the child box;
-     * @param parent is the parent box.
+     * 
+     * @param child
+     *            is the child box;
+     * @param parent
+     *            is the parent box.
      */
     protected void addChildTo(ModelRenderer child, ModelRenderer parent)
     {
@@ -82,12 +84,15 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Rotates a box to face where the entity is looking.
-     * <p/>
+     * <p>
      * Note: Just keep f3 and f4 from the setRotationAngles() method.
-     *
-     * @param f  is the number of boxes being used. (i.e. if you are using this on a head and neck, set it to 2. Just a head, 1);
-     * @param f3 is the rotationYaw of the EntityLivingBase;
-     * @param f4 is the rotationPitch of the EntityLivingBase.
+     * 
+     * @param f
+     *            is the number of boxes being used. (i.e. if you are using this on a head and neck, set it to 2. Just a head, 1);
+     * @param f3
+     *            is the rotationYaw of the EntityLivingBase;
+     * @param f4
+     *            is the rotationPitch of the EntityLivingBase.
      */
     public void faceTarget(MowzieModelRenderer box, float f, float f3, float f4)
     {
@@ -97,16 +102,23 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Returns a float that can be used to rotate boxes.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
-     *
-     * @param speed  is how fast the animation runs;
-     * @param degree is how far the box will rotate;
-     * @param invert will invert the rotation;
-     * @param offset will offset the timing of the animation;
-     * @param weight will make the animation favor one direction more based on how fast the mob is moving;
-     * @param f      is the walked distance;
-     * @param f1     is the walk speed.
+     * 
+     * @param speed
+     *            is how fast the animation runs;
+     * @param degree
+     *            is how far the box will rotate;
+     * @param invert
+     *            will invert the rotation;
+     * @param offset
+     *            will offset the timing of the animation;
+     * @param weight
+     *            will make the animation favor one direction more based on how fast the mob is moving;
+     * @param f
+     *            is the walked distance;
+     * @param f1
+     *            is the walk speed.
      */
     public float rotateBox(float speed, float degree, boolean invert, float offset, float weight, float f, float f1)
     {
@@ -118,14 +130,19 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Returns a float that can be used to move boxes.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
-     *
-     * @param speed  is how fast the animation runs;
-     * @param degree is how far the box will move;
-     * @param bounce will make the box bounce;
-     * @param f      is the walked distance;
-     * @param f1     is the walk speed.
+     * 
+     * @param speed
+     *            is how fast the animation runs;
+     * @param degree
+     *            is how far the box will move;
+     * @param bounce
+     *            will make the box bounce;
+     * @param f
+     *            is the walked distance;
+     * @param f1
+     *            is the walk speed.
      */
     public float moveBox(float speed, float degree, boolean bounce, float f, float f1)
     {
@@ -137,17 +154,25 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Rotates a box back and forth (rotateAngleX). Useful for arms and legs.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
-     *
-     * @param box    is the ModelRenderer to be animated;
-     * @param speed  is how fast the animation runs;
-     * @param degree is how far the box will rotate;
-     * @param invert will invert the rotation;
-     * @param offset will offset the timing of the animation;
-     * @param weight will make the animation favor one direction more based on how fast the mob is moving;
-     * @param f      is the walked distance;
-     * @param f1     is the walk speed.
+     * 
+     * @param box
+     *            is the ModelRenderer to be animated;
+     * @param speed
+     *            is how fast the animation runs;
+     * @param degree
+     *            is how far the box will rotate;
+     * @param invert
+     *            will invert the rotation;
+     * @param offset
+     *            will offset the timing of the animation;
+     * @param weight
+     *            will make the animation favor one direction more based on how fast the mob is moving;
+     * @param f
+     *            is the walked distance;
+     * @param f1
+     *            is the walk speed.
      */
     public void walk(MowzieModelRenderer box, float speed, float degree, boolean invert, float offset, float weight, float f, float f1)
     {
@@ -159,17 +184,25 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Rotates a box up and down (rotateAngleZ). Useful for wings and ears.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
-     *
-     * @param box    is the ModelRenderer to be animated;
-     * @param speed  is how fast the animation runs;
-     * @param degree is how far the box will rotate;
-     * @param invert will invert the rotation;
-     * @param offset will offset the timing of the animation;
-     * @param weight will make the animation favor one direction more based on how fast the mob is moving;
-     * @param f      is the walked distance;
-     * @param f1     is the walk speed.
+     * 
+     * @param box
+     *            is the ModelRenderer to be animated;
+     * @param speed
+     *            is how fast the animation runs;
+     * @param degree
+     *            is how far the box will rotate;
+     * @param invert
+     *            will invert the rotation;
+     * @param offset
+     *            will offset the timing of the animation;
+     * @param weight
+     *            will make the animation favor one direction more based on how fast the mob is moving;
+     * @param f
+     *            is the walked distance;
+     * @param f1
+     *            is the walk speed.
      */
     public void flap(MowzieModelRenderer box, float speed, float degree, boolean invert, float offset, float weight, float f, float f1)
     {
@@ -181,17 +214,25 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Rotates a box side to side (rotateAngleY).
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
-     *
-     * @param box    is the ModelRenderer to be animated;
-     * @param speed  is how fast the animation runs;
-     * @param degree is how far the box will rotate;
-     * @param invert will invert the rotation;
-     * @param offset will offset the timing of the animation;
-     * @param weight will make the animation favor one direction more based on how fast the mob is moving;
-     * @param f      is the walked distance;
-     * @param f1     is the walk speed.
+     * 
+     * @param box
+     *            is the ModelRenderer to be animated;
+     * @param speed
+     *            is how fast the animation runs;
+     * @param degree
+     *            is how far the box will rotate;
+     * @param invert
+     *            will invert the rotation;
+     * @param offset
+     *            will offset the timing of the animation;
+     * @param weight
+     *            will make the animation favor one direction more based on how fast the mob is moving;
+     * @param f
+     *            is the walked distance;
+     * @param f1
+     *            is the walk speed.
      */
     public void swing(MowzieModelRenderer box, float speed, float degree, boolean invert, float offset, float weight, float f, float f1)
     {
@@ -203,15 +244,21 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Moves a box up and down (rotationPointY). Useful for bodies.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
-     *
-     * @param box    is the ModelRenderer to be animated;
-     * @param speed  is how fast the animation runs;
-     * @param degree is how far the box will move;
-     * @param bounce will make the box bounce;
-     * @param f      is the walked distance;
-     * @param f1     is the walk speed.
+     * 
+     * @param box
+     *            is the ModelRenderer to be animated;
+     * @param speed
+     *            is how fast the animation runs;
+     * @param degree
+     *            is how far the box will move;
+     * @param bounce
+     *            will make the box bounce;
+     * @param f
+     *            is the walked distance;
+     * @param f1
+     *            is the walk speed.
      */
     public void bob(MowzieModelRenderer box, float speed, float degree, boolean bounce, float f, float f1)
     {
@@ -223,15 +270,21 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Swings a chain of parented boxes back and forth (rotateAngleY). Useful for tails.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
-     *
-     * @param boxes      are the ModelRenderers to be animated;
-     * @param speed      is how fast the animation runs;
-     * @param degree     is how far the box will move;
-     * @param rootOffset changes the delay between boxes. Try values from 0.0D to 5.0D or so until you like the effect;
-     * @param f          is the walked distance;
-     * @param f1         is the walk speed.
+     * 
+     * @param boxes
+     *            are the ModelRenderers to be animated;
+     * @param speed
+     *            is how fast the animation runs;
+     * @param degree
+     *            is how far the box will move;
+     * @param rootOffset
+     *            changes the delay between boxes. Try values from 0.0D to 5.0D or so until you like the effect;
+     * @param f
+     *            is the walked distance;
+     * @param f1
+     *            is the walk speed.
      */
     public void chainSwing(MowzieModelRenderer[] boxes, float speed, float degree, double rootOffset, float f, float f1)
     {
@@ -243,15 +296,21 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Swings a chain of parented boxes up and down (rotateAngleX). Useful for tails.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
-     *
-     * @param boxes      are the ModelRenderers to be animated;
-     * @param speed      is how fast the animation runs;
-     * @param degree     is how far the box will move;
-     * @param rootOffset changes the delay between boxes. Try values from 0.0D to 5.0D or so until you like the effect;
-     * @param f          is the walked distance;
-     * @param f1         is the walk speed.
+     * 
+     * @param boxes
+     *            are the ModelRenderers to be animated;
+     * @param speed
+     *            is how fast the animation runs;
+     * @param degree
+     *            is how far the box will move;
+     * @param rootOffset
+     *            changes the delay between boxes. Try values from 0.0D to 5.0D or so until you like the effect;
+     * @param f
+     *            is the walked distance;
+     * @param f1
+     *            is the walk speed.
      */
     public void chainWave(MowzieModelRenderer[] boxes, float speed, float degree, double rootOffset, float f, float f1)
     {
@@ -263,15 +322,21 @@ public class MowzieModelBase extends ModelBase
 
     /**
      * Flaps a chain of parented boxes up and down (rotateAngleZ). Useful for tails.
-     * <p/>
+     * <p>
      * Note: Just keep f and f1 from the setRotationAngles() method.
-     *
-     * @param boxes      are the ModelRenderers to be animated;
-     * @param speed      is how fast the animation runs;
-     * @param degree     is how far the box will move;
-     * @param rootOffset changes the delay between boxes. Try values from 0.0D to 5.0D or so until you like the effect;
-     * @param f          is the walked distance;
-     * @param f1         is the walk speed.
+     * 
+     * @param boxes
+     *            are the ModelRenderers to be animated;
+     * @param speed
+     *            is how fast the animation runs;
+     * @param degree
+     *            is how far the box will move;
+     * @param rootOffset
+     *            changes the delay between boxes. Try values from 0.0D to 5.0D or so until you like the effect;
+     * @param f
+     *            is the walked distance;
+     * @param f1
+     *            is the walk speed.
      */
     public void chainFlap(MowzieModelRenderer[] boxes, float speed, float degree, double rootOffset, float f, float f1)
     {
@@ -282,9 +347,12 @@ public class MowzieModelBase extends ModelBase
     }
 
     /**
-     * @param rotating The ModelRenderer you are moving.
-     * @param to       The ModelRenderer you are moving to
-     * @param t        The timer (20-0)
+     * @param rotating
+     *            The ModelRenderer you are moving.
+     * @param to
+     *            The ModelRenderer you are moving to
+     * @param t
+     *            The timer (20-0)
      */
     protected void rotateTo(ModelRenderer rotating, ModelRenderer to, float t)
     {

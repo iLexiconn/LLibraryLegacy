@@ -5,14 +5,11 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.client.GuiScrollingList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * @author FiskFile
  * @since 0.1.0
  */
-@SideOnly(Side.CLIENT)
 public class GuiSlotItemStackList extends GuiScrollingList
 {
     private GuiPickItem parent;

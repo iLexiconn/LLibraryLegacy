@@ -82,7 +82,7 @@ public class ModelJson extends MowzieModelBase
 
     /**
      * Sets the model's various rotation angles. For bipeds, limbSwing and limbSwingAmount are used for animating the movement of arms and legs, where limbSwing represents the time(so that arms and legs swing back and forth) and limbSwingAmount represents how "far" arms and legs can swing at most.
-     *
+     * 
      * @see net.minecraft.entity.Entity
      * @since 0.1.0
      */
@@ -140,7 +140,7 @@ public class ModelJson extends MowzieModelBase
 
     /**
      * Starts an animation with the id from the Tabula model.
-     *
+     * 
      * @see net.ilexiconn.llibrary.client.model.tabula.ModelJson
      * @see net.ilexiconn.llibrary.client.model.tabula.Animation
      * @see net.ilexiconn.llibrary.client.model.tabula.AnimationComponent
@@ -171,7 +171,7 @@ public class ModelJson extends MowzieModelBase
 
     /**
      * Stop all current running animations.
-     *
+     * 
      * @see net.ilexiconn.llibrary.client.model.tabula.ModelJson
      * @see net.ilexiconn.llibrary.client.model.tabula.Animation
      * @see net.ilexiconn.llibrary.client.model.tabula.AnimationComponent

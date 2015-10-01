@@ -16,7 +16,8 @@ public class ContentHelper
     private static Map<InitializationState, IContentHandler> timedHandlers = Maps.newHashMap();
 
     /**
-     * @param contentHandlers the list of {@link net.ilexiconn.llibrary.common.content.IContentHandler} to initialize.
+     * @param contentHandlers
+     *            the list of {@link net.ilexiconn.llibrary.common.content.IContentHandler} to initialize.
      * @since 0.2.0
      */
     public static void init(IContentHandler... contentHandlers)
@@ -25,8 +26,10 @@ public class ContentHelper
     }
 
     /**
-     * @param ignoreTimed     ignore the timed state of the content handler.
-     * @param contentHandlers the list of {@link net.ilexiconn.llibrary.common.content.IContentHandler} to initialize.
+     * @param ignoreTimed
+     *            ignore the timed state of the content handler.
+     * @param contentHandlers
+     *            the list of {@link net.ilexiconn.llibrary.common.content.IContentHandler} to initialize.
      * @since 0.2.0
      */
     public static void init(boolean ignoreTimed, IContentHandler... contentHandlers)

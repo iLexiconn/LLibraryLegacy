@@ -26,10 +26,76 @@ public class WebHelper
     /**
      * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin</a> line by line.
      *
+     * @param pasteId An array of paste IDs, data from the first working ID will be used
+     * @return The lines of the paste as a list
+     */
+    public static List<String> readPastebinAsList(String pasteId)
+    {
+        return readPastebinAsList(new String[]{pasteId});
+    }
+
+    /**
+     * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin</a>
+     *
+     * @param pasteId An array of paste IDs, data from the first working ID will be used
+     * @return The content of the paste
+     */
+    public static String readPastebin(String pasteId)
+    {
+        return readPastebin(new String[]{pasteId});
+    }
+
+    /**
+     * Downloads a text file from given URL line by line.
+     *
+     * @param urlString An array of links, receive data from the first working URL in the array
+     * @return The different lines of the file from first to last
+     */
+    public static List<String> downloadTextFileList(String urlString)
+    {
+        return downloadTextFileList(new String[]{urlString});
+    }
+
+    /**
+     * Downloads a text file from given URL.
+     *
+     * @param urlString An array of links, receive data from the first working URL in the array
+     * @return The content of the file, as a String
+     */
+    public static String downloadTextFile(String urlString)
+    {
+        return downloadTextFile(new String[]{urlString});
+    }
+
+    /**
+     * Downloads a file from given URL.
+     *
+     * @param urlString An array of links, receive data from the first working URL in the array
+     * @return A byte array containing all the content of the file
+     */
+    public static byte[] download(String urlString)
+    {
+        return download(new String[]{urlString});
+    }
+
+    /**
+     * Downloads an image from given URL.
+     *
+     * @param urlString An array of links, receive data from the first working URL in the array
+     * @return A BufferedImage object downloaded from the given URL
+     */
+    public static BufferedImage downloadImage(String urlString)
+    {
+        return downloadImage(new String[]{urlString});
+    }
+
+    /**
+     * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin</a> line by line.
+     *
      * @param pasteIds An array of paste IDs, data from the first working ID will be used
      * @return The lines of the paste as a list
      */
-    public static List<String> readPastebinAsList(String... pasteIds)
+    public static List<String> readPastebinAsList(String[] pasteIds)
     {
         for (int i = 0; i < pasteIds.length; i++)
             pasteIds[i] = pastebinURLPrefix + pasteIds[i];
@@ -42,7 +108,7 @@ public class WebHelper
      * @param pasteIds An array of paste IDs, data from the first working ID will be used
      * @return The content of the paste
      */
-    public static String readPastebin(String... pasteIds)
+    public static String readPastebin(String[] pasteIds)
     {
         for (int i = 0; i < pasteIds.length; i++)
             pasteIds[i] = pastebinURLPrefix + pasteIds[i];
@@ -55,7 +121,7 @@ public class WebHelper
      * @param urlStrings An array of links, receive data from the first working URL in the array
      * @return The different lines of the file from first to last
      */
-    public static List<String> downloadTextFileList(String... urlStrings)
+    public static List<String> downloadTextFileList(String[] urlStrings)
     {
         for (String urlString : urlStrings)
         {
@@ -88,7 +154,7 @@ public class WebHelper
      * @param urlStrings An array of links, receive data from the first working URL in the array
      * @return The content of the file, as a String
      */
-    public static String downloadTextFile(String... urlStrings)
+    public static String downloadTextFile(String[] urlStrings)
     {
         for (String urlString : urlStrings)
         {
@@ -121,7 +187,7 @@ public class WebHelper
      * @param urlStrings An array of links, receive data from the first working URL in the array
      * @return A byte array containing all the content of the file
      */
-    public static byte[] download(String... urlStrings)
+    public static byte[] download(String[] urlStrings)
     {
         for (String urlString : urlStrings)
         {
@@ -152,7 +218,7 @@ public class WebHelper
      * @param urlStrings An array of links, receive data from the first working URL in the array
      * @return A BufferedImage object downloaded from the given URL
      */
-    public static BufferedImage downloadImage(String... urlStrings)
+    public static BufferedImage downloadImage(String[] urlStrings)
     {
         for (String urlString : urlStrings)
         {

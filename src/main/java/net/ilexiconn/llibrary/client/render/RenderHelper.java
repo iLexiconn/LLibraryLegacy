@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -14,7 +13,7 @@ import java.util.Map;
 
 /**
  * Render helper class for basic render operations and the IModelExtension.
- *
+ * 
  * @author iLexiconn
  * @author Gegy1000
  * @since 0.1.0
@@ -23,11 +22,10 @@ import java.util.Map;
 public class RenderHelper
 {
     private static Map<Class<? extends ModelBase>, List<IExtension>> modelExtensions = Maps.newHashMap();
-    private static ResourceLocation glintTexture = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 
     /**
      * Registers the given {@link net.ilexiconn.llibrary.client.render.IModelExtension}.
-     *
+     * 
      * @see net.ilexiconn.llibrary.client.render.IModelExtension
      * @since 0.1.0
      */
@@ -38,7 +36,7 @@ public class RenderHelper
 
     /**
      * Registers the given {@link net.ilexiconn.llibrary.client.render.IModelExtension} to a specific model.
-     *
+     * 
      * @see net.ilexiconn.llibrary.client.render.IModelExtension
      * @since 0.1.0
      */

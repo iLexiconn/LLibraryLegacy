@@ -11,21 +11,34 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath "net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT"
     }
 }
 
-apply plugin: 'forge'
+project.ext.buildnumber = ""
+if (System.getenv().BUILD_NUMBER) project.buildnumber = "-" + System.getenv().BUILD_NUMBER
 
-version = "0.3.0-1.8"
-group = "net.ilexiconn.llibrary"
-archivesBaseName = "LLibrary"
+apply plugin: "forge"
+
+ext.configFile = file "build.properties"
+
+sourceCompatibility = targetCompatibility = 1.7
+
+configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+version = config.mod_version + "-" + config.minecraft_version + project.buildnumber
+group = config.mod_group
+archivesBaseName = config.mod_name
 
 minecraft {
-    version = "1.8-11.14.3.1450"
+    version = config.minecraft_version + "-" + config.forge_version
     runDir = "minecraft"
-	mappings = "snapshot_20141130"
-    replace '${version}', project.version
+    mappings = "snapshot_20141130"
+    replace "${version}", project.version
 }
 
 processResources {
@@ -33,48 +46,37 @@ processResources {
     inputs.property "mcversion", project.minecraft.version
 
     from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        include "mcmod.info"
+        expand "version":project.version, "mcversion":project.minecraft.version
     }
         
     from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+        exclude "mcmod.info"
     }
 }
 
 jar {
     manifest {
-        attributes 'FMLCorePlugin' : 'net.ilexiconn.lloader.LLoader'
-        attributes 'FMLCorePluginContainsFMLMod' : 'true'
-        attributes 'FMLAT' : 'llibrary_at.cfg'
+        attributes "FMLAT" : "llibrary_at.cfg"
     }
 }
 
 task devJar(type: Jar) {
-    classifier = 'dev'
+    classifier = "dev"
     from sourceSets.main.output
     manifest {
-        attributes 'FMLCorePlugin' : 'net.ilexiconn.lloader.LLoader'
-        attributes 'FMLCorePluginContainsFMLMod' : 'true'
-        attributes 'FMLAT' : 'llibrary-dev_at.cfg'
+        attributes "FMLAT" : "llibrary_at.cfg"
     }
 }
 
 task srcJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    classifier = "sources"
     from sourceSets.main.allSource
 	manifest {
-        attributes 'FMLCorePlugin' : 'net.ilexiconn.lloader.LLoader'
-        attributes 'FMLCorePluginContainsFMLMod' : 'true'
-        attributes 'FMLAT' : 'llibrary-dev_at.cfg'
+        attributes "FMLAT" : "llibrary_at.cfg"
     }
 }
 
-task docJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
 artifacts {
-    archives devJar, srcJar, docJar
+    archives devJar, srcJar
 }

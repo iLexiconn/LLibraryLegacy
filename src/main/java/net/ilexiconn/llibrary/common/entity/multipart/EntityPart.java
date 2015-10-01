@@ -3,6 +3,7 @@ package net.ilexiconn.llibrary.common.entity.multipart;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 
 import java.util.List;
@@ -21,13 +22,21 @@ public class EntityPart extends Entity
 
     public float damageMultiplier;
 
+    public boolean solid;
+
     /**
-     * @param e     parent
-     * @param r     radius
-     * @param y     angle yaw
-     * @param o     y-offset
-     * @param sizeX collision box x-size
-     * @param sizeY collision box y-size
+     * @param e
+     *            parent
+     * @param r
+     *            radius
+     * @param y
+     *            angle yaw
+     * @param o
+     *            y-offset
+     * @param sizeX
+     *            collision box x-size
+     * @param sizeY
+     *            collision box y-size
      */
     public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY)
     {
@@ -35,15 +44,45 @@ public class EntityPart extends Entity
     }
 
     /**
-     * @param e     parent
-     * @param r     radius
-     * @param y     angle yaw
-     * @param o     y-offset
-     * @param sizeX collision box x-size
-     * @param sizeY collision box y-size
-     * @param d     damage multiplier
+     * @param e
+     *            parent
+     * @param r
+     *            radius
+     * @param y
+     *            angle yaw
+     * @param o
+     *            y-offset
+     * @param sizeX
+     *            collision box x-size
+     * @param sizeY
+     *            collision box y-size
+     * @param d
+     *            damage multiplier
      */
     public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY, float d)
+    {
+        this(e, r, y, o, sizeX, sizeY, d, false);
+    }
+
+    /**
+     * @param e
+     *            parent
+     * @param r
+     *            radius
+     * @param y
+     *            angle yaw
+     * @param o
+     *            y-offset
+     * @param sizeX
+     *            collision box x-size
+     * @param sizeY
+     *            collision box y-size
+     * @param d
+     *            damage multiplier
+     * @param s
+     *            solid
+     */
+    public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY, float d, boolean s)
     {
         super(e.worldObj);
         setSize(sizeX, sizeY);
@@ -54,6 +93,8 @@ public class EntityPart extends Entity
         offsetY = o;
 
         damageMultiplier = d;
+
+        solid = s;
     }
 
     public void onUpdate()
@@ -96,6 +137,16 @@ public class EntityPart extends Entity
 
     }
 
+    public AxisAlignedBB getCollisionBox(Entity entity)
+    {
+        return solid ? entity.getEntityBoundingBox() : null;
+    }
+
+    public AxisAlignedBB getBoundingBox()
+    {
+        return solid ? getEntityBoundingBox() : null;
+    }
+
     public boolean canBeCollidedWith()
     {
         return true;
@@ -103,7 +154,7 @@ public class EntityPart extends Entity
 
     public void collideWithNearbyEntities()
     {
-        List entities = worldObj.getEntitiesWithinAABBExcludingEntity(this, getBoundingBox().expand(0.20000000298023224d, 0d, 0.20000000298023224d));
+        List entities = worldObj.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().expand(0.20000000298023224d, 0d, 0.20000000298023224d));
 
         if (entities != null && !entities.isEmpty())
         {

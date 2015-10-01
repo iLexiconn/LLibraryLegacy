@@ -4,7 +4,7 @@ import net.minecraftforge.common.config.Configuration;
 
 /**
  * Container class for {@link net.minecraftforge.common.config.Configuration}
- *
+ * 
  * @author iLexiconn
  * @see net.minecraftforge.common.config.Configuration
  * @since 0.1.0

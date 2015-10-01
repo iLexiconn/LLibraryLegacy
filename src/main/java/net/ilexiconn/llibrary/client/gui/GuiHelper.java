@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * Helper class for GUIs.
- *
+ * 
  * @author FiskFille
  * @author iLexiconn
  * @since 0.1.0
@@ -25,7 +25,7 @@ public class GuiHelper
 
     /**
      * A method for adding {@link net.ilexiconn.llibrary.client.gui.GuiOverride} to an existing {@link net.minecraft.client.gui.GuiScreen} or {@link net.minecraft.client.gui.inventory.GuiContainer} {@link net.ilexiconn.llibrary.client.gui.GuiOverride} classes may get added twice.
-     *
+     * 
      * @see #getOverridesForGui(java.lang.Class)
      * @see net.ilexiconn.llibrary.client.gui.GuiOverride
      * @since 0.1.0
@@ -37,7 +37,7 @@ public class GuiHelper
 
     /**
      * Display a toast notification with the given text.
-     *
+     * 
      * @since 0.3.0
      */
     public static void createToast(int x, int y, String... text)
@@ -55,7 +55,7 @@ public class GuiHelper
 
     /**
      * Get a list of all the overrides of a specific GUI class.
-     *
+     * 
      * @return the list with {@link net.ilexiconn.llibrary.client.gui.GuiOverride} instances
      * @see #addOverride(java.lang.Class, net.ilexiconn.llibrary.client.gui.GuiOverride)
      * @see net.ilexiconn.llibrary.client.gui.GuiOverride
@@ -78,7 +78,7 @@ public class GuiHelper
 
     /**
      * Get a list of all the overrides of all the GUI class.
-     *
+     * 
      * @return the list with {@link net.ilexiconn.llibrary.client.gui.GuiOverride} instances
      * @see #addOverride(java.lang.Class, net.ilexiconn.llibrary.client.gui.GuiOverride)
      * @see net.ilexiconn.llibrary.client.gui.GuiOverride

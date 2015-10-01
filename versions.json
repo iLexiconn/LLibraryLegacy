@@ -1,5 +1,5 @@
 {
-    "newestVersion": "0.3.5-1.8",
+    "newestVersion": "0.4.0-1.8",
     "versions":
     {
         "0.1.0-1.8":
@@ -36,10 +36,19 @@
         [
             "Skipped 4 versions(?)",
             "Fixed update url",
-            "Added custom spawn egg helpers (Thanks to Ry_dog10)",
+            "Added custom spawn egg helpers",
             "Added IMC update checker support",
-            "Added LoggerHelper (Thanks to Ry_dog101)",
-            "Fixed MountableBlock crash (Thanks to Ry_dog101)"
+            "Added LoggerHelper",
+            "Fixed MountableBlock crash"
+        ],
+        "0.4.0-1.8":
+        [
+            "Added new animation api",
+            "Added Java 6 support",
+            "Added config gui",
+            "Added (almost) all LLibrary 1.7.10 features and bugfixes",
+            "Renamed 'List' to 'LLibraryEntityList'",
+            "Updated forge"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",

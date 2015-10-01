@@ -18,12 +18,13 @@ public class ItemModelledArmor extends ItemArmor
 {
     @SideOnly(Side.CLIENT)
     private ModelBiped armorModel;
+
     private IArmorModelReceiver armorModelReceiver;
 
-    public ItemModelledArmor(String name, ArmorMaterial material, int armorType, IArmorModelReceiver receiver)
+    public ItemModelledArmor(String textureName, ArmorMaterial material, int armorType, IArmorModelReceiver receiver)
     {
         super(material, 4, armorType);
-        setUnlocalizedName(receiver.getModelTextureName() + "_" + name);
+        setUnlocalizedName(receiver.getModelTextureName() + "_" + textureName);
         armorModelReceiver = receiver;
     }
 

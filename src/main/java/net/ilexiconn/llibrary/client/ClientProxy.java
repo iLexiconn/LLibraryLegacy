@@ -12,8 +12,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.Timer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -23,10 +25,13 @@ import java.io.File;
 public class ClientProxy extends ServerProxy
 {
     public static RenderLLibraryPlayer renderCustomPlayer;
+    public Timer timer;
 
     public void preInit(File config)
     {
         super.preInit(config);
+
+        timer = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "field_71428_T", "S", "timer");
 
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
         FMLCommonHandler.instance().bus().register(new ClientEventHandler());
@@ -41,7 +46,6 @@ public class ClientProxy extends ServerProxy
                 {
                     Minecraft.getMinecraft().gameSettings.keyBindings[i] = ClientEventHandler.screenshotKeyBinding;
                     Minecraft.getMinecraft().gameSettings.keyBindScreenshot.setKeyCode(-1);
-                    break;
                 }
             }
         }
@@ -74,5 +78,10 @@ public class ClientProxy extends ServerProxy
     public EntityPlayer getClientPlayer()
     {
         return Minecraft.getMinecraft().thePlayer;
+    }
+
+    public float getPartialTicks()
+    {
+        return timer.renderPartialTicks;
     }
 }

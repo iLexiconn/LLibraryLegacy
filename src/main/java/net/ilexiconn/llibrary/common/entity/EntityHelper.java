@@ -2,7 +2,6 @@ package net.ilexiconn.llibrary.common.entity;
 
 import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.common.item.SpawnEgg;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -17,7 +16,7 @@ import java.util.Map;
 
 /**
  * Class for registering entities, removing entities and getting entities.
- *
+ * 
  * @author iLexiconn
  * @author Gegy1000
  * @author FiskFille
@@ -75,19 +74,6 @@ public class EntityHelper
         int entityId = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId, primaryColor, secondaryColor);
         EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
-    }
-
-    public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int primaryColor, int secondaryColor, SpawnEgg spawnEgg)
-    {
-        int entityId = EntityRegistry.findGlobalUniqueEntityId();
-        EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId, primaryColor, secondaryColor);
-        EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
-        addSpawnEgg(entityClass, entityName, entityId, primaryColor, secondaryColor, spawnEgg);
-    }
-
-    public static void addSpawnEgg(Class<? extends Entity> entityClass, String entityName, int id, int background, int forground, SpawnEgg spawnEgg)
-    {
-        net.ilexiconn.llibrary.common.entity.List.addToList(entityClass, entityName, id, background, forground, spawnEgg);
     }
 
     public static void removeLivingEntity(Class<? extends EntityLiving> clazz)
@@ -173,7 +159,7 @@ public class EntityHelper
 
         try
         {
-            entity = (Entity) entityClass.getConstructor(new Class[]{World.class}).newInstance(world);
+            entity = (Entity) entityClass.getConstructor(new Class[] { World.class }).newInstance(world);
         }
         catch (Exception e)
         {

@@ -20,13 +20,16 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -43,10 +46,10 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class ClientEventHandler
 {
-    private static final double timeU = 1000000000 / 20;
     public static KeyBinding screenshotKeyBinding;
     private RenderPlayer prevRenderPlayer;
     private Minecraft mc = Minecraft.getMinecraft();
+    private static final double timeU = 1000000000 / 20;
     private long initialTime = System.nanoTime();
     private double deltaU = 0;
     private long timer = System.currentTimeMillis();
@@ -113,6 +116,15 @@ public class ClientEventHandler
 
                 event.setCanceled(true);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void itemTooltip(ItemTooltipEvent event)
+    {
+        if (Minecraft.getMinecraft().gameSettings.advancedItemTooltips)
+        {
+            event.toolTip.add(EnumChatFormatting.DARK_GRAY + "" + Item.itemRegistry.getNameForObject(event.itemStack.getItem()));
         }
     }
 

@@ -1,11 +1,13 @@
 package net.ilexiconn.llibrary;
 
 import net.ilexiconn.llibrary.common.ServerProxy;
+import net.ilexiconn.llibrary.common.animation.MessageLLibraryAnimation;
 import net.ilexiconn.llibrary.common.command.CommandLLibrary;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.ilexiconn.llibrary.common.content.InitializationState;
 import net.ilexiconn.llibrary.common.log.LoggerHelper;
+import net.ilexiconn.llibrary.common.message.MessageLLibraryIntemittentAnimation;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
 import net.minecraft.crash.CrashReport;
@@ -20,7 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "${version}")
+@Mod(modid = "llibrary", name = "LLibrary", version = "${version}", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
 public class LLibrary
 {
     @Mod.Instance("llibrary")
@@ -29,15 +31,17 @@ public class LLibrary
     @SidedProxy(serverSide = "net.ilexiconn.llibrary.common.ServerProxy", clientSide = "net.ilexiconn.llibrary.client.ClientProxy")
     public static ServerProxy proxy;
 
-    public static SimpleNetworkWrapper networkWrapper;
-
     public static LoggerHelper logger = new LoggerHelper("llibrary");
+
+    public static SimpleNetworkWrapper networkWrapper;
 
     @Mod.EventHandler
     private void preInit(FMLPreInitializationEvent event)
     {
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("llibrary");
         networkWrapper.registerMessage(MessageLLibrarySurvivalTab.class, MessageLLibrarySurvivalTab.class, 0, Side.SERVER);
+        networkWrapper.registerMessage(MessageLLibraryIntemittentAnimation.class, MessageLLibraryIntemittentAnimation.class, 1, Side.CLIENT);
+        networkWrapper.registerMessage(MessageLLibraryAnimation.class, MessageLLibraryAnimation.class, 2, Side.CLIENT);
 
         proxy.preInit(event.getSuggestedConfigurationFile());
     }
@@ -47,8 +51,7 @@ public class LLibrary
     {
         for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet())
         {
-            if (contentHandlerEntry.getKey() == InitializationState.INIT)
-                ContentHelper.init(true, contentHandlerEntry.getValue());
+            if (contentHandlerEntry.getKey() == InitializationState.INIT) ContentHelper.init(true, contentHandlerEntry.getValue());
         }
     }
 
@@ -59,8 +62,7 @@ public class LLibrary
 
         for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet())
         {
-            if (contentHandlerEntry.getKey() == InitializationState.POSTINIT)
-                ContentHelper.init(true, contentHandlerEntry.getValue());
+            if (contentHandlerEntry.getKey() == InitializationState.POSTINIT) ContentHelper.init(true, contentHandlerEntry.getValue());
         }
     }
 
@@ -80,8 +82,7 @@ public class LLibrary
                 try
                 {
                     ModContainer modContainer = null;
-                    for (ModContainer mod : Loader.instance().getModList())
-                        if (mod.getModId().equals(message.getSender())) modContainer = mod;
+                    for (ModContainer mod : Loader.instance().getModList()) if (mod.getModId().equals(message.getSender())) modContainer = mod;
                     if (modContainer == null) throw new Exception();
                     UpdateHelper.registerUpdateChecker(modContainer, message.getStringValue());
                 }

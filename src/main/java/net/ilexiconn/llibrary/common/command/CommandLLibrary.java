@@ -40,7 +40,7 @@ public class CommandLLibrary extends CommandBase
         return 0;
     }
 
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void execute(ICommandSender sender, String[] args) throws CommandException
     {
         List<JsonModUpdate> outdatedMods = VersionHandler.getOutdatedMods();
 
@@ -137,25 +137,25 @@ public class CommandLLibrary extends CommandBase
         throw new WrongUsageException(getCommandUsage(sender));
     }
 
-    public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List addTabCompletionOptions(ICommandSender icommandsender, String[] astring, BlockPos pos)
     {
-        if (args.length == 1)
+        if (astring.length == 1)
         {
-            return getListOfStringsMatchingLastWord(args, "list", "update", "changelog");
+            return getListOfStringsMatchingLastWord(astring, "list", "update", "changelog");
         }
         else
         {
-            if (args[0].equalsIgnoreCase("update") && args.length == 2)
+            if (astring[0].equalsIgnoreCase("update") && astring.length == 2)
             {
-                return func_175762_a(args, getAllModIDs(VersionHandler.getOutdatedMods()));
+                return func_175762_a(astring, getAllModIDs(VersionHandler.getOutdatedMods()));
             }
-            if (args[0].equalsIgnoreCase("changelog") && args.length == 2)
+            if (astring[0].equalsIgnoreCase("changelog") && astring.length == 2)
             {
-                return func_175762_a(args, getAllModIDs(UpdateHelper.modList));
+                return func_175762_a(astring, getAllModIDs(UpdateHelper.modList));
             }
-            if (args[0].equalsIgnoreCase("changelog") && args.length == 3)
+            if (astring[0].equalsIgnoreCase("changelog") && astring.length == 3)
             {
-                return func_175762_a(args, getAllModChangelogs(UpdateHelper.getModContainerById(args[1])));
+                return func_175762_a(astring, getAllModChangelogs(UpdateHelper.getModContainerById(astring[1])));
             }
         }
         return null;

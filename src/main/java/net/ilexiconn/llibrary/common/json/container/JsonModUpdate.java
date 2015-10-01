@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * Container class for {@link net.ilexiconn.llibrary.common.update.UpdateHelper}
- *
+ * 
  * @author iLexiconn
  * @author FiskFille
  * @see net.ilexiconn.llibrary.common.update.UpdateHelper
@@ -14,15 +14,16 @@ import java.util.Map;
  */
 public class JsonModUpdate
 {
-    public String modid;
-    public String name;
-    public String currentVersion;
-    public BufferedImage thumbnail;
     private String apiVersion;
     private String newestVersion;
     private Map<String, List<String>> versions;
     private String updateUrl;
     private String iconUrl;
+
+    public String modid;
+    public String name;
+    public String currentVersion;
+    public BufferedImage thumbnail;
 
     public String getApiVersion()
     {
