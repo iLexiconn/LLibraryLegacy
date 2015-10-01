@@ -1,10 +1,14 @@
 package net.ilexiconn.llibrary;
 
-import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import net.ilexiconn.llibrary.common.animation.MessageLLibraryAnimation;
 import net.ilexiconn.llibrary.common.ServerProxy;
 import net.ilexiconn.llibrary.common.command.CommandLLibrary;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
@@ -18,7 +22,7 @@ import net.minecraft.crash.CrashReport;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "${version}")
+@Mod(modid = "llibrary", name = "LLibrary", version = "${version}", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
 public class LLibrary
 {
     @Mod.Instance("llibrary")
@@ -37,6 +41,7 @@ public class LLibrary
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("llibrary");
         networkWrapper.registerMessage(MessageLLibrarySurvivalTab.class, MessageLLibrarySurvivalTab.class, 0, Side.SERVER);
         networkWrapper.registerMessage(MessageLLibraryIntemittentAnimation.class, MessageLLibraryIntemittentAnimation.class, 1, Side.CLIENT);
+        networkWrapper.registerMessage(MessageLLibraryAnimation.class, MessageLLibraryAnimation.class, 2, Side.CLIENT);
 
         proxy.preInit(event.getSuggestedConfigurationFile());
     }

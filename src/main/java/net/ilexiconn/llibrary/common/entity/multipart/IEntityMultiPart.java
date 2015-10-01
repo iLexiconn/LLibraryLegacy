@@ -13,5 +13,5 @@ public interface IEntityMultiPart
      * 
      * @return the array of parts
      */
-    public EntityPart[] getParts();
+    EntityPart[] getParts();
 }

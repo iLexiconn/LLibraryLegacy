@@ -9,9 +9,9 @@ import java.util.LinkedHashMap;
 /**
  * @author Ry_dog101
  */
-public class List
+public class LLibraryEntityList
 {
-    public static HashMap<Integer, Entities> entities = new LinkedHashMap<>();
+    public static HashMap<Integer, Entities> entities = new LinkedHashMap<Integer, Entities>();
 
     /**
      * @param entityClass Class of entity

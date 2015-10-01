@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.client;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.client.gui.GuiChangelog;
@@ -16,6 +17,7 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.Timer;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.io.File;
@@ -24,10 +26,13 @@ import java.io.File;
 public class ClientProxy extends ServerProxy
 {
     public static RenderLLibraryPlayer renderCustomPlayer;
+    public Timer timer;
 
     public void preInit(File config)
     {
         super.preInit(config);
+
+        timer = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "field_71428_T", "Q", "timer");
 
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
         FMLCommonHandler.instance().bus().register(new ClientEventHandler());
@@ -74,5 +79,10 @@ public class ClientProxy extends ServerProxy
     public EntityPlayer getClientPlayer()
     {
         return Minecraft.getMinecraft().thePlayer;
+    }
+
+    public float getPartialTicks()
+    {
+        return timer.renderPartialTicks;
     }
 }

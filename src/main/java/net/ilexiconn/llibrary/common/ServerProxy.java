@@ -38,4 +38,9 @@ public class ServerProxy
     {
         return null;
     }
+
+    public float getPartialTicks()
+    {
+        return 0f;
+    }
 }

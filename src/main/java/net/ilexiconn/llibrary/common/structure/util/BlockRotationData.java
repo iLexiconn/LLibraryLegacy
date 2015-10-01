@@ -149,7 +149,7 @@ public class BlockRotationData
     /**
      * Valid rotation types. Each type is handled like vanilla blocks of this kind.
      */
-    public static enum Rotation
+    public enum Rotation
     {
         /**
          * 0 - north/south, 1 - east/west

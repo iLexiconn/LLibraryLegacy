@@ -87,7 +87,7 @@ public class EntityHelper
 
     public static void addSpawnEgg(Class<? extends Entity> entityClass, String entityName, int id, int background, int forground, SpawnEgg spawnEgg)
     {
-        net.ilexiconn.llibrary.common.entity.List.addToList(entityClass, entityName, id, background, forground, spawnEgg);
+        LLibraryEntityList.addToList(entityClass, entityName, id, background, forground, spawnEgg);
     }
 
     public static void removeLivingEntity(Class<? extends EntityLiving> clazz)

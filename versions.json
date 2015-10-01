@@ -1,5 +1,5 @@
 {
-    "newestVersion": "0.3.4-1.7.10",
+    "newestVersion": "0.4.0-1.7.10",
     "versions":
     {
         "0.1.0-1.7.10":
@@ -50,6 +50,14 @@
             "Added IMC support for update checkers",
             "Fixed other update checker bugs",
             "Fixed development version number"
+        ],
+        "0.4.0-1.7.10":
+        [
+            "Added new animation api",
+            "Added Java 6 support",
+            "Added config gui",
+            "Renamed 'List' to 'LLibraryEntityList'",
+            "Updated forge"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",

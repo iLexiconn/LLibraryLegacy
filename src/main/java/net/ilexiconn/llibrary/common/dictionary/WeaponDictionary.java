@@ -66,7 +66,7 @@ public class WeaponDictionary
     {
         if (typeInfoList[type.ordinal()] != null)
         {
-            return (Item[]) typeInfoList[type.ordinal()].toArray(new Item[0]);
+            return typeInfoList[type.ordinal()].toArray(new Item[0]);
         }
 
         return new Item[0];
@@ -85,7 +85,7 @@ public class WeaponDictionary
 
         if (weaponList[Item.getIdFromItem(item)] != null)
         {
-            return (Type[]) weaponList[Item.getIdFromItem(item)].typeList.toArray(new Type[0]);
+            return weaponList[Item.getIdFromItem(item)].typeList.toArray(new Type[0]);
         }
 
         return new Type[0];
@@ -227,7 +227,7 @@ public class WeaponDictionary
 
         private List<Type> subTags;
 
-        private Type(Type... subTags)
+        Type(Type... subTags)
         {
             this.subTags = Arrays.asList(subTags);
         }
