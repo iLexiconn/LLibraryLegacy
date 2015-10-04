@@ -1,5 +1,5 @@
 {
-    "newestVersion": "0.4.0-1.7.10",
+    "newestVersion": "0.4.0",
     "versions":
     {
         "0.1.0-1.7.10":
@@ -51,7 +51,7 @@
             "Fixed other update checker bugs",
             "Fixed development version number"
         ],
-        "0.4.0-1.7.10":
+        "0.4.0":
         [
             "Added new animation api",
             "Added Java 6 support",

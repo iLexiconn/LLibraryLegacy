@@ -15,29 +15,23 @@ buildscript {
     }
 }
 
-project.ext.buildnumber = ""
-if (System.getenv().BUILD_NUMBER) project.buildnumber = "-" + System.getenv().BUILD_NUMBER
-
 apply plugin: "forge"
 
 ext.configFile = file "build.properties"
-
-sourceCompatibility = targetCompatibility = 1.7
-
 configFile.withReader {
     def prop = new Properties()
     prop.load(it)
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-version = config.mod_version + "-" + config.minecraft_version + project.buildnumber
+version = config.mod_version + "-" + config.minecraft_version
 group = config.mod_group
 archivesBaseName = config.mod_name
+sourceCompatibility = targetCompatibility = 1.6
 
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version + "-" + config.minecraft_version
     runDir = "minecraft"
-    replace "${version}", project.version
 }
 
 processResources {
