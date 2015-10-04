@@ -1,5 +1,5 @@
 {
-    "newestVersion": "0.4.0-1.8",
+    "newestVersion": "0.4.0",
     "versions":
     {
         "0.1.0-1.8":
@@ -41,7 +41,7 @@
             "Added LoggerHelper",
             "Fixed MountableBlock crash"
         ],
-        "0.4.0-1.8":
+        "0.4.0":
         [
             "Added new animation api",
             "Added Java 6 support",
