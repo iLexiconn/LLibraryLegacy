@@ -8,7 +8,7 @@ import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
-import net.ilexiconn.llibrary.common.animation.MessageLLibraryAnimation;
+import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimation;
 import net.ilexiconn.llibrary.common.ServerProxy;
 import net.ilexiconn.llibrary.common.command.CommandLLibrary;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
@@ -22,7 +22,7 @@ import net.minecraft.crash.CrashReport;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "0.4.0", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
+@Mod(modid = "llibrary", name = "LLibrary", version = "0.4.1", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
 public class LLibrary
 {
     @Mod.Instance("llibrary")

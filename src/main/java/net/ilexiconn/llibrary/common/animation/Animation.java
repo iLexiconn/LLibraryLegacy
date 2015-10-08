@@ -2,6 +2,7 @@ package net.ilexiconn.llibrary.common.animation;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.ilexiconn.llibrary.LLibrary;
+import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimation;
 import net.minecraft.entity.Entity;
 
 public class Animation
