@@ -1,10 +1,8 @@
-package net.ilexiconn.llibrary.common.animation;
+package net.ilexiconn.llibrary.common.message;
 
 import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.common.message.AbstractMessage;
+import net.ilexiconn.llibrary.common.animation.IAnimated;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.client.FMLClientHandler;
 
 public class MessageLLibraryAnimation extends AbstractMessage<MessageLLibraryAnimation>
 {
@@ -36,8 +34,7 @@ public class MessageLLibraryAnimation extends AbstractMessage<MessageLLibraryAni
 
     public void handleClientMessage(MessageLLibraryAnimation message, EntityPlayer player)
     {
-        World world = FMLClientHandler.instance().getWorldClient();
-        IAnimated entity = (IAnimated) world.getEntityByID(message.entityId);
+        IAnimated entity = (IAnimated) player.worldObj.getEntityByID(message.entityId);
         if (entity != null && message.animationId != 0)
         {
             entity.setAnimation(entity.animations()[0]);

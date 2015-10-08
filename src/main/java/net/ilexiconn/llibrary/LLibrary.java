@@ -1,7 +1,7 @@
 package net.ilexiconn.llibrary;
 
 import net.ilexiconn.llibrary.common.ServerProxy;
-import net.ilexiconn.llibrary.common.animation.MessageLLibraryAnimation;
+import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimation;
 import net.ilexiconn.llibrary.common.command.CommandLLibrary;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "0.4.0", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
+@Mod(modid = "llibrary", name = "LLibrary", version = "0.4.1", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
 public class LLibrary
 {
     @Mod.Instance("llibrary")
