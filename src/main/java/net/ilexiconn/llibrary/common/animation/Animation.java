@@ -20,7 +20,7 @@ public class Animation
     {
         if (FMLCommonHandler.instance().getEffectiveSide().isClient()) return;
         entity.setAnimation(animation);
-        LLibrary.networkWrapper.sendToAll(new MessageLLibraryAnimation((byte) animation.animationId, ((Entity) entity).getEntityId()));
+        LLibrary.networkWrapper.sendToAll(new MessageLLibraryAnimation(animation.animationId, ((Entity) entity).getEntityId()));
     }
 
     public static void tickAnimations(IAnimated entity)

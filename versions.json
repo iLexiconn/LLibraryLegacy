@@ -1,5 +1,5 @@
 {
-    "newestVersion": "0.4.1",
+    "newestVersion": "0.4.2",
     "versions":
     {
         "0.1.0-1.8":
@@ -53,6 +53,10 @@
         "0.4.1":
         [
             "Fixed serverside crash"
+        ],
+        "0.4.2":
+        [
+            "Fixed animation api not syncing animation across all clients"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",
