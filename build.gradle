@@ -16,6 +16,7 @@ buildscript {
 }
 
 apply plugin: "forge"
+apply plugin: "curseforge"
 
 ext.configFile = file "build.properties"
 configFile.withReader {
@@ -23,6 +24,17 @@ configFile.withReader {
     prop.load(it)
     project.ext.config = new ConfigSlurper().parse prop
 }
+
+ext.secretFile = file "secret.properties"
+secretFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.secret = new ConfigSlurper().parse prop
+}
+
+import groovy.json.JsonSlurper
+ext.versionFile = file "versions.json"
+project.ext.versions = new JsonSlurper().parseText versionFile.text
 
 version = config.mod_version + "-" + config.minecraft_version
 group = config.mod_group
@@ -72,4 +84,15 @@ task srcJar(type: Jar, dependsOn: classes) {
 
 artifacts {
     archives devJar, srcJar
+}
+
+curse {
+    projectId = "230798"
+    apiKey = secret.curseForgeApiKey
+    releaseType = "release"
+    changelog = versions.versions[versions.newestVersion].join("\n")
+
+    displayName = "LLibrary " + config.mod_version + " for Minecraft " + config.minecraft_version
+
+    additionalArtifact devJar, srcJar
 }

@@ -4,15 +4,5 @@ out/
 *.iml
 *.ipr
 *.iws
-.classpath
-.project
-.settings/
-bin/
-saves/
-config/
-options.txt
-logs/
-screenshots/
-usernamecache.json
-eclipse/
-src/test/
+
+secret.properties
