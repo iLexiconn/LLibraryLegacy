@@ -1,5 +1,6 @@
 plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.1"
+    id "com.matthewprenger.cursegradle" version "1.0.3"
 }
 
 ext.configFile = file "build.properties"
@@ -8,6 +9,17 @@ configFile.withReader {
     prop.load(it)
     project.ext.config = new ConfigSlurper().parse prop
 }
+
+ext.secretFile = file "secret.properties"
+secretFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.secret = new ConfigSlurper().parse prop
+}
+
+import groovy.json.JsonSlurper
+ext.versionFile = file "versions.json"
+project.ext.versions = new JsonSlurper().parseText versionFile.text
 
 version = config.mod_version + "-" + config.minecraft_version
 group = config.mod_group
@@ -48,4 +60,35 @@ task devJar(type: Jar) {
     }
 }
 
-build.dependsOn sourceJar, devJar
+artifacts {
+    archives devJar, sourceJar
+}
+
+curseforge {
+    apiKey = secret.curseForgeApiKey
+
+    project {
+        id = "230798"
+    
+        releaseType = "release"
+        changelog = versions.versions[versions.newestVersion].join("\n")
+
+        addGameVersion config.minecraft_version
+        
+        mainArtifact(jar) {
+            displayName = "LLibrary " + config.mod_version + " for Minecraft " + config.minecraft_version
+        }
+        
+        addArtifact(devJar) {
+            displayName = "Development"
+        }
+        
+        addArtifact(sourceJar) {
+            displayName = "Sources"
+        }
+    }
+}
+
+curseforge.dependsOn build
+
+task upload(dependsOn: curseforge)
