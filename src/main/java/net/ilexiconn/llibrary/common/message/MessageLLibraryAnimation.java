@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class MessageLLibraryAnimation extends AbstractMessage<MessageLLibraryAnimation>
 {
-    public byte animationId;
+    public int animationId;
     public int entityId;
 
     public MessageLLibraryAnimation()
@@ -14,7 +14,7 @@ public class MessageLLibraryAnimation extends AbstractMessage<MessageLLibraryAni
 
     }
 
-    public MessageLLibraryAnimation(byte animation, int entity)
+    public MessageLLibraryAnimation(int animation, int entity)
     {
         animationId = animation;
         entityId = entity;
@@ -22,13 +22,13 @@ public class MessageLLibraryAnimation extends AbstractMessage<MessageLLibraryAni
 
     public void toBytes(ByteBuf buffer)
     {
-        buffer.writeByte(animationId);
+        buffer.writeInt(animationId);
         buffer.writeInt(entityId);
     }
 
     public void fromBytes(ByteBuf buffer)
     {
-        animationId = buffer.readByte();
+        animationId = buffer.readInt();
         entityId = buffer.readInt();
     }
 
@@ -37,7 +37,7 @@ public class MessageLLibraryAnimation extends AbstractMessage<MessageLLibraryAni
         IAnimated entity = (IAnimated) player.worldObj.getEntityByID(message.entityId);
         if (entity != null && message.animationId != 0)
         {
-            entity.setAnimation(entity.animations()[0]);
+            entity.setAnimation(entity.animations()[message.animationId]);
             entity.setAnimationTick(0);
         }
     }
