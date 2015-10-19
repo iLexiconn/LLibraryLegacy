@@ -8,11 +8,14 @@ import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
+import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.survivaltab.TabHelper;
+import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -142,6 +145,13 @@ public class ClientEventHandler
                     event.buttonList.add(new GuiSurvivalTab(count, tab));
                     count++;
                 }
+            }
+        }
+        if (event.gui instanceof GuiMainMenu)
+        {
+            for (JsonModUpdate mod : VersionHandler.getOutdatedMods())
+            {
+                GuiHelper.createToast(10, 10, "Update available!", mod.name, mod.currentVersion + " -> " + mod.getNewestVersion());
             }
         }
     }

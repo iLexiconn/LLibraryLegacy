@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.client.gui;
 
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
+import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -37,7 +38,7 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
 
     protected int getSize()
     {
-        return parent.outdatedMods.size();
+        return VersionHandler.getOutdatedMods().size();
     }
 
     protected void elementClicked(int index, boolean doubleClick)
@@ -72,9 +73,9 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
 
     protected void drawSlot(int listIndex, int x, int y, int par4, Tessellator tessellator)
     {
-        if (listIndex < parent.outdatedMods.size())
+        if (listIndex < VersionHandler.getOutdatedMods().size())
         {
-            JsonModUpdate mod = parent.outdatedMods.get(listIndex);
+            JsonModUpdate mod = VersionHandler.getOutdatedMods().get(listIndex);
 
             if (mod != null)
             {

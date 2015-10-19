@@ -5,6 +5,7 @@ import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.entity.EntityHelper;
 import net.ilexiconn.llibrary.common.entity.EntityMountableBlock;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
+import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -26,7 +27,7 @@ public class ServerProxy
 
     public void postInit()
     {
-
+        VersionHandler.searchForOutdatedMods();
     }
 
     public void openChangelogGui(JsonModUpdate mod, String version)
