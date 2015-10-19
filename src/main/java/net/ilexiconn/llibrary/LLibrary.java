@@ -23,7 +23,7 @@ import net.minecraft.crash.CrashReport;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "0.4.2", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
+@Mod(modid = "llibrary", name = "LLibrary", version = "0.4.3", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
 public class LLibrary
 {
     @Mod.Instance("llibrary")
