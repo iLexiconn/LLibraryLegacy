@@ -66,6 +66,12 @@
         "0.4.2":
         [
             "Fixed animation api not syncing animation across all clients"
+        ],
+        "0.4.3":
+        [
+            "Added toast notification for updates",
+            "Added animation action api",
+            "Fixed white tint on models"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",
