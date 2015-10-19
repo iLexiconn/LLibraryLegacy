@@ -47,6 +47,7 @@ public class ClientProxy extends ServerProxy
                 {
                     Minecraft.getMinecraft().gameSettings.keyBindings[i] = ClientEventHandler.screenshotKeyBinding;
                     Minecraft.getMinecraft().gameSettings.keyBindScreenshot.setKeyCode(-1);
+                    break;
                 }
             }
         }
