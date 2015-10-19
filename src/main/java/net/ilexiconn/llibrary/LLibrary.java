@@ -7,6 +7,7 @@ import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.ilexiconn.llibrary.common.content.InitializationState;
 import net.ilexiconn.llibrary.common.log.LoggerHelper;
+import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimationAction;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryIntemittentAnimation;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
@@ -42,6 +43,7 @@ public class LLibrary
         networkWrapper.registerMessage(MessageLLibrarySurvivalTab.class, MessageLLibrarySurvivalTab.class, 0, Side.SERVER);
         networkWrapper.registerMessage(MessageLLibraryIntemittentAnimation.class, MessageLLibraryIntemittentAnimation.class, 1, Side.CLIENT);
         networkWrapper.registerMessage(MessageLLibraryAnimation.class, MessageLLibraryAnimation.class, 2, Side.CLIENT);
+        networkWrapper.registerMessage(MessageLLibraryAnimationAction.class, MessageLLibraryAnimationAction.class, 3, Side.CLIENT);
 
         proxy.preInit(event.getSuggestedConfigurationFile());
     }

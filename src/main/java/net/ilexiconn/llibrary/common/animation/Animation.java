@@ -1,12 +1,17 @@
 package net.ilexiconn.llibrary.common.animation;
 
+import com.google.common.collect.Maps;
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimation;
+import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimationAction;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
+import java.util.Map;
+
 public class Animation
 {
+    public Map<Integer, IAnimationAction> actions = Maps.newHashMap();
     public int animationId;
     public int duration;
 
@@ -14,6 +19,11 @@ public class Animation
     {
         animationId = id;
         duration = d;
+    }
+
+    public void registerAction(int tick, IAnimationAction action)
+    {
+        actions.put(tick, action);
     }
 
     public static void sendAnimationPacket(IAnimated entity, Animation animation)
@@ -31,6 +41,11 @@ public class Animation
             if (entity.getAnimation().animationId != 0)
             {
                 if (entity.getAnimationTick() == 0) sendAnimationPacket(entity, entity.getAnimation());
+                if (entity.getAnimation().actions.containsKey(entity.getAnimationTick()))
+                {
+                    entity.getAnimation().actions.get(entity.getAnimationTick()).execute(entity.getAnimationTick(), (Entity) entity);
+                    LLibrary.networkWrapper.sendToAll(new MessageLLibraryAnimationAction(entity.getAnimation().animationId, ((Entity) entity).getEntityId(), entity.getAnimationTick()));
+                }
                 if (entity.getAnimationTick() < entity.getAnimation().duration) entity.setAnimationTick(entity.getAnimationTick() + 1);
                 if (entity.getAnimationTick() == entity.getAnimation().duration)
                 {
