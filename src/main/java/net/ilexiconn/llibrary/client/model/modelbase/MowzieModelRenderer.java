@@ -31,7 +31,6 @@ public class MowzieModelRenderer extends ModelRenderer
     public float scaleX = 1f;
     public float scaleY = 1f;
     public float scaleZ = 1f;
-    public float opacity = 1f;
 
     private boolean compiled;
     private int displayList;
@@ -272,9 +271,10 @@ public class MowzieModelRenderer extends ModelRenderer
         scaleZ = z;
     }
 
+    @Deprecated
     public void setOpacity(float o)
     {
-        opacity = o;
+
     }
 
     @SideOnly(Side.CLIENT)
@@ -295,7 +295,6 @@ public class MowzieModelRenderer extends ModelRenderer
                 GL11.glTranslatef(rotationPointX * f5, rotationPointY * f5, rotationPointZ * f5);
                 GL11.glTranslatef(offsetX, offsetY, offsetZ);
                 GL11.glScalef(scaleX, scaleY, scaleZ);
-                GL11.glColor4f(1f, 1f, 1f, opacity);
                 GL11.glTranslatef(-rotationPointX * f5, -rotationPointY * f5, -rotationPointZ * f5);
                 int i;
 
@@ -362,7 +361,6 @@ public class MowzieModelRenderer extends ModelRenderer
                     GL11.glPopMatrix();
                 }
 
-                GL11.glColor4f(1f, 1f, 1f, 1f);
                 GL11.glTranslatef(-offsetX, -offsetY, -offsetZ);
                 GL11.glScalef(1f / scaleX, 1f / scaleY, 1f / scaleZ);
             }
