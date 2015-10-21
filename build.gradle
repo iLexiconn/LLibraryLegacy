@@ -10,17 +10,6 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-ext.secretFile = file "secret.properties"
-secretFile.withReader {
-    def prop = new Properties()
-    prop.load(it)
-    project.ext.secret = new ConfigSlurper().parse prop
-}
-
-import groovy.json.JsonSlurper
-ext.versionFile = file "versions.json"
-project.ext.versions = new JsonSlurper().parseText versionFile.text
-
 version = config.mod_version + "-" + config.minecraft_version
 group = config.mod_group
 archivesBaseName = config.mod_name
@@ -64,7 +53,18 @@ artifacts {
     archives devJar, sourceJar
 }
 
+import groovy.json.JsonSlurper
 curseforge {
+    secretFile = file "secret.properties"
+    secretFile.withReader {
+        def prop = new Properties()
+        prop.load(it)
+        secret = new ConfigSlurper().parse prop
+    }
+
+    def url = "https://github.com/iLexiconn/LLibrary/raw/version/versions.json".toURL()
+    versions = new JsonSlurper().parseText url.text
+
     apiKey = secret.curseForgeApiKey
 
     project {

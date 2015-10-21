@@ -1,5 +1,7 @@
 package net.ilexiconn.llibrary.common.json.container;
 
+import net.ilexiconn.llibrary.common.update.UpdateType;
+
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
@@ -14,22 +16,24 @@ import java.util.Map;
  */
 public class JsonModUpdate
 {
-    private String apiVersion;
-    private String newestVersion;
     private Map<String, List<String>> versions;
     private String updateUrl;
     private String iconUrl;
+
+    @Deprecated
+    private String newestVersion;
+
+    private String release;
+    private String beta;
+    private String alpha;
 
     public String modid;
     public String name;
     public String currentVersion;
     public BufferedImage thumbnail;
+    public UpdateType updateType;
 
-    public String getApiVersion()
-    {
-        return apiVersion;
-    }
-
+    @Deprecated
     public String getNewestVersion()
     {
         return newestVersion;
@@ -48,5 +52,20 @@ public class JsonModUpdate
     public String getIconUrl()
     {
         return iconUrl;
+    }
+
+    public String getRelease()
+    {
+        return release;
+    }
+
+    public String getBeta()
+    {
+        return beta;
+    }
+
+    public String getAlpha()
+    {
+        return alpha;
     }
 }
