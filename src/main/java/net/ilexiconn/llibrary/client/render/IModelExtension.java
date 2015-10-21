@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @see net.minecraft.client.model.ModelBiped
  * @since 0.1.0
  */
+@Deprecated
 @SideOnly(Side.CLIENT)
 public interface IModelExtension extends IExtension
 {

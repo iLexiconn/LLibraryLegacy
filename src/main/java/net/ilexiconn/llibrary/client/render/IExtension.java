@@ -9,6 +9,7 @@ import net.minecraft.client.model.ModelBase;
  * @author Gegy1000
  * @since 0.2.0
  */
+@Deprecated
 public interface IExtension
 {
     /**
