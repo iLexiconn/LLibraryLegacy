@@ -30,13 +30,13 @@ public final class RenderLLibraryPlayer extends RenderPlayer
         addLayer(new LayerLLibraryArrow(this));
         addLayer(new LayerDeadmau5Head(this));
         addLayer(new LayerCape(this));
-        addLayer(new LayerCustomHead(getPlayerModel().bipedHead));
+        addLayer(new LayerCustomHead(((ModelLLibraryBiped) getMainModel()).bipedHead));
     }
 
     public void func_177138_b(AbstractClientPlayer player)
     {
-        if (!MinecraftForge.EVENT_BUS.post(new RenderFirstPersonEvent.Pre(player, this, getPlayerModel())))
+        if (!MinecraftForge.EVENT_BUS.post(new RenderFirstPersonEvent.Pre(player, this, ((ModelLLibraryBiped) getMainModel()))))
             super.func_177138_b(player);
-        MinecraftForge.EVENT_BUS.post(new RenderFirstPersonEvent.Post(player, this, getPlayerModel()));
+        MinecraftForge.EVENT_BUS.post(new RenderFirstPersonEvent.Post(player, this, ((ModelLLibraryBiped) getMainModel())));
     }
 }
