@@ -11,6 +11,7 @@ import net.ilexiconn.llibrary.client.gui.GuiHelper;
 import net.ilexiconn.llibrary.client.gui.GuiOverride;
 import net.ilexiconn.llibrary.client.gui.GuiSurvivalTab;
 import net.ilexiconn.llibrary.client.gui.GuiToast;
+import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryEntity;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
@@ -24,6 +25,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.entity.Render;
@@ -57,6 +59,7 @@ public class ClientEventHandler
     private long initialTime = System.nanoTime();
     private double deltaU = 0;
     private long timer = System.currentTimeMillis();
+    private EntityRenderer renderer;
 
     @SubscribeEvent
     public void onRenderPlayerPost(RenderPlayerEvent.Specials.Post event)
@@ -88,7 +91,7 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent
-    public void blockHighlight(DrawBlockHighlightEvent event)
+    public void onBlockHighlight(DrawBlockHighlightEvent event)
     {
         if (event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
@@ -127,7 +130,7 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent
-    public void itemTooltip(ItemTooltipEvent event)
+    public void onItemTooltip(ItemTooltipEvent event)
     {
         if (Minecraft.getMinecraft().gameSettings.advancedItemTooltips)
         {
@@ -136,7 +139,7 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent
-    public void initGui(GuiScreenEvent.InitGuiEvent.Post event)
+    public void onInitGui(GuiScreenEvent.InitGuiEvent.Post event)
     {
         for (SurvivalTab survivalTab : TabHelper.getSurvivalTabs())
         {
@@ -272,6 +275,28 @@ public class ClientEventHandler
                 toast.time--;
                 if (toast.time <= 0)
                     iterator.remove();
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onRenderTick(TickEvent.RenderTickEvent event)
+    {
+        Minecraft mc = Minecraft.getMinecraft();
+
+        if (mc.theWorld != null)
+        {
+            if (event.phase == TickEvent.Phase.START)
+            {
+                if (renderer == null)
+                {
+                    renderer = new RenderLLibraryEntity(mc);
+                }
+
+                if (mc.entityRenderer != renderer)
+                {
+                    mc.entityRenderer = renderer;
+                }
             }
         }
     }

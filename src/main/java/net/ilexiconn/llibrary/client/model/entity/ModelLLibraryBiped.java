@@ -1,17 +1,13 @@
 package net.ilexiconn.llibrary.client.model.entity;
 
-import com.google.common.collect.Lists;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.client.render.IExtension;
-import net.ilexiconn.llibrary.client.render.IModelExtension;
-import net.ilexiconn.llibrary.client.render.RenderHelper;
+import net.ilexiconn.llibrary.common.event.InitializePlayerModelEvent;
+import net.ilexiconn.llibrary.common.event.RenderPlayerModelEvent;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.opengl.GL11;
-
-import java.util.List;
 
 /**
  * @author Gegy1000
@@ -23,30 +19,14 @@ public final class ModelLLibraryBiped extends ModelBiped
 {
     public ModelLLibraryBiped()
     {
-        List<IExtension> extensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
-        if (extensions != null)
-            for (IExtension extension : extensions)
-                extension.init(this);
+        MinecraftForge.EVENT_BUS.post(new InitializePlayerModelEvent(this));
     }
 
     public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
     {
-        List<IExtension> modelExtensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
-
-        if (modelExtensions == null)
-            modelExtensions = Lists.newArrayList();
-
         setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
 
-        for (IExtension extension : modelExtensions)
-        {
-            if (extension instanceof IModelExtension)
-            {
-                IModelExtension modelExtension = (IModelExtension) extension;
-                modelExtension.setRotationAngles(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
-                modelExtension.preRender((EntityPlayer) entity, this, partialTicks);
-            }
-        }
+        if (MinecraftForge.EVENT_BUS.post(new RenderPlayerModelEvent.Pre(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity))) return;
 
         if (isChild)
         {
@@ -78,13 +58,6 @@ public final class ModelLLibraryBiped extends ModelBiped
             bipedHeadwear.render(partialTicks);
         }
 
-        for (IExtension extension : modelExtensions)
-        {
-            if (extension instanceof IModelExtension)
-            {
-                IModelExtension modelExtension = (IModelExtension) extension;
-                modelExtension.postRender((EntityPlayer) entity, this, partialTicks);
-            }
-        }
+        MinecraftForge.EVENT_BUS.post(new RenderPlayerModelEvent.Post(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity));
     }
 }

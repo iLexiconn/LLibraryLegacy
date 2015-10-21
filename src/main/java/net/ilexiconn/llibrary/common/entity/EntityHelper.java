@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.common.entity;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.common.item.SpawnEgg;
@@ -12,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -26,10 +28,14 @@ import java.util.Map;
  */
 public class EntityHelper
 {
-    static int startEntityId = 0;
+    private static int startEntityId = 0;
 
     private static Field classToIDMappingField;
     private static Field stringToIDMappingField;
+
+    private static Method setSize;
+
+    private static Map<Entity, Float> scales = Maps.newHashMap();
 
     private static List<Class<? extends Entity>> removedEntities = Lists.newArrayList();
 
@@ -54,6 +60,19 @@ public class EntityHelper
                 }
 
                 i++;
+            }
+        }
+
+        for (Method method : Entity.class.getDeclaredMethods())
+        {
+            for (String name : new String[] {"setSize", "func_70105_a"})
+            {
+                if (method.getName().equals(name))
+                {
+                    method.setAccessible(true);
+                    setSize = method;
+                    break;
+                }
             }
         }
     }
@@ -181,5 +200,20 @@ public class EntityHelper
         }
 
         return entity;
+    }
+
+    public static void setSize(Entity entity, float x, float y) throws ReflectiveOperationException
+    {
+        setSize.invoke(entity, x, y);
+    }
+
+    public static void setScale(Entity entity, float scale)
+    {
+        scales.put(entity, scale);
+    }
+
+    public static float getScale(Entity entity)
+    {
+        return scales.containsKey(entity) ? scales.get(entity) : 1f;
     }
 }

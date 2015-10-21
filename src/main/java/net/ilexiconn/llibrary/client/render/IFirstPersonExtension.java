@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
  * @see net.minecraft.client.renderer.entity.RenderPlayer#renderFirstPersonArm(net.minecraft.entity.player.EntityPlayer)
  * @since 0.2.0
  */
+@Deprecated
 @SideOnly(Side.CLIENT)
 public interface IFirstPersonExtension extends IExtension
 {

@@ -1,5 +1,7 @@
 package net.ilexiconn.llibrary.client.render;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 
@@ -11,6 +13,8 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
  * @see net.minecraft.client.renderer.entity.RenderPlayer#renderEquippedItems(net.minecraft.client.entity.AbstractClientPlayer, float)
  * @since 0.2.0
  */
+@Deprecated
+@SideOnly(Side.CLIENT)
 public interface IEquippedItemsExtension extends IExtension
 {
     /**
