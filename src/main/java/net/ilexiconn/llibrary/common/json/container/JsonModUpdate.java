@@ -34,12 +34,6 @@ public class JsonModUpdate
     public BufferedImage thumbnail;
     public UpdateType updateType;
 
-    @Deprecated
-    public String getNewestVersion()
-    {
-        return newestVersion;
-    }
-
     public Map<String, List<String>> getVersions()
     {
         return versions;
@@ -57,7 +51,7 @@ public class JsonModUpdate
 
     public String getRelease()
     {
-        return release;
+        return release == null ? newestVersion : release;
     }
 
     public String getBeta()
@@ -75,17 +69,35 @@ public class JsonModUpdate
         switch (LLibraryConfigHandler.updateType)
         {
             case ALPHA:
-                if (getAlpha() != null) return getAlpha();
-                else if (getBeta() != null) return getBeta();
-                else if (getRelease() != null) return getRelease();
-                else return getNewestVersion();
+                if (getAlpha() != null)
+                {
+                    updateType = UpdateType.ALPHA;
+                    return getAlpha();
+                }
+                else if (getBeta() != null)
+                {
+                    updateType = UpdateType.BETA;
+                    return getBeta();
+                }
+                else
+                {
+                    updateType = UpdateType.RELEASE;
+                    return getRelease();
+                }
             case BETA:
-                if (getBeta() != null) return getBeta();
-                else if (getRelease() != null) return getRelease();
-                else return getNewestVersion();
+                if (getBeta() != null)
+                {
+                    updateType = UpdateType.BETA;
+                    return getBeta();
+                }
+                else
+                {
+                    updateType = UpdateType.RELEASE;
+                    return getRelease();
+                }
             default:
-                if (getRelease() != null) return getRelease();
-                else return getNewestVersion();
+                updateType = UpdateType.RELEASE;
+                return getRelease();
         }
     }
 }

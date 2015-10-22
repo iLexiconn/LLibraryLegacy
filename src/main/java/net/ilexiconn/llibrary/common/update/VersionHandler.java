@@ -1,7 +1,6 @@
 package net.ilexiconn.llibrary.common.update;
 
 import com.google.common.collect.Lists;
-import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 
 import java.io.IOException;
@@ -22,37 +21,9 @@ public class VersionHandler
 
         for (JsonModUpdate mod : UpdateHelper.modList)
         {
-            if (LLibraryConfigHandler.updateType == UpdateType.ALPHA && mod.getAlpha() != null)
+            if (!mod.currentVersion.equals(mod.getUpdateVersion()))
             {
-                if (!mod.currentVersion.equals(mod.getAlpha()))
-                {
-                    mod.updateType = UpdateType.ALPHA;
-                    outdatedMods.add(mod);
-                }
-            }
-            else if ((LLibraryConfigHandler.updateType == UpdateType.ALPHA || LLibraryConfigHandler.updateType == UpdateType.BETA) && mod.getBeta() != null)
-            {
-                if (!mod.currentVersion.equals(mod.getBeta()))
-                {
-                    mod.updateType = UpdateType.BETA;
-                    outdatedMods.add(mod);
-                }
-            }
-            else if (mod.getRelease() != null)
-            {
-                if (!mod.currentVersion.equals(mod.getRelease()))
-                {
-                    mod.updateType = UpdateType.RELEASE;
-                    outdatedMods.add(mod);
-                }
-            }
-            else if (mod.getNewestVersion() != null)
-            {
-                if (!mod.currentVersion.equals(mod.getNewestVersion()))
-                {
-                    mod.updateType = UpdateType.RELEASE;
-                    outdatedMods.add(mod);
-                }
+                outdatedMods.add(mod);
             }
         }
 
