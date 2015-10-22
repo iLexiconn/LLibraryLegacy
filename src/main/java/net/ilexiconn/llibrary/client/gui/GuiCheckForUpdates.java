@@ -142,7 +142,7 @@ public class GuiCheckForUpdates extends GuiScreen
                 int k = modList.getLeft() + listWidth + 20 - width / 2 + 180;
                 int l = modList.getTop() - height / 2 + 100;
 
-                drawString(fontRendererObj, mod.name + " " + mod.getUpdateVersion(), k + width / 2 - 190, l + height / 2 - 97, 0xffffff);
+                drawString(fontRendererObj, mod.name + " " + mod.getUpdateVersion().getVersionString(), k + width / 2 - 190, l + height / 2 - 97, 0xffffff);
 
                 for (int x = 0; x < changelog.length; ++x)
                 {
