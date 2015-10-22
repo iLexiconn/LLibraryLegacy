@@ -90,6 +90,7 @@
             "Added config option for update type",
             "Revamped update gui",
             "Fixed flickering images in gui",
+            "Fixed detection of outdated updates",
             "Removed update command",
             "",
             "Please remove your config file before installing this update!"
