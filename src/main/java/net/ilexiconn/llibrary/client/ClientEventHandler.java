@@ -158,7 +158,7 @@ public class ClientEventHandler
         {
             for (JsonModUpdate mod : VersionHandler.getOutdatedMods())
             {
-                GuiHelper.createToast(10, 10, "Update available!", mod.name, mod.currentVersion + " -> " + mod.getNewestVersion());
+                GuiHelper.createToast(10, 10, "Update available!", mod.name, mod.currentVersion + " -> " + mod.getUpdateVersion());
             }
         }
     }

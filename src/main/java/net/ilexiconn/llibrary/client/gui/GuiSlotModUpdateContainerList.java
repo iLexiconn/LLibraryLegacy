@@ -3,7 +3,6 @@ package net.ilexiconn.llibrary.client.gui;
 import cpw.mods.fml.client.GuiScrollingList;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.client.ClientProxy;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.client.Minecraft;
@@ -30,7 +29,7 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
 
     public GuiSlotModUpdateContainerList(GuiCheckForUpdates parent, int listWidth)
     {
-        super(parent.getMinecraftInstance(), listWidth, parent.height, 20, parent.height - 45, 20, 34);
+        super(parent.getMinecraftInstance(), listWidth, parent.height, 32, parent.height - 48, 10, 35);
         this.parent = parent;
         cachedLogo = new ResourceLocation[getSize()];
         cachedLogoDimensions = new Dimension[getSize()];
@@ -113,7 +112,7 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
                     cachedLogoDimensions[listIndex].width *= scale;
                     cachedLogoDimensions[listIndex].height *= scale;
                     int top = y - 1;
-                    int offset = 21;
+                    int offset = 12;
                     Tessellator tess = Tessellator.instance;
                     tess.startDrawingQuads();
                     tess.addVertexWithUV(offset, top + cachedLogoDimensions[listIndex].height, 0, 0, 1);

@@ -1,7 +1,5 @@
 {
     "newestVersion": "0.4.3",
-    "release": "0.4.3",
-    "beta": "0.5.0-beta1",
     "versions":
     {
         "0.1.0":
@@ -74,16 +72,6 @@
             "Added toast notification for updates",
             "Added animation action api",
             "Fixed white tint on models"
-        ],
-        "0.5.0-beta1":
-        [
-            "Added methods to scale entities",
-            "Added new event hook system for player model",
-            "Added update types to checker",
-            "Added new player render hooks",
-            "Added config option for update type",
-            "",
-            "Please remove your config file before installing this update!"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",

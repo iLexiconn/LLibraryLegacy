@@ -1,10 +1,7 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import com.google.common.collect.Lists;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.client.ClientProxy;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.update.ChangelogHandler;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
@@ -14,14 +11,10 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
-
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.io.IOException;
 import java.net.URI;
-import java.util.List;
 
 /**
  * @author FiskFile
@@ -32,16 +25,17 @@ import java.util.List;
 public class GuiCheckForUpdates extends GuiScreen
 {
     private GuiSlotModUpdateContainerList modList;
-    private int selectedIndex;
+    private int selectedIndex = -1;
     private int listWidth;
 
     private GuiButton buttonUpdate;
+    private GuiButton buttonDone;
 
     public void initGui()
     {
         buttonList.clear();
 
-        buttonList.add(new GuiButton(0, width / 2 - 100, height - 38, I18n.format("gui.done")));
+        buttonList.add(buttonDone = new GuiButton(0, width / 2 - 75, height - 38, I18n.format("gui.done")));
 
         for (JsonModUpdate mod : VersionHandler.getOutdatedMods())
         {
@@ -54,7 +48,8 @@ public class GuiCheckForUpdates extends GuiScreen
         listWidth = Math.min(listWidth, 200);
         modList = new GuiSlotModUpdateContainerList(this, listWidth);
         modList.registerScrollButtons(buttonList, 7, 8);
-        buttonList.add(buttonUpdate = new GuiButton(1, 20, height - 38, listWidth, 20, I18n.format("gui.llibrary.updatecheck.update")));
+        buttonList.add(buttonUpdate = new GuiButton(1, 10, height - 38, listWidth, 20, I18n.format("gui.llibrary.updatecheck.update")));
+        buttonUpdate.visible = false;
 
         centerDoneButton();
     }
@@ -95,7 +90,7 @@ public class GuiCheckForUpdates extends GuiScreen
         }
         else if (id == 1)
         {
-            if (selectedIndex < VersionHandler.getOutdatedMods().size())
+            if (selectedIndex != -1 && selectedIndex < VersionHandler.getOutdatedMods().size())
             {
                 JsonModUpdate mod = VersionHandler.getOutdatedMods().get(selectedIndex);
                 Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
@@ -115,11 +110,6 @@ public class GuiCheckForUpdates extends GuiScreen
         }
     }
 
-    public void updateScreen()
-    {
-        initGui();
-    }
-
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         drawDefaultBackground();
@@ -133,30 +123,36 @@ public class GuiCheckForUpdates extends GuiScreen
 
         if (VersionHandler.getOutdatedMods().isEmpty())
         {
+            buttonDone.xPosition = width / 2 - 100;
+            buttonDone.yPosition = height - 38;
             buttonList.remove(buttonUpdate);
-            drawScaledString(I18n.format("gui.llibrary.updatecheck.no_updates.line1"), i, j - 40, 0xffffff, 1.5F);
-            drawScaledString(I18n.format("gui.llibrary.updatecheck.no_updates.line2"), i, j - 20, 0xffffff, 1.0F);
+            drawScaledString(I18n.format("gui.llibrary.updatecheck.no_updates.line1"), i, j - 40, 0xffffff, 2F);
+            drawScaledString(I18n.format("gui.llibrary.updatecheck.no_updates.line2"), i, j - 20, 0xffffff, 1F);
         }
         else
         {
-            if (selectedIndex < VersionHandler.getOutdatedMods().size())
+            if (selectedIndex != -1 && selectedIndex < VersionHandler.getOutdatedMods().size())
             {
+                buttonUpdate.visible = true;
+
                 JsonModUpdate mod = VersionHandler.getOutdatedMods().get(selectedIndex);
-                String[] changelog = null;
+                String[] changelog = ChangelogHandler.getChangelog(mod, mod.getUpdateVersion());
 
-                try
-                {
-                    changelog = ChangelogHandler.getChangelog(mod, mod.getNewestVersion());
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                int k = modList.getLeft() + listWidth + 20 - width / 2 + 180;
+                int l = modList.getTop() - height / 2 + 100;
 
-                int k = Math.max(modList.getLeft() + listWidth + 20 - width / 2 + 201, 1);
-                int l = modList.getTop() - height / 2 + 110;
-                GuiChangelog.drawChangelog(this, getFontRenderer(), changelog, k, l, mod.getNewestVersion(), mod);
+                drawString(fontRendererObj, mod.name + " " + mod.getUpdateVersion(), k + width / 2 - 190, l + height / 2 - 97, 0xffffff);
+
+                for (int x = 0; x < changelog.length; ++x)
+                {
+                    if (changelog[x] != null)
+                    {
+                        drawString(fontRendererObj, changelog[x], k + width / 2 - 190, l + height / 2 - 65 + x * 10, 0xffffff);
+                    }
+                }
             }
+
+            drawCenteredString(fontRendererObj, "Mod Updates", width / 2, 16, 0xFFFFFF);
         }
 
         super.drawScreen(mouseX, mouseY, partialTicks);
