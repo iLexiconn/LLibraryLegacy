@@ -18,6 +18,7 @@ import java.net.URI;
 
 /**
  * @author FiskFile
+ * @author iLexiconn
  * @see net.ilexiconn.llibrary.common.update.UpdateHelper
  * @since 0.1.0
  */
@@ -41,8 +42,8 @@ public class GuiCheckForUpdates extends GuiScreen
         {
             int i = 20 + 32;
             listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.name) + i);
-            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.modid) + i);
-            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.currentVersion) + i);
+            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.getUpdateVersion()) + i);
+            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.updateType.name()) + i);
         }
 
         listWidth = Math.min(listWidth, 200);

@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.GuiScrollingList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -79,10 +80,30 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
 
             if (mod != null)
             {
+                WorldRenderer renderer = tessellator.getWorldRenderer();
+                renderer.startDrawingQuads();
+                switch (mod.updateType)
+                {
+                    case ALPHA:
+                        renderer.setColorRGBA(255, 0, 0, 255);
+                        break;
+                    case BETA:
+                        renderer.setColorRGBA(0, 0, 255, 255);
+                        break;
+                    case RELEASE:
+                        renderer.setColorRGBA(0, 255, 0, 255);
+                        break;
+                }
+                renderer.addVertex(left + 1, y + getContentHeight() - 3, 0);
+                renderer.addVertex(left + listWidth - 8, y + getContentHeight() - 3, 0);
+                renderer.addVertex(left + listWidth - 8, y - 1, 0);
+                renderer.addVertex(left + 1, y - 1, 0);
+                tessellator.draw();
+
                 int i = 4 + 32;
                 parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.name, listWidth - 10), left + i, y + 2, 0xFFFFFF);
-                parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.modid, listWidth - 10), left + i, y + 12, 0xCCCCCC);
-                parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.currentVersion, listWidth - 10), left + i, y + 22, 0xCCCCCC);
+                parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.getUpdateVersion(), listWidth - 10), left + i, y + 12, 0xCCCCCC);
+                parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(StringUtils.capitalize(mod.updateType.name().toLowerCase()), listWidth - 10), left + i, y + 22, 0xCCCCCC);
 
                 GL11.glColor4f(1f, 1f, 1f, 1f);
                 Minecraft mc = parent.getMinecraftInstance();
@@ -114,14 +135,12 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
                     cachedLogoDimensions[listIndex].height *= scale;
                     int top = y - 1;
                     int offset = 12;
-                    Tessellator tess = Tessellator.getInstance();
-                    WorldRenderer renderer = tess.getWorldRenderer();
                     renderer.startDrawingQuads();
                     renderer.addVertexWithUV(offset, top + cachedLogoDimensions[listIndex].height, 0, 0, 1);
                     renderer.addVertexWithUV(offset + cachedLogoDimensions[listIndex].width, top + cachedLogoDimensions[listIndex].height, 0, 1, 1);
                     renderer.addVertexWithUV(offset + cachedLogoDimensions[listIndex].width, top, 0, 1, 0);
                     renderer.addVertexWithUV(offset, top, 0, 0, 0);
-                    tess.draw();
+                    tessellator.draw();
                 }
             }
         }
