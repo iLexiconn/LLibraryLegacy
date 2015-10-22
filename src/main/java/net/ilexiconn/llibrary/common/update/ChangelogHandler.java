@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.common.update;
 
+import cpw.mods.fml.common.versioning.ArtifactVersion;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public class ChangelogHandler
 {
-    public static String[] getChangelog(JsonModUpdate mod, String version)
+    public static String[] getChangelog(JsonModUpdate mod, ArtifactVersion version)
     {
         if (hasModGotChangelogForVersion(mod, version))
         {
@@ -21,13 +22,13 @@ public class ChangelogHandler
         else return new String[0];
     }
 
-    private static List<String> getVersionChangelog(JsonModUpdate mod, String version)
+    private static List<String> getVersionChangelog(JsonModUpdate mod, ArtifactVersion version)
     {
-        return mod.getVersions().get(version);
+        return mod.getVersions().get(version.getVersionString());
     }
 
-    public static boolean hasModGotChangelogForVersion(JsonModUpdate mod, String version)
+    public static boolean hasModGotChangelogForVersion(JsonModUpdate mod, ArtifactVersion version)
     {
-        return mod.getVersions().containsKey(version);
+        return mod.getVersions().containsKey(version.getVersionString());
     }
 }
