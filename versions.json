@@ -1,12 +1,14 @@
 {
     "newestVersion": "0.4.3",
+    "release": "0.4.3",
+    "beta": "0.5.0-beta1",
     "versions":
     {
-        "0.1.0-1.8":
+        "0.1.0":
         [
-            "Initial 1.8 release"
+            "Initial release"
         ],
-        "0.2.0-1.8":
+        "0.2.0":
         [
             "Added survival tabs",
             "Added IClientOnlyHandler for IContentHandler",
@@ -14,7 +16,7 @@
             "Fixed crash for users without Scala",
             "Fixed Optifine crash when overriding the player model"
         ],
-        "0.3.0-1.8":
+        "0.3.0":
         [
             "Added world save helper",
             "Added enchantment helper",
@@ -32,21 +34,30 @@
             "Fixed webhelper crash",
             "Updated forge"
         ],
-        "0.3.5-1.8":
+        "0.3.1":
         [
-            "Skipped 4 versions(?)",
-            "Fixed update url",
-            "Added custom spawn egg helpers",
-            "Added IMC update checker support",
-            "Added LoggerHelper",
-            "Fixed MountableBlock crash"
+            "Fixed crashes compiled with LLibrary <= 0.2.0",
+            "Added 'type' parameter to render 3d event"
+        ],
+        "0.3.2":
+        [
+            "Fixed WebHelper error"
+        ],
+        "0.3.3":
+        [
+            "Added data array variable to render 3d event"
+        ],
+        "0.3.4":
+        [
+            "Added IMC support for update checkers",
+            "Fixed other update checker bugs",
+            "Fixed development version number"
         ],
         "0.4.0":
         [
             "Added new animation api",
             "Added Java 6 support",
             "Added config gui",
-            "Added (almost) all LLibrary 1.7.10 features and bugfixes",
             "Renamed 'List' to 'LLibraryEntityList'",
             "Updated forge"
         ],
@@ -63,6 +74,16 @@
             "Added toast notification for updates",
             "Added animation action api",
             "Fixed white tint on models"
+        ],
+        "0.5.0-beta1":
+        [
+            "Added methods to scale entities",
+            "Added new event hook system for player model",
+            "Added update types to checker",
+            "Added new player render hooks",
+            "Added config option for update type",
+            "",
+            "Please remove your config file before installing this update!"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",
