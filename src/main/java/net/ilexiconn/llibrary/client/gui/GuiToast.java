@@ -2,6 +2,7 @@ package net.ilexiconn.llibrary.client.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.ilexiconn.llibrary.api.Toast;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -14,29 +15,25 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class GuiToast extends Gui
 {
-    public int xPos;
-    public int yPos;
+    public Toast toast;
     public int width;
     public int height;
     public List<String> message;
-    public int time;
 
-    public GuiToast(int x, int y, int w, int t, String... m)
+    public GuiToast(Toast g, int w, String... m)
     {
-        xPos = x;
-        yPos = y;
+        toast = g;
         width = w;
-        time = t;
         message = Arrays.asList(m);
         height = message.size() * Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT + 7;
     }
 
     public void drawToast()
     {
-        if (time > 0)
+        if (toast.getDuration() > 0)
         {
             FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
-            int opacity = (int) (time * 256f / 25f);
+            int opacity = (int) (toast.getDuration() * 256f / 25f);
             if (opacity > 255)
                 opacity = 255;
 
@@ -46,12 +43,12 @@ public class GuiToast extends Gui
                 GL11.glEnable(GL11.GL_BLEND);
                 GL11.glDisable(GL11.GL_LIGHTING);
                 OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
-                drawBackdrop(xPos, yPos, width, height, opacity);
+                drawBackdrop(toast.getPosX(), toast.getPosY(), width, height, opacity);
                 int color = 0xffffff | (opacity << 24);
                 for (int i = 0; i < message.size(); i++)
                 {
                     String s = message.get(i);
-                    fontRenderer.drawStringWithShadow(s, (xPos + width / 2) - (fontRenderer.getStringWidth(s) / 2), yPos + 4 + (fontRenderer.FONT_HEIGHT * i), color);
+                    fontRenderer.drawStringWithShadow(s, (toast.getPosX() + width / 2) - (fontRenderer.getStringWidth(s) / 2), toast.getPosY() + 4 + (fontRenderer.FONT_HEIGHT * i), color);
                 }
                 GL11.glDisable(GL11.GL_BLEND);
                 GL11.glColor4f(0F, 0F, 0F, 1F);

@@ -7,10 +7,10 @@ import cpw.mods.fml.common.gameevent.InputEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.ilexiconn.llibrary.api.Toast;
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
 import net.ilexiconn.llibrary.client.gui.GuiOverride;
 import net.ilexiconn.llibrary.client.gui.GuiSurvivalTab;
-import net.ilexiconn.llibrary.client.gui.GuiToast;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryEntity;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
@@ -158,7 +158,7 @@ public class ClientEventHandler
         {
             for (JsonModUpdate mod : VersionHandler.getOutdatedMods())
             {
-                GuiHelper.createToast(10, 10, "Update available!", mod.name, mod.currentVersion + " -> " + mod.getUpdateVersion());
+                Toast.makeText("Update available!", mod.name, mod.currentVersion + " -> " + mod.getUpdateVersion().getVersionString()).show();
             }
         }
     }
@@ -224,18 +224,18 @@ public class ClientEventHandler
             }
         }
 
-        for (GuiToast toast : GuiHelper.getToasts())
+        for (Toast toast : Toast.getToastList())
         {
-            toast.drawToast();
+            toast.getGui().drawToast();
         }
     }
 
     @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.Post event)
     {
-        for (GuiToast toast : GuiHelper.getToasts())
+        for (Toast toast : Toast.getToastList())
         {
-            toast.drawToast();
+            toast.getGui().drawToast();
         }
     }
 
@@ -268,12 +268,11 @@ public class ClientEventHandler
     {
         if (event.phase == TickEvent.Phase.END)
         {
-            Iterator<GuiToast> iterator = GuiHelper.getToasts().iterator();
+            Iterator<Toast> iterator = Toast.getToastList().iterator();
             while (iterator.hasNext())
             {
-                GuiToast toast = iterator.next();
-                toast.time--;
-                if (toast.time <= 0)
+                Toast toast = iterator.next();
+                if (toast.tick() <= 0)
                     iterator.remove();
             }
         }
