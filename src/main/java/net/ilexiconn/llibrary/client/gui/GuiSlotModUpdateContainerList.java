@@ -30,7 +30,7 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
 
     public GuiSlotModUpdateContainerList(GuiCheckForUpdates parent, int listWidth)
     {
-        super(parent.getMinecraftInstance(), listWidth, parent.height, 20, parent.height - 45, 20, 34);
+        super(parent.getMinecraftInstance(), listWidth, parent.height, 32, parent.height - 48, 10, 35);
         this.parent = parent;
         cachedLogo = new ResourceLocation[getSize()];
         cachedLogoDimensions = new Dimension[getSize()];
@@ -113,7 +113,7 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
                     cachedLogoDimensions[listIndex].width *= scale;
                     cachedLogoDimensions[listIndex].height *= scale;
                     int top = y - 1;
-                    int offset = 21;
+                    int offset = 12;
                     Tessellator tess = Tessellator.getInstance();
                     WorldRenderer renderer = tess.getWorldRenderer();
                     renderer.startDrawingQuads();

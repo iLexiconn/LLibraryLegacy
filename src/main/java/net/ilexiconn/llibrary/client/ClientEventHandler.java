@@ -23,16 +23,13 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -87,7 +84,7 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent
-    public void blockHighlight(DrawBlockHighlightEvent event)
+    public void onBlockHighlight(DrawBlockHighlightEvent event)
     {
         if (event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
@@ -123,16 +120,7 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent
-    public void itemTooltip(ItemTooltipEvent event)
-    {
-        if (Minecraft.getMinecraft().gameSettings.advancedItemTooltips)
-        {
-            event.toolTip.add(EnumChatFormatting.DARK_GRAY + "" + Item.itemRegistry.getNameForObject(event.itemStack.getItem()));
-        }
-    }
-
-    @SubscribeEvent
-    public void initGui(GuiScreenEvent.InitGuiEvent.Post event)
+    public void onInitGui(GuiScreenEvent.InitGuiEvent.Post event)
     {
         for (SurvivalTab survivalTab : TabHelper.getSurvivalTabs())
         {
@@ -151,7 +139,7 @@ public class ClientEventHandler
         {
             for (JsonModUpdate mod : VersionHandler.getOutdatedMods())
             {
-                GuiHelper.createToast(10, 10, "Update available!", mod.name, mod.currentVersion + " -> " + mod.getNewestVersion());
+                GuiHelper.createToast(10, 10, "Update available!", mod.name, mod.currentVersion + " -> " + mod.getUpdateVersion());
             }
         }
     }

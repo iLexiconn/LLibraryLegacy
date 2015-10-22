@@ -2,7 +2,6 @@ package net.ilexiconn.llibrary;
 
 import net.ilexiconn.llibrary.common.ServerProxy;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimation;
-import net.ilexiconn.llibrary.common.command.CommandLLibrary;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.ilexiconn.llibrary.common.content.InitializationState;
@@ -23,7 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "0.4.3", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
+@Mod(modid = "llibrary", name = "LLibrary", version = "0.5.0-beta1", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
 public class LLibrary
 {
     @Mod.Instance("llibrary")
@@ -66,12 +65,6 @@ public class LLibrary
         {
             if (contentHandlerEntry.getKey() == InitializationState.POSTINIT) ContentHelper.init(true, contentHandlerEntry.getValue());
         }
-    }
-
-    @Mod.EventHandler
-    public void serverStart(FMLServerStartingEvent event)
-    {
-        event.registerServerCommand(new CommandLLibrary());
     }
 
     @Mod.EventHandler

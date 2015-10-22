@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.common.json.container;
 
+import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.update.UpdateType;
 
 import java.awt.image.BufferedImage;
@@ -67,5 +68,24 @@ public class JsonModUpdate
     public String getAlpha()
     {
         return alpha;
+    }
+
+    public String getUpdateVersion()
+    {
+        switch (LLibraryConfigHandler.updateType)
+        {
+            case ALPHA:
+                if (getAlpha() != null) return getAlpha();
+                else if (getBeta() != null) return getBeta();
+                else if (getRelease() != null) return getRelease();
+                else return getNewestVersion();
+            case BETA:
+                if (getBeta() != null) return getBeta();
+                else if (getRelease() != null) return getRelease();
+                else return getNewestVersion();
+            default:
+                if (getRelease() != null) return getRelease();
+                else return getNewestVersion();
+        }
     }
 }

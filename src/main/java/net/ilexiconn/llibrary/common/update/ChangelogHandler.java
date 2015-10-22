@@ -11,18 +11,22 @@ import java.util.List;
  */
 public class ChangelogHandler
 {
-    public static String[] getChangelog(JsonModUpdate mod, String version) throws Exception
+    public static String[] getChangelog(JsonModUpdate mod, String version)
     {
-        List<String> list = getVersionChangelog(mod, version);
-        return list.toArray(new String[4096]);
+        if (hasModGotChangelogForVersion(mod, version))
+        {
+            List<String> list = getVersionChangelog(mod, version);
+            return list.toArray(new String[list.size()]);
+        }
+        else return new String[0];
     }
 
-    private static List<String> getVersionChangelog(JsonModUpdate mod, String version) throws Exception
+    private static List<String> getVersionChangelog(JsonModUpdate mod, String version)
     {
         return mod.getVersions().get(version);
     }
 
-    public static boolean hasModGotChangelogForVersion(JsonModUpdate mod, String version) throws Exception
+    public static boolean hasModGotChangelogForVersion(JsonModUpdate mod, String version)
     {
         return mod.getVersions().containsKey(version);
     }
