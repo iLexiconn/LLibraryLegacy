@@ -34,7 +34,6 @@ public class UpdateHelper
      *            the updater file
      * @throws java.io.IOException
      */
-    @Deprecated
     public static void registerUpdateChecker(Object mod, String url) throws IOException
     {
         registerUpdateChecker(mod, new String[]{url});
@@ -53,7 +52,6 @@ public class UpdateHelper
      *            the updater file
      * @throws java.io.IOException
      */
-    @Deprecated
     public static void registerUpdateChecker(Object mod, String[] urls) throws IOException
     {
         JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(urls), JsonModUpdate.class);
@@ -88,7 +86,6 @@ public class UpdateHelper
      *            the updater file
      * @throws java.io.IOException
      */
-    @Deprecated
     public static void registerUpdateChecker(ModContainer mod, String url) throws IOException
     {
         registerUpdateChecker(mod, new String[]{url});
@@ -107,7 +104,6 @@ public class UpdateHelper
      *            the updater file
      * @throws java.io.IOException
      */
-    @Deprecated
     public static void registerUpdateChecker(ModContainer mod, String[] urls) throws IOException
     {
         JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(urls), JsonModUpdate.class);

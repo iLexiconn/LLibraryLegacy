@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -141,10 +140,9 @@ public class WebHelper
             }
             catch (IOException e)
             {
-                LLibrary.logger.error("Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                LLibrary.logger.error("Failed connecting to '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
-        LLibrary.logger.error("None of the given urls worked! " + Arrays.toString(urlStrings));
         return null;
     }
 
@@ -174,10 +172,9 @@ public class WebHelper
             }
             catch (IOException e)
             {
-                LLibrary.logger.error("Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                LLibrary.logger.error("Failed connecting to '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
-        LLibrary.logger.error("None of the given urls worked! " + Arrays.toString(urlStrings));
         return null;
     }
 
@@ -205,10 +202,9 @@ public class WebHelper
             }
             catch (IOException e)
             {
-                LLibrary.logger.error("Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                LLibrary.logger.error("Failed connecting to '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
-        LLibrary.logger.error("None of the given urls worked! " + Arrays.toString(urlStrings));
         return null;
     }
 
@@ -230,10 +226,9 @@ public class WebHelper
             }
             catch (IOException e)
             {
-                LLibrary.logger.error("Failed receiving data from url '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
+                LLibrary.logger.error("Failed connecting to '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
-        LLibrary.logger.error("None of the given urls worked! " + Arrays.toString(urlStrings));
         return null;
     }
 }
