@@ -92,6 +92,7 @@
             "Revamped update gui",
             "Fixed flickering images in gui",
             "Fixed detection of outdated updates",
+            "Fixed toast fade-out animation",
             "Removed update command",
             "",
             "Please remove your config file before installing this update!"
