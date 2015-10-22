@@ -1,6 +1,7 @@
 {
     "release": "0.4.3",
     "beta": "0.5.0-beta1",
+    "alpha": "0.5.0-alpha1",
     "versions":
     {
         "0.1.0":
@@ -73,6 +74,12 @@
             "Added toast notification for updates",
             "Added animation action api",
             "Fixed white tint on models"
+        ],
+        "0.5.0-alpha1":
+        [
+            "Testing",
+            "",
+            "Please remove your config file before installing this update!"
         ],
         "0.5.0-beta1":
         [
