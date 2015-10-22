@@ -40,10 +40,10 @@ public class GuiToast extends Gui
             if (opacity > 0)
             {
                 GL11.glPushMatrix();
-                GL11.glEnable(GL11.GL_BLEND);
                 GL11.glDisable(GL11.GL_LIGHTING);
-                OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
                 drawBackdrop(toast.getPosX(), toast.getPosY(), width, height, opacity);
+                GL11.glEnable(GL11.GL_BLEND);
+                OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
                 int color = 0xffffff | (opacity << 24);
                 for (int i = 0; i < message.size(); i++)
                 {
