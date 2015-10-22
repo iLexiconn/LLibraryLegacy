@@ -27,7 +27,7 @@ public class VersionHandler
             ModContainer modContainer = null;
             for (ModContainer c : Loader.instance().getModList()) if (c.getModId().equals(mod.modid)) modContainer = c;
             if (modContainer == null) continue;
-            if (VersionParser.satisfies(mod.getUpdateVersion(), modContainer.getProcessedVersion()))
+            if (!VersionParser.satisfies(modContainer.getProcessedVersion(), mod.getUpdateVersion()))
             {
                 outdatedMods.add(mod);
             }
