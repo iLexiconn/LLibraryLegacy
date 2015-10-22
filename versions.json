@@ -1,5 +1,4 @@
 {
-    "newestVersion": "0.4.3",
     "release": "0.4.3",
     "beta": "0.5.0-beta1",
     "versions":
@@ -82,6 +81,9 @@
             "Added update types to checker",
             "Added new player render hooks",
             "Added config option for update type",
+            "Revamped update gui",
+            "Fixed flickering images in gui",
+            "Removed update command",
             "",
             "Please remove your config file before installing this update!"
         ]
