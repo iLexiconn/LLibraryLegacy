@@ -102,7 +102,7 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
 
                 int i = 4 + 32;
                 parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.name, listWidth - 10), left + i, y + 2, 0xFFFFFF);
-                parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.getUpdateVersion(), listWidth - 10), left + i, y + 12, 0xCCCCCC);
+                parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(mod.getUpdateVersion().getVersionString(), listWidth - 10), left + i, y + 12, 0xCCCCCC);
                 parent.getFontRenderer().drawString(parent.getFontRenderer().trimStringToWidth(StringUtils.capitalize(mod.updateType.name().toLowerCase()), listWidth - 10), left + i, y + 22, 0xCCCCCC);
 
                 GL11.glColor4f(1f, 1f, 1f, 1f);

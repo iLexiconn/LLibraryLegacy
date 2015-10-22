@@ -2,6 +2,8 @@ package net.ilexiconn.llibrary.common.json.container;
 
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.update.UpdateType;
+import net.minecraftforge.fml.common.versioning.ArtifactVersion;
+import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -17,6 +19,10 @@ import java.util.Map;
  */
 public class JsonModUpdate
 {
+    private transient ArtifactVersion releaseVersion;
+    private transient ArtifactVersion betaVersion;
+    private transient ArtifactVersion alphaVersion;
+
     private Map<String, List<String>> versions;
     private String updateUrl;
     private String iconUrl;
@@ -49,22 +55,25 @@ public class JsonModUpdate
         return iconUrl;
     }
 
-    public String getRelease()
+    public ArtifactVersion getRelease()
     {
-        return release == null ? newestVersion : release;
+        if (releaseVersion == null) releaseVersion = new DefaultArtifactVersion(modid, release == null ? newestVersion : release);
+        return releaseVersion;
     }
 
-    public String getBeta()
+    public ArtifactVersion getBeta()
     {
-        return beta;
+        if (betaVersion == null && beta != null) betaVersion = new DefaultArtifactVersion(modid, beta);
+        return betaVersion;
     }
 
-    public String getAlpha()
+    public ArtifactVersion getAlpha()
     {
-        return alpha;
+        if (alphaVersion == null && alpha != null) alphaVersion = new DefaultArtifactVersion(modid, alpha);
+        return alphaVersion;
     }
 
-    public String getUpdateVersion()
+    public ArtifactVersion getUpdateVersion()
     {
         switch (LLibraryConfigHandler.updateType)
         {

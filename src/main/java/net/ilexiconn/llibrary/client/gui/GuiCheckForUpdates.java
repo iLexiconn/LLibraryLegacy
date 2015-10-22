@@ -42,7 +42,7 @@ public class GuiCheckForUpdates extends GuiScreen
         {
             int i = 20 + 32;
             listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.name) + i);
-            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.getUpdateVersion()) + i);
+            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.getUpdateVersion().getVersionString()) + i);
             listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.updateType.name()) + i);
         }
 
