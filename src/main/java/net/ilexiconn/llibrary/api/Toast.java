@@ -11,8 +11,8 @@ import java.util.List;
 /**
  * Toast builder. Use this to send toast messages to the player. Can only be used on the CLIENT side.
  *
- * @author iLexiconn
- * @since 0.5.0
+ * @author      iLexiconn
+ * @since       0.5.0
  */
 @SideOnly(Side.CLIENT)
 public class Toast
@@ -88,6 +88,36 @@ public class Toast
         return this;
     }
 
+    /**
+     * Get the toast's x position.
+     *
+     * @return      The toast's x position.
+     */
+    public int getPosX()
+    {
+        return posX;
+    }
+
+    /**
+     * Get the toast's y position.
+     *
+     * @return      The toast's y position.
+     */
+    public int getPosY()
+    {
+        return posY;
+    }
+
+    /**
+     * Get the duration left.
+     *
+     * @return      The duration left.
+     */
+    public int getDuration()
+    {
+        return duration;
+    }
+
     /* =========================================== FOR INTERNAL USE ONLY =========================================== */
 
     /**
@@ -106,33 +136,6 @@ public class Toast
     public GuiToast getGui()
     {
         return gui;
-    }
-
-    /**
-     * For internal use only.
-     */
-    @Deprecated
-    public int getPosX()
-    {
-        return posX;
-    }
-
-    /**
-     * For internal use only.
-     */
-    @Deprecated
-    public int getPosY()
-    {
-        return posY;
-    }
-
-    /**
-     * For internal use only.
-     */
-    @Deprecated
-    public int getDuration()
-    {
-        return duration;
     }
 
     /**

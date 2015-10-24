@@ -1,22 +1,24 @@
 package net.ilexiconn.llibrary.client;
 
+import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.api.Toast;
+import net.ilexiconn.llibrary.client.gui.GuiButtonPage;
+import net.ilexiconn.llibrary.client.gui.GuiButtonSurvivalTab;
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
 import net.ilexiconn.llibrary.client.gui.GuiOverride;
-import net.ilexiconn.llibrary.client.gui.GuiSurvivalTab;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
-import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
-import net.ilexiconn.llibrary.common.survivaltab.TabHelper;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.entity.Render;
@@ -30,7 +32,6 @@ import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -122,19 +123,26 @@ public class ClientEventHandler
     @SubscribeEvent
     public void onInitGui(GuiScreenEvent.InitGuiEvent.Post event)
     {
-        for (SurvivalTab survivalTab : TabHelper.getSurvivalTabs())
+        int count = 2;
+        for (net.ilexiconn.llibrary.api.SurvivalTab survivalTab : net.ilexiconn.llibrary.api.SurvivalTab.getSurvivalTabList())
         {
-            if (survivalTab.getSurvivalTab().getContainerGuiClass() != null && survivalTab.getSurvivalTab().getContainerGuiClass().isInstance(event.gui))
+            if (survivalTab.getContainer() != null && survivalTab.getContainer().isInstance(event.gui))
             {
-                int count = 2;
-
-                for (SurvivalTab tab : TabHelper.getSurvivalTabs())
+                for (net.ilexiconn.llibrary.api.SurvivalTab tab : net.ilexiconn.llibrary.api.SurvivalTab.getSurvivalTabList())
                 {
-                    event.buttonList.add(new GuiSurvivalTab(count, tab));
+                    if (tab.getPage() == net.ilexiconn.llibrary.api.SurvivalTab.getCurrentPage()) event.buttonList.add(new GuiButtonSurvivalTab(count, tab));
                     count++;
                 }
             }
         }
+
+        if (count > 11)
+        {
+            GuiContainer container = (GuiContainer) event.gui;
+            event.buttonList.add(new GuiButtonPage(-1, container.guiLeft, container.guiTop - 50, event.gui));
+            event.buttonList.add(new GuiButtonPage(-2, container.guiLeft + container.xSize - 20, container.guiTop - 50, event.gui));
+        }
+
         if (event.gui instanceof GuiMainMenu)
         {
             for (JsonModUpdate mod : VersionHandler.getOutdatedMods())
@@ -184,23 +192,20 @@ public class ClientEventHandler
 
                 if (!gui.buttonList.isEmpty())
                 {
-                    List<GuiButton> buttonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, event.gui, "buttonList", "field_146292_n");
-
                     for (GuiButton button : (List<GuiButton>) gui.buttonList)
                     {
-                        for (int i = 0; i < buttonList.size(); ++i)
+                        for (int i = 0; i < event.gui.buttonList.size(); ++i)
                         {
-                            GuiButton button1 = buttonList.get(i);
+                            GuiButton button1 = (GuiButton) event.gui.buttonList.get(i);
 
                             if (button.id == button1.id)
                             {
-                                buttonList.remove(button1);
+                                event.gui.buttonList.remove(button1);
                             }
                         }
                     }
 
-                    buttonList.addAll(gui.buttonList);
-                    ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, event.gui, buttonList, "buttonList", "field_146292_n");
+                    event.gui.buttonList.addAll(gui.buttonList);
                 }
             }
         }
@@ -256,6 +261,15 @@ public class ClientEventHandler
                 if (toast.tick() <= 0)
                     iterator.remove();
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onSurvivalTabClick(net.ilexiconn.llibrary.api.SurvivalTab.ClickEvent event)
+    {
+        if (event.getSurvivalTab() == LLibrary.tabInventory)
+        {
+            mc.displayGuiScreen(new GuiInventory(event.getEntityPlayer()));
         }
     }
 }

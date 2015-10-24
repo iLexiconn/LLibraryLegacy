@@ -8,10 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * Interface for custom survival tabs, register with {@link net.ilexiconn.llibrary.common.survivaltab.TabHelper#registerSurvivalTab(ISurvivalTab)}
- * 
- * @author iLexiconn
- * @since 0.2.0
+ * @deprecated Use {@link net.ilexiconn.llibrary.api.SurvivalTab} instead.
  */
 public interface ISurvivalTab
 {
@@ -38,7 +35,7 @@ public interface ISurvivalTab
 
     /**
      * @return class of the container gui.
-     * @see net.minecraft.client.gui.inventory.GuiContainer
+     * @see GuiContainer
      * @since 0.2.0
      */
     @SideOnly(Side.CLIENT)

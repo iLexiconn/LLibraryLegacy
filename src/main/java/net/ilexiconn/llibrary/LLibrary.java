@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary;
 
+import net.ilexiconn.llibrary.api.SurvivalTab;
 import net.ilexiconn.llibrary.common.ServerProxy;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimation;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
@@ -10,7 +11,12 @@ import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimationAction;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryIntemittentAnimation;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
+import net.minecraft.client.gui.GuiRepair;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.crash.CrashReport;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
@@ -34,6 +40,20 @@ public class LLibrary
     public static LoggerHelper logger = new LoggerHelper("llibrary");
 
     public static SimpleNetworkWrapper networkWrapper;
+
+    public static SurvivalTab tabInventory = SurvivalTab.create("container.inventory").setIcon(new ItemStack(Items.diamond_sword)).setContainer(GuiInventory.class);
+    public static SurvivalTab tabInventory2 = SurvivalTab.create("container.repair").setIcon(new ItemStack(Blocks.anvil)).setContainer(GuiRepair.class);
+    public static SurvivalTab tabInventory3 = SurvivalTab.create("container.repair").setIcon(new ItemStack(Blocks.anvil)).setContainer(GuiRepair.class);
+    public static SurvivalTab tabInventory4 = SurvivalTab.create("container.repair").setIcon(new ItemStack(Blocks.anvil)).setContainer(GuiRepair.class);
+    public static SurvivalTab tabInventory5 = SurvivalTab.create("container.repair").setIcon(new ItemStack(Blocks.anvil)).setContainer(GuiRepair.class);
+    public static SurvivalTab tabInventory6 = SurvivalTab.create("container.repair").setIcon(new ItemStack(Blocks.anvil)).setContainer(GuiRepair.class);
+    public static SurvivalTab tabInventory7 = SurvivalTab.create("container.repair").setIcon(new ItemStack(Blocks.anvil)).setContainer(GuiRepair.class);
+    public static SurvivalTab tabInventory8 = SurvivalTab.create("container.repair").setIcon(new ItemStack(Blocks.anvil)).setContainer(GuiRepair.class);
+    public static SurvivalTab tabInventory9 = SurvivalTab.create("container.repair").setIcon(new ItemStack(Blocks.anvil)).setContainer(GuiRepair.class);
+    public static SurvivalTab tabInventory10 = SurvivalTab.create("container.repair").setIcon(new ItemStack(Blocks.anvil)).setContainer(GuiRepair.class);
+    public static SurvivalTab tabInventory11 = SurvivalTab.create("container.repair").setIcon(new ItemStack(Blocks.anvil)).setContainer(GuiRepair.class);
+    public static SurvivalTab tabInventory12 = SurvivalTab.create("container.repair").setIcon(new ItemStack(Blocks.anvil)).setContainer(GuiRepair.class);
+    public static SurvivalTab tabInventory13 = SurvivalTab.create("container.repair").setIcon(new ItemStack(Blocks.anvil)).setContainer(GuiRepair.class);
 
     @Mod.EventHandler
     private void preInit(FMLPreInitializationEvent event)

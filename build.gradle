@@ -55,15 +55,15 @@ artifacts {
 
 import groovy.json.JsonSlurper
 curseforge {
-    secretFile = file "secret.properties"
+    def secretFile = file "secret.properties"
     secretFile.withReader {
         def prop = new Properties()
         prop.load(it)
-        secret = new ConfigSlurper().parse prop
+        project.ext.secret = new ConfigSlurper().parse prop
     }
 
     def url = "https://github.com/iLexiconn/LLibrary/raw/version/versions.json".toURL()
-    versions = new JsonSlurper().parseText url.text
+    def versions = new JsonSlurper().parseText url.text
 
     apiKey = secret.curseForgeApiKey
 
@@ -71,7 +71,7 @@ curseforge {
         id = "230798"
     
         releaseType = "release"
-        changelog = versions.versions[versions.newestVersion].join("\n")
+        changelog = versions.versions[versions.release].join("\n")
 
         addGameVersion config.minecraft_version
         
