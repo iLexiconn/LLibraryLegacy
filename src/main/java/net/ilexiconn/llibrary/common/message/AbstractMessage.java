@@ -7,12 +7,12 @@ import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.entity.player.EntityPlayer;
 
 /**
- * @author iLexiconn
- * @since 0.1.0
+ * @deprecated      Use {@link net.ilexiconn.llibrary.api.AbstractMessage} instead.
  */
-public abstract class AbstractMessage<REQ extends AbstractMessage> implements IMessage, IMessageHandler<REQ, IMessage>
+@Deprecated
+public abstract class AbstractMessage<M extends AbstractMessage> implements IMessage, IMessageHandler<M, IMessage>
 {
-    public IMessage onMessage(REQ message, MessageContext ctx)
+    public IMessage onMessage(M message, MessageContext ctx)
     {
         if (ctx.side.isClient())
             handleClientMessage(message, LLibrary.proxy.getClientPlayer());
@@ -22,7 +22,7 @@ public abstract class AbstractMessage<REQ extends AbstractMessage> implements IM
         return null;
     }
 
-    public abstract void handleClientMessage(REQ message, EntityPlayer player);
+    public abstract void handleClientMessage(M message, EntityPlayer player);
 
-    public abstract void handleServerMessage(REQ message, EntityPlayer player);
+    public abstract void handleServerMessage(M message, EntityPlayer player);
 }

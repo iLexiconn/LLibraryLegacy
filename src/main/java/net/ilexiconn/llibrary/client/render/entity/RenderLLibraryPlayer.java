@@ -59,8 +59,6 @@ public final class RenderLLibraryPlayer extends RenderPlayer
     {
         float scale = EntityHelper.getScale(player);
 
-        EntityHelper.setScale(player, EntityHelper.getScale(player) + 0.001f);
-
         if (player == mc.thePlayer)
         {
             GL11.glTranslatef(0, (1.62f) * (scale - 1), 0);

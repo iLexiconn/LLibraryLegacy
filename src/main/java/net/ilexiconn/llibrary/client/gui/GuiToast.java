@@ -51,7 +51,6 @@ public class GuiToast extends Gui
                     fontRenderer.drawStringWithShadow(s, (toast.getPosX() + width / 2) - (fontRenderer.getStringWidth(s) / 2), toast.getPosY() + 4 + (fontRenderer.FONT_HEIGHT * i), color);
                 }
                 GL11.glDisable(GL11.GL_BLEND);
-                GL11.glColor4f(0F, 0F, 0F, 1F);
                 GL11.glPopMatrix();
             }
         }

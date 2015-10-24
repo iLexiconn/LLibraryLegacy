@@ -1,11 +1,13 @@
 package net.ilexiconn.llibrary.common.message;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.common.animation.IAnimated;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class MessageLLibraryAnimationAction extends AbstractMessage<MessageLLibraryAnimationAction>
+public class MessageLLibraryAnimationAction extends net.ilexiconn.llibrary.api.AbstractMessage<MessageLLibraryAnimationAction>
 {
     public int animationId;
     public int entityId;
@@ -23,6 +25,7 @@ public class MessageLLibraryAnimationAction extends AbstractMessage<MessageLLibr
         activationTick = tick;
     }
 
+    @SideOnly(Side.CLIENT)
     public void handleClientMessage(MessageLLibraryAnimationAction message, EntityPlayer player)
     {
         Entity entity = player.worldObj.getEntityByID(message.entityId);

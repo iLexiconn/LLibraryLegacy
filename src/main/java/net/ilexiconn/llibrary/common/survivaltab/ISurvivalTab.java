@@ -8,10 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 /**
- * Interface for custom survival tabs, register with {@link net.ilexiconn.llibrary.common.survivaltab.TabHelper#registerSurvivalTab(ISurvivalTab)}
- * 
- * @author iLexiconn
- * @since 0.2.0
+ * @deprecated Use {@link net.ilexiconn.llibrary.api.SurvivalTab} instead.
  */
 public interface ISurvivalTab
 {

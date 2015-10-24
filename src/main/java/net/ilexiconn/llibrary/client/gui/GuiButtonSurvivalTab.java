@@ -3,9 +3,8 @@ package net.ilexiconn.llibrary.client.gui;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.LLibrary;
+import net.ilexiconn.llibrary.api.SurvivalTab;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
-import net.ilexiconn.llibrary.common.survivaltab.ICustomSurvivalTabTexture;
-import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
@@ -14,31 +13,24 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author iLexiconn
- * @see net.ilexiconn.llibrary.common.survivaltab.TabHelper
- * @since 0.2.0
- */
 @SideOnly(Side.CLIENT)
-public class GuiSurvivalTab extends GuiButton
+public class GuiButtonSurvivalTab extends GuiButton
 {
     private ResourceLocation texture = new ResourceLocation("textures/gui/container/creative_inventory/tabs.png");
     private RenderItem renderItem = new RenderItem();
-    private SurvivalTab survivalTabContainer;
-    private ItemStack stackIcon;
+    private SurvivalTab survivalTab;
 
-    public GuiSurvivalTab(int id, SurvivalTab tab)
+    public GuiButtonSurvivalTab(int id, SurvivalTab tab)
     {
         super(id, 0, 0, 28, 32, "");
-        survivalTabContainer = tab;
-        stackIcon = tab.getSurvivalTab().getTabIcon();
+        survivalTab = tab;
     }
 
     public void drawButton(Minecraft mc, int mouseX, int mouseY)
@@ -47,35 +39,29 @@ public class GuiSurvivalTab extends GuiButton
         {
             GL11.glColor4f(1f, 1f, 1f, 1f);
 
-            boolean selected = mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass();
-            xPosition = (mc.currentScreen.width / 2) - 88 + survivalTabContainer.getTabColumn() * 29;
-            yPosition = survivalTabContainer.isTabInFirstRow() ? mc.currentScreen.height / 2 - ((GuiContainer) mc.currentScreen).ySize / 2 - 28 : selected ? mc.currentScreen.height / 2 + 83 : mc.currentScreen.height / 2 + 79;
+            boolean selected = mc.currentScreen.getClass() != survivalTab.getContainer();
+            xPosition = (mc.currentScreen.width / 2) - 88 + survivalTab.getColumn() * 29;
+            yPosition = survivalTab.isInFirstRow() ? mc.currentScreen.height / 2 - ((GuiContainer) mc.currentScreen).ySize / 2 - 28 : selected ? mc.currentScreen.height / 2 + 83 : mc.currentScreen.height / 2 + 79;
 
-            int yTexPos = survivalTabContainer.isTabInFirstRow() ? selected ? 0 : 32 : selected ? 66 : 96;
+            int yTexPos = survivalTab.isInFirstRow() ? selected ? 0 : 32 : selected ? 66 : 96;
             int xTexPos = id == 2 || id == 8 ? 0 : 28;
-            int ySize = survivalTabContainer.isTabInFirstRow() ? selected ? 28 : 32 : selected ? 26 : 32;
+            int ySize = survivalTab.isInFirstRow() ? selected ? 28 : 32 : selected ? 26 : 32;
 
-            if (mc.thePlayer.getActivePotionEffects().size() > 0)
-            {
-                xPosition += 60;
-            }
+            if (mc.thePlayer.getActivePotionEffects().size() > 0) xPosition += 60;
 
-            if (survivalTabContainer.getSurvivalTab() instanceof ICustomSurvivalTabTexture)
-                mc.renderEngine.bindTexture(((ICustomSurvivalTabTexture) survivalTabContainer.getSurvivalTab()).getTabTexture());
-            else
-                mc.renderEngine.bindTexture(texture);
+            if (survivalTab.getTexture() != null) mc.renderEngine.bindTexture(survivalTab.getTexture());
+            else mc.renderEngine.bindTexture(texture);
             drawTexturedModalRect(xPosition, yPosition, xTexPos, yTexPos, 28, ySize);
 
-            if (!survivalTabContainer.isTabInFirstRow() && selected)
-                yPosition -= 3;
+            if (!survivalTab.isInFirstRow() && selected) yPosition -= 3;
 
             RenderHelper.enableGUIStandardItemLighting();
             zLevel = 100f;
             renderItem.zLevel = 100f;
             GL11.glEnable(2896);
             GL11.glEnable(32826);
-            renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, stackIcon, xPosition + 6, yPosition + 8);
-            renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, stackIcon, xPosition + 6, yPosition + 8);
+            renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, survivalTab.getIcon(), xPosition + 6, yPosition + 8);
+            renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, survivalTab.getIcon(), xPosition + 6, yPosition + 8);
             GL11.glDisable(2896);
             GL11.glEnable(3042);
             renderItem.zLevel = 0f;
@@ -83,54 +69,44 @@ public class GuiSurvivalTab extends GuiButton
             RenderHelper.disableStandardItemLighting();
 
             if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
-                drawHoveringText(I18n.format(survivalTabContainer.getSurvivalTab().getTabName()), mouseX, mouseY);
+                drawHoveringText(Collections.singletonList(I18n.format(survivalTab.getLabel())), mouseX, mouseY);
         }
     }
 
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY)
     {
-        if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
+        if (super.mousePressed(mc, mouseX, mouseY))
         {
-            if (mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass())
+            if (mc.currentScreen.getClass() != survivalTab.getContainer())
             {
-                LLibrary.networkWrapper.sendToServer(new MessageLLibrarySurvivalTab(survivalTabContainer.getTabIndex()));
+                MinecraftForge.EVENT_BUS.post(new SurvivalTab.ClickEvent(survivalTab, mc.thePlayer));
+                LLibrary.networkWrapper.sendToServer(new MessageLLibrarySurvivalTab(survivalTab.getIndex()));
                 return true;
             }
-            else
-                return false;
+            else return false;
         }
-        else
-            return false;
+        else return false;
     }
 
-    public void drawHoveringText(String text, int mouseX, int mouseY)
+    public void drawHoveringText(List<String> list, int mouseX, int mouseY)
     {
-        drawHoveringText(Collections.singletonList(text), mouseX, mouseY, Minecraft.getMinecraft().fontRenderer);
-    }
-
-    public void drawHoveringText(List text, int mouseX, int mouseY, FontRenderer font)
-    {
-        if (!text.isEmpty())
+        if (!list.isEmpty())
         {
+            FontRenderer font = Minecraft.getMinecraft().fontRenderer;
             int topWidth = 0;
 
-            for (Object object : text)
+            for (String line : list)
             {
-                String s = (String) object;
-                int width = font.getStringWidth(s);
-
-                if (width > topWidth)
-                    topWidth = width;
+                int width = font.getStringWidth(line);
+                if (width > topWidth) topWidth = width;
             }
 
             int renderX = mouseX + 12;
             int renderY = mouseY - 12;
             int i1 = 8;
 
-            if (text.size() > 1)
-                i1 += 2 + (text.size() - 1) * 10;
-            if (renderX + topWidth > width)
-                renderX -= 28 + topWidth;
+            if (list.size() > 1) i1 += 2 + (list.size() - 1) * 10;
+            if (renderX + topWidth > width) renderX -= 28 + topWidth;
 
             zLevel = 300f;
             renderItem.zLevel = 300f;
@@ -151,14 +127,11 @@ public class GuiSurvivalTab extends GuiButton
             drawGradientRect(renderX - 3, renderY - 3, renderX + topWidth + 3, renderY - 3 + 1, borderColour, borderColour);
             drawGradientRect(renderX - 3, renderY + i1 + 2, renderX + topWidth + 3, renderY + i1 + 3, gradient, gradient);
 
-            for (int letterIndex = 0; letterIndex < text.size(); ++letterIndex)
+            for (int letterIndex = 0; letterIndex < list.size(); ++letterIndex)
             {
-                String s1 = (String) text.get(letterIndex);
+                String s1 = list.get(letterIndex);
                 font.drawStringWithShadow(s1, renderX, renderY, -1);
-
-                if (letterIndex == 0)
-                    renderY += 2;
-
+                if (letterIndex == 0) renderY += 2;
                 renderY += 10;
             }
 
