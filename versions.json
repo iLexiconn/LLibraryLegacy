@@ -1,7 +1,6 @@
 {
     "release": "0.4.3",
     "beta": "0.5.0-beta1",
-    "alpha": "0.5.0-alpha1",
     "versions":
     {
         "0.1.0":
@@ -75,20 +74,16 @@
             "Added animation action api",
             "Fixed white tint on models"
         ],
-        "0.5.0-alpha1":
-        [
-            "Testing",
-            "",
-            "Please remove your config file before installing this update!"
-        ],
         "0.5.0-beta1":
         [
             "Added toast builder",
+            "Added survival tab builder",
             "Added methods to scale entities",
             "Added new event hook system for player model",
             "Added update types to checker",
             "Added new player render hooks",
             "Added config option for update type",
+            "Added survival tab pages. Now you can have more than 12 survival tabs.",
             "Revamped update gui",
             "Fixed flickering images in gui",
             "Fixed detection of outdated updates",
