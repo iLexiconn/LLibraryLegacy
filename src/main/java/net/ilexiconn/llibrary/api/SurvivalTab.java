@@ -1,7 +1,6 @@
 package net.ilexiconn.llibrary.api;
 
 import com.google.common.collect.Lists;
-import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -33,7 +32,6 @@ public class SurvivalTab
 
     private SurvivalTab(int i, String l)
     {
-        LLibrary.logger.info("Creating survival tab with index " + i);
         index = i;
         label = l;
     }

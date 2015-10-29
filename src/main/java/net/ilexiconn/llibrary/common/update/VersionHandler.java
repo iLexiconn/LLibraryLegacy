@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.versioning.VersionParser;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,7 +26,7 @@ public class VersionHandler
             ModContainer modContainer = null;
             for (ModContainer c : Loader.instance().getModList()) if (c.getModId().equals(mod.modid)) modContainer = c;
             if (modContainer == null) continue;
-            if (!VersionParser.satisfies(modContainer.getProcessedVersion(), mod.getUpdateVersion()))
+            if (mod.getUpdateVersion().compareTo(modContainer.getProcessedVersion()) > 0)
             {
                 outdatedMods.add(mod);
             }

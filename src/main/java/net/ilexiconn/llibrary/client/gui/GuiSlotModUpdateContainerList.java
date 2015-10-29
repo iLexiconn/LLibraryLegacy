@@ -25,11 +25,11 @@ import java.awt.image.BufferedImage;
 @SideOnly(Side.CLIENT)
 public class GuiSlotModUpdateContainerList extends GuiScrollingList
 {
-    private GuiCheckForUpdates parent;
+    private GuiModUpdates parent;
     private ResourceLocation[] cachedLogo;
     private Dimension[] cachedLogoDimensions;
 
-    public GuiSlotModUpdateContainerList(GuiCheckForUpdates parent, int listWidth)
+    public GuiSlotModUpdateContainerList(GuiModUpdates parent, int listWidth)
     {
         super(parent.getMinecraftInstance(), listWidth, parent.height, 32, parent.height - 48, 10, 35);
         this.parent = parent;

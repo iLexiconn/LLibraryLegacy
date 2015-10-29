@@ -23,7 +23,7 @@ import java.net.URI;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public class GuiCheckForUpdates extends GuiScreen
+public class GuiModUpdates extends GuiScreen
 {
     private GuiSlotModUpdateContainerList modList;
     private int selectedIndex = -1;
