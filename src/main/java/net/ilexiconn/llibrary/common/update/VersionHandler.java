@@ -3,7 +3,6 @@ package net.ilexiconn.llibrary.common.update;
 import com.google.common.collect.Lists;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.common.versioning.VersionParser;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 
 import java.io.IOException;
@@ -27,7 +26,7 @@ public class VersionHandler
             ModContainer modContainer = null;
             for (ModContainer c : Loader.instance().getModList()) if (c.getModId().equals(mod.modid)) modContainer = c;
             if (modContainer == null) continue;
-            if (!VersionParser.satisfies(modContainer.getProcessedVersion(), mod.getUpdateVersion()))
+            if (mod.getUpdateVersion().compareTo(modContainer.getProcessedVersion()) > 0)
             {
                 outdatedMods.add(mod);
             }

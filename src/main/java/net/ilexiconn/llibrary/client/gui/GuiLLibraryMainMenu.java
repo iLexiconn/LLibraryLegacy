@@ -33,7 +33,7 @@ public class GuiLLibraryMainMenu extends GuiOverride
 
         if (id == 85)
         {
-            mc.displayGuiScreen(new GuiCheckForUpdates());
+            mc.displayGuiScreen(new GuiModUpdates());
         }
     }
 }

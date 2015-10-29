@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -33,7 +32,6 @@ public class SurvivalTab
 
     private SurvivalTab(int i, String l)
     {
-        LLibrary.logger.info("Creating survival tab with index " + i);
         index = i;
         label = l;
     }
