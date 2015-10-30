@@ -78,6 +78,8 @@ artifacts {
 
 import groovy.json.JsonSlurper
 curseforge {
+    debug = true
+
     def secretFile = file "secret.properties"
     secretFile.withReader {
         def prop = new Properties()
@@ -88,13 +90,20 @@ curseforge {
     def url = "https://github.com/iLexiconn/LLibrary/raw/version/versions.json".toURL()
     def versions = new JsonSlurper().parseText url.text
 
+    def type = "release"
+    def latestVersion = ""
+    versions.versions.each{version, changelog -> latestVersion = version}
+    if (versions.beta == latestVersion) {
+        type = "beta"
+    }
+
     apiKey = secret.curseForgeApiKey
 
     project {
         id = "230798"
     
-        releaseType = "release"
-        changelog = versions.versions[versions.release].join("\n")
+        releaseType = type
+        changelog = versions.versions[versions.getAt(type)].join("\n")
 
         addGameVersion config.minecraft_version
         
