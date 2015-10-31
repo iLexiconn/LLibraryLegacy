@@ -76,6 +76,7 @@
         ],
         "0.5.0-beta1":
         [
+            "- Beta 1",
             "Added toast builder",
             "Added survival tab builder",
             "Added methods to scale entities",
@@ -89,6 +90,28 @@
             "Fixed detection of outdated updates",
             "Fixed toast fade-out animation",
             "Removed update command",
+            "",
+            "Please remove your config file before installing this update!"
+        ],
+        "0.5.0-beta2":
+        [
+            "- Beta 1",
+            "Added toast builder",
+            "Added survival tab builder",
+            "Added methods to scale entities",
+            "Added new event hook system for player model",
+            "Added update types to checker",
+            "Added new player render hooks",
+            "Added config option for update type",
+            "Added survival tab pages. Now you can have more than 12 survival tabs.",
+            "Revamped update gui",
+            "Fixed flickering images in gui",
+            "Fixed detection of outdated updates",
+            "Fixed toast fade-out animation",
+            "Removed update command",
+            "- Beta 2",
+            "Added simple AbstractMessage register method",
+            "Fixed server-side ChainBuffer crash",
             "",
             "Please remove your config file before installing this update!"
         ]
