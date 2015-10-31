@@ -3,55 +3,6 @@
     "beta": "0.5.0-beta1",
     "versions":
     {
-        "0.1.0":
-        [
-            "Initial release"
-        ],
-        "0.2.0":
-        [
-            "Added survival tabs",
-            "Added IClientOnlyHandler for IContentHandler",
-            "Added ScreenshotHelper",
-            "Fixed crash for users without Scala",
-            "Fixed Optifine crash when overriding the player model"
-        ],
-        "0.3.0":
-        [
-            "Added world save helper",
-            "Added enchantment helper",
-            "Added generated chests helper",
-            "Added toast notifications",
-            "Added timed content handler",
-            "Added option to disable threaded screenshots",
-            "Added more structure gen methods",
-            "Added option for solid entity multiparts",
-            "Added skull helper",
-            "Added biome helper",
-            "Added more animation methods",
-            "Fixed crash for 0.1.0 mods",
-            "Fixed survival tab offset",
-            "Fixed webhelper crash",
-            "Updated forge"
-        ],
-        "0.3.1":
-        [
-            "Fixed crashes compiled with LLibrary <= 0.2.0",
-            "Added 'type' parameter to render 3d event"
-        ],
-        "0.3.2":
-        [
-            "Fixed WebHelper error"
-        ],
-        "0.3.3":
-        [
-            "Added data array variable to render 3d event"
-        ],
-        "0.3.4":
-        [
-            "Added IMC support for update checkers",
-            "Fixed other update checker bugs",
-            "Fixed development version number"
-        ],
         "0.4.0":
         [
             "Added new animation api",
@@ -117,5 +68,6 @@
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",
+    "directUpdateUrl": "http://minecraft.curseforge.com/projects/llibrary/files/2264548/download",
     "iconUrl": "http://i.imgur.com/N2CJ80g.png"
 }
