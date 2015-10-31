@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MessageLLibraryAnimationAction extends net.ilexiconn.llibrary.api.AbstractMessage<MessageLLibraryAnimationAction>
+public class MessageLLibraryAnimationAction extends AbstractMessage<MessageLLibraryAnimationAction>
 {
     public int animationId;
     public int entityId;

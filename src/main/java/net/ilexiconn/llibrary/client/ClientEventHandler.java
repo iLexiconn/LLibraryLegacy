@@ -1,7 +1,7 @@
 package net.ilexiconn.llibrary.client;
 
 import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.api.Toast;
+import net.ilexiconn.llibrary.client.toast.Toast;
 import net.ilexiconn.llibrary.client.gui.GuiButtonPage;
 import net.ilexiconn.llibrary.client.gui.GuiButtonSurvivalTab;
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
@@ -11,6 +11,7 @@ import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
+import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -124,14 +125,16 @@ public class ClientEventHandler
     public void onInitGui(GuiScreenEvent.InitGuiEvent.Post event)
     {
         int count = 2;
-        for (net.ilexiconn.llibrary.api.SurvivalTab survivalTab : net.ilexiconn.llibrary.api.SurvivalTab.getSurvivalTabList())
+        for (SurvivalTab survivalTab : SurvivalTab.getSurvivalTabList())
         {
             if (survivalTab.getContainer() != null && survivalTab.getContainer().isInstance(event.gui))
             {
-                for (net.ilexiconn.llibrary.api.SurvivalTab tab : net.ilexiconn.llibrary.api.SurvivalTab.getSurvivalTabList())
+                for (SurvivalTab tab : SurvivalTab.getSurvivalTabList())
                 {
-                    if (tab.getPage() == net.ilexiconn.llibrary.api.SurvivalTab.getCurrentPage())
+                    if (tab.getPage() == SurvivalTab.getCurrentPage())
+                    {
                         event.buttonList.add(new GuiButtonSurvivalTab(count, tab));
+                    }
                     count++;
                 }
             }
@@ -260,13 +263,15 @@ public class ClientEventHandler
             {
                 Toast toast = iterator.next();
                 if (toast.tick() <= 0)
+                {
                     iterator.remove();
+                }
             }
         }
     }
 
     @SubscribeEvent
-    public void onSurvivalTabClick(net.ilexiconn.llibrary.api.SurvivalTab.ClickEvent event)
+    public void onSurvivalTabClick(SurvivalTab.ClickEvent event)
     {
         if (event.getSurvivalTab() == LLibrary.tabInventory)
         {

@@ -15,7 +15,13 @@ public class LLibraryConfigHandler implements IConfigHandler
         threadedScreenshots = config.getBoolean("Threaded Screenshots", Configuration.CATEGORY_GENERAL, true, "Enable threaded screenshots. Disable this if you experience crashes. (Restart required)");
         updateType = UpdateType.valueOf(config.getString("Update Type", Configuration.CATEGORY_GENERAL, "Release", "Select the type of updates you want to receive. Be warned though, there may be lots of bugs is alpha and beta versions.", new String[]{"Release", "Beta", "Alpha"}).toUpperCase());
 
-        if (lastUpdateType == null) lastUpdateType = updateType;
-        else if (lastUpdateType != updateType) new UpdateCheckerThread().start();
+        if (lastUpdateType == null)
+        {
+            lastUpdateType = updateType;
+        }
+        else if (lastUpdateType != updateType)
+        {
+            new UpdateCheckerThread().start();
+        }
     }
 }

@@ -2,7 +2,7 @@ package net.ilexiconn.llibrary.client.gui;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import net.ilexiconn.llibrary.api.Toast;
+import net.ilexiconn.llibrary.client.toast.Toast;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

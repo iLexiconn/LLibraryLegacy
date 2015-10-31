@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MessageLLibraryIntemittentAnimation extends net.ilexiconn.llibrary.api.AbstractMessage<MessageLLibraryIntemittentAnimation>
+public class MessageLLibraryIntemittentAnimation extends AbstractMessage<MessageLLibraryIntemittentAnimation>
 {
     private int entityId;
     private byte intermittentAnimationId;

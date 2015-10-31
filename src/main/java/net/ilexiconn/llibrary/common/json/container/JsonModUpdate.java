@@ -54,19 +54,27 @@ public class JsonModUpdate
     public ArtifactVersion getRelease()
     {
         if (releaseVersion == null)
+        {
             releaseVersion = new DefaultArtifactVersion(modid, release == null ? newestVersion : release);
+        }
         return releaseVersion;
     }
 
     public ArtifactVersion getBeta()
     {
-        if (betaVersion == null && beta != null) betaVersion = new DefaultArtifactVersion(modid, beta);
+        if (betaVersion == null && beta != null)
+        {
+            betaVersion = new DefaultArtifactVersion(modid, beta);
+        }
         return betaVersion;
     }
 
     public ArtifactVersion getAlpha()
     {
-        if (alphaVersion == null && alpha != null) alphaVersion = new DefaultArtifactVersion(modid, alpha);
+        if (alphaVersion == null && alpha != null)
+        {
+            alphaVersion = new DefaultArtifactVersion(modid, alpha);
+        }
         return alphaVersion;
     }
 

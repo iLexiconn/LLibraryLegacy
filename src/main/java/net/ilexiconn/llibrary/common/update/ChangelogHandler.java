@@ -19,7 +19,10 @@ public class ChangelogHandler
             List<String> list = getVersionChangelog(mod, version);
             return list.toArray(new String[list.size()]);
         }
-        else return new String[0];
+        else
+        {
+            return new String[0];
+        }
     }
 
     private static List<String> getVersionChangelog(JsonModUpdate mod, ArtifactVersion version)

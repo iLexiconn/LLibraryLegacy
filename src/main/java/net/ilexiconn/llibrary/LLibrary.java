@@ -1,6 +1,6 @@
 package net.ilexiconn.llibrary;
 
-import net.ilexiconn.llibrary.api.SurvivalTab;
+import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.ServerProxy;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
@@ -62,7 +62,9 @@ public class LLibrary
         for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet())
         {
             if (contentHandlerEntry.getKey() == InitializationState.INIT)
+            {
                 ContentHelper.init(true, contentHandlerEntry.getValue());
+            }
         }
     }
 
@@ -74,7 +76,9 @@ public class LLibrary
         for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet())
         {
             if (contentHandlerEntry.getKey() == InitializationState.POSTINIT)
+            {
                 ContentHelper.init(true, contentHandlerEntry.getValue());
+            }
         }
     }
 
@@ -90,9 +94,15 @@ public class LLibrary
                     ModContainer modContainer = null;
                     for (ModContainer mod : Loader.instance().getModList())
                     {
-                        if (mod.getModId().equals(message.getSender())) modContainer = mod;
+                        if (mod.getModId().equals(message.getSender()))
+                        {
+                            modContainer = mod;
+                        }
                     }
-                    if (modContainer == null) throw new Exception();
+                    if (modContainer == null)
+                    {
+                        throw new Exception();
+                    }
                     UpdateHelper.registerUpdateChecker(modContainer, message.getStringValue());
                 }
                 catch (Exception e)

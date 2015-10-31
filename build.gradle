@@ -97,8 +97,6 @@ publishing {
 
 import groovy.json.JsonSlurper
 curseforge {
-    debug = true
-
     def url = "https://github.com/iLexiconn/LLibrary/raw/version/versions.json".toURL()
     def versions = new JsonSlurper().parseText url.text
 

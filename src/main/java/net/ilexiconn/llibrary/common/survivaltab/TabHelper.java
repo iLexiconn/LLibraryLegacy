@@ -1,7 +1,5 @@
 package net.ilexiconn.llibrary.common.survivaltab;
 
-import net.ilexiconn.llibrary.api.SurvivalTab;
-
 /**
  * @deprecated Use {@link SurvivalTab} instead.
  */
@@ -11,6 +9,8 @@ public class TabHelper
     {
         SurvivalTab tab = SurvivalTab.create(survivalTab.getTabName()).setIcon(survivalTab.getTabIcon()).setContainer(survivalTab.getContainerGuiClass());
         if (survivalTab instanceof ICustomSurvivalTabTexture)
+        {
             tab.setTexture(((ICustomSurvivalTabTexture) survivalTab).getTabTexture().getResourcePath());
+        }
     }
 }

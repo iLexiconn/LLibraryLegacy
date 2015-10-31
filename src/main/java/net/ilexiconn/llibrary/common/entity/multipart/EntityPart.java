@@ -83,7 +83,9 @@ public class EntityPart extends Entity
         setLocationAndAngles(parent.posX + radius * Math.cos(parent.renderYawOffset * (Math.PI / 180f) + angleYaw), parent.posY + offsetY, parent.posZ + radius * Math.sin(parent.renderYawOffset * (Math.PI / 180f) + angleYaw), 0f, 0f);
 
         if (!worldObj.isRemote)
+        {
             collideWithNearbyEntities();
+        }
     }
 
     public boolean canBePushed()
@@ -141,7 +143,9 @@ public class EntityPart extends Entity
             {
                 Entity entity = (Entity) object;
                 if (entity != parent && !(entity instanceof EntityPart) && entity.canBePushed())
+                {
                     entity.applyEntityCollision(parent);
+                }
             }
         }
     }

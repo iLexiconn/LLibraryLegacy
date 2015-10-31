@@ -5,7 +5,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * @deprecated Use {@link net.ilexiconn.llibrary.api.SurvivalTab} instead.
+ * @deprecated Use {@link SurvivalTab} instead.
  */
 @Deprecated
 public interface ICustomSurvivalTabTexture

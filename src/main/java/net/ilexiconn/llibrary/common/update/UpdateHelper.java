@@ -56,10 +56,14 @@ public class UpdateHelper
         Class<?> modClass = mod.getClass();
 
         if (json == null)
+        {
             return;
+        }
 
         if (!modClass.isAnnotationPresent(Mod.class))
+        {
             return;
+        }
 
         Mod annotation = modClass.getAnnotation(Mod.class);
 
@@ -105,7 +109,9 @@ public class UpdateHelper
         JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(urls), JsonModUpdate.class);
 
         if (json == null)
+        {
             return;
+        }
 
         json.modid = mod.getModId();
         json.currentVersion = mod.getVersion();

@@ -28,7 +28,10 @@ public class LayerLLibraryArrow implements LayerRenderer
 
     public void doRenderLayer(EntityLivingBase entity, float f8, float f7, float partialTicks, float f5, float f4, float f9, float size)
     {
-        if (MinecraftForge.EVENT_BUS.post(new RenderStuckArrowEvent.Pre(entity, renderer, partialTicks))) return;
+        if (MinecraftForge.EVENT_BUS.post(new RenderStuckArrowEvent.Pre(entity, renderer, partialTicks)))
+        {
+            return;
+        }
 
         int i = entity.getArrowCountInEntity();
 

@@ -40,9 +40,13 @@ public class ConfigHelper
     public static ConfigContainer getConfigContainer(String modid)
     {
         if (hasConfiguration(modid))
+        {
             return configHandlers.get(modid);
+        }
         else
+        {
             return null;
+        }
     }
 
     /**
@@ -59,7 +63,9 @@ public class ConfigHelper
     public static void setProperty(String modid, String category, String name, String value, Property.Type type)
     {
         if (!hasConfiguration(modid))
+        {
             return;
+        }
         getConfigContainer(modid).getConfiguration().getCategory(category).put(name, new Property(name, value, type));
         FMLCommonHandler.instance().bus().post(new ConfigChangedEvent.OnConfigChangedEvent(modid, "", false, false));
     }

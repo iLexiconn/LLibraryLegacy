@@ -62,7 +62,9 @@ public class ItemHelper
         {
             ItemStack stack = iterator.next().getRecipeOutput();
             if (stack != null && stack.getItem() == item)
+            {
                 iterator.remove();
+            }
         }
     }
 

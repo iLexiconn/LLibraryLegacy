@@ -41,13 +41,21 @@ public class ColorHelper
                 green = color & 255;
 
                 if (alpha < a)
+                {
                     color += 50000;
+                }
                 else if (red < r)
+                {
                     color += 500;
+                }
                 else if (blue < g)
+                {
                     color += 25;
+                }
                 else
+                {
                     color += 1;
+                }
             }
         }
         else

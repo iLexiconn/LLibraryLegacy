@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.api;
+package net.ilexiconn.llibrary.common.survivaltab;
 
 import com.google.common.collect.Lists;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -83,20 +83,38 @@ public class SurvivalTab
 
     public int getColumn()
     {
-        if (index > 11) return ((index - 12) % 10) % 5;
-        else return index % 6;
+        if (index > 11)
+        {
+            return ((index - 12) % 10) % 5;
+        }
+        else
+        {
+            return index % 6;
+        }
     }
 
     public boolean isInFirstRow()
     {
-        if (index > 11) return ((index - 12) % 10) < 5;
-        else return index < 6;
+        if (index > 11)
+        {
+            return ((index - 12) % 10) < 5;
+        }
+        else
+        {
+            return index < 6;
+        }
     }
 
     public int getPage()
     {
-        if (index > 11) return ((index - 12) / 10) + 1;
-        else return 0;
+        if (index > 11)
+        {
+            return ((index - 12) / 10) + 1;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     public String getLabel()
