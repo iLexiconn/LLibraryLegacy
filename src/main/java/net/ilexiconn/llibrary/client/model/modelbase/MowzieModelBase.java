@@ -115,9 +115,13 @@ public class MowzieModelBase extends ModelBase
     public float rotateBox(float speed, float degree, boolean invert, float offset, float weight, float f, float f1)
     {
         if (invert)
+        {
             return -MathHelper.cos(f * speed + offset) * degree * f1 + weight * f1;
+        }
         else
+        {
             return MathHelper.cos(f * speed + offset) * degree * f1 + weight * f1;
+        }
     }
 
     /**
@@ -134,9 +138,13 @@ public class MowzieModelBase extends ModelBase
     public float moveBox(float speed, float degree, boolean bounce, float f, float f1)
     {
         if (bounce)
+        {
             return -MathHelper.abs((MathHelper.sin(f * speed) * f1 * degree));
+        }
         else
+        {
             return MathHelper.sin(f * speed) * f1 * degree - f1 * degree;
+        }
     }
 
     /**
@@ -157,7 +165,9 @@ public class MowzieModelBase extends ModelBase
     {
         int inverted = 1;
         if (invert)
+        {
             inverted = -1;
+        }
         box.rotateAngleX += MathHelper.cos(f * speed + offset) * degree * inverted * f1 + weight * f1;
     }
 
@@ -179,7 +189,9 @@ public class MowzieModelBase extends ModelBase
     {
         int inverted = 1;
         if (invert)
+        {
             inverted = -1;
+        }
         box.rotateAngleZ += MathHelper.cos(f * speed + offset) * degree * inverted * f1 + weight * f1;
     }
 
@@ -201,7 +213,9 @@ public class MowzieModelBase extends ModelBase
     {
         int inverted = 1;
         if (invert)
+        {
             inverted = -1;
+        }
         box.rotateAngleY += MathHelper.cos(f * speed + offset) * degree * inverted * f1 + weight * f1;
     }
 
@@ -221,7 +235,9 @@ public class MowzieModelBase extends ModelBase
     {
         float bob = (float) (Math.sin(f * speed) * f1 * degree - f1 * degree);
         if (bounce)
+        {
             bob = (float) -Math.abs((Math.sin(f * speed) * f1 * degree));
+        }
         box.rotationPointY += bob;
     }
 
@@ -326,7 +342,9 @@ public class MowzieModelBase extends ModelBase
     public void addPart(MowzieModelRenderer mowzieModelRenderer)
     {
         if (parts == null)
+        {
             parts = new ArrayList<MowzieModelRenderer>();
+        }
 
         parts.add(mowzieModelRenderer);
     }

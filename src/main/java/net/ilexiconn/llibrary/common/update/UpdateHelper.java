@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.common.update;
 
 import com.google.common.collect.Lists;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModContainer;
 import net.ilexiconn.llibrary.common.json.JsonFactory;
@@ -32,6 +33,7 @@ public class UpdateHelper
      * @param url the updater file
      * @throws java.io.IOException
      */
+    @Deprecated
     public static void registerUpdateChecker(Object mod, String url) throws IOException
     {
         registerUpdateChecker(mod, new String[]{url});
@@ -48,19 +50,35 @@ public class UpdateHelper
      * @param urls the updater file
      * @throws java.io.IOException
      */
+    @Deprecated
     public static void registerUpdateChecker(Object mod, String[] urls) throws IOException
     {
         JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(urls), JsonModUpdate.class);
         Class<?> modClass = mod.getClass();
 
         if (json == null)
+        {
             return;
+        }
 
         if (!modClass.isAnnotationPresent(Mod.class))
+        {
             return;
+        }
 
         Mod annotation = modClass.getAnnotation(Mod.class);
 
+        ModContainer container = null;
+        for (ModContainer c : Loader.instance().getModList())
+        {
+            if (c.getModId().equals(annotation.modid()))
+            {
+                container = c;
+                break;
+            }
+        }
+
+        json.modContainer = container;
         json.modid = annotation.modid();
         json.currentVersion = annotation.version();
         json.name = annotation.name();
@@ -101,8 +119,11 @@ public class UpdateHelper
         JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(urls), JsonModUpdate.class);
 
         if (json == null)
+        {
             return;
+        }
 
+        json.modContainer = mod;
         json.modid = mod.getModId();
         json.currentVersion = mod.getVersion();
         json.name = mod.getName();

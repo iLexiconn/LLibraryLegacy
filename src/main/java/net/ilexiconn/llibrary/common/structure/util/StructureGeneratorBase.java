@@ -224,8 +224,14 @@ public abstract class StructureGeneratorBase extends WorldGenerator
 
         if (blockRotationData.containsKey(blockID))
         {
-            if (override) blockRotationData.remove(blockID);
-            else return false;
+            if (override)
+            {
+                blockRotationData.remove(blockID);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         blockRotationData.put(blockID, rotationType);
@@ -548,7 +554,10 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                 {
                     sign.signText[i] = text[i].substring(0, 15);
                 }
-                else sign.signText[i] = text[i];
+                else
+                {
+                    sign.signText[i] = text[i];
+                }
             }
 
             return true;
@@ -669,7 +678,9 @@ public abstract class StructureGeneratorBase extends WorldGenerator
         {
             blockArrayList.add(blocks);
             if (blockArray == null)
+            {
                 blockArray = blocks;
+            }
         }
     }
 
@@ -694,7 +705,9 @@ public abstract class StructureGeneratorBase extends WorldGenerator
         blockArrayList.addAll(list);
 
         if (blockArray == null && list.size() > 0)
+        {
             blockArray = list.get(0);
+        }
     }
 
     /**
@@ -890,14 +903,19 @@ public abstract class StructureGeneratorBase extends WorldGenerator
 
         for (int[][][][] blocks : blockArrayList)
         {
-            if (!generated) break;
+            if (!generated)
+            {
+                break;
+            }
             this.blockArray = blocks;
             generated = generateLayer(world, posX, posY, posZ, rotations);
             offsetY += blocks.length;
         }
 
         if (generated)
+        {
             doPostGenProcessing(world);
+        }
 
         reset();
 
@@ -918,7 +936,9 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                 for (int z = 0; z < blockArray[y][x].length; ++z)
                 {
                     if (blockArray[y][x][z].length == 0 || blockArray[y][x][z][0] == SET_NO_BLOCK)
+                    {
                         continue;
+                    }
 
                     int rotX = posX, rotZ = posZ, rotY = posY + y + offsetY;
 
@@ -951,7 +971,9 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                     if (removeStructure)
                     {
                         if (!removeBlockAt(world, fakeID, realID, rotX, rotY, rotZ, rotations))
+                        {
                             return false;
+                        }
                     }
                     else
                     {
@@ -983,7 +1005,9 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                 && world.getBlock(x, y, z).getMaterial().blocksMovement())
         {
             if (blockRotationData.containsKey(realID))
+            {
                 meta = getMetadata(Math.abs(realID), meta, facing);
+            }
 
             if (blockRotationData.containsKey(realID) && (blockRotationData.get(realID) == ROTATION.WALL_MOUNTED || blockRotationData.get(realID) == ROTATION.LEVER))
             {
@@ -994,7 +1018,9 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                 world.setBlock(x, y, z, Block.getBlockById(realID), meta, 2);
 
                 if (blockRotationData.containsKey(realID))
+                {
                     setMetadata(world, x, y, z, meta, facing);
+                }
 
                 if (Math.abs(fakeID) > 4095)
                 {
@@ -1023,7 +1049,10 @@ public abstract class StructureGeneratorBase extends WorldGenerator
 
             for (Entity entity : list)
             {
-                if (!(entity instanceof EntityPlayer)) entity.setDead();
+                if (!(entity instanceof EntityPlayer))
+                {
+                    entity.setDead();
+                }
             }
         }
         else
@@ -1085,7 +1114,10 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     {
         int id = Block.getIdFromBlock(world.getBlock(x, y, z));
 
-        if (blockRotationData.get(id) == null) return;
+        if (blockRotationData.get(id) == null)
+        {
+            return;
+        }
 
         switch (blockRotationData.get(id))
         {
@@ -1114,7 +1146,10 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      */
     private int getMetadata(int id, int origMeta, int facing)
     {
-        if (blockRotationData.get(id) == null) return 0;
+        if (blockRotationData.get(id) == null)
+        {
+            return 0;
+        }
 
         int rotations = ((isOppositeAxis() ? structureFacing + 2 : structureFacing) + facing) % 4;
 
@@ -1131,7 +1166,10 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                     meta ^= 1;
                     break;
                 case DOOR:
-                    if (bit8 != 0) return meta;
+                    if (bit8 != 0)
+                    {
+                        return meta;
+                    }
                     meta = (bitface == 3 ? 0 : bitface + 1);
                     meta |= extra;
                     break;
@@ -1140,16 +1178,28 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                     break;
                 case PISTON_CONTAINER:
                     meta -= meta > 7 ? 8 : 0;
-                    if (meta > 1) meta = meta == 2 ? 5 : meta == 5 ? 3 : meta == 3 ? 4 : 2;
+                    if (meta > 1)
+                    {
+                        meta = meta == 2 ? 5 : meta == 5 ? 3 : meta == 3 ? 4 : 2;
+                    }
                     meta |= bit8 | bit9 << 3;
                     break;
                 case QUARTZ:
                     meta = meta == 3 ? 4 : meta == 4 ? 3 : meta;
                     break;
                 case RAIL:
-                    if (meta < 2) meta ^= 1;
-                    else if (meta < 6) meta = meta == 2 ? 5 : meta == 5 ? 3 : meta == 3 ? 4 : 2;
-                    else meta = meta == 9 ? 6 : meta + 1;
+                    if (meta < 2)
+                    {
+                        meta ^= 1;
+                    }
+                    else if (meta < 6)
+                    {
+                        meta = meta == 2 ? 5 : meta == 5 ? 3 : meta == 3 ? 4 : 2;
+                    }
+                    else
+                    {
+                        meta = meta == 9 ? 6 : meta + 1;
+                    }
                     break;
                 case REPEATER:
                     meta = (bitface == 3 ? 0 : bitface + 1) | (tickDelay << 2);
@@ -1170,17 +1220,32 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                     meta = meta == 1 ? 2 : meta == 2 ? 4 : meta == 4 ? 8 : 1;
                     break;
                 case WALL_MOUNTED:
-                    if (meta > 0 && meta < 5) meta = meta == 4 ? 1 : meta == 1 ? 3 : meta == 3 ? 2 : 4;
+                    if (meta > 0 && meta < 5)
+                    {
+                        meta = meta == 4 ? 1 : meta == 1 ? 3 : meta == 3 ? 2 : 4;
+                    }
                     break;
                 case LEVER:
                     meta -= meta > 7 ? 8 : 0;
-                    if (meta > 0 && meta < 5) meta = meta == 4 ? 1 : meta == 1 ? 3 : meta == 3 ? 2 : 4;
-                    else if (meta == 5 || meta == 6) meta = meta == 5 ? 6 : 5;
-                    else meta = meta == 7 ? 0 : 7;
+                    if (meta > 0 && meta < 5)
+                    {
+                        meta = meta == 4 ? 1 : meta == 1 ? 3 : meta == 3 ? 2 : 4;
+                    }
+                    else if (meta == 5 || meta == 6)
+                    {
+                        meta = meta == 5 ? 6 : 5;
+                    }
+                    else
+                    {
+                        meta = meta == 7 ? 0 : 7;
+                    }
                     meta |= bit8;
                     break;
                 case WOOD:
-                    if (meta > 4 && meta < 12) meta = meta < 8 ? meta + 4 : meta - 4;
+                    if (meta > 4 && meta < 12)
+                    {
+                        meta = meta < 8 ? meta + 4 : meta - 4;
+                    }
                     break;
                 default:
                     break;

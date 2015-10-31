@@ -37,22 +37,31 @@ public final class RenderLLibraryPlayer extends RenderPlayer
     public void renderFirstPersonArm(EntityPlayer player)
     {
         if (!MinecraftForge.EVENT_BUS.post(new RenderFirstPersonEvent.Pre(player, this, modelBipedMain)))
+        {
             super.renderFirstPersonArm(player);
+        }
         MinecraftForge.EVENT_BUS.post(new RenderFirstPersonEvent.Post(player, this, modelBipedMain));
     }
 
     public void renderArrowsStuckInEntity(EntityLivingBase entity, float partialTicks)
     {
         if (!MinecraftForge.EVENT_BUS.post(new RenderStuckArrowEvent.Pre(entity, this, partialTicks)))
+        {
             super.renderArrowsStuckInEntity(entity, partialTicks);
+        }
         MinecraftForge.EVENT_BUS.post(new RenderStuckArrowEvent.Post(entity, this, partialTicks));
     }
 
     public void renderLivingAt(AbstractClientPlayer player, double x, double y, double z)
     {
         if (player.isEntityAlive() && player.isPlayerSleeping())
+        {
             applyTranslation(player, x + (double) player.field_71079_bU, y + (double) player.field_71082_cx, z + (double) player.field_71089_bV);
-        else applyTranslation(player, x, y, z);
+        }
+        else
+        {
+            applyTranslation(player, x, y, z);
+        }
     }
 
     public void applyTranslation(AbstractClientPlayer player, double x, double y, double z)

@@ -53,9 +53,13 @@ public class ItemModelledArmor extends ItemArmor
     {
         int type = ((ItemArmor) itemStack.getItem()).armorType;
         if (type == 1 || type == 3)
+        {
             armorModel = armorModelReceiver.getArmorModel(0);
+        }
         else
+        {
             armorModel = armorModelReceiver.getArmorModel(1);
+        }
 
         if (armorModel != null)
         {
@@ -72,7 +76,9 @@ public class ItemModelledArmor extends ItemArmor
             armorModel.heldItemRight = entityLiving.getEquipmentInSlot(0) != null ? 1 : 0;
 
             if (entityLiving instanceof EntityPlayer)
+            {
                 armorModel.aimedBow = ((EntityPlayer) entityLiving).getItemInUseDuration() > 2;
+            }
 
             return armorModel;
         }

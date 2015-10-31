@@ -32,7 +32,9 @@ public abstract class BlockMountable extends BlockContainer
             for (EntityMountableBlock mountableBlock : mountableBlocks)
             {
                 if (mountableBlock.blockPosX == x && mountableBlock.blockPosY == y && mountableBlock.blockPosZ == z)
+                {
                     return mountableBlock.interactFirst(player);
+                }
             }
 
             float mountX = x + mountPosX;

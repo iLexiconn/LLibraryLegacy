@@ -7,7 +7,7 @@ import net.ilexiconn.llibrary.common.animation.IAnimated;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class MessageLLibraryAnimationAction extends net.ilexiconn.llibrary.api.AbstractMessage<MessageLLibraryAnimationAction>
+public class MessageLLibraryAnimationAction extends AbstractMessage<MessageLLibraryAnimationAction>
 {
     public int animationId;
     public int entityId;

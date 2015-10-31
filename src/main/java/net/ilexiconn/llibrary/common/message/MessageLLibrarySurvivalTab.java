@@ -3,11 +3,11 @@ package net.ilexiconn.llibrary.common.message;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.api.SurvivalTab;
+import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 
-public class MessageLLibrarySurvivalTab extends net.ilexiconn.llibrary.api.AbstractMessage<MessageLLibrarySurvivalTab>
+public class MessageLLibrarySurvivalTab extends AbstractMessage<MessageLLibrarySurvivalTab>
 {
     public int tabIndex;
 

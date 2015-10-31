@@ -131,9 +131,13 @@ public class BlockRotationData
         {
             LLibrary.logger.error("Block " + block + " already has a rotation type." + (override ? " Overriding previous data." : ""));
             if (override)
+            {
                 blockRotationData.remove(block);
+            }
             else
+            {
                 return false;
+            }
         }
 
         blockRotationData.put(block, rotationType);

@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.common.json.container;
 
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
@@ -19,11 +20,13 @@ import java.util.Map;
  */
 public class JsonModUpdate
 {
-    public String modid;
-    public String name;
-    public String currentVersion;
-    public BufferedImage thumbnail;
-    public UpdateType updateType;
+    public transient ModContainer modContainer;
+    public transient boolean updateQueued;
+    public transient String modid;
+    public transient String name;
+    public transient String currentVersion;
+    public transient BufferedImage thumbnail;
+    public transient UpdateType updateType;
     private transient ArtifactVersion releaseVersion;
     private transient ArtifactVersion betaVersion;
     private transient ArtifactVersion alphaVersion;
@@ -54,19 +57,27 @@ public class JsonModUpdate
     public ArtifactVersion getRelease()
     {
         if (releaseVersion == null)
+        {
             releaseVersion = new DefaultArtifactVersion(modid, release == null ? newestVersion : release);
+        }
         return releaseVersion;
     }
 
     public ArtifactVersion getBeta()
     {
-        if (betaVersion == null && beta != null) betaVersion = new DefaultArtifactVersion(modid, beta);
+        if (betaVersion == null && beta != null)
+        {
+            betaVersion = new DefaultArtifactVersion(modid, beta);
+        }
         return betaVersion;
     }
 
     public ArtifactVersion getAlpha()
     {
-        if (alphaVersion == null && alpha != null) alphaVersion = new DefaultArtifactVersion(modid, alpha);
+        if (alphaVersion == null && alpha != null)
+        {
+            alphaVersion = new DefaultArtifactVersion(modid, alpha);
+        }
         return alphaVersion;
     }
 

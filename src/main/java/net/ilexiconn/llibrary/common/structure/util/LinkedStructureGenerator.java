@@ -111,9 +111,13 @@ public class LinkedStructureGenerator
         if (!structures.isEmpty())
         {
             if (offsets.size() < structures.size())
+            {
                 addOffset(x, y, z);
+            }
             else
+            {
                 offsets.set(offsets.size() - 1, new int[]{-z, y, x});
+            }
         }
     }
 
@@ -123,7 +127,9 @@ public class LinkedStructureGenerator
     public void setLastRotation(int rot)
     {
         if (!rots.isEmpty())
+        {
             rots.set(rots.size() - 1, (byte) (rot % 4));
+        }
     }
 
     /**
@@ -146,9 +152,13 @@ public class LinkedStructureGenerator
             return;
         }
         if (gen == null)
+        {
             gen = new StructureGenerator();
+        }
         if (player != null)
+        {
             gen.setPlayerFacing(player);
+        }
         setOffsetFromRotation(player != null ? gen.getPlayerFacing() : -1);
         for (Structure structure : structures)
         {

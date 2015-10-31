@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.api.Toast;
+import net.ilexiconn.llibrary.client.toast.Toast;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class GuiHelper
      * @param x    The x position.
      * @param y    The y position.
      * @param text The text to display. Every string is rendered on a new line.
-     * @deprecated Use {@link net.ilexiconn.llibrary.api.Toast#makeText(String...)} instead.
+     * @deprecated Use {@link Toast#makeText(String...)} instead.
      */
     @Deprecated
     public static void createToast(int x, int y, String... text)

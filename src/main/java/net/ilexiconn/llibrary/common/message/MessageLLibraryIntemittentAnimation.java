@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class MessageLLibraryIntemittentAnimation extends net.ilexiconn.llibrary.api.AbstractMessage<MessageLLibraryIntemittentAnimation>
+public class MessageLLibraryIntemittentAnimation extends AbstractMessage<MessageLLibraryIntemittentAnimation>
 {
     private int entityId;
     private byte intermittentAnimationId;

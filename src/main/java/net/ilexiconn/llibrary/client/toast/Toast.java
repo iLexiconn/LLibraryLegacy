@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.api;
+package net.ilexiconn.llibrary.client.toast;
 
 import com.google.common.collect.Lists;
 import cpw.mods.fml.relauncher.Side;

@@ -95,7 +95,6 @@ public class GuiModUpdates extends GuiScreen
             {
                 JsonModUpdate mod = VersionHandler.getOutdatedMods().get(selectedIndex);
                 Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-
                 if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE))
                 {
                     try
@@ -138,6 +137,8 @@ public class GuiModUpdates extends GuiScreen
 
                 JsonModUpdate mod = VersionHandler.getOutdatedMods().get(selectedIndex);
                 String[] changelog = ChangelogHandler.getChangelog(mod, mod.getUpdateVersion());
+
+                buttonUpdate.enabled = !mod.updateQueued;
 
                 int k = modList.getLeft() + listWidth + 20 - width / 2 + 180;
                 int l = modList.getTop() - height / 2 + 100;

@@ -2,7 +2,7 @@ package net.ilexiconn.llibrary.client.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.api.SurvivalTab;
+import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -45,7 +45,10 @@ public class GuiButtonPage extends GuiButton
 
             return true;
         }
-        else return false;
+        else
+        {
+            return false;
+        }
     }
 
     public void initGui()

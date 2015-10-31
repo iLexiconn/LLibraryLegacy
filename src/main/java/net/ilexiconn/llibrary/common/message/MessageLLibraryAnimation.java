@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 import net.ilexiconn.llibrary.common.animation.IAnimated;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class MessageLLibraryAnimation extends net.ilexiconn.llibrary.api.AbstractMessage<MessageLLibraryAnimation>
+public class MessageLLibraryAnimation extends AbstractMessage<MessageLLibraryAnimation>
 {
     public int animationId;
     public int entityId;

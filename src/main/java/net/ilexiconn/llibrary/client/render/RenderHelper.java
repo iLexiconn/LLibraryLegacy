@@ -52,7 +52,9 @@ public class RenderHelper
     {
         TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
         if (textureManager == null)
+        {
             return;
+        }
         Item item = stack.getItem();
         GL11.glPushMatrix();
         Tessellator tessellator = Tessellator.instance;
@@ -65,9 +67,13 @@ public class RenderHelper
         for (int pass = 0; pass < passes; pass++)
         {
             if (stack.getItemSpriteNumber() == 0)
+            {
                 textureManager.bindTexture(TextureMap.locationBlocksTexture);
+            }
             else
+            {
                 textureManager.bindTexture(TextureMap.locationItemsTexture);
+            }
             IIcon icon = item.getIcon(stack, pass);
             float minU = icon.getMinU();
             float maxU = icon.getMaxU();

@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 /**
- * @deprecated Use {@link net.ilexiconn.llibrary.api.SurvivalTab} instead.
+ * @deprecated Use {@link SurvivalTab} instead.
  */
 public interface ISurvivalTab
 {

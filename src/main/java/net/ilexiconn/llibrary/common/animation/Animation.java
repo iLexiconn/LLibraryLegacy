@@ -23,26 +23,37 @@ public class Animation
 
     public static void sendAnimationPacket(IAnimated entity, Animation animation)
     {
-        if (FMLCommonHandler.instance().getEffectiveSide().isClient()) return;
+        if (FMLCommonHandler.instance().getEffectiveSide().isClient())
+        {
+            return;
+        }
         entity.setAnimation(animation);
         LLibrary.networkWrapper.sendToAll(new MessageLLibraryAnimation(animation.animationId, ((Entity) entity).getEntityId()));
     }
 
     public static void tickAnimations(IAnimated entity)
     {
-        if (entity.getAnimation() == null) entity.setAnimation(entity.animations()[0]);
+        if (entity.getAnimation() == null)
+        {
+            entity.setAnimation(entity.animations()[0]);
+        }
         else
         {
             if (entity.getAnimation().animationId != 0)
             {
-                if (entity.getAnimationTick() == 0) sendAnimationPacket(entity, entity.getAnimation());
+                if (entity.getAnimationTick() == 0)
+                {
+                    sendAnimationPacket(entity, entity.getAnimation());
+                }
                 if (entity.getAnimation().actions.containsKey(entity.getAnimationTick()))
                 {
                     entity.getAnimation().actions.get(entity.getAnimationTick()).execute(entity.getAnimationTick(), (Entity) entity);
                     LLibrary.networkWrapper.sendToAll(new MessageLLibraryAnimationAction(entity.getAnimation().animationId, ((Entity) entity).getEntityId(), entity.getAnimationTick()));
                 }
                 if (entity.getAnimationTick() < entity.getAnimation().duration)
+                {
                     entity.setAnimationTick(entity.getAnimationTick() + 1);
+                }
                 if (entity.getAnimationTick() == entity.getAnimation().duration)
                 {
                     entity.setAnimationTick(0);

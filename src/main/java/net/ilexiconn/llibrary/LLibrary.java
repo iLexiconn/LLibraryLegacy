@@ -11,7 +11,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
-import net.ilexiconn.llibrary.api.SurvivalTab;
 import net.ilexiconn.llibrary.common.ServerProxy;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
@@ -21,6 +20,7 @@ import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimation;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimationAction;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryIntemittentAnimation;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
+import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.crash.CrashReport;
@@ -29,7 +29,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "0.5.0-beta1", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
+@Mod(modid = "llibrary", name = "LLibrary", version = "0.5.0-beta0", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
 public class LLibrary
 {
     @Mod.Instance("llibrary")
@@ -62,7 +62,9 @@ public class LLibrary
         for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet())
         {
             if (contentHandlerEntry.getKey() == InitializationState.INIT)
+            {
                 ContentHelper.init(true, contentHandlerEntry.getValue());
+            }
         }
     }
 
@@ -74,7 +76,9 @@ public class LLibrary
         for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet())
         {
             if (contentHandlerEntry.getKey() == InitializationState.POSTINIT)
+            {
                 ContentHelper.init(true, contentHandlerEntry.getValue());
+            }
         }
     }
 
@@ -90,9 +94,15 @@ public class LLibrary
                     ModContainer modContainer = null;
                     for (ModContainer mod : Loader.instance().getModList())
                     {
-                        if (mod.getModId().equals(message.getSender())) modContainer = mod;
+                        if (mod.getModId().equals(message.getSender()))
+                        {
+                            modContainer = mod;
+                        }
                     }
-                    if (modContainer == null) throw new Exception();
+                    if (modContainer == null)
+                    {
+                        throw new Exception();
+                    }
                     UpdateHelper.registerUpdateChecker(modContainer, message.getStringValue());
                 }
                 catch (Exception e)

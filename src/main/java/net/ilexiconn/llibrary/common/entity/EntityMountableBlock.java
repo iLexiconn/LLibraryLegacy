@@ -40,11 +40,15 @@ public class EntityMountableBlock extends Entity
     public boolean interactFirst(EntityPlayer player)
     {
         if (riddenByEntity != null && riddenByEntity instanceof EntityPlayer && riddenByEntity != player)
+        {
             return true;
+        }
         else
         {
             if (!worldObj.isRemote)
+            {
                 player.mountEntity(this);
+            }
             return true;
         }
     }
@@ -53,9 +57,13 @@ public class EntityMountableBlock extends Entity
     {
         worldObj.theProfiler.startSection("entityBaseTick");
         if (riddenByEntity == null || riddenByEntity.isDead)
+        {
             setDead();
+        }
         else if (worldObj.getBlock(blockPosX, blockPosY, blockPosZ) != block)
+        {
             interactFirst((EntityPlayer) riddenByEntity);
+        }
         ticksExisted++;
         worldObj.theProfiler.endSection();
     }

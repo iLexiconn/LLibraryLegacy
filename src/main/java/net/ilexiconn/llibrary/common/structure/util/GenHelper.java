@@ -94,7 +94,9 @@ public class GenHelper
     public static boolean setEntityInStructure(World world, Entity entity, int x, int y, int z)
     {
         if (entity == null)
+        {
             return false;
+        }
 
         int i = 0;
         int iMax = (entity.width > 1f ? 16 : 4);
@@ -159,7 +161,9 @@ public class GenHelper
     public static boolean spawnEntityInStructure(World world, Entity entity, int x, int y, int z)
     {
         if (world.isRemote || entity == null)
+        {
             return false;
+        }
 
         boolean collided = setEntityInStructure(world, entity, x, y, z);
         world.spawnEntityInWorld(entity);
@@ -213,7 +217,9 @@ public class GenHelper
     public static int setHangingEntity(World world, ItemStack hanging, int x, int y, int z)
     {
         if (hanging.getItem() == null || !(hanging.getItem() instanceof ItemHangingEntity))
+        {
             return -1;
+        }
 
         if (world.getBlockMetadata(x, y, z) < 1 || world.getBlockMetadata(x, y, z) > 5)
         {
@@ -316,14 +322,18 @@ public class GenHelper
             for (int i = 0; i < sign.signText.length && i < text.length; ++i)
             {
                 if (text[i] == null)
+                {
                     LLibrary.logger.error("Uninitialized String element while setting sign text at index " + i);
+                }
                 else if (text[i].length() > 15)
                 {
                     LLibrary.logger.error(text[i] + " is too long to fit on a sign; maximum length is 15 characters.");
                     sign.signText[i] = text[i].substring(0, 15);
                 }
                 else
+                {
                     sign.signText[i] = text[i];
+                }
             }
 
             return true;
@@ -364,7 +374,9 @@ public class GenHelper
             skull.func_152107_a(type);
 
             if (rot > -1)
+            {
                 skull.func_145903_a(rot % 16);
+            }
 
             return true;
         }
@@ -387,7 +399,9 @@ public class GenHelper
     public static int getMetadata(int rotations, Block block, int origMeta)
     {
         if (BlockRotationData.getBlockRotationType(block) == null)
+        {
             return origMeta;
+        }
 
         int meta = origMeta;
         int bitface;
@@ -407,7 +421,9 @@ public class GenHelper
                     break;
                 case DOOR:
                     if (bit8 != 0)
+                    {
                         return meta;
+                    }
                     meta = (bitface == 3 ? 0 : bitface + 1);
                     meta |= extra;
                     break;
@@ -417,7 +433,9 @@ public class GenHelper
                 case PISTON_CONTAINER:
                     meta -= meta > 7 ? 8 : 0;
                     if (meta > 1)
+                    {
                         meta = meta == 2 ? 5 : meta == 5 ? 3 : meta == 3 ? 4 : 2;
+                    }
                     meta |= bit8 | bit9 << 3;
                     break;
                 case QUARTZ:
@@ -425,11 +443,17 @@ public class GenHelper
                     break;
                 case RAIL:
                     if (meta < 2)
+                    {
                         meta ^= 1;
+                    }
                     else if (meta < 6)
+                    {
                         meta = meta == 2 ? 5 : meta == 5 ? 3 : meta == 3 ? 4 : 2;
+                    }
                     else
+                    {
                         meta = meta == 9 ? 6 : meta + 1;
+                    }
                     break;
                 case REPEATER:
                     meta = (bitface == 3 ? 0 : bitface + 1) | (tickDelay << 2);
@@ -451,21 +475,31 @@ public class GenHelper
                     break;
                 case WALL_MOUNTED:
                     if (meta > 0 && meta < 5)
+                    {
                         meta = meta == 4 ? 1 : meta == 1 ? 3 : meta == 3 ? 2 : 4;
+                    }
                     break;
                 case LEVER:
                     meta -= meta > 7 ? 8 : 0;
                     if (meta > 0 && meta < 5)
+                    {
                         meta = meta == 4 ? 1 : meta == 1 ? 3 : meta == 3 ? 2 : 4;
+                    }
                     else if (meta == 5 || meta == 6)
+                    {
                         meta = meta == 5 ? 6 : 5;
+                    }
                     else
+                    {
                         meta = meta == 7 ? 0 : 7;
+                    }
                     meta |= bit8;
                     break;
                 case WOOD:
                     if (meta > 4 && meta < 12)
+                    {
                         meta = meta < 8 ? meta + 4 : meta - 4;
+                    }
                     break;
                 default:
                     break;
@@ -482,7 +516,9 @@ public class GenHelper
     {
         Block block = world.getBlock(x, y, z);
         if (BlockRotationData.getBlockRotationType(block) == null)
+        {
             return;
+        }
 
         switch (BlockRotationData.getBlockRotationType(block))
         {

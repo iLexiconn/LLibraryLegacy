@@ -2,7 +2,7 @@ package net.ilexiconn.llibrary.client.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.ilexiconn.llibrary.api.Toast;
+import net.ilexiconn.llibrary.client.toast.Toast;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -35,7 +35,9 @@ public class GuiToast extends Gui
             FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
             int opacity = (int) (toast.getDuration() * 256f / 25f);
             if (opacity > 255)
+            {
                 opacity = 255;
+            }
 
             if (opacity > 0)
             {

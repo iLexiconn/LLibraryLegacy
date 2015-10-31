@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * @deprecated Use {@link net.ilexiconn.llibrary.api.SurvivalTab} instead.
+ * @deprecated Use {@link SurvivalTab} instead.
  */
 @Deprecated
 public interface ICustomSurvivalTabTexture

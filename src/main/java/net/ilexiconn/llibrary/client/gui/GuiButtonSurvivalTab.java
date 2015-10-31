@@ -3,8 +3,8 @@ package net.ilexiconn.llibrary.client.gui;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.api.SurvivalTab;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
+import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
@@ -47,13 +47,25 @@ public class GuiButtonSurvivalTab extends GuiButton
             int xTexPos = id == 2 || id == 8 ? 0 : 28;
             int ySize = survivalTab.isInFirstRow() ? selected ? 28 : 32 : selected ? 26 : 32;
 
-            if (mc.thePlayer.getActivePotionEffects().size() > 0) xPosition += 60;
+            if (mc.thePlayer.getActivePotionEffects().size() > 0)
+            {
+                xPosition += 60;
+            }
 
-            if (survivalTab.getTexture() != null) mc.renderEngine.bindTexture(survivalTab.getTexture());
-            else mc.renderEngine.bindTexture(texture);
+            if (survivalTab.getTexture() != null)
+            {
+                mc.renderEngine.bindTexture(survivalTab.getTexture());
+            }
+            else
+            {
+                mc.renderEngine.bindTexture(texture);
+            }
             drawTexturedModalRect(xPosition, yPosition, xTexPos, yTexPos, 28, ySize);
 
-            if (!survivalTab.isInFirstRow() && selected) yPosition -= 3;
+            if (!survivalTab.isInFirstRow() && selected)
+            {
+                yPosition -= 3;
+            }
 
             RenderHelper.enableGUIStandardItemLighting();
             zLevel = 100f;
@@ -69,7 +81,9 @@ public class GuiButtonSurvivalTab extends GuiButton
             RenderHelper.disableStandardItemLighting();
 
             if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
+            {
                 drawHoveringText(Collections.singletonList(I18n.format(survivalTab.getLabel())), mouseX, mouseY);
+            }
         }
     }
 
@@ -83,9 +97,15 @@ public class GuiButtonSurvivalTab extends GuiButton
                 LLibrary.networkWrapper.sendToServer(new MessageLLibrarySurvivalTab(survivalTab.getIndex()));
                 return true;
             }
-            else return false;
+            else
+            {
+                return false;
+            }
         }
-        else return false;
+        else
+        {
+            return false;
+        }
     }
 
     public void drawHoveringText(List<String> list, int mouseX, int mouseY)
@@ -98,15 +118,24 @@ public class GuiButtonSurvivalTab extends GuiButton
             for (String line : list)
             {
                 int width = font.getStringWidth(line);
-                if (width > topWidth) topWidth = width;
+                if (width > topWidth)
+                {
+                    topWidth = width;
+                }
             }
 
             int renderX = mouseX + 12;
             int renderY = mouseY - 12;
             int i1 = 8;
 
-            if (list.size() > 1) i1 += 2 + (list.size() - 1) * 10;
-            if (renderX + topWidth > width) renderX -= 28 + topWidth;
+            if (list.size() > 1)
+            {
+                i1 += 2 + (list.size() - 1) * 10;
+            }
+            if (renderX + topWidth > width)
+            {
+                renderX -= 28 + topWidth;
+            }
 
             zLevel = 300f;
             renderItem.zLevel = 300f;
@@ -131,7 +160,10 @@ public class GuiButtonSurvivalTab extends GuiButton
             {
                 String s1 = list.get(letterIndex);
                 font.drawStringWithShadow(s1, renderX, renderY, -1);
-                if (letterIndex == 0) renderY += 2;
+                if (letterIndex == 0)
+                {
+                    renderY += 2;
+                }
                 renderY += 10;
             }
 
