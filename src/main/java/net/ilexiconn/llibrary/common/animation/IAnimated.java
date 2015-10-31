@@ -4,13 +4,13 @@ public interface IAnimated
 {
     Animation animation_none = new Animation(0, 0);
 
-    void setAnimationTick(int tick);
-
-    void setAnimation(Animation animation);
-
     int getAnimationTick();
 
+    void setAnimationTick(int tick);
+
     Animation getAnimation();
+
+    void setAnimation(Animation animation);
 
     Animation[] animations();
 }

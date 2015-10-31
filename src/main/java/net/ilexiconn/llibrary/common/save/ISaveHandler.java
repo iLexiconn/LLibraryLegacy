@@ -12,12 +12,6 @@ import java.io.ObjectOutputStream;
  */
 public interface ISaveHandler
 {
-    enum SaveType
-    {
-        OBJECT,
-        NBT
-    }
-
     /**
      * @return An array of file names
      */
@@ -56,4 +50,10 @@ public interface ISaveHandler
      * @param nbt      The NBT tag to write to
      */
     void saveNBT(String fileName, File file, NBTTagCompound nbt);
+
+    enum SaveType
+    {
+        OBJECT,
+        NBT
+    }
 }

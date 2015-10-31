@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Container for Tabula animation components.
- * 
+ *
  * @author Gegy1000
  * @since 0.1.0
  */

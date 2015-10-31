@@ -68,7 +68,9 @@ public class ChainBuffer
         }
 
         for (int i = 0; i < yawArray.length; i++)
+        {
             yawArray[i] = 0.01745329251f * yawVariation / pitchArray.length;
+        }
     }
 
     public void calculateChainWaveBuffer(float maxAngle, int bufferTime, float angleDecrement, float divider, EntityLivingBase entity)
@@ -106,7 +108,9 @@ public class ChainBuffer
         }
 
         for (int i = 0; i < pitchArray.length; i++)
+        {
             pitchArray[i] = 0.01745329251f * pitchVariation / pitchArray.length;
+        }
     }
 
     public void calculateChainSwingBuffer(float maxAngle, int bufferTime, float angleDecrement, EntityLivingBase entity)
@@ -144,7 +148,9 @@ public class ChainBuffer
         }
 
         for (int i = 0; i < yawArray.length; i++)
+        {
             yawArray[i] = 0.01745329251f * yawVariation / pitchArray.length;
+        }
     }
 
     public void calculateChainWaveBuffer(float maxAngle, int bufferTime, float angleDecrement, EntityLivingBase entity)
@@ -182,14 +188,18 @@ public class ChainBuffer
         }
 
         for (int i = 0; i < pitchArray.length; i++)
+        {
             pitchArray[i] = 0.01745329251f * pitchVariation / pitchArray.length;
+        }
     }
 
     public void applyChainSwingBuffer(MowzieModelRenderer[] boxes)
     {
         if (boxes.length == yawArray.length)
             for (int i = 0; i < boxes.length; i++)
+            {
                 boxes[i].rotateAngleY += yawArray[i];
+            }
         else
             LLibrary.logger.error("Wrong array length being used in the buffer! (Y axis)");
     }
@@ -198,7 +208,9 @@ public class ChainBuffer
     {
         if (boxes.length == pitchArray.length)
             for (int i = 0; i < boxes.length; i++)
+            {
                 boxes[i].rotateAngleX += pitchArray[i];
+            }
         else
             LLibrary.logger.error("Wrong array length being used in the buffer! (X axis)");
     }

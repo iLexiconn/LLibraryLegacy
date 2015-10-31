@@ -1,15 +1,13 @@
 package net.ilexiconn.llibrary.client.model.modelbase;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.Tessellator;
-
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author BobMowzie, gegy1000, FiskFille
@@ -33,12 +31,10 @@ public class MowzieModelRenderer extends ModelRenderer
     public float scaleX = 1f;
     public float scaleY = 1f;
     public float scaleZ = 1f;
-
-    private boolean compiled;
-    private int displayList;
-
     public ModelRenderer parent;
     public boolean hasInitPose;
+    private boolean compiled;
+    private int displayList;
 
     public MowzieModelRenderer(ModelBase modelBase, String name)
     {
@@ -377,7 +373,10 @@ public class MowzieModelRenderer extends ModelRenderer
         displayList = GLAllocation.generateDisplayLists(1);
         GL11.glNewList(displayList, GL11.GL_COMPILE);
         Tessellator tessellator = Tessellator.instance;
-        for (Object object : cubeList) ((ModelBox) object).render(tessellator, partialTicks);
+        for (Object object : cubeList)
+        {
+            ((ModelBox) object).render(tessellator, partialTicks);
+        }
         GL11.glEndList();
         compiled = true;
     }

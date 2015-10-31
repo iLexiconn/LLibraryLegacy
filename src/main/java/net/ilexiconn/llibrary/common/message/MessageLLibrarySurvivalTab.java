@@ -3,7 +3,7 @@ package net.ilexiconn.llibrary.common.message;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
-import net.ilexiconn.llibrary.api.*;
+import net.ilexiconn.llibrary.api.SurvivalTab;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 

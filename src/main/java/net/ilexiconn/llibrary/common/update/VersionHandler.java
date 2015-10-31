@@ -24,7 +24,10 @@ public class VersionHandler
         for (JsonModUpdate mod : UpdateHelper.modList)
         {
             ModContainer modContainer = null;
-            for (ModContainer c : Loader.instance().getModList()) if (c.getModId().equals(mod.modid)) modContainer = c;
+            for (ModContainer c : Loader.instance().getModList())
+            {
+                if (c.getModId().equals(mod.modid)) modContainer = c;
+            }
             if (modContainer == null) continue;
             if (mod.getUpdateVersion().compareTo(modContainer.getProcessedVersion()) > 0)
             {

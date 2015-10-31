@@ -54,10 +54,10 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class ClientEventHandler
 {
+    private static final double timeU = 1000000000 / 20;
     public static KeyBinding screenshotKeyBinding;
     private RenderPlayer prevRenderPlayer;
     private Minecraft mc = Minecraft.getMinecraft();
-    private static final double timeU = 1000000000 / 20;
     private long initialTime = System.nanoTime();
     private double deltaU = 0;
     private long timer = System.currentTimeMillis();
@@ -150,7 +150,8 @@ public class ClientEventHandler
             {
                 for (SurvivalTab tab : SurvivalTab.getSurvivalTabList())
                 {
-                    if (tab.getPage() == SurvivalTab.getCurrentPage()) event.buttonList.add(new GuiButtonSurvivalTab(count, tab));
+                    if (tab.getPage() == SurvivalTab.getCurrentPage())
+                        event.buttonList.add(new GuiButtonSurvivalTab(count, tab));
                     count++;
                 }
             }

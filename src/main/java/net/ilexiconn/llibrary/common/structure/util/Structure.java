@@ -109,7 +109,9 @@ public class Structure
     {
         int sum = 0;
         for (int[][][][] blockArray : blockArrayList)
+        {
             sum += blockArray.length;
+        }
 
         return sum;
     }

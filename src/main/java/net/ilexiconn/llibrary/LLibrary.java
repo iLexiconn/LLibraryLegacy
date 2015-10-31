@@ -61,7 +61,8 @@ public class LLibrary
     {
         for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet())
         {
-            if (contentHandlerEntry.getKey() == InitializationState.INIT) ContentHelper.init(true, contentHandlerEntry.getValue());
+            if (contentHandlerEntry.getKey() == InitializationState.INIT)
+                ContentHelper.init(true, contentHandlerEntry.getValue());
         }
     }
 
@@ -72,7 +73,8 @@ public class LLibrary
 
         for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet())
         {
-            if (contentHandlerEntry.getKey() == InitializationState.POSTINIT) ContentHelper.init(true, contentHandlerEntry.getValue());
+            if (contentHandlerEntry.getKey() == InitializationState.POSTINIT)
+                ContentHelper.init(true, contentHandlerEntry.getValue());
         }
     }
 
@@ -86,7 +88,10 @@ public class LLibrary
                 try
                 {
                     ModContainer modContainer = null;
-                    for (ModContainer mod : Loader.instance().getModList()) if (mod.getModId().equals(message.getSender())) modContainer = mod;
+                    for (ModContainer mod : Loader.instance().getModList())
+                    {
+                        if (mod.getModId().equals(message.getSender())) modContainer = mod;
+                    }
                     if (modContainer == null) throw new Exception();
                     UpdateHelper.registerUpdateChecker(modContainer, message.getStringValue());
                 }

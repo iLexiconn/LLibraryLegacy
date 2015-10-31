@@ -7,7 +7,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.creativetab.CreativeTabs;
@@ -31,13 +34,12 @@ import java.util.List;
 public abstract class GuiPickItem extends GuiScreen
 {
     public String title;
+    public ArrayList<ItemStack> itemsFiltered = Lists.newArrayList();
     private GuiScreen parentScreen;
     private GuiSlotItemStackList itemList;
     private GuiTextField textField;
     private RenderItem renderItem = new RenderItem();
     private ArrayList<ItemStack> items = Lists.newArrayList();
-    public ArrayList<ItemStack> itemsFiltered = Lists.newArrayList();
-
     private int selectedIndex;
     private int listWidth;
 

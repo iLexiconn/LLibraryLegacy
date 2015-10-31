@@ -42,57 +42,115 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * The directional values associated with player facing:
      */
     public static final int SOUTH = 0, WEST = 1, NORTH = 2, EAST = 3;
-
-    /**
-     * Valid rotation types. Each type is handled like vanilla blocks of this kind.
-     */
-    public enum ROTATION
-    {
-        ANVIL, DOOR, GENERIC, PISTON_CONTAINER, QUARTZ, RAIL, REPEATER,
-        SIGNPOST, SKULL, STAIRS, TRAPDOOR, VINE, WALL_MOUNTED, LEVER, WOOD
-    }
-
-    /**
-     * Stores the direction this structure faces. Default is EAST.
-     */
-    private int structureFacing = EAST, manualRotations = 0;
-
-    /**
-     * Stores the player's facing for structure generation
-     */
-    private int facing;
-
-    /**
-     * Stores amount to offset structure's location in the world, if any.
-     */
-    private int offsetX = 0, offsetY = 0, offsetZ = 0;
-
-    /**
-     * When true all blocks will be set to air within the structure's area.
-     */
-    private boolean removeStructure = false;
-
     /**
      * A mapping of block ids to rotation type for handling rotation. Allows custom blocks to be added.
      */
     private static final Map<Integer, ROTATION> blockRotationData = new HashMap<Integer, ROTATION>();
+    private static final GameProfile generatorName = new GameProfile(UUID.fromString("54acf800-054d-11e4-9191-0800200c9a66"), "fake");
 
-    /**
-     * Stores the data for current layer. See StructureArray.java for information on how create a blockArray.
-     */
-    private int[][][][] blockArray;
+    /** Set rotation data for vanilla blocks */
+    static
+    {
+        blockRotationData.put(Block.getIdFromBlock(Blocks.anvil), ROTATION.ANVIL);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.iron_door), ROTATION.DOOR);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.wooden_door), ROTATION.DOOR);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.bed), ROTATION.GENERIC);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.cocoa), ROTATION.GENERIC);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.fence_gate), ROTATION.GENERIC);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.pumpkin), ROTATION.GENERIC);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.lit_pumpkin), ROTATION.GENERIC);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.end_portal_frame), ROTATION.GENERIC);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.tripwire_hook), ROTATION.GENERIC);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.chest), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.trapped_chest), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.dispenser), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.dropper), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.ender_chest), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.lit_furnace), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.furnace), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.hopper), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.ladder), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.wall_sign), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.piston), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.piston_extension), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.piston_head), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.sticky_piston), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.activator_rail), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.detector_rail), ROTATION.PISTON_CONTAINER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.golden_rail), ROTATION.PISTON_CONTAINER);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.quartz_ore), ROTATION.QUARTZ);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.rail), ROTATION.RAIL);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.powered_comparator), ROTATION.REPEATER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.unpowered_comparator), ROTATION.REPEATER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.powered_repeater), ROTATION.REPEATER);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.unpowered_repeater), ROTATION.REPEATER);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.standing_sign), ROTATION.SIGNPOST);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.skull), ROTATION.SKULL);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.brick_stairs), ROTATION.STAIRS);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.stone_stairs), ROTATION.STAIRS);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.nether_brick_stairs), ROTATION.STAIRS);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.quartz_stairs), ROTATION.STAIRS);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.sandstone_stairs), ROTATION.STAIRS);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.stone_brick_stairs), ROTATION.STAIRS);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.birch_stairs), ROTATION.STAIRS);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.jungle_stairs), ROTATION.STAIRS);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.oak_stairs), ROTATION.STAIRS);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.spruce_stairs), ROTATION.STAIRS);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.acacia_stairs), ROTATION.STAIRS);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.dark_oak_stairs), ROTATION.STAIRS);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.trapdoor), ROTATION.TRAPDOOR);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.vine), ROTATION.VINE);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.lever), ROTATION.LEVER);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.stone_button), ROTATION.WALL_MOUNTED);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.wooden_button), ROTATION.WALL_MOUNTED);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.redstone_torch), ROTATION.WALL_MOUNTED);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.unlit_redstone_torch), ROTATION.WALL_MOUNTED);
+        blockRotationData.put(Block.getIdFromBlock(Blocks.torch), ROTATION.WALL_MOUNTED);
+
+        blockRotationData.put(Block.getIdFromBlock(Blocks.log), ROTATION.WOOD);
+    }
 
     /**
      * Stores a list of the structure to build, in 'layers' made up of individual blockArrays.
      */
     private final List<int[][][][]> blockArrayList = new LinkedList<int[][][][]>();
-
     /**
      * Stores blocks that need to be set post-generation, such as torches
      */
     private final List<BlockData> postGenBlocks = new LinkedList<BlockData>();
-
-    private static final GameProfile generatorName = new GameProfile(UUID.fromString("54acf800-054d-11e4-9191-0800200c9a66"), "fake");
+    /**
+     * Stores the direction this structure faces. Default is EAST.
+     */
+    private int structureFacing = EAST, manualRotations = 0;
+    /**
+     * Stores the player's facing for structure generation
+     */
+    private int facing;
+    /**
+     * Stores amount to offset structure's location in the world, if any.
+     */
+    private int offsetX = 0, offsetY = 0, offsetZ = 0;
+    /**
+     * When true all blocks will be set to air within the structure's area.
+     */
+    private boolean removeStructure = false;
+    /**
+     * Stores the data for current layer. See StructureArray.java for information on how create a blockArray.
+     */
+    private int[][][][] blockArray;
 
     /**
      * Basic constructor. Sets generator to notify other blocks of blocks it changes.
@@ -136,24 +194,6 @@ public abstract class StructureGeneratorBase extends WorldGenerator
         setStructureFacing(structureFacing);
         setOffset(offX, offY, offZ);
     }
-
-    /**
-     * Allows the use of block ids greater than 4095 as custom 'hooks' to trigger onCustomBlockAdded
-     *
-     * @param fakeID      ID you use to identify your 'event'. Absolute value must be greater than 4095
-     * @param customData1 Custom data may be used to subtype events for given fakeID
-     *                    Returns the real id of the block to spawn in the world; must be less or equal to 4095
-     */
-    public abstract int getRealBlockID(int fakeID, int customData1);
-
-    /**
-     * A custom 'hook' to allow setting of tile entities, spawning entities, etc.
-     *
-     * @param fakeID      The custom identifier used to distinguish between types
-     * @param customData1 Custom data which can be used to subtype events for given fakeID
-     * @param customData2 Additional custom data
-     */
-    public abstract void onCustomBlockAdded(World world, int x, int y, int z, int fakeID, int customData1, int customData2);
 
     /**
      * Maps a block id to a specified rotation type. Allows custom blocks to rotate with structure.
@@ -550,6 +590,24 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     }
 
     /**
+     * Allows the use of block ids greater than 4095 as custom 'hooks' to trigger onCustomBlockAdded
+     *
+     * @param fakeID      ID you use to identify your 'event'. Absolute value must be greater than 4095
+     * @param customData1 Custom data may be used to subtype events for given fakeID
+     *                    Returns the real id of the block to spawn in the world; must be less or equal to 4095
+     */
+    public abstract int getRealBlockID(int fakeID, int customData1);
+
+    /**
+     * A custom 'hook' to allow setting of tile entities, spawning entities, etc.
+     *
+     * @param fakeID      The custom identifier used to distinguish between types
+     * @param customData1 Custom data which can be used to subtype events for given fakeID
+     * @param customData2 Additional custom data
+     */
+    public abstract void onCustomBlockAdded(World world, int x, int y, int z, int fakeID, int customData1, int customData2);
+
+    /**
      * Returns facing value as set from player, or 0 if no facing was specified
      */
     public final int getPlayerFacing()
@@ -673,7 +731,9 @@ public abstract class StructureGeneratorBase extends WorldGenerator
         setStructure(structure);
         manualRotations = 0;
         for (int i = 0; i < rotations % 4; ++i)
+        {
             rotateStructureFacing();
+        }
     }
 
     /**
@@ -1044,11 +1104,11 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * This method will return the correct metadata value for the block type based on
      * how it was rotated in the world, IF and ONLY IF you used the correct metadata
      * value to set the block's default orientation for your structure's default facing.
-     * <p>
+     * <p/>
      * If your structure's front faces EAST by default, for example, and you want a wall
      * sign out front greeting all your guests, you'd better use '5' as its metadata value
      * in your blockArray so it faces EAST as well.
-     * <p>
+     * <p/>
      * Please read the blockArray notes very carefully and test out your structure to make
      * sure everything is oriented how you thought it was.
      */
@@ -1156,78 +1216,12 @@ public abstract class StructureGeneratorBase extends WorldGenerator
         offsetX = offsetY = offsetZ = 0;
     }
 
-    /** Set rotation data for vanilla blocks */
-    static
+    /**
+     * Valid rotation types. Each type is handled like vanilla blocks of this kind.
+     */
+    public enum ROTATION
     {
-        blockRotationData.put(Block.getIdFromBlock(Blocks.anvil), ROTATION.ANVIL);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.iron_door), ROTATION.DOOR);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.wooden_door), ROTATION.DOOR);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.bed), ROTATION.GENERIC);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.cocoa), ROTATION.GENERIC);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.fence_gate), ROTATION.GENERIC);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.pumpkin), ROTATION.GENERIC);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.lit_pumpkin), ROTATION.GENERIC);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.end_portal_frame), ROTATION.GENERIC);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.tripwire_hook), ROTATION.GENERIC);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.chest), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.trapped_chest), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.dispenser), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.dropper), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.ender_chest), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.lit_furnace), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.furnace), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.hopper), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.ladder), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.wall_sign), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.piston), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.piston_extension), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.piston_head), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.sticky_piston), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.activator_rail), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.detector_rail), ROTATION.PISTON_CONTAINER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.golden_rail), ROTATION.PISTON_CONTAINER);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.quartz_ore), ROTATION.QUARTZ);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.rail), ROTATION.RAIL);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.powered_comparator), ROTATION.REPEATER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.unpowered_comparator), ROTATION.REPEATER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.powered_repeater), ROTATION.REPEATER);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.unpowered_repeater), ROTATION.REPEATER);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.standing_sign), ROTATION.SIGNPOST);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.skull), ROTATION.SKULL);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.brick_stairs), ROTATION.STAIRS);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.stone_stairs), ROTATION.STAIRS);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.nether_brick_stairs), ROTATION.STAIRS);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.quartz_stairs), ROTATION.STAIRS);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.sandstone_stairs), ROTATION.STAIRS);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.stone_brick_stairs), ROTATION.STAIRS);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.birch_stairs), ROTATION.STAIRS);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.jungle_stairs), ROTATION.STAIRS);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.oak_stairs), ROTATION.STAIRS);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.spruce_stairs), ROTATION.STAIRS);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.acacia_stairs), ROTATION.STAIRS);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.dark_oak_stairs), ROTATION.STAIRS);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.trapdoor), ROTATION.TRAPDOOR);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.vine), ROTATION.VINE);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.lever), ROTATION.LEVER);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.stone_button), ROTATION.WALL_MOUNTED);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.wooden_button), ROTATION.WALL_MOUNTED);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.redstone_torch), ROTATION.WALL_MOUNTED);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.unlit_redstone_torch), ROTATION.WALL_MOUNTED);
-        blockRotationData.put(Block.getIdFromBlock(Blocks.torch), ROTATION.WALL_MOUNTED);
-
-        blockRotationData.put(Block.getIdFromBlock(Blocks.log), ROTATION.WOOD);
+        ANVIL, DOOR, GENERIC, PISTON_CONTAINER, QUARTZ, RAIL, REPEATER,
+        SIGNPOST, SKULL, STAIRS, TRAPDOOR, VINE, WALL_MOUNTED, LEVER, WOOD
     }
 }

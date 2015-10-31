@@ -6,7 +6,6 @@ import net.ilexiconn.llibrary.common.structure.StructureGenerator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -101,7 +100,7 @@ public class LinkedStructureGenerator
 
     private void addOffset(int x, int y, int z)
     {
-        offsets.add(new int[] { -z, y, x });
+        offsets.add(new int[]{-z, y, x});
     }
 
     /**
@@ -114,7 +113,7 @@ public class LinkedStructureGenerator
             if (offsets.size() < structures.size())
                 addOffset(x, y, z);
             else
-                offsets.set(offsets.size() - 1, new int[] { -z, y, x });
+                offsets.set(offsets.size() - 1, new int[]{-z, y, x});
         }
     }
 

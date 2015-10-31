@@ -2,7 +2,7 @@ package net.ilexiconn.llibrary.common.structure.util;
 
 /**
  * Stores all data needed for post-gen processing, specifically for custom 'hooks'
- * 
+ *
  * @author coolAlias
  * @see net.ilexiconn.llibrary.common.structure.util.GenHelper
  * @since 0.1.0

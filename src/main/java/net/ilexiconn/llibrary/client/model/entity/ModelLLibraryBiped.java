@@ -26,7 +26,8 @@ public final class ModelLLibraryBiped extends ModelBiped
     {
         setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
 
-        if (MinecraftForge.EVENT_BUS.post(new RenderPlayerModelEvent.Pre(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity))) return;
+        if (MinecraftForge.EVENT_BUS.post(new RenderPlayerModelEvent.Pre(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity)))
+            return;
 
         if (isChild)
         {

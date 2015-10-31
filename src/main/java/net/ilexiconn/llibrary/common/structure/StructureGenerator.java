@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 
 /**
  * This class is responsible for handling custom block hooks used in your block arrays, though currently it is here only as a place-holder.
- * 
+ *
  * @author coolAlias
  * @see net.ilexiconn.llibrary.common.structure.util.GenHelper
  * @since 0.1.0

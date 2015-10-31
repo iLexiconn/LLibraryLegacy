@@ -19,7 +19,7 @@ import org.lwjgl.opengl.GL12;
 
 /**
  * Render helper class for basic render operations and the IModelExtension.
- * 
+ *
  * @author iLexiconn
  * @author Gegy1000
  * @since 0.1.0
@@ -31,7 +31,7 @@ public class RenderHelper
 
     /**
      * Registers the given {@link net.ilexiconn.llibrary.client.render.IModelExtension}.
-     * 
+     *
      * @see net.ilexiconn.llibrary.client.render.IModelExtension
      * @since 0.1.0
      */
@@ -43,9 +43,8 @@ public class RenderHelper
 
     /**
      * Renders the given {@link net.minecraft.item.ItemStack} in 3D.
-     * 
-     * @param stack
-     *            the ItemStack you want to render.
+     *
+     * @param stack the ItemStack you want to render.
      * @see net.minecraft.item.ItemStack
      * @since 0.1.0
      */
@@ -126,7 +125,7 @@ public class RenderHelper
 
     /**
      * Register a 3D item renderer for an {@link net.minecraft.item.Item}
-     * 
+     *
      * @see net.minecraft.item.Item
      * @since 0.1.0
      */

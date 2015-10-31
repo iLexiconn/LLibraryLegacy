@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * Survival tab builder. Use this to add tabs for the survival inventory.
  *
- * @author      iLexiconn
- * @since       0.5.0
+ * @author iLexiconn
+ * @since 0.5.0
  */
 public class SurvivalTab
 {
@@ -39,8 +39,8 @@ public class SurvivalTab
     /**
      * Initialize your survival tab. You can save the result to a field if you want to edit the survival tab ever again.
      *
-     * @param l     The unlocalized survival tab label.
-     * @return      The survival tab instance.
+     * @param l The unlocalized survival tab label.
+     * @return The survival tab instance.
      */
     public static SurvivalTab create(String l)
     {
@@ -50,41 +50,30 @@ public class SurvivalTab
     }
 
     /**
-     * Set the survival tab's icon. This can be set at any time.
-     *
-     * @param i     The new icon.
-     * @return      The updated survival tab instance.
+     * For internal use only.
      */
-    public SurvivalTab setIcon(ItemStack i)
+    @Deprecated
+    public static List<SurvivalTab> getSurvivalTabList()
     {
-        icon = i;
-        return this;
+        return survivalTabList;
     }
 
     /**
-     * Set the container for this survival tab. This value is only used to check if LLibrary can show the survival tabs in your gui. Can only be used on the CLIENT side. To open containers, use {@link net.ilexiconn.llibrary.api.SurvivalTab.ClickEvent} (called on both CLIENT and SERVER side).
-     *
-     * @param c     The container to display the tabs.
-     * @return      The updated survival tab instance.
+     * For internal use only.
      */
-    @SideOnly(Side.CLIENT)
-    public SurvivalTab setContainer(Class<? extends GuiContainer> c)
+    @Deprecated
+    public static int getCurrentPage()
     {
-        container = c;
-        return this;
+        return page;
     }
 
     /**
-     * Set a custom texture for the survival tab. If null, the default texture will be used. This can be set at any time. Can only be used on the CLIENT side.
-     *
-     * @param t     The new texture.
-     * @return      The updated survival tab instance.
+     * For internal use only.
      */
-    @SideOnly(Side.CLIENT)
-    public SurvivalTab setTexture(String t)
+    @Deprecated
+    public static void setCurrentPage(int p)
     {
-        texture = new ResourceLocation(t);
-        return this;
+        page = p;
     }
 
     public int getIndex()
@@ -120,16 +109,56 @@ public class SurvivalTab
         return icon;
     }
 
+    /**
+     * Set the survival tab's icon. This can be set at any time.
+     *
+     * @param i The new icon.
+     * @return The updated survival tab instance.
+     */
+    public SurvivalTab setIcon(ItemStack i)
+    {
+        icon = i;
+        return this;
+    }
+
     @SideOnly(Side.CLIENT)
     public Class<? extends GuiContainer> getContainer()
     {
         return container;
     }
 
+    /**
+     * Set the container for this survival tab. This value is only used to check if LLibrary can show the survival tabs in your gui. Can only be used on the CLIENT side. To open containers, use {@link net.ilexiconn.llibrary.api.SurvivalTab.ClickEvent} (called on both CLIENT and SERVER side).
+     *
+     * @param c The container to display the tabs.
+     * @return The updated survival tab instance.
+     */
+    @SideOnly(Side.CLIENT)
+    public SurvivalTab setContainer(Class<? extends GuiContainer> c)
+    {
+        container = c;
+        return this;
+    }
+
+    /* =========================================== FOR INTERNAL USE ONLY =========================================== */
+
     @SideOnly(Side.CLIENT)
     public ResourceLocation getTexture()
     {
         return texture;
+    }
+
+    /**
+     * Set a custom texture for the survival tab. If null, the default texture will be used. This can be set at any time. Can only be used on the CLIENT side.
+     *
+     * @param t The new texture.
+     * @return The updated survival tab instance.
+     */
+    @SideOnly(Side.CLIENT)
+    public SurvivalTab setTexture(String t)
+    {
+        texture = new ResourceLocation(t);
+        return this;
     }
 
     /**
@@ -155,34 +184,5 @@ public class SurvivalTab
         {
             return entityPlayer;
         }
-    }
-
-    /* =========================================== FOR INTERNAL USE ONLY =========================================== */
-
-    /**
-     * For internal use only.
-     */
-    @Deprecated
-    public static List<SurvivalTab> getSurvivalTabList()
-    {
-        return survivalTabList;
-    }
-
-    /**
-     * For internal use only.
-     */
-    @Deprecated
-    public static int getCurrentPage()
-    {
-        return page;
-    }
-
-    /**
-     * For internal use only.
-     */
-    @Deprecated
-    public static void setCurrentPage(int p)
-    {
-        page = p;
     }
 }

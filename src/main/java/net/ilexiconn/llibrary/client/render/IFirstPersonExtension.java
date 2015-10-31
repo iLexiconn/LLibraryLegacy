@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 /**
  * Interface for overriding {@link net.minecraft.client.renderer.entity.RenderPlayer#renderFirstPersonArm(net.minecraft.entity.player.EntityPlayer)}.
- * 
+ *
  * @author iLexiconn
  * @see net.minecraft.client.renderer.entity.RenderPlayer
  * @see net.minecraft.client.renderer.entity.RenderPlayer#renderFirstPersonArm(net.minecraft.entity.player.EntityPlayer)

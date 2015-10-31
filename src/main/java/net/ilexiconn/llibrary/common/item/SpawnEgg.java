@@ -33,26 +33,6 @@ public class SpawnEgg extends ItemMonsterPlacer
         this.setTextureName("minecraft:spawn_egg");
     }
 
-    public String getItemStackDisplayName(ItemStack p_77653_1_)
-    {
-        String s = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
-        String s1 = LLibraryEntityList.entities.get(p_77653_1_.getItemDamage()).entityName;
-
-        if (s1 != null)
-        {
-            s = s + " " + StatCollector.translateToLocal("entity." + s1 + ".name");
-        }
-
-        return s;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack p_82790_1_, int p_82790_2_)
-    {
-        LLibraryEntityList.Entities entityegginfo = LLibraryEntityList.entities.get(Integer.valueOf(p_82790_1_.getItemDamage()));
-        return entityegginfo != null ? (p_82790_2_ == 0 ? entityegginfo.background : entityegginfo.forground) : 16777215;
-    }
-
     /**
      * Spawns the creature specified by the egg's type in the location specified by the last three parameters.
      * Parameters: world, entityID, x, y, z.
@@ -85,6 +65,26 @@ public class SpawnEgg extends ItemMonsterPlacer
 
             return entity;
         }
+    }
+
+    public String getItemStackDisplayName(ItemStack p_77653_1_)
+    {
+        String s = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
+        String s1 = LLibraryEntityList.entities.get(p_77653_1_.getItemDamage()).entityName;
+
+        if (s1 != null)
+        {
+            s = s + " " + StatCollector.translateToLocal("entity." + s1 + ".name");
+        }
+
+        return s;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getColorFromItemStack(ItemStack p_82790_1_, int p_82790_2_)
+    {
+        LLibraryEntityList.Entities entityegginfo = LLibraryEntityList.entities.get(Integer.valueOf(p_82790_1_.getItemDamage()));
+        return entityegginfo != null ? (p_82790_2_ == 0 ? entityegginfo.background : entityegginfo.forground) : 16777215;
     }
 
     /**

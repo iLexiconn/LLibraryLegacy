@@ -23,10 +23,10 @@ import java.util.List;
 public class GuiButtonCheckForUpdates extends GuiButton
 {
     protected static final ResourceLocation buttonTextures = new ResourceLocation("llibrary:textures/gui/widgets.png");
-    private boolean isHoveringOverButton;
-    private int hoverTimer;
     public int screenWidth;
     public int screenHeight;
+    private boolean isHoveringOverButton;
+    private int hoverTimer;
 
     public GuiButtonCheckForUpdates(int id, int x, int y)
     {

@@ -97,7 +97,9 @@ public class WebHelper
     public static List<String> readPastebinAsList(String[] pasteIds)
     {
         for (int i = 0; i < pasteIds.length; i++)
+        {
             pasteIds[i] = pastebinURLPrefix + pasteIds[i];
+        }
         return downloadTextFileList(pasteIds);
     }
 
@@ -110,7 +112,9 @@ public class WebHelper
     public static String readPastebin(String[] pasteIds)
     {
         for (int i = 0; i < pasteIds.length; i++)
+        {
             pasteIds[i] = pastebinURLPrefix + pasteIds[i];
+        }
         return downloadTextFile(pasteIds);
     }
 
@@ -133,7 +137,9 @@ public class WebHelper
                 String currentLine;
 
                 while ((currentLine = reader.readLine()) != null)
+                {
                     text.add(currentLine);
+                }
                 reader.close();
 
                 return text;
@@ -165,7 +171,9 @@ public class WebHelper
                 String currentLine;
 
                 while ((currentLine = reader.readLine()) != null)
+                {
                     text += currentLine + "\r\n";
+                }
                 reader.close();
 
                 return text;
@@ -196,7 +204,9 @@ public class WebHelper
                 byte[] buffer = new byte[4096];
                 int k;
                 while ((k = in.read(buffer)) != -1)
+                {
                     baos.write(buffer, 0, k);
+                }
                 baos.flush();
                 return baos.toByteArray();
             }
