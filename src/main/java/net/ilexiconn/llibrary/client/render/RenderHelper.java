@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 /**
  * Render helper class for basic render operations and the IModelExtension.
- * 
+ *
  * @author iLexiconn
  * @author Gegy1000
  * @since 0.1.0
@@ -16,7 +16,7 @@ public class RenderHelper
 {
     /**
      * Registers the given {@link net.ilexiconn.llibrary.client.render.IModelExtension}.
-     * 
+     *
      * @see net.ilexiconn.llibrary.client.render.IModelExtension
      * @since 0.1.0
      */

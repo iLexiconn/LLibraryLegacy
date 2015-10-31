@@ -25,18 +25,12 @@ public class EntityPart extends Entity
     public boolean solid;
 
     /**
-     * @param e
-     *            parent
-     * @param r
-     *            radius
-     * @param y
-     *            angle yaw
-     * @param o
-     *            y-offset
-     * @param sizeX
-     *            collision box x-size
-     * @param sizeY
-     *            collision box y-size
+     * @param e     parent
+     * @param r     radius
+     * @param y     angle yaw
+     * @param o     y-offset
+     * @param sizeX collision box x-size
+     * @param sizeY collision box y-size
      */
     public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY)
     {
@@ -44,20 +38,13 @@ public class EntityPart extends Entity
     }
 
     /**
-     * @param e
-     *            parent
-     * @param r
-     *            radius
-     * @param y
-     *            angle yaw
-     * @param o
-     *            y-offset
-     * @param sizeX
-     *            collision box x-size
-     * @param sizeY
-     *            collision box y-size
-     * @param d
-     *            damage multiplier
+     * @param e     parent
+     * @param r     radius
+     * @param y     angle yaw
+     * @param o     y-offset
+     * @param sizeX collision box x-size
+     * @param sizeY collision box y-size
+     * @param d     damage multiplier
      */
     public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY, float d)
     {
@@ -65,22 +52,14 @@ public class EntityPart extends Entity
     }
 
     /**
-     * @param e
-     *            parent
-     * @param r
-     *            radius
-     * @param y
-     *            angle yaw
-     * @param o
-     *            y-offset
-     * @param sizeX
-     *            collision box x-size
-     * @param sizeY
-     *            collision box y-size
-     * @param d
-     *            damage multiplier
-     * @param s
-     *            solid
+     * @param e     parent
+     * @param r     radius
+     * @param y     angle yaw
+     * @param o     y-offset
+     * @param sizeX collision box x-size
+     * @param sizeY collision box y-size
+     * @param d     damage multiplier
+     * @param s     solid
      */
     public EntityPart(EntityLivingBase e, float r, float y, float o, float sizeX, float sizeY, float d, boolean s)
     {

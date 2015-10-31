@@ -35,14 +35,14 @@ public class LayerLLibraryArrow implements LayerRenderer
         if (i > 0)
         {
             EntityArrow entityarrow = new EntityArrow(entity.worldObj, entity.posX, entity.posY, entity.posZ);
-            Random random = new Random((long)entity.getEntityId());
+            Random random = new Random((long) entity.getEntityId());
             RenderHelper.disableStandardItemLighting();
 
             for (int j = 0; j < i; ++j)
             {
                 GlStateManager.pushMatrix();
                 ModelRenderer modelrenderer = this.renderer.getMainModel().getRandomModelBox(random);
-                ModelBox modelbox = (ModelBox)modelrenderer.cubeList.get(random.nextInt(modelrenderer.cubeList.size()));
+                ModelBox modelbox = (ModelBox) modelrenderer.cubeList.get(random.nextInt(modelrenderer.cubeList.size()));
                 modelrenderer.postRender(0.0625F);
                 float f14 = random.nextFloat();
                 float f15 = random.nextFloat();
@@ -58,8 +58,8 @@ public class LayerLLibraryArrow implements LayerRenderer
                 f15 *= -1.0F;
                 f16 *= -1.0F;
                 float f13 = MathHelper.sqrt_float(f14 * f14 + f16 * f16);
-                entityarrow.prevRotationYaw = entityarrow.rotationYaw = (float)(Math.atan2((double)f14, (double)f16) * 180.0D / Math.PI);
-                entityarrow.prevRotationPitch = entityarrow.rotationPitch = (float)(Math.atan2((double)f15, (double)f13) * 180.0D / Math.PI);
+                entityarrow.prevRotationYaw = entityarrow.rotationYaw = (float) (Math.atan2((double) f14, (double) f16) * 180.0D / Math.PI);
+                entityarrow.prevRotationPitch = entityarrow.rotationPitch = (float) (Math.atan2((double) f15, (double) f13) * 180.0D / Math.PI);
                 double d0 = 0.0D;
                 double d1 = 0.0D;
                 double d2 = 0.0D;

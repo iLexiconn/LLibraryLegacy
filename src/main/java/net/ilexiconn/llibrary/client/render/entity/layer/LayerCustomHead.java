@@ -26,8 +26,8 @@ import java.util.UUID;
 @SideOnly(Side.CLIENT)
 public class LayerCustomHead implements LayerRenderer
 {
-    private final ModelRenderer field_177209_a;
     private static final String __OBFID = "CL_00002422";
+    private final ModelRenderer field_177209_a;
 
     public LayerCustomHead(ModelRenderer p_i46120_1_)
     {
@@ -49,7 +49,7 @@ public class LayerCustomHead implements LayerRenderer
                 GlStateManager.translate(0.0F, 0.2F, 0.0F);
             }
 
-            boolean flag = p_177141_1_ instanceof EntityVillager || p_177141_1_ instanceof EntityZombie && ((EntityZombie)p_177141_1_).isVillager();
+            boolean flag = p_177141_1_ instanceof EntityVillager || p_177141_1_ instanceof EntityZombie && ((EntityZombie) p_177141_1_).isVillager();
             float f7;
 
             if (!flag && p_177141_1_.isChild())

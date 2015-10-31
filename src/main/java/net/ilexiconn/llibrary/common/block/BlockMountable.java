@@ -33,8 +33,10 @@ public abstract class BlockMountable extends BlockContainer
         {
             List<EntityMountableBlock> mountableBlocks = world.getEntitiesWithinAABB(EntityMountableBlock.class, AxisAlignedBB.fromBounds(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1f, pos.getY() + 1f, pos.getZ() + 1f).expand(1f, 1f, 1f));
             for (EntityMountableBlock mountableBlock : mountableBlocks)
+            {
                 if (mountableBlock.blockPos == pos)
                     return mountableBlock.interactFirst(player);
+            }
 
             float mountX = pos.getX() + mountPosX;
             float mountY = pos.getY() + mountPosY;
@@ -54,7 +56,9 @@ public abstract class BlockMountable extends BlockContainer
         {
             List<EntityMountableBlock> mountableBlocks = world.getEntitiesWithinAABB(EntityMountableBlock.class, AxisAlignedBB.fromBounds(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1f, pos.getY() + 1f, pos.getZ() + 1f).expand(1f, 1f, 1f));
             for (EntityMountableBlock mountableBlock : mountableBlocks)
+            {
                 mountableBlock.setDead();
+            }
         }
     }
 

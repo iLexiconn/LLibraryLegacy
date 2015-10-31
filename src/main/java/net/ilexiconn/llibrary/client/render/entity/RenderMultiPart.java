@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL11;
 
 /**
  * Basic class for debugging entity classes with {@link net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart}.
- * 
+ *
  * @author iLexiconn
  * @see net.ilexiconn.llibrary.common.entity.multipart.EntityPart
  * @see net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart
@@ -43,7 +43,9 @@ public abstract class RenderMultiPart extends RenderLiving
             GL11.glDisable(GL11.GL_CULL_FACE);
             GL11.glDisable(GL11.GL_BLEND);
             for (EntityPart e : entity.getParts())
+            {
                 RenderGlobal.drawOutlinedBoundingBox(e.getBoundingBox().offset(-renderManager.viewerPosX, -renderManager.viewerPosY, -renderManager.viewerPosZ), 0xffffff);
+            }
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glEnable(GL11.GL_CULL_FACE);

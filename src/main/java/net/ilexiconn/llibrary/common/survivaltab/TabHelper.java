@@ -10,6 +10,7 @@ public class TabHelper
     public static void registerSurvivalTab(ISurvivalTab survivalTab)
     {
         SurvivalTab tab = SurvivalTab.create(survivalTab.getTabName()).setIcon(survivalTab.getTabIcon()).setContainer(survivalTab.getContainerGuiClass());
-        if (survivalTab instanceof ICustomSurvivalTabTexture) tab.setTexture(((ICustomSurvivalTabTexture) survivalTab).getTabTexture().getResourcePath());
+        if (survivalTab instanceof ICustomSurvivalTabTexture)
+            tab.setTexture(((ICustomSurvivalTabTexture) survivalTab).getTabTexture().getResourcePath());
     }
 }

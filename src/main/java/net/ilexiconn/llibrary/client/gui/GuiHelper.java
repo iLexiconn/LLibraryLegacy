@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * Helper class for GUIs.
- * 
+ *
  * @author FiskFille
  * @author iLexiconn
  * @since 0.1.0
@@ -20,11 +20,15 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class GuiHelper
 {
+    private static Map<GuiOverride, Class<? extends GuiScreen>> overrideMap = Maps.newHashMap();
+
+    /* x */
+
     /**
-     * @deprecated  Use {@link Toast#makeText(String...)} instead.
-     * @param x     The x position.
-     * @param y     The y position.
-     * @param text  The text to display. Every string is rendered on a new line.
+     * @param x    The x position.
+     * @param y    The y position.
+     * @param text The text to display. Every string is rendered on a new line.
+     * @deprecated Use {@link Toast#makeText(String...)} instead.
      */
     @Deprecated
     public static void createToast(int x, int y, String... text)
@@ -32,9 +36,6 @@ public class GuiHelper
         Toast.makeText(text).setPosition(x, y).show();
     }
 
-    /* x */
-
-    private static Map<GuiOverride, Class<? extends GuiScreen>> overrideMap = Maps.newHashMap();
     /**
      * A method for adding {@link GuiOverride} to an existing {@link GuiScreen} or {@link net.minecraft.client.gui.inventory.GuiContainer} {@link GuiOverride} classes may get added twice.
      *
@@ -46,6 +47,7 @@ public class GuiHelper
     {
         overrideMap.put(gui, clazz);
     }
+
     /**
      * Get a list of all the overrides of a specific GUI class.
      *

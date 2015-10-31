@@ -23,6 +23,7 @@ public class MessageLLibraryIntemittentAnimation extends net.ilexiconn.llibrary.
         entityId = entity.getEntityId();
         intermittentAnimationId = id;
     }
+
     public void toBytes(ByteBuf buf)
     {
         buf.writeInt(entityId);

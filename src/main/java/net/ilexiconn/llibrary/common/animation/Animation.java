@@ -21,11 +21,6 @@ public class Animation
         duration = d;
     }
 
-    public void registerAction(int tick, IAnimationAction action)
-    {
-        actions.put(tick, action);
-    }
-
     public static void sendAnimationPacket(IAnimated entity, Animation animation)
     {
         if (FMLCommonHandler.instance().getEffectiveSide().isClient()) return;
@@ -46,7 +41,8 @@ public class Animation
                     entity.getAnimation().actions.get(entity.getAnimationTick()).execute(entity.getAnimationTick(), (Entity) entity);
                     LLibrary.networkWrapper.sendToAll(new MessageLLibraryAnimationAction(entity.getAnimation().animationId, ((Entity) entity).getEntityId(), entity.getAnimationTick()));
                 }
-                if (entity.getAnimationTick() < entity.getAnimation().duration) entity.setAnimationTick(entity.getAnimationTick() + 1);
+                if (entity.getAnimationTick() < entity.getAnimation().duration)
+                    entity.setAnimationTick(entity.getAnimationTick() + 1);
                 if (entity.getAnimationTick() == entity.getAnimation().duration)
                 {
                     entity.setAnimationTick(0);
@@ -54,5 +50,10 @@ public class Animation
                 }
             }
         }
+    }
+
+    public void registerAction(int tick, IAnimationAction action)
+    {
+        actions.put(tick, action);
     }
 }

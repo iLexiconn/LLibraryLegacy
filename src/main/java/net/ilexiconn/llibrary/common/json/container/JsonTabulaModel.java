@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Container class for {@link net.ilexiconn.llibrary.client.model.tabula.ModelJson}. Use {@link net.ilexiconn.llibrary.common.json.JsonHelper#parseTabulaModel(InputStream)} to get a new instance.
- * 
+ *
  * @author Gegy1000
  * @see net.ilexiconn.llibrary.client.model.tabula.ModelJson
  * @since 0.1.0
@@ -19,7 +19,7 @@ public class JsonTabulaModel
     private int textureWidth = 64;
     private int textureHeight = 32;
 
-    private double[] scale = new double[] { 1d, 1d, 1d };
+    private double[] scale = new double[]{1d, 1d, 1d};
 
     private ArrayList<CubeGroup> cubeGroups;
     private ArrayList<CubeInfo> cubes;

@@ -31,12 +31,10 @@ public class MowzieModelRenderer extends ModelRenderer
     public float scaleX = 1f;
     public float scaleY = 1f;
     public float scaleZ = 1f;
-
-    private boolean compiled;
-    private int displayList;
-
     public ModelRenderer parent;
     public boolean hasInitPose;
+    private boolean compiled;
+    private int displayList;
 
     public MowzieModelRenderer(ModelBase modelBase, String name)
     {
@@ -374,7 +372,10 @@ public class MowzieModelRenderer extends ModelRenderer
     {
         displayList = GLAllocation.generateDisplayLists(1);
         GL11.glNewList(displayList, GL11.GL_COMPILE);
-        for (Object object : cubeList) ((ModelBox) object).render(Tessellator.getInstance().getWorldRenderer(), partialTicks);
+        for (Object object : cubeList)
+        {
+            ((ModelBox) object).render(Tessellator.getInstance().getWorldRenderer(), partialTicks);
+        }
         GL11.glEndList();
         compiled = true;
     }

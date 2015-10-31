@@ -4,7 +4,7 @@ import net.ilexiconn.llibrary.common.color.EnumChatColor;
 
 /**
  * Container class for chat messages.
- * 
+ *
  * @author FiskFille
  * @see net.ilexiconn.llibrary.common.command.ChatHelper
  * @since 0.1.0

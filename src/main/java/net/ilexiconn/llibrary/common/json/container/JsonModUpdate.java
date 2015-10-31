@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * Container class for {@link net.ilexiconn.llibrary.common.update.UpdateHelper}
- * 
+ *
  * @author iLexiconn
  * @author FiskFille
  * @see net.ilexiconn.llibrary.common.update.UpdateHelper
@@ -19,26 +19,22 @@ import java.util.Map;
  */
 public class JsonModUpdate
 {
-    private transient ArtifactVersion releaseVersion;
-    private transient ArtifactVersion betaVersion;
-    private transient ArtifactVersion alphaVersion;
-
-    private Map<String, List<String>> versions;
-    private String updateUrl;
-    private String iconUrl;
-
-    @Deprecated
-    private String newestVersion;
-
-    private String release;
-    private String beta;
-    private String alpha;
-
     public String modid;
     public String name;
     public String currentVersion;
     public BufferedImage thumbnail;
     public UpdateType updateType;
+    private transient ArtifactVersion releaseVersion;
+    private transient ArtifactVersion betaVersion;
+    private transient ArtifactVersion alphaVersion;
+    private Map<String, List<String>> versions;
+    private String updateUrl;
+    private String iconUrl;
+    @Deprecated
+    private String newestVersion;
+    private String release;
+    private String beta;
+    private String alpha;
 
     public Map<String, List<String>> getVersions()
     {
@@ -57,7 +53,8 @@ public class JsonModUpdate
 
     public ArtifactVersion getRelease()
     {
-        if (releaseVersion == null) releaseVersion = new DefaultArtifactVersion(modid, release == null ? newestVersion : release);
+        if (releaseVersion == null)
+            releaseVersion = new DefaultArtifactVersion(modid, release == null ? newestVersion : release);
         return releaseVersion;
     }
 

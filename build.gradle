@@ -1,6 +1,7 @@
 plugins {
-    id "net.minecraftforge.gradle.forge" version "2.0.1"
+    id "net.minecraftforge.gradle.forge" version "2.0.2"
     id "com.matthewprenger.cursegradle" version "1.0.3"
+    id "maven-publish"
 }
 
 ext.configFile = file "build.properties"
@@ -8,6 +9,13 @@ configFile.withReader {
     def prop = new Properties()
     prop.load(it)
     project.ext.config = new ConfigSlurper().parse prop
+}
+
+def secretFile = file "secret.properties"
+secretFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.secret = new ConfigSlurper().parse prop
 }
 
 version = config.mod_version + "-" + config.minecraft_version
@@ -53,16 +61,43 @@ artifacts {
     archives devJar, sourceJar
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId "net.ilexiconn"
+            artifactId "llibrary"
+            version config.mod_version + "-" + config.minecraft_version
+
+            from components.java
+
+            artifact devJar {
+                classifier "dev"
+            }
+
+            artifact sourceJar {
+                classifier "sources"
+            }
+
+            pom.withXml {
+                asNode().appendNode("description", "The modding library that claims to be lightweight")
+                asNode().appendNode("url", "https://github.com/iLexiconn/LLibrary")
+            }
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username secret.username
+                password secret.password
+            }
+            url secret.repo
+        }
+    }
+}
+
 import groovy.json.JsonSlurper
 curseforge {
     debug = true
-
-    def secretFile = file "secret.properties"
-    secretFile.withReader {
-        def prop = new Properties()
-        prop.load(it)
-        project.ext.secret = new ConfigSlurper().parse prop
-    }
 
     def url = "https://github.com/iLexiconn/LLibrary/raw/version/versions.json".toURL()
     def versions = new JsonSlurper().parseText url.text

@@ -34,8 +34,7 @@ public class ControlledAnimation
     /**
      * Sets the duration of the animation in ticks. Try values around 50.
      *
-     * @param duration
-     *            is the maximum number of ticks that the timer can reach.
+     * @param duration is the maximum number of ticks that the timer can reach.
      */
     public void setDuration(int d)
     {
@@ -56,8 +55,7 @@ public class ControlledAnimation
     /**
      * Sets the timer to a specific value.
      *
-     * @param time
-     *            is the number of ticks to be set.
+     * @param time is the number of ticks to be set.
      */
     public void setTimer(int time)
     {
@@ -109,8 +107,7 @@ public class ControlledAnimation
     /**
      * Increases the timer by a specific value.
      *
-     * @param time
-     *            is the number of ticks to be increased in the timer
+     * @param time is the number of ticks to be increased in the timer
      */
     public void increaseTimer(int time)
     {
@@ -148,8 +145,7 @@ public class ControlledAnimation
     /**
      * Decreases the timer by a specific value.
      *
-     * @param time
-     *            is the number of ticks to be decreased in the timer
+     * @param time is the number of ticks to be decreased in the timer
      */
     public void decreaseTimer(int time)
     {
@@ -249,8 +245,7 @@ public class ControlledAnimation
      * of the animation. It reaches 1.0F using a sine function to a specific
      * power "i."
      *
-     * @param i
-     *            is the power of the sine function.
+     * @param i is the power of the sine function.
      */
     public float getAnimationProgressSinPowerOf(float partialRenderTicks, int i)
     {
@@ -286,8 +281,7 @@ public class ControlledAnimation
      * of the animation. It reaches 1.0F using x^n / (x^n + (1-x)^n). It is
      * steeper when n increases.
      *
-     * @param n
-     *            is the power of the polynomial function.
+     * @param n is the power of the polynomial function.
      */
     public float getAnimationProgressPolyN(float partialRenderTicks, int n)
     {

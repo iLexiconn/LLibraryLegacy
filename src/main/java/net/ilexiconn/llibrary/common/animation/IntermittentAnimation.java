@@ -48,16 +48,15 @@ public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEnti
     private byte id;
 
     /**
-     * 
-     * @param id id of this intermittent animation
-     * @param entity entity that uses this intermittent animation
-     * @param duration duration
-     * @param intervalDuration minium ticks between animation cycles
+     * @param id                id of this intermittent animation
+     * @param entity            entity that uses this intermittent animation
+     * @param duration          duration
+     * @param intervalDuration  minium ticks between animation cycles
      * @param startPropbability propbablity that the animation will begain, higher values have lower probability
-     * @param isOperator If true this intermittent animation will run logic for starting animation,
-     * If you want this intermittent animation to be syncronized between the server and the client
-     * contruct this intermittent animation with isOperator = !entity.worldObj.isRemote, of client only
-     * then isOperator should be true
+     * @param isOperator        If true this intermittent animation will run logic for starting animation,
+     *                          If you want this intermittent animation to be syncronized between the server and the client
+     *                          contruct this intermittent animation with isOperator = !entity.worldObj.isRemote, of client only
+     *                          then isOperator should be true
      */
     public IntermittentAnimation(int id, T entity, int duration, int intervalDuration, int startPropbability, boolean isOperator)
     {
@@ -79,8 +78,7 @@ public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEnti
     /**
      * Sets the timer to a specific value.
      *
-     * @param timeRunning
-     *            is the number of ticks to be set.
+     * @param timeRunning is the number of ticks to be set.
      */
     public void setTimeRunning(int timeRunning)
     {
@@ -168,8 +166,7 @@ public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEnti
     /**
      * Decreases the timer by a specific value.
      *
-     * @param timeDelta
-     *            is the number of ticks to be decreased in the timer
+     * @param timeDelta is the number of ticks to be decreased in the timer
      */
     public void stop(int timeDelta)
     {

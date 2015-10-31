@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 /**
- * @deprecated      Use {@link net.ilexiconn.llibrary.api.AbstractMessage} instead.
+ * @deprecated Use {@link net.ilexiconn.llibrary.api.AbstractMessage} instead.
  */
 @Deprecated
 public abstract class AbstractMessage<M extends AbstractMessage> implements IMessage, IMessageHandler<M, IMessage>

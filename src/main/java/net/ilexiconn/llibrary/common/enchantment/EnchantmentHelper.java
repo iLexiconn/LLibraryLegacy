@@ -10,7 +10,7 @@ public class EnchantmentHelper
 {
     /**
      * Removes the specified enchantment from minecraft
-     * 
+     *
      * @since 0.2.1
      */
     public static void removeEnchantment(Enchantment enchantment)

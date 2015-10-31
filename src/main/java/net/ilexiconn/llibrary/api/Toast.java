@@ -11,8 +11,8 @@ import java.util.List;
 /**
  * Toast builder. Use this to send toast messages to the player. Can only be used on the CLIENT side.
  *
- * @author      iLexiconn
- * @since       0.5.0
+ * @author iLexiconn
+ * @since 0.5.0
  */
 @SideOnly(Side.CLIENT)
 public class Toast
@@ -36,25 +36,36 @@ public class Toast
     /**
      * Initialize your toast. You can save the result to a field if you want to show the message multiple times.
      *
-     * @param text  The text to display. Every string is rendered on a new line.
-     * @return      The toast instance.
+     * @param text The text to display. Every string is rendered on a new line.
+     * @return The toast instance.
      */
     public static Toast makeText(String... text)
     {
         Toast toast = new Toast(10, 10, 60);
         int stringWidth = 0;
         for (String s : text)
+        {
             stringWidth = Math.max(stringWidth, Minecraft.getMinecraft().fontRendererObj.getStringWidth(s));
+        }
         toast.gui = new GuiToast(toast, stringWidth + 10, text);
         return toast;
     }
 
     /**
+     * For internal use only.
+     */
+    @Deprecated
+    public static List<Toast> getToastList()
+    {
+        return toastList;
+    }
+
+    /**
      * Set the toast's position. This can be set at any time. The default is x10, y10.
      *
-     * @param x     The x position.
-     * @param y     The y position.
-     * @return      The updated toast instance.
+     * @param x The x position.
+     * @param y The y position.
+     * @return The updated toast instance.
      */
     public Toast setPosition(int x, int y)
     {
@@ -64,22 +75,9 @@ public class Toast
     }
 
     /**
-     * Set the toast's duration. This can be set at any time. The default is d60 (3 seconds).
-     *
-     * @param d     The duration.
-     * @return      The updated toast instance.
-     */
-    public Toast setDuration(int d)
-    {
-        duration = d;
-        lastDuration = d;
-        return this;
-    }
-
-    /**
      * Display the toast. The duration will be reset if the toast was already shown.
      *
-     * @return      The updated toast instance.
+     * @return The updated toast instance.
      */
     public Toast show()
     {
@@ -91,7 +89,7 @@ public class Toast
     /**
      * Get the toast's x position.
      *
-     * @return      The toast's x position.
+     * @return The toast's x position.
      */
     public int getPosX()
     {
@@ -101,7 +99,7 @@ public class Toast
     /**
      * Get the toast's y position.
      *
-     * @return      The toast's y position.
+     * @return The toast's y position.
      */
     public int getPosY()
     {
@@ -111,7 +109,7 @@ public class Toast
     /**
      * Get the duration left.
      *
-     * @return      The duration left.
+     * @return The duration left.
      */
     public int getDuration()
     {
@@ -119,6 +117,19 @@ public class Toast
     }
 
     /* =========================================== FOR INTERNAL USE ONLY =========================================== */
+
+    /**
+     * Set the toast's duration. This can be set at any time. The default is d60 (3 seconds).
+     *
+     * @param d The duration.
+     * @return The updated toast instance.
+     */
+    public Toast setDuration(int d)
+    {
+        duration = d;
+        lastDuration = d;
+        return this;
+    }
 
     /**
      * For internal use only.
@@ -136,14 +147,5 @@ public class Toast
     public GuiToast getGui()
     {
         return gui;
-    }
-
-    /**
-     * For internal use only.
-     */
-    @Deprecated
-    public static List<Toast> getToastList()
-    {
-        return toastList;
     }
 }
