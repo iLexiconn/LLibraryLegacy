@@ -1,6 +1,6 @@
 {
     "release": "0.4.3",
-    "beta": "0.5.0-beta2",
+    "beta": "0.5.0-beta3",
     "versions":
     {
         "0.4.0":
@@ -27,7 +27,6 @@
         ],
         "0.5.0-beta1":
         [
-            "- Beta 1",
             "Added toast builder",
             "Added survival tab builder",
             "Added methods to scale entities",
@@ -46,26 +45,20 @@
         ],
         "0.5.0-beta2":
         [
-            "- Beta 1",
-            "Added toast builder",
-            "Added survival tab builder",
-            "Added methods to scale entities",
-            "Added new event hook system for player model",
-            "Added update types to checker",
-            "Added new player render hooks",
-            "Added config option for update type",
-            "Added survival tab pages. Now you can have more than 12 survival tabs.",
-            "Revamped update gui",
-            "Fixed flickering images in gui",
-            "Fixed detection of outdated updates",
-            "Fixed toast fade-out animation",
-            "Removed update command",
-            "- Beta 2",
             "Added simple AbstractMessage register method",
             "Added simple crash report implementation",
             "Added JSON config helper",
             "Added config option for extra tooltip info",
             "Fixed server-side ChainBuffer crash",
+            "",
+            "Please remove your config file before installing this update!"
+        ],
+        "0.5.0-beta3":
+        [
+            "Added NBTIO",
+            "   - Load and save class containers to NBT",
+            "Added ParticleHelper",
+            "   - A handy enum with all particle types",
             "",
             "Please remove your config file before installing this update!"
         ]
