@@ -64,5 +64,7 @@
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",
-    "iconUrl": "http://i.imgur.com/N2CJ80g.png"
+    "iconUrl": "http://i.imgur.com/N2CJ80g.png",
+    "directUpdateUrl-1.8": "http://minecraft.curseforge.com/projects/llibrary/files/2265403/download",
+    "directUpdateUrl-1.7.10": "http://minecraft.curseforge.com/projects/llibrary/files/2265400/download"
 }
