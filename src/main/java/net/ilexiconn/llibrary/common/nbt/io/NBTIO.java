@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.common.nbt.io;
 
+import com.google.common.base.CaseFormat;
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.common.crash.SimpleCrashReport;
 import net.ilexiconn.llibrary.common.nbt.tag.NBTTagBoolean;
@@ -18,7 +19,7 @@ public class NBTIO {
                 for (Field field : fields) {
                     if (tag.hasKey(field.getName())) {
                         field.setAccessible(true);
-                        field.set(t, getValue(tag.getTag(field.getName())));
+                        field.set(t, getValue(tag.getTag(CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, field.getName()))));
                     }
                 }
                 return t;
@@ -34,7 +35,7 @@ public class NBTIO {
         try {
             Field[] fields = type.getFields();
             for (Field field : fields) {
-                tag.setTag(field.getName(), getType(field.get(object)));
+                tag.setTag(CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, field.getName()), getType(field.get(object)));
             }
         } catch (Exception e) {
             LLibrary.logger.error(SimpleCrashReport.makeCrashReport(e, "Unable to save " + type + " to nbt " + tag));
