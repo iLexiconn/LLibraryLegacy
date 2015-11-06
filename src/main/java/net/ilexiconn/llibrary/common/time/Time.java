@@ -6,15 +6,13 @@ import net.minecraft.world.World;
  * @author FiskFille
  * @since 0.2.0
  */
-public class Time
-{
+public class Time {
     public long ticks;
     public int seconds;
     public int minutes;
     public int hours;
 
-    public static Time getTimeFromTicks(long ticks)
-    {
+    public static Time getTimeFromTicks(long ticks) {
         Time t = new Time();
         t.ticks = ticks;
         t.seconds = (int) t.ticks / 20;
@@ -26,28 +24,24 @@ public class Time
         return t;
     }
 
-    public static int getWorldTimeInHours(World world)
-    {
+    public static int getWorldTimeInHours(World world) {
         long time = world.getWorldTime() % 24000;
         int hours = (int) time / 1000 + 6 > 24 ? (int) time / 1000 + 6 - 24 : (int) time / 1000 + 6;
         return hours;
     }
 
-    public static String toAmPm(int hours)
-    {
+    public static String toAmPm(int hours) {
         String am = hours + (hours == 12 ? " pm" : " am");
         String pm = hours - 12 + (hours - 12 == 12 ? " am" : " pm");
         return hours > 12 ? pm : am;
     }
 
-    public String toString()
-    {
+    public String toString() {
         Object[] aobject = {hours, minutes, seconds, ticks};
         return String.format("%sh %smin %ss %st", aobject);
     }
 
-    public long totalTicks()
-    {
+    public long totalTicks() {
         return ticks + seconds * 20 + minutes * 60 * 20 + hours * 60 * 60 * 20;
     }
 }

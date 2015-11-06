@@ -31,8 +31,7 @@ import java.util.List;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public abstract class GuiPickItem extends GuiScreen
-{
+public abstract class GuiPickItem extends GuiScreen {
     public String title;
     public ArrayList<ItemStack> itemsFiltered = Lists.newArrayList();
     private GuiScreen parentScreen;
@@ -43,8 +42,7 @@ public abstract class GuiPickItem extends GuiScreen
     private int selectedIndex;
     private int listWidth;
 
-    public GuiPickItem(String t)
-    {
+    public GuiPickItem(String t) {
         title = t;
         parentScreen = Minecraft.getMinecraft().currentScreen;
 
@@ -57,50 +55,40 @@ public abstract class GuiPickItem extends GuiScreen
         textField = new GuiTextField(fontRendererObj, 20, 30, 103, 12);
         textField.setMaxStringLength(40);
 
-        for (Item item : (Iterable<Item>) Item.itemRegistry)
-        {
+        for (Item item : (Iterable<Item>) Item.itemRegistry) {
             ItemStack itemstack = new ItemStack(item);
 
-            if (item != null)
-            {
-                try
-                {
+            if (item != null) {
+                try {
                     items.add(itemstack);
                     List subItems = Lists.newArrayList();
                     item.getSubItems(item, null, subItems);
                     int maxDamage = subItems.size() - 1;
 
-                    while (item.getHasSubtypes() && itemstack.getItemDamage() < maxDamage)
-                    {
+                    while (item.getHasSubtypes() && itemstack.getItemDamage() < maxDamage) {
                         itemstack.setItemDamage(itemstack.getItemDamage() + 1);
 
-                        if (!(item instanceof ItemDoublePlant) && !(Block.getBlockFromItem(item) instanceof BlockMobSpawner) && !(Block.getBlockFromItem(item) instanceof BlockDoublePlant) && !(item instanceof ItemMonsterPlacer))
-                        {
+                        if (!(item instanceof ItemDoublePlant) && !(Block.getBlockFromItem(item) instanceof BlockMobSpawner) && !(Block.getBlockFromItem(item) instanceof BlockDoublePlant) && !(item instanceof ItemMonsterPlacer)) {
                             items.add(new ItemStack(item, 1, itemstack.getItemDamage()));
                         }
                     }
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
     }
 
-    public void initGui()
-    {
+    public void initGui() {
         super.initGui();
 
-        for (ItemStack itemstack : items)
-        {
+        for (ItemStack itemstack : items) {
             listWidth = Math.max(listWidth, fontRendererObj.getStringWidth(StatCollector.translateToLocal(itemstack.getDisplayName())) + 30);
         }
 
         listWidth = Math.min(listWidth, 300);
 
-        if (textField != null)
-        {
+        if (textField != null) {
             textField.xPosition = 20 + listWidth / 2 - textField.width / 2;
             textField.yPosition = 30;
         }
@@ -112,40 +100,33 @@ public abstract class GuiPickItem extends GuiScreen
 
     public abstract void onSelectEntry(ItemStack itemstack, EntityPlayer player);
 
-    protected void actionPerformed(GuiButton button)
-    {
+    protected void actionPerformed(GuiButton button) {
         int id = button.id;
 
-        if (id == 0)
-        {
+        if (id == 0) {
             onSelectEntry(itemsFiltered.get(selectedIndex), Minecraft.getMinecraft().thePlayer);
         }
     }
 
-    protected void keyTyped(char c, int key)
-    {
+    protected void keyTyped(char c, int key) {
         Keyboard.enableRepeatEvents(true);
         textField.textboxKeyTyped(c, key);
 
-        if (key == Keyboard.KEY_ESCAPE)
-        {
+        if (key == Keyboard.KEY_ESCAPE) {
             mc.displayGuiScreen(parentScreen);
         }
     }
 
-    public boolean doesGuiPauseGame()
-    {
+    public boolean doesGuiPauseGame() {
         return false;
     }
 
-    protected void mouseClicked(int mouseX, int mouseY, int button)
-    {
+    protected void mouseClicked(int mouseX, int mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
         textField.mouseClicked(mouseX, mouseY, button);
     }
 
-    public void drawScreen(int mouseX, int mouseY, float partialTicks)
-    {
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         filterItemsBySearch();
         itemList.drawScreen(mouseX, mouseY, partialTicks);
 
@@ -154,48 +135,37 @@ public abstract class GuiPickItem extends GuiScreen
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    private void filterItemsBySearch()
-    {
+    private void filterItemsBySearch() {
         itemsFiltered.clear();
 
-        for (ItemStack itemstack : items)
-        {
-            try
-            {
+        for (ItemStack itemstack : items) {
+            try {
                 String name = StatCollector.translateToLocal(itemstack.getDisplayName());
                 Item item = itemstack.getItem();
                 boolean tabEquals = false;
 
-                if (item != null)
-                {
-                    for (CreativeTabs tab : item.getCreativeTabs())
-                    {
-                        if (tab != null)
-                        {
+                if (item != null) {
+                    for (CreativeTabs tab : item.getCreativeTabs()) {
+                        if (tab != null) {
                             tabEquals = StatCollector.translateToLocal(tab.getTranslatedTabLabel()).toLowerCase().contains(textField.getText().toLowerCase());
 
-                            if (tabEquals)
-                            {
+                            if (tabEquals) {
                                 break;
                             }
                         }
                     }
                 }
 
-                if (name.toLowerCase().contains(textField.getText().toLowerCase()) || tabEquals)
-                {
+                if (name.toLowerCase().contains(textField.getText().toLowerCase()) || tabEquals) {
                     itemsFiltered.add(itemstack);
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void drawItemStack(int x, int y, ItemStack itemstack)
-    {
+    public void drawItemStack(int x, int y, ItemStack itemstack) {
         RenderHelper.enableGUIStandardItemLighting();
         zLevel = 100f;
         renderItem.zLevel = 100f;
@@ -210,13 +180,11 @@ public abstract class GuiPickItem extends GuiScreen
         RenderHelper.disableStandardItemLighting();
     }
 
-    public void selectItemIndex(int var1)
-    {
+    public void selectItemIndex(int var1) {
         selectedIndex = var1;
     }
 
-    public boolean itemIndexSelected(int var1)
-    {
+    public boolean itemIndexSelected(int var1) {
         return selectedIndex == var1;
     }
 }

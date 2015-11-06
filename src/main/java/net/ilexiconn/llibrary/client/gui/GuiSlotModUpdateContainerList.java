@@ -22,66 +22,53 @@ import java.awt.image.BufferedImage;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public class GuiSlotModUpdateContainerList extends GuiScrollingList
-{
+public class GuiSlotModUpdateContainerList extends GuiScrollingList {
     private GuiModUpdates parent;
     private ResourceLocation[] cachedLogo;
     private Dimension[] cachedLogoDimensions;
 
-    public GuiSlotModUpdateContainerList(GuiModUpdates parent, int listWidth)
-    {
+    public GuiSlotModUpdateContainerList(GuiModUpdates parent, int listWidth) {
         super(parent.getMinecraftInstance(), listWidth, parent.height, 32, parent.height - 48, 10, 35);
         this.parent = parent;
         cachedLogo = new ResourceLocation[getSize()];
         cachedLogoDimensions = new Dimension[getSize()];
     }
 
-    protected int getSize()
-    {
+    protected int getSize() {
         return VersionHandler.getOutdatedMods().size();
     }
 
-    protected void elementClicked(int index, boolean doubleClick)
-    {
+    protected void elementClicked(int index, boolean doubleClick) {
         parent.selectItemIndex(index);
     }
 
-    protected boolean isSelected(int index)
-    {
+    protected boolean isSelected(int index) {
         return parent.itemIndexSelected(index);
     }
 
-    protected void drawBackground()
-    {
+    protected void drawBackground() {
         parent.drawDefaultBackground();
     }
 
-    protected int getContentHeight()
-    {
+    protected int getContentHeight() {
         return (getSize()) * 34 + 1;
     }
 
-    public int getLeft()
-    {
+    public int getLeft() {
         return left;
     }
 
-    public int getTop()
-    {
+    public int getTop() {
         return top;
     }
 
-    protected void drawSlot(int listIndex, int x, int y, int par4, Tessellator tessellator)
-    {
-        if (listIndex < VersionHandler.getOutdatedMods().size())
-        {
+    protected void drawSlot(int listIndex, int x, int y, int par4, Tessellator tessellator) {
+        if (listIndex < VersionHandler.getOutdatedMods().size()) {
             JsonModUpdate mod = VersionHandler.getOutdatedMods().get(listIndex);
 
-            if (mod != null)
-            {
+            if (mod != null) {
                 tessellator.startDrawingQuads();
-                switch (mod.updateType)
-                {
+                switch (mod.updateType) {
                     case ALPHA:
                         tessellator.setColorRGBA(255, 0, 0, 255);
                         break;
@@ -107,25 +94,20 @@ public class GuiSlotModUpdateContainerList extends GuiScrollingList
                 Minecraft mc = parent.getMinecraftInstance();
                 TextureManager tm = mc.getTextureManager();
 
-                if (cachedLogo[listIndex] == null)
-                {
+                if (cachedLogo[listIndex] == null) {
                     BufferedImage logo = mod.thumbnail;
 
-                    if (logo != null)
-                    {
+                    if (logo != null) {
                         cachedLogo[listIndex] = tm.getDynamicTextureLocation("mod_thumbnail", new DynamicTexture(logo));
                         cachedLogoDimensions[listIndex] = new Dimension(logo.getWidth(), logo.getHeight());
                     }
-                }
-                else
-                {
+                } else {
                     mc.renderEngine.bindTexture(cachedLogo[listIndex]);
                     double scaleX = cachedLogoDimensions[listIndex].width / 32.0;
                     double scaleY = cachedLogoDimensions[listIndex].height / 32.0;
                     double scale = 1.0;
 
-                    if (scaleX > 1 || scaleY > 1)
-                    {
+                    if (scaleX > 1 || scaleY > 1) {
                         scale = 1.0 / Math.max(scaleX, scaleY);
                     }
 

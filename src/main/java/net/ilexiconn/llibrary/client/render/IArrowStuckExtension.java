@@ -15,8 +15,7 @@ import net.minecraft.entity.EntityLivingBase;
  */
 @Deprecated
 @SideOnly(Side.CLIENT)
-public interface IArrowStuckExtension extends IExtension
-{
+public interface IArrowStuckExtension extends IExtension {
     /**
      * @return true if continue rendering
      * @since 0.2.0

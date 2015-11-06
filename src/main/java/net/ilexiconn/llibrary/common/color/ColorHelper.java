@@ -11,8 +11,7 @@ import java.util.Map;
  * @author Gegy1000
  * @since 0.1.0
  */
-public class ColorHelper
-{
+public class ColorHelper {
     private static Map<RGB, Integer> colorCache = Maps.newHashMap();
 
     /**
@@ -20,46 +19,34 @@ public class ColorHelper
      *
      * @since 0.1.0
      */
-    public static int getColorInt(int r, int g, int b, int a)
-    {
+    public static int getColorInt(int r, int g, int b, int a) {
         int color = 0;
 
         Integer cached = colorCache.get(new RGB(r, g, b, a));
 
-        if (cached == null)
-        {
+        if (cached == null) {
             int red = 0;
             int blue = 0;
             int green = 0;
             int alpha = 0;
 
-            while (alpha != a || red != r || green != b || blue != g)
-            {
+            while (alpha != a || red != r || green != b || blue != g) {
                 alpha = color >> 24 & 255;
                 red = color >> 16 & 255;
                 blue = color >> 8 & 255;
                 green = color & 255;
 
-                if (alpha < a)
-                {
+                if (alpha < a) {
                     color += 50000;
-                }
-                else if (red < r)
-                {
+                } else if (red < r) {
                     color += 500;
-                }
-                else if (blue < g)
-                {
+                } else if (blue < g) {
                     color += 25;
-                }
-                else
-                {
+                } else {
                     color += 1;
                 }
             }
-        }
-        else
-        {
+        } else {
             return cached;
         }
 

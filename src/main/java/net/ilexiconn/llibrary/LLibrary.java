@@ -29,9 +29,8 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "0.5.0-beta3", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
-public class LLibrary
-{
+@Mod(modid = "llibrary", name = "LLibrary", version = "0.5.0-beta4", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
+public class LLibrary {
     @Mod.Instance("llibrary")
     public static LLibrary instance;
 
@@ -45,8 +44,7 @@ public class LLibrary
     public static SurvivalTab tabInventory = SurvivalTab.create("container.inventory").setIcon(new ItemStack(Items.diamond_sword)).setContainer(GuiInventory.class);
 
     @Mod.EventHandler
-    private void preInit(FMLPreInitializationEvent event)
-    {
+    private void preInit(FMLPreInitializationEvent event) {
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("llibrary");
         networkWrapper.registerMessage(MessageLLibrarySurvivalTab.class, MessageLLibrarySurvivalTab.class, 0, Side.SERVER);
         networkWrapper.registerMessage(MessageLLibraryIntemittentAnimation.class, MessageLLibraryIntemittentAnimation.class, 1, Side.CLIENT);
@@ -57,56 +55,41 @@ public class LLibrary
     }
 
     @Mod.EventHandler
-    private void init(FMLInitializationEvent event)
-    {
-        for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet())
-        {
-            if (contentHandlerEntry.getKey() == InitializationState.INIT)
-            {
+    private void init(FMLInitializationEvent event) {
+        for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet()) {
+            if (contentHandlerEntry.getKey() == InitializationState.INIT) {
                 ContentHelper.init(true, contentHandlerEntry.getValue());
             }
         }
     }
 
     @Mod.EventHandler
-    private void postInit(FMLPostInitializationEvent event)
-    {
+    private void postInit(FMLPostInitializationEvent event) {
         proxy.postInit();
 
-        for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet())
-        {
-            if (contentHandlerEntry.getKey() == InitializationState.POSTINIT)
-            {
+        for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet()) {
+            if (contentHandlerEntry.getKey() == InitializationState.POSTINIT) {
                 ContentHelper.init(true, contentHandlerEntry.getValue());
             }
         }
     }
 
     @Mod.EventHandler
-    public void messageReceived(FMLInterModComms.IMCEvent event)
-    {
-        for (FMLInterModComms.IMCMessage message : event.getMessages())
-        {
-            if (message.key.equalsIgnoreCase("update-checker") && message.isStringMessage())
-            {
-                try
-                {
+    public void messageReceived(FMLInterModComms.IMCEvent event) {
+        for (FMLInterModComms.IMCMessage message : event.getMessages()) {
+            if (message.key.equalsIgnoreCase("update-checker") && message.isStringMessage()) {
+                try {
                     ModContainer modContainer = null;
-                    for (ModContainer mod : Loader.instance().getModList())
-                    {
-                        if (mod.getModId().equals(message.getSender()))
-                        {
+                    for (ModContainer mod : Loader.instance().getModList()) {
+                        if (mod.getModId().equals(message.getSender())) {
                             modContainer = mod;
                         }
                     }
-                    if (modContainer == null)
-                    {
+                    if (modContainer == null) {
                         throw new Exception();
                     }
                     UpdateHelper.registerUpdateChecker(modContainer, message.getStringValue());
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     LLibrary.logger.info(CrashReport.makeCrashReport(e, "Failed to register update checker for mod " + message.getSender()).getCompleteReport());
                 }
             }

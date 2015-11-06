@@ -15,8 +15,7 @@ import java.util.List;
  * @see net.minecraft.util.AxisAlignedBB
  * @since 0.1.0
  */
-public interface IHighlightedBlock
-{
+public interface IHighlightedBlock {
     /**
      * @see net.minecraft.util.AxisAlignedBB
      * @since 0.1.0

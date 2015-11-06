@@ -15,8 +15,7 @@ import java.util.List;
  * @since 0.5.0
  */
 @SideOnly(Side.CLIENT)
-public class Toast
-{
+public class Toast {
     private static List<Toast> toastList = Lists.newArrayList();
 
     private GuiToast gui;
@@ -25,8 +24,7 @@ public class Toast
     private int duration;
     private int lastDuration;
 
-    private Toast(int x, int y, int d)
-    {
+    private Toast(int x, int y, int d) {
         posX = x;
         posY = y;
         duration = d;
@@ -39,12 +37,10 @@ public class Toast
      * @param text The text to display. Every string is rendered on a new line.
      * @return The toast instance.
      */
-    public static Toast makeText(String... text)
-    {
+    public static Toast makeText(String... text) {
         Toast toast = new Toast(10, 10, 60);
         int stringWidth = 0;
-        for (String s : text)
-        {
+        for (String s : text) {
             stringWidth = Math.max(stringWidth, Minecraft.getMinecraft().fontRenderer.getStringWidth(s));
         }
         toast.gui = new GuiToast(toast, stringWidth + 10, text);
@@ -55,8 +51,7 @@ public class Toast
      * For internal use only.
      */
     @Deprecated
-    public static List<Toast> getToastList()
-    {
+    public static List<Toast> getToastList() {
         return toastList;
     }
 
@@ -67,8 +62,7 @@ public class Toast
      * @param y The y position.
      * @return The updated toast instance.
      */
-    public Toast setPosition(int x, int y)
-    {
+    public Toast setPosition(int x, int y) {
         posX = x;
         posY = y;
         return this;
@@ -79,8 +73,7 @@ public class Toast
      *
      * @return The updated toast instance.
      */
-    public Toast show()
-    {
+    public Toast show() {
         duration = lastDuration;
         toastList.add(this);
         return this;
@@ -91,8 +84,7 @@ public class Toast
      *
      * @return The toast's x position.
      */
-    public int getPosX()
-    {
+    public int getPosX() {
         return posX;
     }
 
@@ -101,8 +93,7 @@ public class Toast
      *
      * @return The toast's y position.
      */
-    public int getPosY()
-    {
+    public int getPosY() {
         return posY;
     }
 
@@ -111,8 +102,7 @@ public class Toast
      *
      * @return The duration left.
      */
-    public int getDuration()
-    {
+    public int getDuration() {
         return duration;
     }
 
@@ -124,8 +114,7 @@ public class Toast
      * @param d The duration.
      * @return The updated toast instance.
      */
-    public Toast setDuration(int d)
-    {
+    public Toast setDuration(int d) {
         duration = d;
         lastDuration = d;
         return this;
@@ -135,8 +124,7 @@ public class Toast
      * For internal use only.
      */
     @Deprecated
-    public int tick()
-    {
+    public int tick() {
         return duration--;
     }
 
@@ -144,8 +132,7 @@ public class Toast
      * For internal use only.
      */
     @Deprecated
-    public GuiToast getGui()
-    {
+    public GuiToast getGui() {
         return gui;
     }
 }

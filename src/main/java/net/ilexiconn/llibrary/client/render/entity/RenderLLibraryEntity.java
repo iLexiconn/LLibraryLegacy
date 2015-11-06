@@ -8,22 +8,18 @@ import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 
 @SideOnly(Side.CLIENT)
-public class RenderLLibraryEntity extends EntityRenderer
-{
+public class RenderLLibraryEntity extends EntityRenderer {
     public Minecraft mc;
 
-    public RenderLLibraryEntity(Minecraft minecraft)
-    {
+    public RenderLLibraryEntity(Minecraft minecraft) {
         super(minecraft, minecraft.getResourceManager());
         mc = minecraft;
     }
 
-    public void updateCameraAndRender(float partialTick)
-    {
+    public void updateCameraAndRender(float partialTick) {
         EntityPlayer player = mc.thePlayer;
 
-        if (player == null || player.isPlayerSleeping())
-        {
+        if (player == null || player.isPlayerSleeping()) {
             super.updateCameraAndRender(partialTick);
             return;
         }

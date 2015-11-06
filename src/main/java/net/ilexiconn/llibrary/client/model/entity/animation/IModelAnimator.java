@@ -11,8 +11,7 @@ import net.minecraft.entity.Entity;
  * @author Gegy1000
  * @since 0.1.0
  */
-public interface IModelAnimator
-{
+public interface IModelAnimator {
     /**
      * Set the rotation angles for the shapes. Called every tick.
      *

@@ -18,8 +18,7 @@ import java.util.List;
  * @author iLexiconn
  * @since 0.1.0
  */
-public class WebHelper
-{
+public class WebHelper {
     private static String pastebinURLPrefix = "http://pastebin.com/raw.php?i=";
 
     /**
@@ -28,8 +27,7 @@ public class WebHelper
      * @param pasteId An array of paste IDs, data from the first working ID will be used
      * @return The lines of the paste as a list
      */
-    public static List<String> readPastebinAsList(String pasteId)
-    {
+    public static List<String> readPastebinAsList(String pasteId) {
         return readPastebinAsList(new String[]{pasteId});
     }
 
@@ -39,8 +37,7 @@ public class WebHelper
      * @param pasteId An array of paste IDs, data from the first working ID will be used
      * @return The content of the paste
      */
-    public static String readPastebin(String pasteId)
-    {
+    public static String readPastebin(String pasteId) {
         return readPastebin(new String[]{pasteId});
     }
 
@@ -50,8 +47,7 @@ public class WebHelper
      * @param urlString An array of links, receive data from the first working URL in the array
      * @return The different lines of the file from first to last
      */
-    public static List<String> downloadTextFileList(String urlString)
-    {
+    public static List<String> downloadTextFileList(String urlString) {
         return downloadTextFileList(new String[]{urlString});
     }
 
@@ -61,8 +57,7 @@ public class WebHelper
      * @param urlString An array of links, receive data from the first working URL in the array
      * @return The content of the file, as a String
      */
-    public static String downloadTextFile(String urlString)
-    {
+    public static String downloadTextFile(String urlString) {
         return downloadTextFile(new String[]{urlString});
     }
 
@@ -72,8 +67,7 @@ public class WebHelper
      * @param urlString An array of links, receive data from the first working URL in the array
      * @return A byte array containing all the content of the file
      */
-    public static byte[] download(String urlString)
-    {
+    public static byte[] download(String urlString) {
         return download(new String[]{urlString});
     }
 
@@ -83,8 +77,7 @@ public class WebHelper
      * @param urlString An array of links, receive data from the first working URL in the array
      * @return A BufferedImage object downloaded from the given URL
      */
-    public static BufferedImage downloadImage(String urlString)
-    {
+    public static BufferedImage downloadImage(String urlString) {
         return downloadImage(new String[]{urlString});
     }
 
@@ -94,10 +87,8 @@ public class WebHelper
      * @param pasteIds An array of paste IDs, data from the first working ID will be used
      * @return The lines of the paste as a list
      */
-    public static List<String> readPastebinAsList(String[] pasteIds)
-    {
-        for (int i = 0; i < pasteIds.length; i++)
-        {
+    public static List<String> readPastebinAsList(String[] pasteIds) {
+        for (int i = 0; i < pasteIds.length; i++) {
             pasteIds[i] = pastebinURLPrefix + pasteIds[i];
         }
         return downloadTextFileList(pasteIds);
@@ -109,10 +100,8 @@ public class WebHelper
      * @param pasteIds An array of paste IDs, data from the first working ID will be used
      * @return The content of the paste
      */
-    public static String readPastebin(String[] pasteIds)
-    {
-        for (int i = 0; i < pasteIds.length; i++)
-        {
+    public static String readPastebin(String[] pasteIds) {
+        for (int i = 0; i < pasteIds.length; i++) {
             pasteIds[i] = pastebinURLPrefix + pasteIds[i];
         }
         return downloadTextFile(pasteIds);
@@ -124,28 +113,22 @@ public class WebHelper
      * @param urlStrings An array of links, receive data from the first working URL in the array
      * @return The different lines of the file from first to last
      */
-    public static List<String> downloadTextFileList(String[] urlStrings)
-    {
-        for (String urlString : urlStrings)
-        {
-            try
-            {
+    public static List<String> downloadTextFileList(String[] urlStrings) {
+        for (String urlString : urlStrings) {
+            try {
                 List<String> text = Lists.newArrayList();
 
                 URL url = new URL(urlString);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
                 String currentLine;
 
-                while ((currentLine = reader.readLine()) != null)
-                {
+                while ((currentLine = reader.readLine()) != null) {
                     text.add(currentLine);
                 }
                 reader.close();
 
                 return text;
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 LLibrary.logger.error("Failed connecting to '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
@@ -158,28 +141,22 @@ public class WebHelper
      * @param urlStrings An array of links, receive data from the first working URL in the array
      * @return The content of the file, as a String
      */
-    public static String downloadTextFile(String[] urlStrings)
-    {
-        for (String urlString : urlStrings)
-        {
-            try
-            {
+    public static String downloadTextFile(String[] urlStrings) {
+        for (String urlString : urlStrings) {
+            try {
                 String text = "";
 
                 URL url = new URL(urlString);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
                 String currentLine;
 
-                while ((currentLine = reader.readLine()) != null)
-                {
+                while ((currentLine = reader.readLine()) != null) {
                     text += currentLine + "\r\n";
                 }
                 reader.close();
 
                 return text;
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 LLibrary.logger.error("Failed connecting to '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
@@ -192,26 +169,20 @@ public class WebHelper
      * @param urlStrings An array of links, receive data from the first working URL in the array
      * @return A byte array containing all the content of the file
      */
-    public static byte[] download(String[] urlStrings)
-    {
-        for (String urlString : urlStrings)
-        {
-            try
-            {
+    public static byte[] download(String[] urlStrings) {
+        for (String urlString : urlStrings) {
+            try {
                 URL url = new URL(urlString);
                 InputStream in = url.openStream();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 byte[] buffer = new byte[4096];
                 int k;
-                while ((k = in.read(buffer)) != -1)
-                {
+                while ((k = in.read(buffer)) != -1) {
                     baos.write(buffer, 0, k);
                 }
                 baos.flush();
                 return baos.toByteArray();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 LLibrary.logger.error("Failed connecting to '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }
@@ -224,18 +195,13 @@ public class WebHelper
      * @param urlStrings An array of links, receive data from the first working URL in the array
      * @return A BufferedImage object downloaded from the given URL
      */
-    public static BufferedImage downloadImage(String[] urlStrings)
-    {
-        for (String urlString : urlStrings)
-        {
-            try
-            {
+    public static BufferedImage downloadImage(String[] urlStrings) {
+        for (String urlString : urlStrings) {
+            try {
                 URL url = new URL(urlString);
                 InputStream in = new BufferedInputStream(url.openStream());
                 return ImageIO.read(in);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 LLibrary.logger.error("Failed connecting to '" + urlString + "'. (" + e.getLocalizedMessage() + ")");
             }
         }

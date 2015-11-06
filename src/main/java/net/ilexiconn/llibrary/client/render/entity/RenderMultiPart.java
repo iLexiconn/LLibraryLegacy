@@ -20,30 +20,24 @@ import org.lwjgl.opengl.GL11;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public abstract class RenderMultiPart extends RenderLiving
-{
-    public RenderMultiPart(ModelBase model, float shadow)
-    {
+public abstract class RenderMultiPart extends RenderLiving {
+    public RenderMultiPart(ModelBase model, float shadow) {
         super(model, shadow);
     }
 
-    public void doRender(EntityLiving entity, double x, double y, double z, float rotationYaw, float partialTicks)
-    {
+    public void doRender(EntityLiving entity, double x, double y, double z, float rotationYaw, float partialTicks) {
         super.doRender(entity, x, y, z, rotationYaw, partialTicks);
         doRender((IEntityMultiPart) entity, x, y, z, rotationYaw, partialTicks);
     }
 
-    public void doRender(IEntityMultiPart entity, double x, double y, double z, float rotationYaw, float partialTicks)
-    {
-        if (RenderManager.debugBoundingBox)
-        {
+    public void doRender(IEntityMultiPart entity, double x, double y, double z, float rotationYaw, float partialTicks) {
+        if (RenderManager.debugBoundingBox) {
             GL11.glDepthMask(false);
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_CULL_FACE);
             GL11.glDisable(GL11.GL_BLEND);
-            for (EntityPart e : entity.getParts())
-            {
+            for (EntityPart e : entity.getParts()) {
                 RenderGlobal.drawOutlinedBoundingBox(e.boundingBox.copy().offset(-RenderManager.renderPosX, -RenderManager.renderPosY, -RenderManager.renderPosZ), 0xffffff);
             }
             GL11.glEnable(GL11.GL_TEXTURE_2D);

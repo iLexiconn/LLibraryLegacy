@@ -8,8 +8,7 @@ import net.minecraft.util.MathHelper;
  * @author RafaMv0
  * @since 0.1.0
  */
-public class ChainBuffer
-{
+public class ChainBuffer {
     private int yawTimer;
     private float yawVariation;
     private int pitchTimer;
@@ -17,8 +16,7 @@ public class ChainBuffer
     private float[] yawArray;
     private float[] pitchArray;
 
-    public ChainBuffer(int numberOfParentedBoxes)
-    {
+    public ChainBuffer(int numberOfParentedBoxes) {
         yawTimer = 0;
         pitchTimer = 0;
         yawVariation = 0f;
@@ -27,222 +25,155 @@ public class ChainBuffer
         pitchArray = new float[numberOfParentedBoxes];
     }
 
-    public void resetRotations()
-    {
+    public void resetRotations() {
         yawVariation = 0f;
         pitchVariation = 0f;
     }
 
-    public void calculateChainSwingBuffer(float maxAngle, int bufferTime, float angleDecrement, float divider, EntityLivingBase entity)
-    {
-        if (entity.renderYawOffset != entity.prevRenderYawOffset && MathHelper.abs(yawVariation) < maxAngle)
-        {
+    public void calculateChainSwingBuffer(float maxAngle, int bufferTime, float angleDecrement, float divider, EntityLivingBase entity) {
+        if (entity.renderYawOffset != entity.prevRenderYawOffset && MathHelper.abs(yawVariation) < maxAngle) {
             yawVariation += (entity.prevRenderYawOffset - entity.renderYawOffset) / divider;
         }
 
-        if (yawVariation > 0.7f * angleDecrement)
-        {
-            if (yawTimer > bufferTime)
-            {
+        if (yawVariation > 0.7f * angleDecrement) {
+            if (yawTimer > bufferTime) {
                 yawVariation -= angleDecrement;
-                if (MathHelper.abs(yawVariation) < angleDecrement)
-                {
+                if (MathHelper.abs(yawVariation) < angleDecrement) {
                     yawVariation = 0f;
                     yawTimer = 0;
                 }
-            }
-            else
-            {
+            } else {
                 yawTimer++;
             }
-        }
-        else if (yawVariation < -0.7f * angleDecrement)
-        {
-            if (yawTimer > bufferTime)
-            {
+        } else if (yawVariation < -0.7f * angleDecrement) {
+            if (yawTimer > bufferTime) {
                 yawVariation += angleDecrement;
-                if (MathHelper.abs(yawVariation) < angleDecrement)
-                {
+                if (MathHelper.abs(yawVariation) < angleDecrement) {
                     yawVariation = 0f;
                     yawTimer = 0;
                 }
-            }
-            else
-            {
+            } else {
                 yawTimer++;
             }
         }
 
-        for (int i = 0; i < yawArray.length; i++)
-        {
+        for (int i = 0; i < yawArray.length; i++) {
             yawArray[i] = 0.01745329251f * yawVariation / pitchArray.length;
         }
     }
 
-    public void calculateChainWaveBuffer(float maxAngle, int bufferTime, float angleDecrement, float divider, EntityLivingBase entity)
-    {
-        if (entity.rotationPitch != entity.prevRotationPitch && MathHelper.abs(pitchVariation) < maxAngle)
-        {
+    public void calculateChainWaveBuffer(float maxAngle, int bufferTime, float angleDecrement, float divider, EntityLivingBase entity) {
+        if (entity.rotationPitch != entity.prevRotationPitch && MathHelper.abs(pitchVariation) < maxAngle) {
             pitchVariation += (entity.prevRotationPitch - entity.rotationPitch) / divider;
         }
 
-        if (pitchVariation > 0.7f * angleDecrement)
-        {
-            if (pitchTimer > bufferTime)
-            {
+        if (pitchVariation > 0.7f * angleDecrement) {
+            if (pitchTimer > bufferTime) {
                 pitchVariation -= angleDecrement;
-                if (MathHelper.abs(pitchVariation) < angleDecrement)
-                {
+                if (MathHelper.abs(pitchVariation) < angleDecrement) {
                     pitchVariation = 0f;
                     pitchTimer = 0;
                 }
-            }
-            else
-            {
+            } else {
                 pitchTimer++;
             }
-        }
-        else if (pitchVariation < -0.7f * angleDecrement)
-        {
-            if (pitchTimer > bufferTime)
-            {
+        } else if (pitchVariation < -0.7f * angleDecrement) {
+            if (pitchTimer > bufferTime) {
                 pitchVariation += angleDecrement;
-                if (MathHelper.abs(pitchVariation) < angleDecrement)
-                {
+                if (MathHelper.abs(pitchVariation) < angleDecrement) {
                     pitchVariation = 0f;
                     pitchTimer = 0;
                 }
-            }
-            else
-            {
+            } else {
                 pitchTimer++;
             }
         }
 
-        for (int i = 0; i < pitchArray.length; i++)
-        {
+        for (int i = 0; i < pitchArray.length; i++) {
             pitchArray[i] = 0.01745329251f * pitchVariation / pitchArray.length;
         }
     }
 
-    public void calculateChainSwingBuffer(float maxAngle, int bufferTime, float angleDecrement, EntityLivingBase entity)
-    {
-        if (entity.renderYawOffset != entity.prevRenderYawOffset && MathHelper.abs(yawVariation) < maxAngle)
-        {
+    public void calculateChainSwingBuffer(float maxAngle, int bufferTime, float angleDecrement, EntityLivingBase entity) {
+        if (entity.renderYawOffset != entity.prevRenderYawOffset && MathHelper.abs(yawVariation) < maxAngle) {
             yawVariation += (entity.prevRenderYawOffset - entity.renderYawOffset);
         }
 
-        if (yawVariation > 0.7f * angleDecrement)
-        {
-            if (yawTimer > bufferTime)
-            {
+        if (yawVariation > 0.7f * angleDecrement) {
+            if (yawTimer > bufferTime) {
                 yawVariation -= angleDecrement;
-                if (MathHelper.abs(yawVariation) < angleDecrement)
-                {
+                if (MathHelper.abs(yawVariation) < angleDecrement) {
                     yawVariation = 0f;
                     yawTimer = 0;
                 }
-            }
-            else
-            {
+            } else {
                 yawTimer++;
             }
-        }
-        else if (yawVariation < -0.7f * angleDecrement)
-        {
-            if (yawTimer > bufferTime)
-            {
+        } else if (yawVariation < -0.7f * angleDecrement) {
+            if (yawTimer > bufferTime) {
                 yawVariation += angleDecrement;
-                if (MathHelper.abs(yawVariation) < angleDecrement)
-                {
+                if (MathHelper.abs(yawVariation) < angleDecrement) {
                     yawVariation = 0f;
                     yawTimer = 0;
                 }
-            }
-            else
-            {
+            } else {
                 yawTimer++;
             }
         }
 
-        for (int i = 0; i < yawArray.length; i++)
-        {
+        for (int i = 0; i < yawArray.length; i++) {
             yawArray[i] = 0.01745329251f * yawVariation / pitchArray.length;
         }
     }
 
-    public void calculateChainWaveBuffer(float maxAngle, int bufferTime, float angleDecrement, EntityLivingBase entity)
-    {
-        if (entity.rotationPitch != entity.prevRotationPitch && MathHelper.abs(pitchVariation) < maxAngle)
-        {
+    public void calculateChainWaveBuffer(float maxAngle, int bufferTime, float angleDecrement, EntityLivingBase entity) {
+        if (entity.rotationPitch != entity.prevRotationPitch && MathHelper.abs(pitchVariation) < maxAngle) {
             pitchVariation += (entity.prevRotationPitch - entity.rotationPitch);
         }
 
-        if (pitchVariation > 0.7f * angleDecrement)
-        {
-            if (pitchTimer > bufferTime)
-            {
+        if (pitchVariation > 0.7f * angleDecrement) {
+            if (pitchTimer > bufferTime) {
                 pitchVariation -= angleDecrement;
-                if (MathHelper.abs(pitchVariation) < angleDecrement)
-                {
+                if (MathHelper.abs(pitchVariation) < angleDecrement) {
                     pitchVariation = 0f;
                     pitchTimer = 0;
                 }
-            }
-            else
-            {
+            } else {
                 pitchTimer++;
             }
-        }
-        else if (pitchVariation < -0.7f * angleDecrement)
-        {
-            if (pitchTimer > bufferTime)
-            {
+        } else if (pitchVariation < -0.7f * angleDecrement) {
+            if (pitchTimer > bufferTime) {
                 pitchVariation += angleDecrement;
-                if (MathHelper.abs(pitchVariation) < angleDecrement)
-                {
+                if (MathHelper.abs(pitchVariation) < angleDecrement) {
                     pitchVariation = 0f;
                     pitchTimer = 0;
                 }
-            }
-            else
-            {
+            } else {
                 pitchTimer++;
             }
         }
 
-        for (int i = 0; i < pitchArray.length; i++)
-        {
+        for (int i = 0; i < pitchArray.length; i++) {
             pitchArray[i] = 0.01745329251f * pitchVariation / pitchArray.length;
         }
     }
 
-    public void applyChainSwingBuffer(MowzieModelRenderer[] boxes)
-    {
-        if (boxes.length == yawArray.length)
-        {
-            for (int i = 0; i < boxes.length; i++)
-            {
+    public void applyChainSwingBuffer(MowzieModelRenderer[] boxes) {
+        if (boxes.length == yawArray.length) {
+            for (int i = 0; i < boxes.length; i++) {
                 boxes[i].rotateAngleY += yawArray[i];
             }
-        }
-        else
-        {
+        } else {
             LLibrary.logger.error("Wrong array length being used in the buffer! (Y axis)");
         }
     }
 
-    public void applyChainWaveBuffer(MowzieModelRenderer[] boxes)
-    {
-        if (boxes.length == pitchArray.length)
-        {
-            for (int i = 0; i < boxes.length; i++)
-            {
+    public void applyChainWaveBuffer(MowzieModelRenderer[] boxes) {
+        if (boxes.length == pitchArray.length) {
+            for (int i = 0; i < boxes.length; i++) {
                 boxes[i].rotateAngleX += pitchArray[i];
             }
-        }
-        else
-        {
+        } else {
             LLibrary.logger.error("Wrong array length being used in the buffer! (X axis)");
         }
     }

@@ -12,16 +12,14 @@ import java.util.Map;
  * @see net.ilexiconn.llibrary.common.structure.util.GenHelper
  * @since 0.1.0
  */
-public class BlockRotationData
-{
+public class BlockRotationData {
     /**
      * A mapping of blocks to rotation type for handling rotation. Allows custom blocks to be added.
      */
     private static final Map<Block, Rotation> blockRotationData = Maps.newHashMap();
 
     /** Set rotation data for vanilla blocks */
-    static
-    {
+    static {
         blockRotationData.put(Blocks.anvil, Rotation.ANVIL);
 
         blockRotationData.put(Blocks.iron_door, Rotation.DOOR);
@@ -100,8 +98,7 @@ public class BlockRotationData
     /**
      * Returns the rotation type for the block given, or null if no type is registered
      */
-    public static Rotation getBlockRotationType(Block block)
-    {
+    public static Rotation getBlockRotationType(Block block) {
         return blockRotationData.get(block);
     }
 
@@ -112,8 +109,7 @@ public class BlockRotationData
      * @param rotationType types predefined by enumerated type ROTATION
      * @return false if a rotation type has already been specified for the given block
      */
-    public static boolean registerCustomBlockRotation(Block block, Rotation rotationType)
-    {
+    public static boolean registerCustomBlockRotation(Block block, Rotation rotationType) {
         return registerCustomBlockRotation(block, rotationType, false);
     }
 
@@ -125,17 +121,12 @@ public class BlockRotationData
      * @param override     if true, will override the previously set rotation data for specified block
      * @return false if a rotation type has already been specified for the given block
      */
-    public static boolean registerCustomBlockRotation(Block block, Rotation rotationType, boolean override)
-    {
-        if (blockRotationData.containsKey(block))
-        {
+    public static boolean registerCustomBlockRotation(Block block, Rotation rotationType, boolean override) {
+        if (blockRotationData.containsKey(block)) {
             LLibrary.logger.error("Block " + block + " already has a rotation type." + (override ? " Overriding previous data." : ""));
-            if (override)
-            {
+            if (override) {
                 blockRotationData.remove(block);
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
@@ -148,8 +139,7 @@ public class BlockRotationData
     /**
      * Valid rotation types. Each type is handled like vanilla blocks of this kind.
      */
-    public enum Rotation
-    {
+    public enum Rotation {
         /**
          * 0 - north/south, 1 - east/west
          */

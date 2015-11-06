@@ -16,8 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
  */
 @Deprecated
 @SideOnly(Side.CLIENT)
-public interface IFirstPersonExtension extends IExtension
-{
+public interface IFirstPersonExtension extends IExtension {
     /**
      * @return true if continue rendering
      * @since 0.2.0

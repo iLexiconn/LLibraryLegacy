@@ -20,13 +20,11 @@ import net.minecraftforge.common.MinecraftForge;
 import java.io.File;
 
 @SideOnly(Side.CLIENT)
-public class ClientProxy extends ServerProxy
-{
+public class ClientProxy extends ServerProxy {
     public static RenderLLibraryPlayer renderCustomPlayer;
     public Timer timer;
 
-    public void preInit(File config)
-    {
+    public void preInit(File config) {
         super.preInit(config);
 
         timer = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "field_71428_T", "Q", "timer");
@@ -35,13 +33,10 @@ public class ClientProxy extends ServerProxy
         FMLCommonHandler.instance().bus().register(new ClientEventHandler());
         GuiHelper.addOverride(GuiMainMenu.class, new GuiLLibraryMainMenu());
 
-        if (LLibraryConfigHandler.threadedScreenshots)
-        {
+        if (LLibraryConfigHandler.threadedScreenshots) {
             ClientEventHandler.screenshotKeyBinding = new KeyBinding(Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyDescription(), Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCode(), Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCategory());
-            for (int i = 0; i < Minecraft.getMinecraft().gameSettings.keyBindings.length; ++i)
-            {
-                if (Minecraft.getMinecraft().gameSettings.keyBindings[i] == Minecraft.getMinecraft().gameSettings.keyBindScreenshot)
-                {
+            for (int i = 0; i < Minecraft.getMinecraft().gameSettings.keyBindings.length; ++i) {
+                if (Minecraft.getMinecraft().gameSettings.keyBindings[i] == Minecraft.getMinecraft().gameSettings.keyBindScreenshot) {
                     Minecraft.getMinecraft().gameSettings.keyBindings[i] = ClientEventHandler.screenshotKeyBinding;
                     Minecraft.getMinecraft().gameSettings.keyBindScreenshot.setKeyCode(-1);
                     break;
@@ -50,21 +45,18 @@ public class ClientProxy extends ServerProxy
         }
     }
 
-    public void postInit()
-    {
+    public void postInit() {
         super.postInit();
 
         renderCustomPlayer = new RenderLLibraryPlayer();
         RenderManager.instance.entityRenderMap.put(EntityPlayer.class, renderCustomPlayer);
     }
 
-    public EntityPlayer getClientPlayer()
-    {
+    public EntityPlayer getClientPlayer() {
         return Minecraft.getMinecraft().thePlayer;
     }
 
-    public float getPartialTicks()
-    {
+    public float getPartialTicks() {
         return timer.renderPartialTicks;
     }
 }

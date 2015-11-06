@@ -8,8 +8,7 @@ import java.util.ArrayList;
  * @author iChun
  * @since 0.1.0
  */
-public class CubeGroup
-{
+public class CubeGroup {
     public ArrayList<CubeInfo> cubes = Lists.newArrayList();
     public ArrayList<CubeGroup> cubeGroups = Lists.newArrayList();
 

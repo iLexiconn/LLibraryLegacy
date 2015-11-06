@@ -11,8 +11,7 @@ import net.minecraft.client.model.ModelBiped;
  * @see net.ilexiconn.llibrary.common.item.ItemModelledArmor
  * @since 0.1.0
  */
-public interface IArmorModelReceiver
-{
+public interface IArmorModelReceiver {
     /**
      * Get the instance of the scaled model. Pass 0 = Boots, Chestplate, Helmet (scale 1f) Pass 1 = Leggings (scale 0.5f)
      *

@@ -10,7 +10,6 @@ import net.minecraftforge.common.config.Configuration;
  * @see net.minecraftforge.common.config.Configuration
  * @since 0.1.0
  */
-public interface IConfigHandler
-{
+public interface IConfigHandler {
     void loadConfig(Configuration config);
 }

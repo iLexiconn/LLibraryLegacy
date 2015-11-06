@@ -1,10 +1,12 @@
 package net.ilexiconn.llibrary.common.json.container;
 
+import com.google.gson.annotations.SerializedName;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.update.UpdateType;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -18,10 +20,9 @@ import java.util.Map;
  * @see net.ilexiconn.llibrary.common.update.UpdateHelper
  * @since 0.1.0
  */
-public class JsonModUpdate
-{
+public class JsonModUpdate {
+    public transient boolean updated;
     public transient ModContainer modContainer;
-    public transient boolean updateQueued;
     public transient String modid;
     public transient String name;
     public transient String currentVersion;
@@ -38,77 +39,60 @@ public class JsonModUpdate
     private String release;
     private String beta;
     private String alpha;
+    @SerializedName("directUpdateUrl-" + MinecraftForge.MC_VERSION)
+    private String directUpdateUrl;
 
-    public Map<String, List<String>> getVersions()
-    {
+    public Map<String, List<String>> getVersions() {
         return versions;
     }
 
-    public String getUpdateUrl()
-    {
+    public String getUpdateUrl() {
         return updateUrl;
     }
 
-    public String getIconUrl()
-    {
+    public String getIconUrl() {
         return iconUrl;
     }
 
-    public ArtifactVersion getRelease()
-    {
-        if (releaseVersion == null)
-        {
+    public ArtifactVersion getRelease() {
+        if (releaseVersion == null) {
             releaseVersion = new DefaultArtifactVersion(modid, release == null ? newestVersion : release);
         }
         return releaseVersion;
     }
 
-    public ArtifactVersion getBeta()
-    {
-        if (betaVersion == null && beta != null)
-        {
+    public ArtifactVersion getBeta() {
+        if (betaVersion == null && beta != null) {
             betaVersion = new DefaultArtifactVersion(modid, beta);
         }
         return betaVersion;
     }
 
-    public ArtifactVersion getAlpha()
-    {
-        if (alphaVersion == null && alpha != null)
-        {
+    public ArtifactVersion getAlpha() {
+        if (alphaVersion == null && alpha != null) {
             alphaVersion = new DefaultArtifactVersion(modid, alpha);
         }
         return alphaVersion;
     }
 
-    public ArtifactVersion getUpdateVersion()
-    {
-        switch (LLibraryConfigHandler.updateType)
-        {
+    public ArtifactVersion getUpdateVersion() {
+        switch (LLibraryConfigHandler.updateType) {
             case ALPHA:
-                if (getAlpha() != null)
-                {
+                if (getAlpha() != null) {
                     updateType = UpdateType.ALPHA;
                     return getAlpha();
-                }
-                else if (getBeta() != null)
-                {
+                } else if (getBeta() != null) {
                     updateType = UpdateType.BETA;
                     return getBeta();
-                }
-                else
-                {
+                } else {
                     updateType = UpdateType.RELEASE;
                     return getRelease();
                 }
             case BETA:
-                if (getBeta() != null)
-                {
+                if (getBeta() != null) {
                     updateType = UpdateType.BETA;
                     return getBeta();
-                }
-                else
-                {
+                } else {
                     updateType = UpdateType.RELEASE;
                     return getRelease();
                 }
@@ -116,5 +100,9 @@ public class JsonModUpdate
                 updateType = UpdateType.RELEASE;
                 return getRelease();
         }
+    }
+
+    public String getDirectUpdateUrl() {
+        return directUpdateUrl;
     }
 }

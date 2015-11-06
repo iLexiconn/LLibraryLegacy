@@ -10,28 +10,21 @@ import java.util.List;
  * @author iLexiconn
  * @since 0.1.0
  */
-public class ChangelogHandler
-{
-    public static String[] getChangelog(JsonModUpdate mod, ArtifactVersion version)
-    {
-        if (hasModGotChangelogForVersion(mod, version))
-        {
+public class ChangelogHandler {
+    public static String[] getChangelog(JsonModUpdate mod, ArtifactVersion version) {
+        if (hasModGotChangelogForVersion(mod, version)) {
             List<String> list = getVersionChangelog(mod, version);
             return list.toArray(new String[list.size()]);
-        }
-        else
-        {
+        } else {
             return new String[0];
         }
     }
 
-    private static List<String> getVersionChangelog(JsonModUpdate mod, ArtifactVersion version)
-    {
+    private static List<String> getVersionChangelog(JsonModUpdate mod, ArtifactVersion version) {
         return mod.getVersions().get(version.getVersionString());
     }
 
-    public static boolean hasModGotChangelogForVersion(JsonModUpdate mod, ArtifactVersion version)
-    {
+    public static boolean hasModGotChangelogForVersion(JsonModUpdate mod, ArtifactVersion version) {
         return mod.getVersions().containsKey(version.getVersionString());
     }
 }

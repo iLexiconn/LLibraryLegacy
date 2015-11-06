@@ -17,8 +17,7 @@ import java.util.List;
  * @author iLexiconn
  * @since 0.5.0
  */
-public class SurvivalTab
-{
+public class SurvivalTab {
     private static List<SurvivalTab> survivalTabList = Lists.newArrayList();
     private static int page;
 
@@ -30,8 +29,7 @@ public class SurvivalTab
     @SideOnly(Side.CLIENT)
     private ResourceLocation texture;
 
-    private SurvivalTab(int i, String l)
-    {
+    private SurvivalTab(int i, String l) {
         index = i;
         label = l;
     }
@@ -42,8 +40,7 @@ public class SurvivalTab
      * @param l The unlocalized survival tab label.
      * @return The survival tab instance.
      */
-    public static SurvivalTab create(String l)
-    {
+    public static SurvivalTab create(String l) {
         SurvivalTab survivalTab = new SurvivalTab(survivalTabList.size(), l);
         survivalTabList.add(survivalTab);
         return survivalTab;
@@ -53,8 +50,7 @@ public class SurvivalTab
      * For internal use only.
      */
     @Deprecated
-    public static List<SurvivalTab> getSurvivalTabList()
-    {
+    public static List<SurvivalTab> getSurvivalTabList() {
         return survivalTabList;
     }
 
@@ -62,8 +58,7 @@ public class SurvivalTab
      * For internal use only.
      */
     @Deprecated
-    public static int getCurrentPage()
-    {
+    public static int getCurrentPage() {
         return page;
     }
 
@@ -71,59 +66,43 @@ public class SurvivalTab
      * For internal use only.
      */
     @Deprecated
-    public static void setCurrentPage(int p)
-    {
+    public static void setCurrentPage(int p) {
         page = p;
     }
 
-    public int getIndex()
-    {
+    public int getIndex() {
         return index;
     }
 
-    public int getColumn()
-    {
-        if (index > 11)
-        {
+    public int getColumn() {
+        if (index > 11) {
             return ((index - 12) % 10) % 5;
-        }
-        else
-        {
+        } else {
             return index % 6;
         }
     }
 
-    public boolean isInFirstRow()
-    {
-        if (index > 11)
-        {
+    public boolean isInFirstRow() {
+        if (index > 11) {
             return ((index - 12) % 10) < 5;
-        }
-        else
-        {
+        } else {
             return index < 6;
         }
     }
 
-    public int getPage()
-    {
-        if (index > 11)
-        {
+    public int getPage() {
+        if (index > 11) {
             return ((index - 12) / 10) + 1;
-        }
-        else
-        {
+        } else {
             return 0;
         }
     }
 
-    public String getLabel()
-    {
+    public String getLabel() {
         return label;
     }
 
-    public ItemStack getIcon()
-    {
+    public ItemStack getIcon() {
         return icon;
     }
 
@@ -133,15 +112,13 @@ public class SurvivalTab
      * @param i The new icon.
      * @return The updated survival tab instance.
      */
-    public SurvivalTab setIcon(ItemStack i)
-    {
+    public SurvivalTab setIcon(ItemStack i) {
         icon = i;
         return this;
     }
 
     @SideOnly(Side.CLIENT)
-    public Class<? extends GuiContainer> getContainer()
-    {
+    public Class<? extends GuiContainer> getContainer() {
         return container;
     }
 
@@ -152,8 +129,7 @@ public class SurvivalTab
      * @return The updated survival tab instance.
      */
     @SideOnly(Side.CLIENT)
-    public SurvivalTab setContainer(Class<? extends GuiContainer> c)
-    {
+    public SurvivalTab setContainer(Class<? extends GuiContainer> c) {
         container = c;
         return this;
     }
@@ -161,8 +137,7 @@ public class SurvivalTab
     /* =========================================== FOR INTERNAL USE ONLY =========================================== */
 
     @SideOnly(Side.CLIENT)
-    public ResourceLocation getTexture()
-    {
+    public ResourceLocation getTexture() {
         return texture;
     }
 
@@ -173,8 +148,7 @@ public class SurvivalTab
      * @return The updated survival tab instance.
      */
     @SideOnly(Side.CLIENT)
-    public SurvivalTab setTexture(String t)
-    {
+    public SurvivalTab setTexture(String t) {
         texture = new ResourceLocation(t);
         return this;
     }
@@ -182,24 +156,20 @@ public class SurvivalTab
     /**
      * Subscribe to this event to open guis for the player. This event gets fired on both CLIENT and SERVER.
      */
-    public static class ClickEvent extends Event
-    {
+    public static class ClickEvent extends Event {
         private SurvivalTab survivalTab;
         private EntityPlayer entityPlayer;
 
-        public ClickEvent(SurvivalTab t, EntityPlayer p)
-        {
+        public ClickEvent(SurvivalTab t, EntityPlayer p) {
             survivalTab = t;
             entityPlayer = p;
         }
 
-        public SurvivalTab getSurvivalTab()
-        {
+        public SurvivalTab getSurvivalTab() {
             return survivalTab;
         }
 
-        public EntityPlayer getEntityPlayer()
-        {
+        public EntityPlayer getEntityPlayer() {
             return entityPlayer;
         }
     }

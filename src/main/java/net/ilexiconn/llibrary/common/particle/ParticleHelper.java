@@ -45,11 +45,11 @@ public enum ParticleHelper {
         particleName = name;
     }
 
-    public String getParticleName() {
-        return particleName;
-    }
-
     public static void spawnParticle(World world, ParticleHelper particle, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
         world.spawnParticle(particle.getParticleName(), x, y, z, velocityX, velocityY, velocityZ);
+    }
+
+    public String getParticleName() {
+        return particleName;
     }
 }

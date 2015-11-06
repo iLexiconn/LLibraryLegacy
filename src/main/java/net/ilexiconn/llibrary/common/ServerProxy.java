@@ -12,10 +12,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 import java.io.File;
 
-public class ServerProxy
-{
-    public void preInit(File config)
-    {
+public class ServerProxy {
+    public void preInit(File config) {
         MinecraftForge.EVENT_BUS.register(new ServerEventHandler());
         FMLCommonHandler.instance().bus().register(new ServerEventHandler());
         EntityHelper.registerEntity("mountableBlock", EntityMountableBlock.class);
@@ -24,18 +22,15 @@ public class ServerProxy
         FMLInterModComms.sendMessage("llibrary", "update-checker", "https://github.com/iLexiconn/LLibrary/raw/version/versions.json");
     }
 
-    public void postInit()
-    {
+    public void postInit() {
         VersionHandler.searchForOutdatedMods();
     }
 
-    public EntityPlayer getClientPlayer()
-    {
+    public EntityPlayer getClientPlayer() {
         return null;
     }
 
-    public float getPartialTicks()
-    {
+    public float getPartialTicks() {
         return 0f;
     }
 }

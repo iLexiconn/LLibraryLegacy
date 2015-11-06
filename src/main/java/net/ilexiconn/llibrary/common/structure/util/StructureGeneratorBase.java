@@ -31,8 +31,7 @@ import net.minecraftforge.common.util.FakePlayer;
 
 import java.util.*;
 
-public abstract class StructureGeneratorBase extends WorldGenerator
-{
+public abstract class StructureGeneratorBase extends WorldGenerator {
     /**
      * Use this value to skip setting a block at an x,y,z coordinate for whatever reason.
      */
@@ -49,8 +48,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     private static final GameProfile generatorName = new GameProfile(UUID.fromString("54acf800-054d-11e4-9191-0800200c9a66"), "fake");
 
     /** Set rotation data for vanilla blocks */
-    static
-    {
+    static {
         blockRotationData.put(Block.getIdFromBlock(Blocks.anvil), ROTATION.ANVIL);
 
         blockRotationData.put(Block.getIdFromBlock(Blocks.iron_door), ROTATION.DOOR);
@@ -155,16 +153,14 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Basic constructor. Sets generator to notify other blocks of blocks it changes.
      */
-    public StructureGeneratorBase()
-    {
+    public StructureGeneratorBase() {
         super(true);
     }
 
     /**
      * Constructs the generator based on the player's facing and blockArray for the structure
      */
-    public StructureGeneratorBase(Entity entity, int[][][][] blocks)
-    {
+    public StructureGeneratorBase(Entity entity, int[][][][] blocks) {
         this(entity, blocks, EAST, 0, 0, 0);
     }
 
@@ -172,8 +168,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Constructs the generator with the player's facing, the blockArray for the structure
      * and the structure's facing
      */
-    public StructureGeneratorBase(Entity entity, int[][][][] blocks, int structureFacing)
-    {
+    public StructureGeneratorBase(Entity entity, int[][][][] blocks, int structureFacing) {
         this(entity, blocks, structureFacing, 0, 0, 0);
     }
 
@@ -186,8 +181,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * @param offY            Amount to offset the structure's location along the vertical axis
      * @param offZ            Amount to offset the structure's location along the north-south axis
      */
-    public StructureGeneratorBase(Entity entity, int[][][][] blocks, int structureFacing, int offX, int offY, int offZ)
-    {
+    public StructureGeneratorBase(Entity entity, int[][][][] blocks, int structureFacing, int offX, int offY, int offZ) {
         super(true);
         setPlayerFacing(entity);
         setBlockArray(blocks);
@@ -202,8 +196,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * @param rotationType types predefined by enumerated type ROTATION
      * @return false if a rotation type has already been specified for the given blockID
      */
-    public static boolean registerCustomBlockRotation(int blockID, ROTATION rotationType)
-    {
+    public static boolean registerCustomBlockRotation(int blockID, ROTATION rotationType) {
         return registerCustomBlockRotation(blockID, rotationType, false);
     }
 
@@ -215,21 +208,15 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * @param override     if true, will override the previously set rotation data for specified blockID
      * @return false if a rotation type has already been specified for the given blockID
      */
-    public static boolean registerCustomBlockRotation(int blockID, ROTATION rotationType, boolean override)
-    {
-        if (Block.getBlockById(blockID) == null || blockID < 0 || blockID > 4095)
-        {
+    public static boolean registerCustomBlockRotation(int blockID, ROTATION rotationType, boolean override) {
+        if (Block.getBlockById(blockID) == null || blockID < 0 || blockID > 4095) {
             throw new IllegalArgumentException("[LLibrary] Error setting custom block rotation for block ID " + blockID + (Block.getBlockById(blockID) == null ? "; block was not found in Block.blocksList. Please register your block." : "Valid ids are (0-4095)"));
         }
 
-        if (blockRotationData.containsKey(blockID))
-        {
-            if (override)
-            {
+        if (blockRotationData.containsKey(blockID)) {
+            if (override) {
                 blockRotationData.remove(blockID);
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
@@ -245,18 +232,15 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      *
      * @return true if entire itemstack was added
      */
-    public static boolean addItemToTileInventory(World world, ItemStack itemstack, int x, int y, int z)
-    {
+    public static boolean addItemToTileInventory(World world, ItemStack itemstack, int x, int y, int z) {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile == null || !(tile instanceof IInventory))
-        {
+        if (tile == null || !(tile instanceof IInventory)) {
             LLibrary.logger.info("Tile Entity at " + x + "/" + y + "/" + z + " is " + (tile != null ? "not an IInventory" : "null"));
             return false;
         }
 
-        if (itemstack.stackSize < 1)
-        {
+        if (itemstack.stackSize < 1) {
             LLibrary.logger.info("Trying to add ItemStack of size 0 to Tile Inventory");
             return false;
         }
@@ -264,32 +248,24 @@ public abstract class StructureGeneratorBase extends WorldGenerator
         IInventory inventory = (IInventory) tile;
         int remaining = itemstack.stackSize;
 
-        for (int i = 0; i < inventory.getSizeInventory() && remaining > 0; ++i)
-        {
+        for (int i = 0; i < inventory.getSizeInventory() && remaining > 0; ++i) {
             ItemStack slotstack = inventory.getStackInSlot(i);
 
-            if (slotstack == null && inventory.isItemValidForSlot(i, itemstack))
-            {
+            if (slotstack == null && inventory.isItemValidForSlot(i, itemstack)) {
                 remaining -= inventory.getInventoryStackLimit();
                 itemstack.stackSize = (remaining > 0 ? inventory.getInventoryStackLimit() : itemstack.stackSize);
                 inventory.setInventorySlotContents(i, itemstack);
                 inventory.markDirty();
-            }
-            else if (slotstack != null && itemstack.isStackable() && inventory.isItemValidForSlot(i, itemstack))
-            {
+            } else if (slotstack != null && itemstack.isStackable() && inventory.isItemValidForSlot(i, itemstack)) {
                 if (Item.getIdFromItem(slotstack.getItem()) == Item.getIdFromItem(itemstack.getItem()) && (!itemstack.getHasSubtypes() ||
-                        itemstack.getItemDamage() == slotstack.getItemDamage()) && ItemStack.areItemStackTagsEqual(itemstack, slotstack))
-                {
+                        itemstack.getItemDamage() == slotstack.getItemDamage()) && ItemStack.areItemStackTagsEqual(itemstack, slotstack)) {
                     int l = slotstack.stackSize + remaining;
 
-                    if (l <= itemstack.getMaxStackSize() && l <= inventory.getInventoryStackLimit())
-                    {
+                    if (l <= itemstack.getMaxStackSize() && l <= inventory.getInventoryStackLimit()) {
                         remaining = 0;
                         slotstack.stackSize = l;
                         inventory.markDirty();
-                    }
-                    else if (slotstack.stackSize < itemstack.getMaxStackSize() && itemstack.getMaxStackSize() <= inventory.getInventoryStackLimit())
-                    {
+                    } else if (slotstack.stackSize < itemstack.getMaxStackSize() && itemstack.getMaxStackSize() <= inventory.getInventoryStackLimit()) {
                         remaining -= itemstack.getMaxStackSize() - slotstack.stackSize;
                         slotstack.stackSize = itemstack.getMaxStackSize();
                         inventory.markDirty();
@@ -307,10 +283,8 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      *
      * @return false if no suitable location found
      */
-    public static boolean setEntityInStructure(World world, Entity entity, int x, int y, int z)
-    {
-        if (entity == null)
-        {
+    public static boolean setEntityInStructure(World world, Entity entity, int x, int y, int z) {
+        if (entity == null) {
             return false;
         }
         int i = 0, iMax = (entity.width > 1.0F ? 16 : 4);
@@ -319,23 +293,16 @@ public abstract class StructureGeneratorBase extends WorldGenerator
 
         entity.setLocationAndAngles(x, y, z, 0.0F, 0.0F);
 
-        while (entity.isEntityInsideOpaqueBlock() && i < iMax)
-        {
-            if (i == 4 && entity.isEntityInsideOpaqueBlock() && entity.width > 1.0F)
-            {
+        while (entity.isEntityInsideOpaqueBlock() && i < iMax) {
+            if (i == 4 && entity.isEntityInsideOpaqueBlock() && entity.width > 1.0F) {
                 entity.setLocationAndAngles(x, y, z, 90.0F, 0.0F);
-            }
-            else if (i == 8 && entity.isEntityInsideOpaqueBlock() && entity.width > 1.0F)
-            {
+            } else if (i == 8 && entity.isEntityInsideOpaqueBlock() && entity.width > 1.0F) {
                 entity.setLocationAndAngles(x, y, z, 180.0F, 0.0F);
-            }
-            else if (i == 12 && entity.isEntityInsideOpaqueBlock() && entity.width > 1.0F)
-            {
+            } else if (i == 12 && entity.isEntityInsideOpaqueBlock() && entity.width > 1.0F) {
                 entity.setLocationAndAngles(x, y, z, 270.0F, 0.0F);
             }
 
-            switch (i % 4)
-            {
+            switch (i % 4) {
                 case 0:
                     entity.setPosition(entity.posX + 0.5D, entity.posY, entity.posZ + 0.5D);
                     break;
@@ -352,8 +319,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
 
             ++i;
         }
-        if (entity.isEntityInsideOpaqueBlock())
-        {
+        if (entity.isEntityInsideOpaqueBlock()) {
             entity.setPosition(entity.posX + 0.5D, entity.posY, entity.posZ + 0.5D);
             return false;
         }
@@ -366,10 +332,8 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      *
      * @return true if entity spawned without collision (entity will still spawn if false, but may be in a wall)
      */
-    public static boolean spawnEntityInStructure(World world, Entity entity, int x, int y, int z)
-    {
-        if (world.isRemote || entity == null)
-        {
+    public static boolean spawnEntityInStructure(World world, Entity entity, int x, int y, int z) {
+        if (world.isRemote || entity == null) {
             return false;
         }
 
@@ -382,12 +346,10 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Returns an AxisAlignedBB suitable for a hanging entity at x/y/z facing direction
      */
-    public static AxisAlignedBB getHangingEntityAxisAligned(int x, int y, int z, int direction)
-    {
+    public static AxisAlignedBB getHangingEntityAxisAligned(int x, int y, int z, int direction) {
         double minX = (double) x, minZ = (double) z, maxX = minX, maxZ = minZ;
 
-        switch (direction)
-        {
+        switch (direction) {
             case 2: // frame facing NORTH
                 minX += 0.25D;
                 maxX += 0.75D;
@@ -429,15 +391,12 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * @param hanging Must be an instance of ItemHangingEntity, such as Items.painting
      * @return Returns direction for further processing such as for ItemFrames, or -1 if no entity set
      */
-    public static int setHangingEntity(World world, ItemStack hanging, int x, int y, int z)
-    {
-        if (hanging.getItem() == null || !(hanging.getItem() instanceof ItemHangingEntity))
-        {
+    public static int setHangingEntity(World world, ItemStack hanging, int x, int y, int z) {
+        if (hanging.getItem() == null || !(hanging.getItem() instanceof ItemHangingEntity)) {
             return -1;
         }
 
-        if (world.getBlockMetadata(x, y, z) < 1 || world.getBlockMetadata(x, y, z) > 5)
-        {
+        if (world.getBlockMetadata(x, y, z) < 1 || world.getBlockMetadata(x, y, z) > 5) {
             return -1;
         }
 
@@ -447,8 +406,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
 
         world.setBlockToAir(x, y, z);
 
-        switch (direction)
-        {
+        switch (direction) {
             case 2:
                 ++z;
                 break; // frame facing NORTH
@@ -473,8 +431,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      *
      * @param direction Use the value returned from the setHangingEntity method
      */
-    public static void setItemFrameStack(World world, ItemStack itemstack, int x, int y, int z, int direction)
-    {
+    public static void setItemFrameStack(World world, ItemStack itemstack, int x, int y, int z, int direction) {
         setItemFrameStack(world, itemstack, x, y, z, direction, 0);
     }
 
@@ -484,13 +441,10 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * @param direction    Use the value returned from the setHangingEntity method
      * @param itemRotation 0,1,2,3 starting at default and rotating 90 degrees clockwise
      */
-    public static void setItemFrameStack(World world, ItemStack itemstack, int x, int y, int z, int direction, int itemRotation)
-    {
+    public static void setItemFrameStack(World world, ItemStack itemstack, int x, int y, int z, int direction, int itemRotation) {
         List<EntityItemFrame> frames = world.getEntitiesWithinAABB(EntityItemFrame.class, getHangingEntityAxisAligned(x, y, z, direction));
-        if (frames != null && !frames.isEmpty())
-        {
-            for (EntityItemFrame frame : frames)
-            {
+        if (frames != null && !frames.isEmpty()) {
+            for (EntityItemFrame frame : frames) {
                 frame.setDisplayedItem(itemstack);
                 frame.setItemRotation(itemRotation);
             }
@@ -503,28 +457,20 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * @param direction Use the value returned from the setHangingEntity method
      * @return false if 'name' didn't match any EnumArt values.
      */
-    public static boolean setPaintingArt(World world, String name, int x, int y, int z, int direction)
-    {
+    public static boolean setPaintingArt(World world, String name, int x, int y, int z, int direction) {
         List<EntityPainting> paintings = world.getEntitiesWithinAABB(EntityPainting.class, getHangingEntityAxisAligned(x, y, z, direction));
 
-        if (paintings != null && !paintings.isEmpty() && name.length() > 0)
-        {
-            for (EntityPainting toEdit : paintings)
-            {
+        if (paintings != null && !paintings.isEmpty() && name.length() > 0) {
+            for (EntityPainting toEdit : paintings) {
                 EntityPainting.EnumArt[] aenumart = EntityPainting.EnumArt.values();
 
-                for (EntityPainting.EnumArt enumart : aenumart)
-                {
-                    if (enumart.title.equals(name))
-                    {
+                for (EntityPainting.EnumArt enumart : aenumart) {
+                    if (enumart.title.equals(name)) {
                         toEdit.art = enumart;
                         MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-                        if (server != null)
-                        {
+                        if (server != null) {
                             server.getConfigurationManager().sendToAllNear(x, y, z, 64, world.provider.dimensionId, new S10PacketSpawnPainting(toEdit));
-                        }
-                        else
-                        {
+                        } else {
                             LLibrary.logger.info("Attempt to send packet to all around without a server instance available");
                         }
                         return true;
@@ -542,20 +488,14 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * @param text A String array of no more than 4 elements; additional elements will be ignored
      * @return false if no sign tile entity was found at x/y/z
      */
-    public static boolean setSignText(World world, String[] text, int x, int y, int z)
-    {
+    public static boolean setSignText(World world, String[] text, int x, int y, int z) {
         TileEntitySign sign = (world.getTileEntity(x, y, z) instanceof TileEntitySign ? (TileEntitySign) world.getTileEntity(x, y, z) : null);
 
-        if (sign != null)
-        {
-            for (int i = 0; i < sign.signText.length && i < text.length; ++i)
-            {
-                if (text[i] != null && text[i].length() > 15)
-                {
+        if (sign != null) {
+            for (int i = 0; i < sign.signText.length && i < text.length; ++i) {
+                if (text[i] != null && text[i].length() > 15) {
                     sign.signText[i] = text[i].substring(0, 15);
-                }
-                else
-                {
+                } else {
                     sign.signText[i] = text[i];
                 }
             }
@@ -568,8 +508,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Method to set skulls not requiring extra rotation data (i.e. wall-mounted skulls whose rotation is determined by metadata)
      */
-    public static boolean setSkullData(World world, int type, int x, int y, int z)
-    {
+    public static boolean setSkullData(World world, int type, int x, int y, int z) {
         return setSkullData(world, type, -1, x, y, z);
     }
 
@@ -580,16 +519,13 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * @param rot  Sets the rotation for the skull if positive value is used
      * @return false if errors were encountered (i.e. incorrect tile entity at x/y/z)
      */
-    public static boolean setSkullData(World world, int type, int rot, int x, int y, int z)
-    {
+    public static boolean setSkullData(World world, int type, int rot, int x, int y, int z) {
         TileEntitySkull skull = (world.getTileEntity(x, y, z) instanceof TileEntitySkull ? (TileEntitySkull) world.getTileEntity(x, y, z) : null);
 
-        if (skull != null)
-        {
+        if (skull != null) {
             skull.func_152107_a(3);
 
-            if (rot > -1)
-            {
+            if (rot > -1) {
                 skull.func_145903_a(rot % 16);
             }
 
@@ -619,8 +555,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Returns facing value as set from player, or 0 if no facing was specified
      */
-    public final int getPlayerFacing()
-    {
+    public final int getPlayerFacing() {
         return facing;
     }
 
@@ -628,8 +563,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Sets the direction in which the player is facing. The structure will be generated
      * opposite of player view (so player will be looking at front when finished)
      */
-    public final void setPlayerFacing(Entity entity)
-    {
+    public final void setPlayerFacing(Entity entity) {
         facing = MathHelper.floor_double((double) ((entity.rotationYaw * 4F) / 360f) + 0.5D) & 3;
     }
 
@@ -637,8 +571,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Sets the default direction the structure is facing. This side will always face the player
      * unless you manually rotate the structure with the rotateStructureFacing() method.
      */
-    public final void setStructureFacing(int facing)
-    {
+    public final void setStructureFacing(int facing) {
         structureFacing = facing % 4;
     }
 
@@ -646,8 +579,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * This will manually rotate the structure's facing 90 degrees clockwise.
      * Note that a different side will now face the player when generated.
      */
-    public final void rotateStructureFacing()
-    {
+    public final void rotateStructureFacing() {
         structureFacing = ++structureFacing % 4;
         manualRotations = ++manualRotations % 4;
     }
@@ -655,8 +587,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Manually rotates the structure's facing a specified number of times.
      */
-    public final void rotateStructureFacing(int rotations)
-    {
+    public final void rotateStructureFacing(int rotations) {
         structureFacing = (structureFacing + rotations) % 4;
         manualRotations = (manualRotations + rotations) % 4;
     }
@@ -664,21 +595,17 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Returns a string describing current facing of structure
      */
-    public final String currentStructureFacing()
-    {
+    public final String currentStructureFacing() {
         return (structureFacing == EAST ? "East" : structureFacing == WEST ? "West" : structureFacing == NORTH ? "North" : "South");
     }
 
     /**
      * Adds a block array 'layer' to the list to be generated
      */
-    public final void addBlockArray(int blocks[][][][])
-    {
-        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-        {
+    public final void addBlockArray(int blocks[][][][]) {
+        if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
             blockArrayList.add(blocks);
-            if (blockArray == null)
-            {
+            if (blockArray == null) {
                 blockArray = blocks;
             }
         }
@@ -687,10 +614,8 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Overwrites current list with the provided blockArray
      */
-    public final void setBlockArray(int blocks[][][][])
-    {
-        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-        {
+    public final void setBlockArray(int blocks[][][][]) {
+        if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
             blockArrayList.clear();
             blockArrayList.add(blocks);
             blockArray = blocks;
@@ -700,12 +625,10 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Adds all elements contained in the parameter list to the structure
      */
-    public final void addBlockArrayList(List<int[][][][]> list)
-    {
+    public final void addBlockArrayList(List<int[][][][]> list) {
         blockArrayList.addAll(list);
 
-        if (blockArray == null && list.size() > 0)
-        {
+        if (blockArray == null && list.size() > 0) {
             blockArray = list.get(0);
         }
     }
@@ -713,8 +636,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Overwrites current blockArrayList with list provided
      */
-    public final void setBlockArrayList(List<int[][][][]> list)
-    {
+    public final void setBlockArrayList(List<int[][][][]> list) {
         blockArrayList.clear();
         blockArrayList.addAll(list);
         blockArray = (list.size() > 0 ? list.get(0) : null);
@@ -725,10 +647,8 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Sets structure facing to the default facing of the structure
      * Does NOT set offset for the structure
      */
-    public final void setStructure(Structure structure)
-    {
-        if (structure != null)
-        {
+    public final void setStructure(Structure structure) {
+        if (structure != null) {
             reset();
             setBlockArrayList(structure.blockArrayList());
             setStructureFacing(structure.getFacing());
@@ -739,12 +659,10 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Overwrites current Structure information with passed in structure and rotates it
      * a number of times starting from its default facing
      */
-    public final void setStructureWithRotation(Structure structure, int rotations)
-    {
+    public final void setStructureWithRotation(Structure structure, int rotations) {
         setStructure(structure);
         manualRotations = 0;
-        for (int i = 0; i < rotations % 4; ++i)
-        {
+        for (int i = 0; i < rotations % 4; ++i) {
             rotateStructureFacing();
         }
     }
@@ -752,40 +670,35 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Returns lowest structure layer's width along the x axis or 0 if no structure has been added
      */
-    public final int getWidthX()
-    {
+    public final int getWidthX() {
         return blockArray != null ? blockArray[0].length : 0;
     }
 
     /**
      * Returns lowest structure layer's width along the z axis or 0 if no structure has been set
      */
-    public final int getWidthZ()
-    {
+    public final int getWidthZ() {
         return blockArray != null ? blockArray[0][0].length : 0;
     }
 
     /**
      * Returns current structure layer's height or 0 if no structure has been set
      */
-    public final int getHeight()
-    {
+    public final int getHeight() {
         return blockArray != null ? blockArray.length : 0;
     }
 
     /**
      * Returns the original facing for the structure
      */
-    public final int getOriginalFacing()
-    {
+    public final int getOriginalFacing() {
         return (structureFacing + (4 - manualRotations)) % 4;
     }
 
     /**
      * Returns true if the structure has been rotated onto the opposite axis from original
      */
-    public final boolean isOppositeAxis()
-    {
+    public final boolean isOppositeAxis() {
         return getOriginalFacing() % 2 != structureFacing % 2;
     }
 
@@ -793,8 +706,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Sets the amount by which to offset the structure's generated location in the world.
      * For advanced users only. Recommended to use setDefaultOffset() methods instead.
      */
-    public final void setOffset(int offX, int offY, int offZ)
-    {
+    public final void setOffset(int offX, int offY, int offZ) {
         offsetX = offX;
         offsetY = offY;
         offsetZ = offZ;
@@ -805,8 +717,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Sets a default offset amount that will keep the entire structure's boundaries
      * from overlapping with the position spawned at, so it will never spawn on the player.
      */
-    public final void setDefaultOffset()
-    {
+    public final void setDefaultOffset() {
         setDefaultOffset(0, 0, 0);
     }
 
@@ -820,16 +731,14 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * @param x Positive value spawns structure further away from player, negative closer to or behind
      * @param z Positive value spawns structure more to the right, negative to the left
      */
-    public final void setDefaultOffset(int x, int y, int z)
-    {
+    public final void setDefaultOffset(int x, int y, int z) {
         boolean flagNS = getOriginalFacing() % 2 == 0;
         int length = flagNS ? getWidthX() : getWidthZ();
         int adj1 = length - (flagNS ? getWidthZ() : getWidthX());
 
         boolean flag1 = (flagNS ? (getWidthX() % 2 == 0 && adj1 % 2 == 1) || (getWidthX() % 2 == 1 && adj1 % 2 == -1) : (getWidthX() % 2 == 0 && adj1 % 2 == -1) || (getWidthX() % 2 == 1 && adj1 % 2 == 1));
 
-        if (flag1 && !flagNS)
-        {
+        if (flag1 && !flagNS) {
             adj1 = -adj1;
         }
 
@@ -837,8 +746,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
         int adj3 = adj1 % 2;
         int adj4 = adj1 / 2 + adj3;
 
-        switch (getOriginalFacing())
-        {
+        switch (getOriginalFacing()) {
             case 0: // SOUTH
                 offsetZ = x + length / 2 - (manualRotations == 0 ? adj1 / 2 + (adj3 == 0 ? 0 : adj1 < 0 && flag1 ? adj3 : adj2) : manualRotations == 1 ? (adj3 == 0 ? adj2 : adj1 > 0 && flag1 ? adj3 : 0) : manualRotations == 2 ? adj1 / 2 + (adj3 == 0 || flag1 ? adj2 : adj3) : 0);
                 offsetX = -z + (manualRotations == 0 ? adj2 + (adj3 > 0 && !flag1 ? adj4 : 0) : manualRotations == 1 ? (adj3 == 0 ? adj2 : flag1 ? (adj3 < 0 ? -adj3 : 0) : adj3) : manualRotations == 2 ? (adj3 > 0 && !flag1 ? adj4 : 0) : 0);
@@ -863,8 +771,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Toggles between generate and remove structure setting. Returns value for ease of reference.
      */
-    public final boolean toggleRemoveStructure()
-    {
+    public final boolean toggleRemoveStructure() {
         removeStructure = !removeStructure;
         return removeStructure;
     }
@@ -872,16 +779,14 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Sets remove structure to true or false
      */
-    public final void setRemoveStructure(boolean value)
-    {
+    public final void setRemoveStructure(boolean value) {
         removeStructure = value;
     }
 
     /**
      * Returns true if the generator has enough information to generate a structure
      */
-    public final boolean canGenerate()
-    {
+    public final boolean canGenerate() {
         return blockArrayList.size() > 0 || blockArray != null;
     }
 
@@ -889,10 +794,8 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Generates each consecutive blockArray in the current list at location posX, posZ,
      * with posY incremented by the height of each previously generated blockArray.
      */
-    public final boolean generate(World world, Random random, int posX, int posY, int posZ)
-    {
-        if (world.isRemote || !canGenerate())
-        {
+    public final boolean generate(World world, Random random, int posX, int posY, int posZ) {
+        if (world.isRemote || !canGenerate()) {
             return false;
         }
 
@@ -901,10 +804,8 @@ public abstract class StructureGeneratorBase extends WorldGenerator
 
         setOffsetFromRotation();
 
-        for (int[][][][] blocks : blockArrayList)
-        {
-            if (!generated)
-            {
+        for (int[][][][] blocks : blockArrayList) {
+            if (!generated) {
                 break;
             }
             this.blockArray = blocks;
@@ -912,8 +813,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
             offsetY += blocks.length;
         }
 
-        if (generated)
-        {
+        if (generated) {
             doPostGenProcessing(world);
         }
 
@@ -925,25 +825,19 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Custom 'generate' method that generates a single 'layer' from the list of blockArrays
      */
-    private boolean generateLayer(World world, int posX, int posY, int posZ, int rotations)
-    {
+    private boolean generateLayer(World world, int posX, int posY, int posZ, int rotations) {
         int centerX = blockArray[0].length / 2, centerZ = blockArray[0][0].length / 2;
 
-        for (int y = (removeStructure ? blockArray.length - 1 : 0); (removeStructure ? y >= 0 : y < blockArray.length); y = (removeStructure ? --y : ++y))
-        {
-            for (int x = 0; x < blockArray[y].length; ++x)
-            {
-                for (int z = 0; z < blockArray[y][x].length; ++z)
-                {
-                    if (blockArray[y][x][z].length == 0 || blockArray[y][x][z][0] == SET_NO_BLOCK)
-                    {
+        for (int y = (removeStructure ? blockArray.length - 1 : 0); (removeStructure ? y >= 0 : y < blockArray.length); y = (removeStructure ? --y : ++y)) {
+            for (int x = 0; x < blockArray[y].length; ++x) {
+                for (int z = 0; z < blockArray[y][x].length; ++z) {
+                    if (blockArray[y][x][z].length == 0 || blockArray[y][x][z][0] == SET_NO_BLOCK) {
                         continue;
                     }
 
                     int rotX = posX, rotZ = posZ, rotY = posY + y + offsetY;
 
-                    switch (rotations)
-                    {
+                    switch (rotations) {
                         case 0: // Player is looking at the front of the default structure
                             rotX += x - centerX + offsetX;
                             rotZ += z - centerZ + offsetZ;
@@ -968,17 +862,12 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                     int fakeID = blockArray[y][x][z][0];
                     int realID = (Math.abs(fakeID) > 4095 ? getRealBlockID(fakeID, customData1) : fakeID);
 
-                    if (removeStructure)
-                    {
-                        if (!removeBlockAt(world, fakeID, realID, rotX, rotY, rotZ, rotations))
-                        {
+                    if (removeStructure) {
+                        if (!removeBlockAt(world, fakeID, realID, rotX, rotY, rotZ, rotations)) {
                             return false;
                         }
-                    }
-                    else
-                    {
-                        if (Math.abs(realID) > 4095)
-                        {
+                    } else {
+                        if (Math.abs(realID) > 4095) {
                             LLibrary.logger.error("Invalid block ID. Initial ID: " + fakeID + ", returned id from getRealID: " + realID);
                             continue;
                         }
@@ -999,31 +888,23 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Handles setting block with fakeID at x/y/z in world.
      * Arguments should be those retrieved from blockArray
      */
-    private void setBlockAt(World world, int fakeID, int realID, int meta, int customData1, int customData2, int x, int y, int z)
-    {
+    private void setBlockAt(World world, int fakeID, int realID, int meta, int customData1, int customData2, int x, int y, int z) {
         if (realID >= 0 || world.isAirBlock(x, y, z) || world.getBlock(x, y, z) != null
-                && world.getBlock(x, y, z).getMaterial().blocksMovement())
-        {
-            if (blockRotationData.containsKey(realID))
-            {
+                && world.getBlock(x, y, z).getMaterial().blocksMovement()) {
+            if (blockRotationData.containsKey(realID)) {
                 meta = getMetadata(Math.abs(realID), meta, facing);
             }
 
-            if (blockRotationData.containsKey(realID) && (blockRotationData.get(realID) == ROTATION.WALL_MOUNTED || blockRotationData.get(realID) == ROTATION.LEVER))
-            {
+            if (blockRotationData.containsKey(realID) && (blockRotationData.get(realID) == ROTATION.WALL_MOUNTED || blockRotationData.get(realID) == ROTATION.LEVER)) {
                 postGenBlocks.add(new BlockData(x, y, z, fakeID, meta, customData1, customData2));
-            }
-            else
-            {
+            } else {
                 world.setBlock(x, y, z, Block.getBlockById(realID), meta, 2);
 
-                if (blockRotationData.containsKey(realID))
-                {
+                if (blockRotationData.containsKey(realID)) {
                     setMetadata(world, x, y, z, meta, facing);
                 }
 
-                if (Math.abs(fakeID) > 4095)
-                {
+                if (Math.abs(fakeID) > 4095) {
                     onCustomBlockAdded(world, x, y, z, fakeID, customData1, customData2);
                 }
             }
@@ -1034,29 +915,22 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Removes block at x/y/z and cleans up any items/entities that may be left behind
      * Returns false if realID is mismatched with world's blockID at x/y/z
      */
-    private boolean removeBlockAt(World world, int fakeID, int realID, int x, int y, int z, int rotations)
-    {
+    private boolean removeBlockAt(World world, int fakeID, int realID, int x, int y, int z, int rotations) {
         int worldID = Block.getIdFromBlock(world.getBlock(x, y, z));
 
-        if (realID == 0 || Block.getBlockById(worldID) == null || (realID < 0 && worldID != Math.abs(realID)))
-        {
+        if (realID == 0 || Block.getBlockById(worldID) == null || (realID < 0 && worldID != Math.abs(realID))) {
             return true;
-        }
-        else if (Math.abs(realID) == worldID || materialsMatch(realID, worldID)) // || Math.abs(fakeID) > 4095
+        } else if (Math.abs(realID) == worldID || materialsMatch(realID, worldID)) // || Math.abs(fakeID) > 4095
         {
             world.setBlockToAir(x, y, z);
             List<Entity> list = world.getEntitiesWithinAABB(Entity.class, getHangingEntityAxisAligned(x, y, z, Direction.directionToFacing[rotations]).expand(1.0F, 1.0F, 1.0F));
 
-            for (Entity entity : list)
-            {
-                if (!(entity instanceof EntityPlayer))
-                {
+            for (Entity entity : list) {
+                if (!(entity instanceof EntityPlayer)) {
                     entity.setDead();
                 }
             }
-        }
-        else
-        {
+        } else {
             return false;
         }
 
@@ -1066,37 +940,31 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Returns true if material for realID matches or is compatible with worldID material
      */
-    private boolean materialsMatch(int realID, int worldID)
-    {
+    private boolean materialsMatch(int realID, int worldID) {
         return (Block.getBlockById(worldID).getMaterial() == Material.grass && Block.getBlockById(Math.abs(realID)).getMaterial() == Material.ground) || (Block.getBlockById(worldID).getMaterial().isLiquid() && Block.getBlockById(Math.abs(realID)).getMaterial() == Block.getBlockById(worldID).getMaterial()) || (Block.getBlockById(worldID).getMaterial() == Material.ice && Block.getBlockById(Math.abs(realID)).getMaterial() == Material.water) || (Block.getBlockById(worldID).getMaterial() == Material.piston && Block.getBlockById(Math.abs(realID)).getMaterial() == Material.piston) || (Block.getBlockById(worldID) instanceof BlockRedstoneTorch && Block.getBlockById(Math.abs(realID)) instanceof BlockRedstoneTorch) || (Block.getBlockById(worldID) instanceof BlockRedstoneRepeater && Block.getBlockById(Math.abs(realID)) instanceof BlockRedstoneRepeater);
     }
 
     /**
      * Sets blocks flagged for post-gen processing; triggers onCustomBlockAdded method where applicable
      */
-    private void doPostGenProcessing(World world)
-    {
+    private void doPostGenProcessing(World world) {
         int fakeID, realID;
 
-        for (BlockData block : postGenBlocks)
-        {
+        for (BlockData block : postGenBlocks) {
             fakeID = block.getBlockID();
             realID = (Math.abs(fakeID) > 4095 ? getRealBlockID(fakeID, block.getCustomData1()) : fakeID);
 
-            if (Math.abs(realID) > 4095)
-            {
+            if (Math.abs(realID) > 4095) {
                 LLibrary.logger.error("Invalid block ID. Initial ID: " + fakeID + ", returned id from getRealID: " + realID);
                 continue;
             }
 
             if (realID >= 0 || world.isAirBlock(block.getPosX(), block.getPosY(), block.getPosZ()) ||
                     (world.getBlock(block.getPosX(), block.getPosY(), block.getPosZ()) != null
-                            && !world.getBlock(block.getPosX(), block.getPosY(), block.getPosZ()).getMaterial().blocksMovement()))
-            {
+                            && !world.getBlock(block.getPosX(), block.getPosY(), block.getPosZ()).getMaterial().blocksMovement())) {
                 world.setBlock(block.getPosX(), block.getPosY(), block.getPosZ(), Block.getBlockById(Math.abs(realID)), block.getMetaData(), 3);
 
-                if (Math.abs(fakeID) > 4095)
-                {
+                if (Math.abs(fakeID) > 4095) {
                     onCustomBlockAdded(world, block.getPosX(), block.getPosY(), block.getPosZ(), fakeID, block.getCustomData1(), block.getCustomData2());
                 }
             }
@@ -1110,17 +978,14 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * such as rails, furnaces, etc. whose orientation is automatically determined by the block
      * when placed via the onBlockAdded method.
      */
-    private void setMetadata(World world, int x, int y, int z, int origMeta, int facing)
-    {
+    private void setMetadata(World world, int x, int y, int z, int origMeta, int facing) {
         int id = Block.getIdFromBlock(world.getBlock(x, y, z));
 
-        if (blockRotationData.get(id) == null)
-        {
+        if (blockRotationData.get(id) == null) {
             return;
         }
 
-        switch (blockRotationData.get(id))
-        {
+        switch (blockRotationData.get(id)) {
             case PISTON_CONTAINER:
                 world.setBlockMetadataWithNotify(x, y, z, origMeta, 2);
                 break;
@@ -1144,10 +1009,8 @@ public abstract class StructureGeneratorBase extends WorldGenerator
      * Please read the blockArray notes very carefully and test out your structure to make
      * sure everything is oriented how you thought it was.
      */
-    private int getMetadata(int id, int origMeta, int facing)
-    {
-        if (blockRotationData.get(id) == null)
-        {
+    private int getMetadata(int id, int origMeta, int facing) {
+        if (blockRotationData.get(id) == null) {
             return 0;
         }
 
@@ -1156,18 +1019,15 @@ public abstract class StructureGeneratorBase extends WorldGenerator
         int meta = origMeta, bitface, tickDelay = meta >> 2, bit9 = meta >> 3,
                 bit4 = meta & 4, bit8 = meta & 8, extra = meta & ~3;
 
-        for (int i = 0; i < rotations; ++i)
-        {
+        for (int i = 0; i < rotations; ++i) {
             bitface = meta % 4;
 
-            switch (blockRotationData.get(id))
-            {
+            switch (blockRotationData.get(id)) {
                 case ANVIL:
                     meta ^= 1;
                     break;
                 case DOOR:
-                    if (bit8 != 0)
-                    {
+                    if (bit8 != 0) {
                         return meta;
                     }
                     meta = (bitface == 3 ? 0 : bitface + 1);
@@ -1178,8 +1038,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                     break;
                 case PISTON_CONTAINER:
                     meta -= meta > 7 ? 8 : 0;
-                    if (meta > 1)
-                    {
+                    if (meta > 1) {
                         meta = meta == 2 ? 5 : meta == 5 ? 3 : meta == 3 ? 4 : 2;
                     }
                     meta |= bit8 | bit9 << 3;
@@ -1188,16 +1047,11 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                     meta = meta == 3 ? 4 : meta == 4 ? 3 : meta;
                     break;
                 case RAIL:
-                    if (meta < 2)
-                    {
+                    if (meta < 2) {
                         meta ^= 1;
-                    }
-                    else if (meta < 6)
-                    {
+                    } else if (meta < 6) {
                         meta = meta == 2 ? 5 : meta == 5 ? 3 : meta == 3 ? 4 : 2;
-                    }
-                    else
-                    {
+                    } else {
                         meta = meta == 9 ? 6 : meta + 1;
                     }
                     break;
@@ -1220,30 +1074,23 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                     meta = meta == 1 ? 2 : meta == 2 ? 4 : meta == 4 ? 8 : 1;
                     break;
                 case WALL_MOUNTED:
-                    if (meta > 0 && meta < 5)
-                    {
+                    if (meta > 0 && meta < 5) {
                         meta = meta == 4 ? 1 : meta == 1 ? 3 : meta == 3 ? 2 : 4;
                     }
                     break;
                 case LEVER:
                     meta -= meta > 7 ? 8 : 0;
-                    if (meta > 0 && meta < 5)
-                    {
+                    if (meta > 0 && meta < 5) {
                         meta = meta == 4 ? 1 : meta == 1 ? 3 : meta == 3 ? 2 : 4;
-                    }
-                    else if (meta == 5 || meta == 6)
-                    {
+                    } else if (meta == 5 || meta == 6) {
                         meta = meta == 5 ? 6 : 5;
-                    }
-                    else
-                    {
+                    } else {
                         meta = meta == 7 ? 0 : 7;
                     }
                     meta |= bit8;
                     break;
                 case WOOD:
-                    if (meta > 4 && meta < 12)
-                    {
+                    if (meta > 4 && meta < 12) {
                         meta = meta < 8 ? meta + 4 : meta - 4;
                     }
                     break;
@@ -1258,12 +1105,10 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Adjusts offsetX and offsetZ amounts to compensate for manual rotation
      */
-    private void setOffsetFromRotation()
-    {
+    private void setOffsetFromRotation() {
         int x, z;
 
-        for (int i = 0; i < manualRotations; ++i)
-        {
+        for (int i = 0; i < manualRotations; ++i) {
             x = -offsetZ;
             z = offsetX;
             offsetX = x;
@@ -1274,8 +1119,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Clears blockArray, blockArrayList and offsets for next structure
      */
-    private void reset()
-    {
+    private void reset() {
         blockArrayList.clear();
         blockArray = null;
         offsetX = offsetY = offsetZ = 0;
@@ -1284,8 +1128,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Valid rotation types. Each type is handled like vanilla blocks of this kind.
      */
-    public enum ROTATION
-    {
+    public enum ROTATION {
         ANVIL, DOOR, GENERIC, PISTON_CONTAINER, QUARTZ, RAIL, REPEATER,
         SIGNPOST, SKULL, STAIRS, TRAPDOOR, VINE, WALL_MOUNTED, LEVER, WOOD
     }

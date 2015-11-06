@@ -11,8 +11,7 @@ import net.minecraft.client.model.ModelRenderer;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public class ResettableModelRenderer extends ModelRenderer
-{
+public class ResettableModelRenderer extends ModelRenderer {
     public float firstRotateAngleX;
     public float firstRotateAngleY;
     public float firstRotateAngleZ;
@@ -25,13 +24,11 @@ public class ResettableModelRenderer extends ModelRenderer
     public float firstOffsetY;
     public float firstOffsetZ;
 
-    public ResettableModelRenderer(ModelBase modelBase, int textureOffsetX, int textureOffsetY)
-    {
+    public ResettableModelRenderer(ModelBase modelBase, int textureOffsetX, int textureOffsetY) {
         super(modelBase, textureOffsetX, textureOffsetY);
     }
 
-    public void savefirstParameters()
-    {
+    public void savefirstParameters() {
         firstRotationPointX = rotationPointX;
         firstRotationPointY = rotationPointY;
         firstRotationPointZ = rotationPointZ;
@@ -43,8 +40,7 @@ public class ResettableModelRenderer extends ModelRenderer
         firstOffsetZ = offsetZ;
     }
 
-    public void resetAllParameters()
-    {
+    public void resetAllParameters() {
         rotationPointX = firstRotationPointX;
         rotationPointY = firstRotationPointY;
         rotationPointZ = firstRotationPointZ;
@@ -56,113 +52,93 @@ public class ResettableModelRenderer extends ModelRenderer
         offsetZ = firstOffsetZ;
     }
 
-    public void resetAllRotationPoints()
-    {
+    public void resetAllRotationPoints() {
         rotationPointX = firstRotationPointX;
         rotationPointY = firstRotationPointY;
         rotationPointZ = firstRotationPointZ;
     }
 
-    public void resetXRotationPoints()
-    {
+    public void resetXRotationPoints() {
         rotationPointX = firstRotationPointX;
     }
 
-    public void resetYRotationPoints()
-    {
+    public void resetYRotationPoints() {
         rotationPointY = firstRotationPointY;
     }
 
-    public void resetZRotationPoints()
-    {
+    public void resetZRotationPoints() {
         rotationPointZ = firstRotationPointZ;
     }
 
-    public void resetAllRotations()
-    {
+    public void resetAllRotations() {
         rotateAngleX = firstRotateAngleX;
         rotateAngleY = firstRotateAngleY;
         rotateAngleZ = firstRotateAngleZ;
     }
 
-    public void resetXRotations()
-    {
+    public void resetXRotations() {
         rotateAngleX = firstRotateAngleX;
     }
 
-    public void resetYRotations()
-    {
+    public void resetYRotations() {
         rotateAngleY = firstRotateAngleY;
     }
 
-    public void resetZRotations()
-    {
+    public void resetZRotations() {
         rotateAngleZ = firstRotateAngleZ;
     }
 
-    public void resetAllOffsets()
-    {
+    public void resetAllOffsets() {
         offsetX = firstOffsetX;
         offsetY = firstOffsetY;
         offsetZ = firstOffsetZ;
     }
 
-    public void resetXOffsets()
-    {
+    public void resetXOffsets() {
         offsetX = firstOffsetX;
     }
 
-    public void resetYOffsets()
-    {
+    public void resetYOffsets() {
         offsetY = firstOffsetY;
     }
 
-    public void resetZOffsets()
-    {
+    public void resetZOffsets() {
         offsetZ = firstOffsetZ;
     }
 
-    public void copyAllRotationPoints(ResettableModelRenderer target)
-    {
+    public void copyAllRotationPoints(ResettableModelRenderer target) {
         rotationPointX = target.rotationPointX;
         rotationPointY = target.rotationPointY;
         rotationPointZ = target.rotationPointZ;
     }
 
-    public void copyXRotationPoint(ResettableModelRenderer target)
-    {
+    public void copyXRotationPoint(ResettableModelRenderer target) {
         rotationPointX = target.rotationPointX;
     }
 
-    public void copyYRotationPoint(ResettableModelRenderer target)
-    {
+    public void copyYRotationPoint(ResettableModelRenderer target) {
         rotationPointY = target.rotationPointY;
     }
 
-    public void copyZRotationPoint(ResettableModelRenderer target)
-    {
+    public void copyZRotationPoint(ResettableModelRenderer target) {
         rotationPointZ = target.rotationPointZ;
     }
 
-    public void pinLegPlaneYZ(ResettableModelRenderer parentBox, float radius, float rotationX)
-    {
+    public void pinLegPlaneYZ(ResettableModelRenderer parentBox, float radius, float rotationX) {
         rotationPointY = parentBox.rotationPointY + radius * (float) Math.cos(rotationX);
         rotationPointZ = parentBox.rotationPointZ + radius * (float) Math.sin(rotationX);
     }
 
-    public void pinTailPlaneYZ(ResettableModelRenderer parentBox, float radius, float rotationX)
-    {
+    public void pinTailPlaneYZ(ResettableModelRenderer parentBox, float radius, float rotationX) {
         rotationPointY = parentBox.rotationPointY + radius * (float) Math.cos(rotationX + Math.PI / 2);
         rotationPointZ = parentBox.rotationPointZ + radius * (float) Math.sin(rotationX + Math.PI / 2);
     }
 
-    public float calculateDistanceYZ(ResettableModelRenderer target)
-    {
+    public float calculateDistanceYZ(ResettableModelRenderer target) {
         return (float) Math.sqrt(Math.pow((target.firstRotationPointY - firstRotationPointY), 2) + Math.pow((target.firstRotationPointZ - firstRotationPointZ), 2));
     }
 
-    public float calculateRadius(ResettableModelRenderer target)
-    {
+    public float calculateRadius(ResettableModelRenderer target) {
         return (float) Math.sqrt(Math.pow((target.firstRotationPointX - firstRotationPointX), 2) + Math.pow((target.firstRotationPointY - firstRotationPointY), 2) + Math.pow((target.firstRotationPointZ - firstRotationPointZ), 2));
     }
 }

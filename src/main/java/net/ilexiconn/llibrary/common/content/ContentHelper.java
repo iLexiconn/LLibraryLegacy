@@ -11,16 +11,14 @@ import java.util.Map;
  * @see net.ilexiconn.llibrary.common.content.IClientOnlyHandler
  * @since 0.2.0
  */
-public class ContentHelper
-{
+public class ContentHelper {
     private static Map<InitializationState, IContentHandler> timedHandlers = Maps.newHashMap();
 
     /**
      * @param contentHandlers the list of {@link net.ilexiconn.llibrary.common.content.IContentHandler} to initialize.
      * @since 0.2.0
      */
-    public static void init(IContentHandler... contentHandlers)
-    {
+    public static void init(IContentHandler... contentHandlers) {
         init(false, contentHandlers);
     }
 
@@ -29,37 +27,23 @@ public class ContentHelper
      * @param contentHandlers the list of {@link net.ilexiconn.llibrary.common.content.IContentHandler} to initialize.
      * @since 0.2.0
      */
-    public static void init(boolean ignoreTimed, IContentHandler... contentHandlers)
-    {
-        for (IContentHandler contentHandler : contentHandlers)
-        {
-            if (!ignoreTimed && contentHandler instanceof ITimedHandler && ((ITimedHandler) contentHandler).getTimedState() != InitializationState.PREINIT) /** Just run PREINIT now */
-            {
+    public static void init(boolean ignoreTimed, IContentHandler... contentHandlers) {
+        for (IContentHandler contentHandler : contentHandlers) {
+            if (!ignoreTimed && contentHandler instanceof ITimedHandler && ((ITimedHandler) contentHandler).getTimedState() != InitializationState.PREINIT) /** Just run PREINIT now */ {
                 timedHandlers.put(((ITimedHandler) contentHandler).getTimedState(), contentHandler);
-            }
-            else
-            {
-                if (contentHandler instanceof IClientOnlyHandler && FMLCommonHandler.instance().getEffectiveSide().isClient())
-                {
-                    try
-                    {
+            } else {
+                if (contentHandler instanceof IClientOnlyHandler && FMLCommonHandler.instance().getEffectiveSide().isClient()) {
+                    try {
                         contentHandler.init();
                         contentHandler.gameRegistry();
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-                else
-                {
-                    try
-                    {
+                } else {
+                    try {
                         contentHandler.init();
                         contentHandler.gameRegistry();
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -67,8 +51,7 @@ public class ContentHelper
         }
     }
 
-    public static Map<InitializationState, IContentHandler> getTimedHandlers()
-    {
+    public static Map<InitializationState, IContentHandler> getTimedHandlers() {
         return timedHandlers;
     }
 }

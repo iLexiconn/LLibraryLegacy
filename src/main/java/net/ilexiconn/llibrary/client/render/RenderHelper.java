@@ -25,8 +25,7 @@ import org.lwjgl.opengl.GL12;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public class RenderHelper
-{
+public class RenderHelper {
     private static ResourceLocation glintTexture = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 
     /**
@@ -36,8 +35,7 @@ public class RenderHelper
      * @since 0.1.0
      */
     @Deprecated
-    public static void registerModelExtension(IModelExtension modelExtension)
-    {
+    public static void registerModelExtension(IModelExtension modelExtension) {
 
     }
 
@@ -48,11 +46,9 @@ public class RenderHelper
      * @see net.minecraft.item.ItemStack
      * @since 0.1.0
      */
-    public static void renderItemIn3d(ItemStack stack)
-    {
+    public static void renderItemIn3d(ItemStack stack) {
         TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
-        if (textureManager == null)
-        {
+        if (textureManager == null) {
             return;
         }
         Item item = stack.getItem();
@@ -64,14 +60,10 @@ public class RenderHelper
         GL11.glColor4f(1f, 1f, 1f, 1f);
         int passes = item.getRenderPasses(stack.getItemDamage());
 
-        for (int pass = 0; pass < passes; pass++)
-        {
-            if (stack.getItemSpriteNumber() == 0)
-            {
+        for (int pass = 0; pass < passes; pass++) {
+            if (stack.getItemSpriteNumber() == 0) {
                 textureManager.bindTexture(TextureMap.locationBlocksTexture);
-            }
-            else
-            {
+            } else {
                 textureManager.bindTexture(TextureMap.locationItemsTexture);
             }
             IIcon icon = item.getIcon(stack, pass);
@@ -83,8 +75,7 @@ public class RenderHelper
             ItemRenderer.renderItemIn2D(tessellator, maxU, minV, minU, maxV, icon.getIconWidth(), icon.getIconHeight(), 0625f);
         }
 
-        if (stack.hasEffect(0))
-        {
+        if (stack.hasEffect(0)) {
             GL11.glDepthFunc(GL11.GL_EQUAL);
             GL11.glDisable(GL11.GL_LIGHTING);
             textureManager.bindTexture(glintTexture);
@@ -121,8 +112,7 @@ public class RenderHelper
     /**
      * @since 0.2.0
      */
-    public static void setColorFromInt(int color)
-    {
+    public static void setColorFromInt(int color) {
         float r = (color >> 16 & 255) / 255f;
         float g = (color >> 8 & 255) / 255f;
         float b = (color & 255) / 255f;
@@ -135,8 +125,7 @@ public class RenderHelper
      * @see net.minecraft.item.Item
      * @since 0.1.0
      */
-    public static void registerItem3dRenderer(Item item, ModelBase model, ResourceLocation texture)
-    {
+    public static void registerItem3dRenderer(Item item, ModelBase model, ResourceLocation texture) {
         MinecraftForgeClient.registerItemRenderer(item, new Item3dRenderer(item, model, texture));
     }
 }

@@ -16,8 +16,7 @@ import java.util.Random;
  * @since 0.1.1
  */
 
-public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEntity> extends ControlledAnimation
-{
+public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEntity> extends ControlledAnimation {
     /**
      * It is the random used to randomize the movement.
      */
@@ -58,8 +57,7 @@ public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEnti
      *                          contruct this intermittent animation with isOperator = !entity.worldObj.isRemote, of client only
      *                          then isOperator should be true
      */
-    public IntermittentAnimation(int id, T entity, int duration, int intervalDuration, int startPropbability, boolean isOperator)
-    {
+    public IntermittentAnimation(int id, T entity, int duration, int intervalDuration, int startPropbability, boolean isOperator) {
         super(duration);
         this.id = (byte) id;
         this.entity = entity;
@@ -70,8 +68,7 @@ public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEnti
         timerChange = -1;
     }
 
-    public byte getId()
-    {
+    public byte getId() {
         return id;
     }
 
@@ -80,16 +77,12 @@ public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEnti
      *
      * @param timeRunning is the number of ticks to be set.
      */
-    public void setTimeRunning(int timeRunning)
-    {
+    public void setTimeRunning(int timeRunning) {
         this.timer = timeRunning;
 
-        if (this.timer > duration)
-        {
+        if (this.timer > duration) {
             this.timer = duration;
-        }
-        else if (this.timer < 0)
-        {
+        } else if (this.timer < 0) {
             this.timer = 0;
         }
     }
@@ -98,39 +91,25 @@ public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEnti
      * Increases the timer by 1.
      */
     @Override
-    public void update()
-    {
+    public void update() {
         super.update();
-        if (isRunning)
-        {
-            if (timer < duration && timer > 0)
-            {
+        if (isRunning) {
+            if (timer < duration && timer > 0) {
                 timer += timerChange;
-            }
-            else
-            {
-                if (timer >= duration)
-                {
+            } else {
+                if (timer >= duration) {
                     timer = duration;
-                }
-                else if (timer <= 0)
-                {
+                } else if (timer <= 0) {
                     timer = 0;
                 }
                 timeIdle = 0;
                 isRunning = false;
             }
-        }
-        else if (isOperator)
-        {
-            if (timeIdle < minIdleTime)
-            {
+        } else if (isOperator) {
+            if (timeIdle < minIdleTime) {
                 timeIdle++;
-            }
-            else
-            {
-                if (rand.nextInt(startProbability) == 0)
-                {
+            } else {
+                if (rand.nextInt(startProbability) == 0) {
                     start();
                     LLibrary.networkWrapper.sendToDimension(new MessageLLibraryIntemittentAnimation(entity, id), entity.dimension);
                 }
@@ -138,8 +117,7 @@ public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEnti
         }
     }
 
-    public void start()
-    {
+    public void start() {
         timerChange = -timerChange;
         timer += timerChange;
         isRunning = true;
@@ -148,14 +126,10 @@ public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEnti
     /**
      * Decreases the timer by 1.
      */
-    public void stop()
-    {
-        if (timer > 0)
-        {
+    public void stop() {
+        if (timer > 0) {
             timer--;
-        }
-        else
-        {
+        } else {
             timer = 0;
             isRunning = false;
             timeIdle = 0;
@@ -168,14 +142,10 @@ public class IntermittentAnimation<T extends Entity & IntermittentAnimatableEnti
      *
      * @param timeDelta is the number of ticks to be decreased in the timer
      */
-    public void stop(int timeDelta)
-    {
-        if (timer - timeDelta > 0)
-        {
+    public void stop(int timeDelta) {
+        if (timer - timeDelta > 0) {
             timer -= timeDelta;
-        }
-        else
-        {
+        } else {
             timer = 0;
             isRunning = false;
             timeIdle = 0;

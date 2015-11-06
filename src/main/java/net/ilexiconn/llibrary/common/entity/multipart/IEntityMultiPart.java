@@ -6,8 +6,7 @@ package net.ilexiconn.llibrary.common.entity.multipart;
  * @author iLexiconn
  * @see net.ilexiconn.llibrary.common.entity.multipart.EntityPart
  */
-public interface IEntityMultiPart
-{
+public interface IEntityMultiPart {
     /**
      * Get the array of parts.
      *

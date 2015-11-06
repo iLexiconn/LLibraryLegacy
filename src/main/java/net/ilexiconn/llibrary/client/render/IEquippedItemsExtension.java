@@ -15,8 +15,7 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
  */
 @Deprecated
 @SideOnly(Side.CLIENT)
-public interface IEquippedItemsExtension extends IExtension
-{
+public interface IEquippedItemsExtension extends IExtension {
     /**
      * @return true if continue rendering
      * @since 0.2.0

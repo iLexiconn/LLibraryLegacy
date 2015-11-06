@@ -16,8 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
  */
 @Deprecated
 @SideOnly(Side.CLIENT)
-public interface IModelExtension extends IExtension
-{
+public interface IModelExtension extends IExtension {
     /**
      * Method to set the rotation angles for boxes before rendering.
      *

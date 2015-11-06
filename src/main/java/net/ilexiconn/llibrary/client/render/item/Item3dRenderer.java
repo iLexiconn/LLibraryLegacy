@@ -19,33 +19,27 @@ import static org.lwjgl.opengl.GL11.*;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public class Item3dRenderer implements IItemRenderer
-{
+public class Item3dRenderer implements IItemRenderer {
     public Item item;
     public ModelBase model;
     public ResourceLocation texture;
 
-    public Item3dRenderer(Item i, ModelBase m, ResourceLocation t)
-    {
+    public Item3dRenderer(Item i, ModelBase m, ResourceLocation t) {
         item = i;
         model = m;
         texture = t;
     }
 
-    public boolean handleRenderType(ItemStack item, ItemRenderType type)
-    {
+    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
         return type != ItemRenderType.FIRST_PERSON_MAP;
     }
 
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper)
-    {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
         return helper != ItemRendererHelper.BLOCK_3D;
     }
 
-    public void renderItem(ItemRenderType type, ItemStack item, Object... data)
-    {
-        switch (type)
-        {
+    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+        switch (type) {
             case ENTITY:
                 renderBlock(0f, 1.5f, 0f, type, data);
                 break;
@@ -65,13 +59,11 @@ public class Item3dRenderer implements IItemRenderer
         }
     }
 
-    public void renderBlock(float x, float y, float z, ItemRenderType type, Object... data)
-    {
+    public void renderBlock(float x, float y, float z, ItemRenderType type, Object... data) {
         glPushMatrix();
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(texture);
 
-        if (!MinecraftForge.EVENT_BUS.post(new Render3dItemEvent.Pre(item, model, texture, type, data, x, y, z)))
-        {
+        if (!MinecraftForge.EVENT_BUS.post(new Render3dItemEvent.Pre(item, model, texture, type, data, x, y, z))) {
             glTranslatef(x, y, z);
             glScalef(-1f, -1f, 1f);
             model.render(null, 0f, 0f, 0f, 0f, 0f, 0.0625f);

@@ -8,46 +8,38 @@ import java.util.Calendar;
  * @author FiskFille
  * @since 0.2.0
  */
-public class SystemTime
-{
+public class SystemTime {
     private static String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     private static String[] weekDayNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     private static Calendar c = Calendar.getInstance();
 
-    public static int getYear()
-    {
+    public static int getYear() {
         return c.get(Calendar.YEAR);
     }
 
-    public static int getMonth()
-    {
+    public static int getMonth() {
         return c.get(Calendar.MONTH) + 1;
     }
 
-    public static int getWeekOfMonth()
-    {
+    public static int getWeekOfMonth() {
         return c.get(Calendar.WEEK_OF_MONTH);
     }
 
-    public static int getWeekOfYear()
-    {
+    public static int getWeekOfYear() {
         return c.get(Calendar.WEEK_OF_YEAR);
     }
 
-    public static int getDayOfMonth()
-    {
+    public static int getDayOfMonth() {
         return c.get(Calendar.DAY_OF_MONTH);
     }
 
-    public static int getDayOfWeek()
-    {
+    public static int getDayOfWeek() {
         int i = c.get(Calendar.DAY_OF_WEEK);
         return i == 1 ? 7 : i - 1;
     }
 
-    public static int getDayOfWeek(int year, int month, int day)
-    {
+    public static int getDayOfWeek(int year, int month, int day) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.MONTH, month - 1);
@@ -56,38 +48,31 @@ public class SystemTime
         return i == 1 ? 7 : i - 1;
     }
 
-    public static int getDayOfWeek(int month, int day)
-    {
+    public static int getDayOfWeek(int month, int day) {
         return getDayOfWeek(getYear(), month, day);
     }
 
-    public static int getDayOfWeek(int year, String month, int day)
-    {
+    public static int getDayOfWeek(int year, String month, int day) {
         return getDayOfWeek(year, getMonthFromName(month), day);
     }
 
-    public static int getDayOfYear()
-    {
+    public static int getDayOfYear() {
         return c.get(Calendar.DAY_OF_YEAR);
     }
 
-    public static int getHourOfDay()
-    {
+    public static int getHourOfDay() {
         return c.get(Calendar.HOUR_OF_DAY);
     }
 
-    public static int getMinuteOfHour()
-    {
+    public static int getMinuteOfHour() {
         return c.get(Calendar.MINUTE);
     }
 
-    public static int getSecondOfMinute()
-    {
+    public static int getSecondOfMinute() {
         return c.get(Calendar.SECOND);
     }
 
-    public static Time getTime()
-    {
+    public static Time getTime() {
         Time time = new Time();
         time.hours = getHourOfDay();
         time.minutes = getMinuteOfHour();
@@ -95,58 +80,42 @@ public class SystemTime
         return time;
     }
 
-    public static String getMonthName(int month)
-    {
+    public static String getMonthName(int month) {
         return month > 0 && month < 13 ? monthNames[month - 1] : "missingno";
     }
 
-    public static int getMonthFromName(String month)
-    {
-        for (int i = 0; i < monthNames.length; ++i)
-        {
-            if (monthNames[i].equals(month))
-            {
+    public static int getMonthFromName(String month) {
+        for (int i = 0; i < monthNames.length; ++i) {
+            if (monthNames[i].equals(month)) {
                 return i + 1;
             }
         }
         return 0;
     }
 
-    public static String getDayOfWeekName(int dayOfWeek)
-    {
+    public static String getDayOfWeekName(int dayOfWeek) {
         return dayOfWeek > 0 && dayOfWeek < 8 ? weekDayNames[dayOfWeek - 1] : "missingno";
     }
 
-    public static int getDayOfWeekFromName(String dayOfWeek)
-    {
-        for (int i = 0; i < weekDayNames.length; ++i)
-        {
-            if (weekDayNames[i].equals(dayOfWeek))
-            {
+    public static int getDayOfWeekFromName(String dayOfWeek) {
+        for (int i = 0; i < weekDayNames.length; ++i) {
+            if (weekDayNames[i].equals(dayOfWeek)) {
                 return i + 1;
             }
         }
         return 0;
     }
 
-    public static String getNumberSuffix(int number)
-    {
+    public static String getNumberSuffix(int number) {
         String s = String.valueOf(number);
 
-        if (s.endsWith("1"))
-        {
+        if (s.endsWith("1")) {
             return "st";
-        }
-        else if (s.endsWith("2"))
-        {
+        } else if (s.endsWith("2")) {
             return "nd";
-        }
-        else if (s.endsWith("3"))
-        {
+        } else if (s.endsWith("3")) {
             return "rd";
-        }
-        else
-        {
+        } else {
             return "th";
         }
     }

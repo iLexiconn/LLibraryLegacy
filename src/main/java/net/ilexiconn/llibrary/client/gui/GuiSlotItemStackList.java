@@ -10,49 +10,39 @@ import net.minecraft.util.StatCollector;
  * @author FiskFile
  * @since 0.1.0
  */
-public class GuiSlotItemStackList extends GuiScrollingList
-{
+public class GuiSlotItemStackList extends GuiScrollingList {
     private GuiPickItem parent;
 
-    public GuiSlotItemStackList(GuiPickItem parent, int listWidth)
-    {
+    public GuiSlotItemStackList(GuiPickItem parent, int listWidth) {
         super(Minecraft.getMinecraft(), listWidth, parent.height, 55, parent.height - 45, 20, 18);
         this.parent = parent;
     }
 
-    protected int getSize()
-    {
+    protected int getSize() {
         return parent.itemsFiltered.size();
     }
 
-    protected void elementClicked(int index, boolean doubleClick)
-    {
+    protected void elementClicked(int index, boolean doubleClick) {
         parent.selectItemIndex(index);
     }
 
-    protected boolean isSelected(int index)
-    {
+    protected boolean isSelected(int index) {
         return parent.itemIndexSelected(index);
     }
 
-    protected void drawBackground()
-    {
+    protected void drawBackground() {
         parent.drawDefaultBackground();
     }
 
-    protected int getContentHeight()
-    {
+    protected int getContentHeight() {
         return (getSize()) * 18 + 1;
     }
 
-    protected void drawSlot(int listIndex, int x, int y, int par4, Tessellator tessellator)
-    {
-        if (listIndex < parent.itemsFiltered.size())
-        {
+    protected void drawSlot(int listIndex, int x, int y, int par4, Tessellator tessellator) {
+        if (listIndex < parent.itemsFiltered.size()) {
             ItemStack itemstack = parent.itemsFiltered.get(listIndex);
 
-            if (itemstack != null)
-            {
+            if (itemstack != null) {
                 Minecraft.getMinecraft().fontRenderer.drawString(Minecraft.getMinecraft().fontRenderer.trimStringToWidth(StatCollector.translateToLocal(itemstack.getDisplayName()), listWidth - 10), left + 22, y + 3, 0xFFFFFF);
                 parent.drawItemStack(left + 1, y - 1, itemstack);
             }

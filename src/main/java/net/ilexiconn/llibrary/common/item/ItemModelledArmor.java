@@ -15,15 +15,13 @@ import net.minecraft.item.ItemStack;
  * @see net.ilexiconn.llibrary.common.item.IArmorModelReceiver
  * @since 0.1.0
  */
-public class ItemModelledArmor extends ItemArmor
-{
+public class ItemModelledArmor extends ItemArmor {
     @SideOnly(Side.CLIENT)
     private ModelBiped armorModel;
 
     private IArmorModelReceiver armorModelReceiver;
 
-    public ItemModelledArmor(String textureName, ArmorMaterial material, int armorType, IArmorModelReceiver receiver)
-    {
+    public ItemModelledArmor(String textureName, ArmorMaterial material, int armorType, IArmorModelReceiver receiver) {
         super(material, 4, armorType);
         setUnlocalizedName(receiver.getModelTextureName() + "_" + textureName);
         setTextureName(textureName);
@@ -31,16 +29,13 @@ public class ItemModelledArmor extends ItemArmor
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
+    public void registerIcons(IIconRegister iconRegister) {
         itemIcon = iconRegister.registerIcon(getIconString());
     }
 
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
-    {
+    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
         ItemArmor item = (ItemArmor) stack.getItem();
-        switch (item.armorType)
-        {
+        switch (item.armorType) {
             case 2:
                 return armorModelReceiver.getModelTextureName() + "_1.png";
             default:
@@ -49,20 +44,15 @@ public class ItemModelledArmor extends ItemArmor
     }
 
     @SideOnly(Side.CLIENT)
-    public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot)
-    {
+    public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot) {
         int type = ((ItemArmor) itemStack.getItem()).armorType;
-        if (type == 1 || type == 3)
-        {
+        if (type == 1 || type == 3) {
             armorModel = armorModelReceiver.getArmorModel(0);
-        }
-        else
-        {
+        } else {
             armorModel = armorModelReceiver.getArmorModel(1);
         }
 
-        if (armorModel != null)
-        {
+        if (armorModel != null) {
             armorModel.bipedHead.showModel = armorSlot == 0;
             armorModel.bipedHeadwear.showModel = armorSlot == 0;
             armorModel.bipedBody.showModel = armorSlot == 1 || armorSlot == 2;
@@ -75,8 +65,7 @@ public class ItemModelledArmor extends ItemArmor
             armorModel.isChild = entityLiving.isChild();
             armorModel.heldItemRight = entityLiving.getEquipmentInSlot(0) != null ? 1 : 0;
 
-            if (entityLiving instanceof EntityPlayer)
-            {
+            if (entityLiving instanceof EntityPlayer) {
                 armorModel.aimedBow = ((EntityPlayer) entityLiving).getItemInUseDuration() > 2;
             }
 

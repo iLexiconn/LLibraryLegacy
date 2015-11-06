@@ -18,8 +18,7 @@ import java.util.Map;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public class GuiHelper
-{
+public class GuiHelper {
     private static Map<GuiOverride, Class<? extends GuiScreen>> overrideMap = Maps.newHashMap();
 
     /* x */
@@ -31,8 +30,7 @@ public class GuiHelper
      * @deprecated Use {@link Toast#makeText(String...)} instead.
      */
     @Deprecated
-    public static void createToast(int x, int y, String... text)
-    {
+    public static void createToast(int x, int y, String... text) {
         Toast.makeText(text).setPosition(x, y).show();
     }
 
@@ -43,8 +41,7 @@ public class GuiHelper
      * @see net.ilexiconn.llibrary.client.gui.GuiOverride
      * @since 0.1.0
      */
-    public static void addOverride(Class<? extends GuiScreen> clazz, GuiOverride gui)
-    {
+    public static void addOverride(Class<? extends GuiScreen> clazz, GuiOverride gui) {
         overrideMap.put(gui, clazz);
     }
 
@@ -56,14 +53,11 @@ public class GuiHelper
      * @see net.ilexiconn.llibrary.client.gui.GuiOverride
      * @since 0.1.0
      */
-    public static List<GuiOverride> getOverridesForGui(Class<? extends GuiScreen> clazz)
-    {
+    public static List<GuiOverride> getOverridesForGui(Class<? extends GuiScreen> clazz) {
         List<GuiOverride> list = Lists.newArrayList();
 
-        for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : overrideMap.entrySet())
-        {
-            if (e.getValue() == clazz)
-            {
+        for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : overrideMap.entrySet()) {
+            if (e.getValue() == clazz) {
                 list.add(e.getKey());
             }
         }
@@ -79,8 +73,7 @@ public class GuiHelper
      * @see net.ilexiconn.llibrary.client.gui.GuiOverride
      * @since 0.1.0
      */
-    public static Map<GuiOverride, Class<? extends GuiScreen>> getOverrides()
-    {
+    public static Map<GuiOverride, Class<? extends GuiScreen>> getOverrides() {
         return overrideMap;
     }
 }

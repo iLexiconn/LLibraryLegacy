@@ -9,8 +9,7 @@ import java.util.LinkedHashMap;
 /**
  * @author Ry_dog101
  */
-public class LLibraryEntityList
-{
+public class LLibraryEntityList {
     public static HashMap<Integer, Entities> entities = new LinkedHashMap<Integer, Entities>();
 
     /**
@@ -21,13 +20,11 @@ public class LLibraryEntityList
      * @param foreground  Foreground colour for Entity Spawn Egg
      * @param spawnEgg    Instance of Spawn Egg Item
      */
-    public static void addToList(Class entityClass, String entityName, int entityID, int background, int foreground, SpawnEgg spawnEgg)
-    {
+    public static void addToList(Class entityClass, String entityName, int entityID, int background, int foreground, SpawnEgg spawnEgg) {
         entities.put(entityID, new Entities(entityClass, entityName, entityID, background, foreground, spawnEgg.creativeTab));
     }
 
-    public static class Entities
-    {
+    public static class Entities {
         public final Class entityClass;
 
         public final String entityName;
@@ -40,8 +37,7 @@ public class LLibraryEntityList
 
         public final CreativeTabs creativeTab;
 
-        public Entities(Class entityClass, String entityName, int id, int background, int forground, CreativeTabs creativeTab)
-        {
+        public Entities(Class entityClass, String entityName, int id, int background, int forground, CreativeTabs creativeTab) {
             this.entityClass = entityClass;
             this.entityName = entityName;
             this.id = id;

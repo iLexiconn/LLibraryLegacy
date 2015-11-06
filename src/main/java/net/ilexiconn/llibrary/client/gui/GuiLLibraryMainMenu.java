@@ -10,29 +10,24 @@ import net.minecraft.client.gui.GuiButton;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public class GuiLLibraryMainMenu extends GuiOverride
-{
+public class GuiLLibraryMainMenu extends GuiOverride {
     private GuiButtonCheckForUpdates buttonCheckForUpdates;
 
-    public void initGui()
-    {
+    public void initGui() {
         super.initGui();
         buttonList.add(buttonCheckForUpdates = new GuiButtonCheckForUpdates(85, width / 2 - 124, height / 4 + 48));
     }
 
-    public void updateScreen()
-    {
+    public void updateScreen() {
         buttonCheckForUpdates.update();
         buttonCheckForUpdates.screenWidth = width;
         buttonCheckForUpdates.screenHeight = height;
     }
 
-    public void actionPerformed(GuiButton button)
-    {
+    public void actionPerformed(GuiButton button) {
         int id = button.id;
 
-        if (id == 85)
-        {
+        if (id == 85) {
             mc.displayGuiScreen(new GuiModUpdates());
         }
     }

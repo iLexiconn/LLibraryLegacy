@@ -15,24 +15,19 @@ import org.lwjgl.opengl.GL11;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public final class ModelLLibraryBiped extends ModelBiped
-{
-    public ModelLLibraryBiped()
-    {
+public final class ModelLLibraryBiped extends ModelBiped {
+    public ModelLLibraryBiped() {
         MinecraftForge.EVENT_BUS.post(new InitializePlayerModelEvent(this));
     }
 
-    public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
-    {
+    public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks) {
         setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
 
-        if (MinecraftForge.EVENT_BUS.post(new RenderPlayerModelEvent.Pre(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity)))
-        {
+        if (MinecraftForge.EVENT_BUS.post(new RenderPlayerModelEvent.Pre(this, limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity))) {
             return;
         }
 
-        if (isChild)
-        {
+        if (isChild) {
             float scale = 2f;
             GL11.glPushMatrix();
             GL11.glScalef(1.5f / scale, 1.5f / scale, 1.5f / scale);
@@ -49,9 +44,7 @@ public final class ModelLLibraryBiped extends ModelBiped
             bipedLeftLeg.render(partialTicks);
             bipedHeadwear.render(partialTicks);
             GL11.glPopMatrix();
-        }
-        else
-        {
+        } else {
             bipedHead.render(partialTicks);
             bipedBody.render(partialTicks);
             bipedRightArm.render(partialTicks);

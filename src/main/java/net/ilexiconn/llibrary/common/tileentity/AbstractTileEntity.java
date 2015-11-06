@@ -10,28 +10,23 @@ import net.minecraft.tileentity.TileEntity;
  * @author iLexiconn
  * @since 0.1.0
  */
-public abstract class AbstractTileEntity extends TileEntity
-{
-    public Packet getDescriptionPacket()
-    {
+public abstract class AbstractTileEntity extends TileEntity {
+    public Packet getDescriptionPacket() {
         NBTTagCompound nbtTag = new NBTTagCompound();
         saveClientDataToNBT(nbtTag);
         return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, nbtTag);
     }
 
-    public void onDataPacket(NetworkManager manager, S35PacketUpdateTileEntity packet)
-    {
+    public void onDataPacket(NetworkManager manager, S35PacketUpdateTileEntity packet) {
         loadClientDataFromNBT(packet.func_148857_g());
     }
 
-    public void readFromNBT(NBTTagCompound nbtTag)
-    {
+    public void readFromNBT(NBTTagCompound nbtTag) {
         super.readFromNBT(nbtTag);
         loadFromNBT(nbtTag);
     }
 
-    public void writeToNBT(NBTTagCompound nbtTag)
-    {
+    public void writeToNBT(NBTTagCompound nbtTag) {
         super.writeToNBT(nbtTag);
         saveToNBT(nbtTag);
     }

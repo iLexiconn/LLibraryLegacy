@@ -1,6 +1,5 @@
 package net.ilexiconn.llibrary.common.content;
 
-public interface ITimedHandler
-{
+public interface ITimedHandler {
     InitializationState getTimedState();
 }

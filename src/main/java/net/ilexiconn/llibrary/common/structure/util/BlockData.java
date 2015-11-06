@@ -7,12 +7,10 @@ package net.ilexiconn.llibrary.common.structure.util;
  * @see net.ilexiconn.llibrary.common.structure.util.GenHelper
  * @since 0.1.0
  */
-public class BlockData
-{
+public class BlockData {
     private final int posX, posY, posZ, blockId, metadata, customData1, customData2;
 
-    public BlockData(int x, int y, int z, int id, int meta, int data1, int data2)
-    {
+    public BlockData(int x, int y, int z, int id, int meta, int data1, int data2) {
         posX = x;
         posY = y;
         posZ = z;
@@ -22,38 +20,31 @@ public class BlockData
         customData2 = data2;
     }
 
-    public final int getPosX()
-    {
+    public final int getPosX() {
         return this.posX;
     }
 
-    public final int getPosY()
-    {
+    public final int getPosY() {
         return this.posY;
     }
 
-    public final int getPosZ()
-    {
+    public final int getPosZ() {
         return this.posZ;
     }
 
-    public final int getBlockID()
-    {
+    public final int getBlockID() {
         return this.blockId;
     }
 
-    public final int getMetaData()
-    {
+    public final int getMetaData() {
         return this.metadata;
     }
 
-    public final int getCustomData1()
-    {
+    public final int getCustomData1() {
         return this.customData1;
     }
 
-    public final int getCustomData2()
-    {
+    public final int getCustomData2() {
         return this.customData2;
     }
 }
