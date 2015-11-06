@@ -12,18 +12,15 @@ import net.minecraft.world.World;
  * @see net.ilexiconn.llibrary.common.block.BlockMountable
  * @since 0.1.0
  */
-public class EntityMountableBlock extends Entity
-{
+public class EntityMountableBlock extends Entity {
     public BlockPos blockPos;
     public Block block;
 
-    public EntityMountableBlock(World world)
-    {
+    public EntityMountableBlock(World world) {
         super(world);
     }
 
-    public EntityMountableBlock(World world, BlockPos pos, float mountX, float mountY, float mountZ)
-    {
+    public EntityMountableBlock(World world, BlockPos pos, float mountX, float mountY, float mountZ) {
         super(world);
         noClip = true;
         preventEntitySpawning = true;
@@ -34,33 +31,23 @@ public class EntityMountableBlock extends Entity
         setSize(0f, 0f);
     }
 
-    public boolean interactFirst(EntityPlayer player)
-    {
-        if (riddenByEntity != null && riddenByEntity instanceof EntityPlayer && riddenByEntity != player)
-        {
+    public boolean interactFirst(EntityPlayer player) {
+        if (riddenByEntity != null && riddenByEntity instanceof EntityPlayer && riddenByEntity != player) {
             return true;
-        }
-        else
-        {
-            if (!worldObj.isRemote)
-            {
+        } else {
+            if (!worldObj.isRemote) {
                 player.mountEntity(this);
             }
             return true;
         }
     }
 
-    public void onEntityUpdate()
-    {
-        if (!worldObj.isRemote)
-        {
+    public void onEntityUpdate() {
+        if (!worldObj.isRemote) {
             worldObj.theProfiler.startSection("entityBaseTick");
-            if (riddenByEntity == null || riddenByEntity.isDead)
-            {
+            if (riddenByEntity == null || riddenByEntity.isDead) {
                 setDead();
-            }
-            else if (worldObj.getBlockState(blockPos).getBlock() != block)
-            {
+            } else if (worldObj.getBlockState(blockPos).getBlock() != block) {
                 interactFirst((EntityPlayer) riddenByEntity);
             }
             ticksExisted++;
@@ -68,18 +55,15 @@ public class EntityMountableBlock extends Entity
         }
     }
 
-    public void entityInit()
-    {
+    public void entityInit() {
         setSize(0f, 0f);
     }
 
-    public void readEntityFromNBT(NBTTagCompound nbtTag)
-    {
+    public void readEntityFromNBT(NBTTagCompound nbtTag) {
 
     }
 
-    public void writeEntityToNBT(NBTTagCompound nbtTag)
-    {
+    public void writeEntityToNBT(NBTTagCompound nbtTag) {
 
     }
 }

@@ -16,8 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author iLexiconn
  * @since 0.5.0
  */
-public abstract class AbstractMessage<M extends AbstractMessage> implements IMessage, IMessageHandler<M, IMessage>
-{
+public abstract class AbstractMessage<M extends AbstractMessage> implements IMessage, IMessageHandler<M, IMessage> {
     /**
      * Register the message to the {@link net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper}.
      *
@@ -26,19 +25,14 @@ public abstract class AbstractMessage<M extends AbstractMessage> implements IMes
      * @param id             The id to use for the registration of the message.
      * @param side           The {@link net.minecraftforge.fml.relauncher.Side} to register the message on.
      */
-    public static <T extends AbstractMessage<T> & IMessageHandler<T, IMessage>> void registerMessage(SimpleNetworkWrapper networkWrapper, Class<T> clazz, int id, Side side)
-    {
+    public static <T extends AbstractMessage<T> & IMessageHandler<T, IMessage>> void registerMessage(SimpleNetworkWrapper networkWrapper, Class<T> clazz, int id, Side side) {
         networkWrapper.registerMessage(clazz, clazz, id, side);
     }
 
-    public IMessage onMessage(M message, MessageContext ctx)
-    {
-        if (ctx.side.isClient())
-        {
+    public IMessage onMessage(M message, MessageContext ctx) {
+        if (ctx.side.isClient()) {
             handleClientMessage(message, LLibrary.proxy.getClientPlayer());
-        }
-        else
-        {
+        } else {
             handleServerMessage(message, ctx.getServerHandler().playerEntity);
         }
         return null;

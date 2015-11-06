@@ -17,8 +17,7 @@ import java.util.Map;
  * @see net.minecraftforge.fml.common.Mod
  * @since 0.1.0
  */
-public class ConfigHelper
-{
+public class ConfigHelper {
     private static Map<String, ConfigContainer> configHandlers = Maps.newHashMap();
 
     /**
@@ -30,21 +29,16 @@ public class ConfigHelper
      * @see net.minecraftforge.fml.common.Mod
      * @since 0.1.0
      */
-    public static void registerConfigHandler(String modid, File location, IConfigHandler configHandler)
-    {
+    public static void registerConfigHandler(String modid, File location, IConfigHandler configHandler) {
         configHandlers.put(modid, new ConfigContainer(configHandler, new Configuration(location)));
         configHandler.loadConfig(getConfigContainer(modid).getConfiguration());
         getConfigContainer(modid).getConfiguration().save();
     }
 
-    public static ConfigContainer getConfigContainer(String modid)
-    {
-        if (hasConfiguration(modid))
-        {
+    public static ConfigContainer getConfigContainer(String modid) {
+        if (hasConfiguration(modid)) {
             return configHandlers.get(modid);
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -55,15 +49,12 @@ public class ConfigHelper
      * @see net.minecraftforge.fml.common.Mod
      * @since 0.1.0
      */
-    public static boolean hasConfiguration(String modid)
-    {
+    public static boolean hasConfiguration(String modid) {
         return configHandlers.containsKey(modid);
     }
 
-    public static void setProperty(String modid, String category, String name, String value, Property.Type type)
-    {
-        if (!hasConfiguration(modid))
-        {
+    public static void setProperty(String modid, String category, String name, String value, Property.Type type) {
+        if (!hasConfiguration(modid)) {
             return;
         }
         getConfigContainer(modid).getConfiguration().getCategory(category).put(name, new Property(name, value, type));

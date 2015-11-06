@@ -18,8 +18,7 @@ import java.util.List;
  * @author iLexiconn
  * @since 0.1.0
  */
-public class ItemHelper
-{
+public class ItemHelper {
     /**
      * Use {@link net.ilexiconn.llibrary.common.nbt.NbtHelper#readStackFromNbt(NBTTagCompound, String)} instead.
      *
@@ -29,8 +28,7 @@ public class ItemHelper
      * @since 0.1.0
      */
     @Deprecated
-    public static ItemStack getStackFromNBT(NBTTagCompound nbtTag, String name)
-    {
+    public static ItemStack getStackFromNBT(NBTTagCompound nbtTag, String name) {
         return NbtHelper.readStackFromNbt(nbtTag, name);
     }
 
@@ -43,26 +41,21 @@ public class ItemHelper
      * @since 0.1.0
      */
     @Deprecated
-    public static void saveStackToNBT(NBTTagCompound nbtTag, String name, ItemStack stack)
-    {
+    public static void saveStackToNBT(NBTTagCompound nbtTag, String name, ItemStack stack) {
         NbtHelper.writeStackToNbt(nbtTag, name, stack);
     }
 
-    public static void removeRecipe(Block block)
-    {
+    public static void removeRecipe(Block block) {
         removeRecipe(Item.getItemFromBlock(block));
     }
 
-    public static void removeRecipe(Item item)
-    {
+    public static void removeRecipe(Item item) {
         List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
         Iterator<IRecipe> iterator = recipes.iterator();
 
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             ItemStack stack = iterator.next().getRecipeOutput();
-            if (stack != null && stack.getItem() == item)
-            {
+            if (stack != null && stack.getItem() == item) {
                 iterator.remove();
             }
         }
@@ -74,8 +67,7 @@ public class ItemHelper
      * @param item
      * @since 0.2.1
      */
-    public static void removeItemFromChests(ItemStack item)
-    {
+    public static void removeItemFromChests(ItemStack item) {
         ChestGenHooks.removeItem(ChestGenHooks.STRONGHOLD_CORRIDOR, item);
         ChestGenHooks.removeItem(ChestGenHooks.VILLAGE_BLACKSMITH, item);
         ChestGenHooks.removeItem(ChestGenHooks.PYRAMID_JUNGLE_DISPENSER, item);

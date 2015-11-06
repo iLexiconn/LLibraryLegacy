@@ -18,90 +18,60 @@ import java.util.zip.GZIPOutputStream;
  * @author DanielHuisman
  * @since 0.3.0
  */
-public class SaveHelper
-{
+public class SaveHelper {
     public static ArrayList<ISaveHandler> saveHandlers = Lists.newArrayList();
 
-    public static void registerSaveHandler(ISaveHandler handler)
-    {
+    public static void registerSaveHandler(ISaveHandler handler) {
         saveHandlers.add(handler);
     }
 
-    public static void unregisterSaveHandler(ISaveHandler handler)
-    {
+    public static void unregisterSaveHandler(ISaveHandler handler) {
         saveHandlers.remove(handler);
     }
 
-    public static void load(net.minecraft.world.storage.ISaveHandler saveHandler, World world)
-    {
-        if ((world.provider.getDimensionId() == 0))
-        {
-            for (ISaveHandler handler : saveHandlers)
-            {
+    public static void load(net.minecraft.world.storage.ISaveHandler saveHandler, World world) {
+        if ((world.provider.getDimensionId() == 0)) {
+            for (ISaveHandler handler : saveHandlers) {
                 String[] saveFileNames = handler.getSaveFiles();
-                for (String saveFileName : saveFileNames)
-                {
+                for (String saveFileName : saveFileNames) {
                     SaveType saveFileType = handler.getSaveFileType(saveFileName);
-                    if (saveFileType == SaveType.OBJECT)
-                    {
-                        try
-                        {
+                    if (saveFileType == SaveType.OBJECT) {
+                        try {
                             File file = getSaveFile(saveHandler, world, saveFileName + ".dat", false);
-                            if (file != null)
-                            {
-                                try
-                                {
+                            if (file != null) {
+                                try {
                                     loadFile(handler, saveFileName, file);
-                                }
-                                catch (Exception e)
-                                {
+                                } catch (Exception e) {
                                     File fileBackup = getSaveFile(saveHandler, world, saveFileName + ".dat", true);
-                                    if (fileBackup.exists())
-                                    {
+                                    if (fileBackup.exists()) {
                                         loadFile(handler, saveFileName, fileBackup);
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         file.createNewFile();
                                         saveFile(handler, saveFileName, file);
                                     }
                                 }
                             }
-                        }
-                        catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
-                    else if (saveFileType == SaveType.NBT)
-                    {
-                        try
-                        {
+                    } else if (saveFileType == SaveType.NBT) {
+                        try {
                             File file = getSaveFile(saveHandler, world, saveFileName + ".dat", false);
-                            if (file != null)
-                            {
-                                try
-                                {
+                            if (file != null) {
+                                try {
                                     loadFileNBT(handler, saveFileName, file);
-                                }
-                                catch (Exception e)
-                                {
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                     File fileBackup = getSaveFile(saveHandler, world, saveFileName + ".dat", true);
-                                    if (fileBackup.exists())
-                                    {
+                                    if (fileBackup.exists()) {
                                         loadFileNBT(handler, saveFileName, fileBackup);
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         file.createNewFile();
                                         saveFileNBT(handler, saveFileName, file);
                                     }
                                 }
                             }
-                        }
-                        catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -110,8 +80,7 @@ public class SaveHelper
         }
     }
 
-    private static void loadFile(ISaveHandler saveHandler, String fileName, File file) throws Exception
-    {
+    private static void loadFile(ISaveHandler saveHandler, String fileName, File file) throws Exception {
         FileInputStream fis = new FileInputStream(file.getAbsolutePath());
         GZIPInputStream gzis = new GZIPInputStream(fis);
         ObjectInputStream in = new ObjectInputStream(gzis);
@@ -123,45 +92,31 @@ public class SaveHelper
         fis.close();
     }
 
-    private static void loadFileNBT(ISaveHandler saveHandler, String fileName, File file) throws Exception
-    {
+    private static void loadFileNBT(ISaveHandler saveHandler, String fileName, File file) throws Exception {
         FileInputStream fis = new FileInputStream(file);
         NBTTagCompound nbt = CompressedStreamTools.readCompressed(fis);
         fis.close();
         saveHandler.loadNBT(fileName, file, nbt);
     }
 
-    public static void save(net.minecraft.world.storage.ISaveHandler saveHandler, World world)
-    {
-        if ((world.provider.getDimensionId() == 0))
-        {
-            for (ISaveHandler handler : saveHandlers)
-            {
+    public static void save(net.minecraft.world.storage.ISaveHandler saveHandler, World world) {
+        if ((world.provider.getDimensionId() == 0)) {
+            for (ISaveHandler handler : saveHandlers) {
                 String[] saveFileNames = handler.getSaveFiles();
-                for (String saveFileName : saveFileNames)
-                {
+                for (String saveFileName : saveFileNames) {
                     SaveType saveFileType = handler.getSaveFileType(saveFileName);
-                    if (saveFileType == SaveType.OBJECT)
-                    {
-                        try
-                        {
+                    if (saveFileType == SaveType.OBJECT) {
+                        try {
                             File file = getSaveFile(saveHandler, world, saveFileName + ".dat", false);
                             saveFile(handler, saveFileName, file);
-                        }
-                        catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
-                    else if (saveFileType == SaveType.NBT)
-                    {
-                        try
-                        {
+                    } else if (saveFileType == SaveType.NBT) {
+                        try {
                             File file = getSaveFile(saveHandler, world, saveFileName + ".dat", false);
                             saveFileNBT(handler, saveFileName, file);
-                        }
-                        catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -170,8 +125,7 @@ public class SaveHelper
         }
     }
 
-    public static void saveFile(ISaveHandler saveHandler, String fileName, File file) throws Exception
-    {
+    public static void saveFile(ISaveHandler saveHandler, String fileName, File file) throws Exception {
         FileOutputStream fos = new FileOutputStream(file);
         GZIPOutputStream gzos = new GZIPOutputStream(fos);
         ObjectOutputStream out = new ObjectOutputStream(gzos);
@@ -185,8 +139,7 @@ public class SaveHelper
         copyFile(file, new File(file.getAbsolutePath() + ".bak"));
     }
 
-    public static void saveFileNBT(ISaveHandler saveHandler, String fileName, File file) throws Exception
-    {
+    public static void saveFileNBT(ISaveHandler saveHandler, String fileName, File file) throws Exception {
         NBTTagCompound nbt = new NBTTagCompound();
 
         saveHandler.saveNBT(fileName, file, nbt);
@@ -198,37 +151,28 @@ public class SaveHelper
         copyFile(file, new File(file.getAbsolutePath() + ".bak"));
     }
 
-    public static File getSaveFile(net.minecraft.world.storage.ISaveHandler saveHandler, World world, String name, boolean backup)
-    {
+    public static File getSaveFile(net.minecraft.world.storage.ISaveHandler saveHandler, World world, String name, boolean backup) {
         File worldDir = new File(saveHandler.getWorldDirectoryName());
         IChunkLoader loader = saveHandler.getChunkLoader(world.provider);
-        if ((loader instanceof AnvilChunkLoader))
-        {
+        if ((loader instanceof AnvilChunkLoader)) {
             worldDir = ((AnvilChunkLoader) loader).chunkSaveLocation;
         }
         File file = new File(worldDir, name + (backup ? ".bak" : ""));
-        if (!file.exists())
-        {
-            try
-            {
+        if (!file.exists()) {
+            try {
                 file.createNewFile();
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return file;
     }
 
-    public static void copyFile(File sourceFile, File destFile)
-    {
+    public static void copyFile(File sourceFile, File destFile) {
         FileChannel source;
         FileChannel destination;
-        try
-        {
-            if (!destFile.exists())
-            {
+        try {
+            if (!destFile.exists()) {
                 destFile.createNewFile();
             }
             source = new FileInputStream(sourceFile).getChannel();
@@ -236,9 +180,7 @@ public class SaveHelper
             destination.transferFrom(source, 0L, source.size());
             source.close();
             destination.close();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

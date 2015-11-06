@@ -8,8 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @deprecated Use {@link SurvivalTab} instead.
  */
 @Deprecated
-public interface ICustomSurvivalTabTexture
-{
+public interface ICustomSurvivalTabTexture {
     @SideOnly(Side.CLIENT)
     ResourceLocation getTabTexture();
 }

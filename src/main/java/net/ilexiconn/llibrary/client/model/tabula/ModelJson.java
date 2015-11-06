@@ -21,8 +21,7 @@ import java.util.Map.Entry;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public class ModelJson extends MowzieModelBase
-{
+public class ModelJson extends MowzieModelBase {
     private JsonTabulaModel tabulaModel;
     private Map<MowzieModelRenderer, MowzieModelRenderer> childParentMap = Maps.newHashMap();
     private Map<String, MowzieModelRenderer> nameMap = Maps.newHashMap();
@@ -36,8 +35,7 @@ public class ModelJson extends MowzieModelBase
 
     private int animationLength;
 
-    public ModelJson(JsonTabulaModel model)
-    {
+    public ModelJson(JsonTabulaModel model) {
         tabulaModel = model;
 
         textureWidth = model.getTextureWidth();
@@ -45,36 +43,30 @@ public class ModelJson extends MowzieModelBase
 
         animations = model.getAnimations();
 
-        for (CubeInfo c : model.getCubes())
-        {
+        for (CubeInfo c : model.getCubes()) {
             cube(c, null);
         }
 
-        for (CubeGroup g : model.getCubeGroups())
-        {
+        for (CubeGroup g : model.getCubeGroups()) {
             cubeGroup(g);
         }
 
         setInitPose();
     }
 
-    public ModelJson(JsonTabulaModel model, IModelAnimator animator)
-    {
+    public ModelJson(JsonTabulaModel model, IModelAnimator animator) {
         this(model);
         this.animator = animator;
     }
 
-    public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks)
-    {
+    public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks) {
         this.setRotationAngles(limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
 
         double[] scale = tabulaModel.getScale();
         GL11.glScaled(scale[0], scale[1], scale[2]);
 
-        for (Entry<MowzieModelRenderer, MowzieModelRenderer> cube : childParentMap.entrySet())
-        {
-            if (cube.getValue() == null)
-            {
+        for (Entry<MowzieModelRenderer, MowzieModelRenderer> cube : childParentMap.entrySet()) {
+            if (cube.getValue() == null) {
                 cube.getKey().render(partialTicks);
             }
         }
@@ -86,54 +78,44 @@ public class ModelJson extends MowzieModelBase
      * @see net.minecraft.entity.Entity
      * @since 0.1.0
      */
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, Entity entity)
-    {
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, Entity entity) {
         super.setRotationAngles(limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
 
-        if (!Minecraft.getMinecraft().isGamePaused())
-        {
+        if (!Minecraft.getMinecraft().isGamePaused()) {
             this.setToInitPose();
 
-            if (playingAnimation != null)
-            {
+            if (playingAnimation != null) {
                 updateAnimation(entity);
             }
 
-            if (animator != null)
-            {
+            if (animator != null) {
                 animator.setRotationAngles(this, limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
             }
         }
     }
 
-    private void cubeGroup(CubeGroup group)
-    {
-        for (CubeInfo cube : group.cubes)
-        {
+    private void cubeGroup(CubeGroup group) {
+        for (CubeInfo cube : group.cubes) {
             cube(cube, null);
         }
 
-        for (CubeGroup c : group.cubeGroups)
-        {
+        for (CubeGroup c : group.cubeGroups) {
             cubeGroup(c);
         }
     }
 
-    private void cube(CubeInfo cube, MowzieModelRenderer parent)
-    {
+    private void cube(CubeInfo cube, MowzieModelRenderer parent) {
         MowzieModelRenderer modelRenderer = createModelRenderer(cube);
 
         childParentMap.put(modelRenderer, parent);
         nameMap.put(cube.name, modelRenderer);
         identifierMap.put(cube.identifier, modelRenderer);
 
-        if (parent != null)
-        {
+        if (parent != null) {
             parent.addChild(modelRenderer);
         }
 
-        for (CubeInfo c : cube.children)
-        {
+        for (CubeInfo c : cube.children) {
             cube(c, modelRenderer);
         }
     }
@@ -146,20 +128,15 @@ public class ModelJson extends MowzieModelBase
      * @see net.ilexiconn.llibrary.client.model.tabula.AnimationComponent
      * @since 0.1.0
      */
-    public void startAnimation(int id)
-    {
-        if (playingAnimation == null)
-        {
+    public void startAnimation(int id) {
+        if (playingAnimation == null) {
             playingAnimation = animations.get(id);
 
             animationLength = 0;
 
-            for (Entry<String, ArrayList<AnimationComponent>> entry : playingAnimation.sets.entrySet())
-            {
-                for (AnimationComponent component : entry.getValue())
-                {
-                    if (component.startKey + component.length > animationLength)
-                    {
+            for (Entry<String, ArrayList<AnimationComponent>> entry : playingAnimation.sets.entrySet()) {
+                for (AnimationComponent component : entry.getValue()) {
+                    if (component.startKey + component.length > animationLength) {
                         animationLength = component.startKey + component.length;
                     }
                 }
@@ -177,25 +154,20 @@ public class ModelJson extends MowzieModelBase
      * @see net.ilexiconn.llibrary.client.model.tabula.AnimationComponent
      * @since 0.1.0
      */
-    public void stopAnimation()
-    {
+    public void stopAnimation() {
         playingAnimation = null;
     }
 
-    public void updateAnimation(Entity entity)
-    {
-        for (Entry<String, ArrayList<AnimationComponent>> entry : playingAnimation.sets.entrySet())
-        {
+    public void updateAnimation(Entity entity) {
+        for (Entry<String, ArrayList<AnimationComponent>> entry : playingAnimation.sets.entrySet()) {
             MowzieModelRenderer animating = identifierMap.get(entry.getKey());
 
-            for (AnimationComponent component : entry.getValue())
-            {
+            for (AnimationComponent component : entry.getValue()) {
                 if (animationTimer > component.startKey) // && animationTimer < component.startKey + component.length)
                 {
                     int componentTimer = animationTimer - component.startKey;
 
-                    if (componentTimer > component.length)
-                    {
+                    if (componentTimer > component.length) {
                         componentTimer = component.length;
                     }
 
@@ -212,21 +184,16 @@ public class ModelJson extends MowzieModelBase
 
         animationTimer = entity.ticksExisted % animationLength;
 
-        if (animationTimer > animationLength)
-        {
-            if (playingAnimation.loops)
-            {
+        if (animationTimer > animationLength) {
+            if (playingAnimation.loops) {
                 animationTimer = 0;
-            }
-            else
-            {
+            } else {
                 stopAnimation();
             }
         }
     }
 
-    private MowzieModelRenderer createModelRenderer(CubeInfo cubeInfo)
-    {
+    private MowzieModelRenderer createModelRenderer(CubeInfo cubeInfo) {
         MowzieModelRenderer cube = new MowzieModelRenderer(this, cubeInfo.txOffset[0], cubeInfo.txOffset[1]);
         cube.setRotationPoint((float) cubeInfo.position[0], (float) cubeInfo.position[1], (float) cubeInfo.position[2]);
         cube.addBox((float) cubeInfo.offset[0], (float) cubeInfo.offset[1], (float) cubeInfo.offset[2], cubeInfo.dimensions[0], cubeInfo.dimensions[1], cubeInfo.dimensions[2], 0.0F);
@@ -237,13 +204,11 @@ public class ModelJson extends MowzieModelBase
         return cube;
     }
 
-    public MowzieModelRenderer getCube(String name)
-    {
+    public MowzieModelRenderer getCube(String name) {
         return nameMap.get(name);
     }
 
-    public boolean isAnimationInProgress()
-    {
+    public boolean isAnimationInProgress() {
         return playingAnimation != null;
     }
 }

@@ -1,8 +1,8 @@
 package net.ilexiconn.llibrary.client.gui;
 
 import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
+import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
@@ -20,21 +20,17 @@ import java.util.Collections;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class GuiButtonSurvivalTab extends GuiButton
-{
+public class GuiButtonSurvivalTab extends GuiButton {
     private ResourceLocation texture = new ResourceLocation("textures/gui/container/creative_inventory/tabs.png");
     private SurvivalTab survivalTab;
 
-    public GuiButtonSurvivalTab(int id, SurvivalTab tab)
-    {
+    public GuiButtonSurvivalTab(int id, SurvivalTab tab) {
         super(id, 0, 0, 28, 32, "");
         survivalTab = tab;
     }
 
-    public void drawButton(Minecraft mc, int mouseX, int mouseY)
-    {
-        if (visible)
-        {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+        if (visible) {
             GL11.glColor4f(1f, 1f, 1f, 1f);
 
             boolean selected = mc.currentScreen.getClass() != survivalTab.getContainer();
@@ -45,23 +41,18 @@ public class GuiButtonSurvivalTab extends GuiButton
             int xTexPos = id == 2 || id == 8 ? 0 : 28;
             int ySize = survivalTab.isInFirstRow() ? selected ? 28 : 32 : selected ? 26 : 32;
 
-            if (mc.thePlayer.getActivePotionEffects().size() > 0)
-            {
+            if (mc.thePlayer.getActivePotionEffects().size() > 0) {
                 xPosition += 60;
             }
 
-            if (survivalTab.getTexture() != null)
-            {
+            if (survivalTab.getTexture() != null) {
                 mc.renderEngine.bindTexture(survivalTab.getTexture());
-            }
-            else
-            {
+            } else {
                 mc.renderEngine.bindTexture(texture);
             }
             drawTexturedModalRect(xPosition, yPosition, xTexPos, yTexPos, 28, ySize);
 
-            if (!survivalTab.isInFirstRow() && selected)
-            {
+            if (!survivalTab.isInFirstRow() && selected) {
                 yPosition -= 3;
             }
 
@@ -74,46 +65,34 @@ public class GuiButtonSurvivalTab extends GuiButton
             zLevel = 0f;
             RenderHelper.disableStandardItemLighting();
 
-            if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
-            {
+            if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height) {
                 drawHoveringText(Collections.singletonList(I18n.format(survivalTab.getLabel())), mouseX, mouseY);
             }
         }
     }
 
-    public boolean mousePressed(Minecraft mc, int mouseX, int mouseY)
-    {
-        if (super.mousePressed(mc, mouseX, mouseY))
-        {
-            if (mc.currentScreen.getClass() != survivalTab.getContainer())
-            {
+    public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+        if (super.mousePressed(mc, mouseX, mouseY)) {
+            if (mc.currentScreen.getClass() != survivalTab.getContainer()) {
                 MinecraftForge.EVENT_BUS.post(new SurvivalTab.ClickEvent(survivalTab, mc.thePlayer));
                 LLibrary.networkWrapper.sendToServer(new MessageLLibrarySurvivalTab(survivalTab.getIndex()));
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
-    public void drawHoveringText(List<String> list, int mouseX, int mouseY)
-    {
-        if (!list.isEmpty())
-        {
+    public void drawHoveringText(List<String> list, int mouseX, int mouseY) {
+        if (!list.isEmpty()) {
             FontRenderer font = Minecraft.getMinecraft().fontRendererObj;
             int topWidth = 0;
 
-            for (String line : list)
-            {
+            for (String line : list) {
                 int width = font.getStringWidth(line);
-                if (width > topWidth)
-                {
+                if (width > topWidth) {
                     topWidth = width;
                 }
             }
@@ -122,12 +101,10 @@ public class GuiButtonSurvivalTab extends GuiButton
             int renderY = mouseY - 12;
             int i1 = 8;
 
-            if (list.size() > 1)
-            {
+            if (list.size() > 1) {
                 i1 += 2 + (list.size() - 1) * 10;
             }
-            if (renderX + topWidth > width)
-            {
+            if (renderX + topWidth > width) {
                 renderX -= 28 + topWidth;
             }
 
@@ -150,12 +127,10 @@ public class GuiButtonSurvivalTab extends GuiButton
             drawGradientRect(renderX - 3, renderY - 3, renderX + topWidth + 3, renderY - 3 + 1, borderColour, borderColour);
             drawGradientRect(renderX - 3, renderY + i1 + 2, renderX + topWidth + 3, renderY + i1 + 3, gradient, gradient);
 
-            for (int letterIndex = 0; letterIndex < list.size(); ++letterIndex)
-            {
+            for (int letterIndex = 0; letterIndex < list.size(); ++letterIndex) {
                 String s1 = list.get(letterIndex);
                 font.drawStringWithShadow(s1, renderX, renderY, -1);
-                if (letterIndex == 0)
-                {
+                if (letterIndex == 0) {
                     renderY += 2;
                 }
                 renderY += 10;
@@ -166,8 +141,7 @@ public class GuiButtonSurvivalTab extends GuiButton
         }
     }
 
-    public void playPressSound(SoundHandler soundHandler)
-    {
+    public void playPressSound(SoundHandler soundHandler) {
 
     }
 }

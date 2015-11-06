@@ -1,13 +1,13 @@
 package net.ilexiconn.llibrary.client;
 
 import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.client.toast.Toast;
 import net.ilexiconn.llibrary.client.gui.GuiButtonPage;
 import net.ilexiconn.llibrary.client.gui.GuiButtonSurvivalTab;
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
 import net.ilexiconn.llibrary.client.gui.GuiOverride;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
+import net.ilexiconn.llibrary.client.toast.Toast;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
@@ -46,8 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 @SideOnly(Side.CLIENT)
-public class ClientEventHandler
-{
+public class ClientEventHandler {
     private static final double timeU = 1000000000 / 20;
     public static KeyBinding screenshotKeyBinding;
     private RenderPlayer prevRenderPlayer;
@@ -57,28 +56,22 @@ public class ClientEventHandler
     private long timer = System.currentTimeMillis();
 
     @SubscribeEvent
-    public void onRenderPlayerPost(RenderPlayerEvent.Specials.Post event)
-    {
-        if (event.entityPlayer == mc.thePlayer)
-        {
-            if (prevRenderPlayer != null)
-            {
+    public void onRenderPlayerPost(RenderPlayerEvent.Specials.Post event) {
+        if (event.entityPlayer == mc.thePlayer) {
+            if (prevRenderPlayer != null) {
                 mc.getRenderManager().entityRenderMap.put(event.entityPlayer.getClass(), prevRenderPlayer);
             }
         }
     }
 
     @SubscribeEvent
-    public void onRenderPlayerPre(RenderPlayerEvent.Pre event)
-    {
+    public void onRenderPlayerPre(RenderPlayerEvent.Pre event) {
         EntityPlayer player = event.entityPlayer;
 
-        if (mc.thePlayer == player)
-        {
+        if (mc.thePlayer == player) {
             Render entityRenderObject = mc.getRenderManager().getEntityRenderObject(event.entityPlayer);
 
-            if (!(entityRenderObject instanceof RenderLLibraryPlayer))
-            {
+            if (!(entityRenderObject instanceof RenderLLibraryPlayer)) {
                 prevRenderPlayer = (RenderPlayer) entityRenderObject;
                 mc.getRenderManager().entityRenderMap.put(player.getClass(), ClientProxy.renderCustomPlayer);
             }
@@ -86,15 +79,12 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent
-    public void onBlockHighlight(DrawBlockHighlightEvent event)
-    {
-        if (event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-        {
+    public void onBlockHighlight(DrawBlockHighlightEvent event) {
+        if (event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
             BlockPos blockPos = event.target.getBlockPos();
             Block block = event.player.worldObj.getBlockState(blockPos).getBlock();
 
-            if (block instanceof IHighlightedBlock)
-            {
+            if (block instanceof IHighlightedBlock) {
                 List<AxisAlignedBB> bounds = ((IHighlightedBlock) block).getHighlightedBoxes(event.player.worldObj, blockPos, event.player.worldObj.getBlockState(blockPos), event.player);
 
                 BlockPos pos = event.player.getPosition();
@@ -107,8 +97,7 @@ public class ClientEventHandler
                 GL11.glDisable(GL11.GL_TEXTURE_2D);
                 GL11.glDepthMask(false);
 
-                for (AxisAlignedBB box : bounds)
-                {
+                for (AxisAlignedBB box : bounds) {
                     RenderGlobal.drawOutlinedBoundingBox(box.offset(blockPos.getX(), blockPos.getY(), blockPos.getZ()).offset(-pos.getX(), -pos.getY(), -pos.getZ()), -1);
                 }
 
@@ -122,17 +111,12 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent
-    public void onInitGui(GuiScreenEvent.InitGuiEvent.Post event)
-    {
+    public void onInitGui(GuiScreenEvent.InitGuiEvent.Post event) {
         int count = 2;
-        for (SurvivalTab survivalTab : SurvivalTab.getSurvivalTabList())
-        {
-            if (survivalTab.getContainer() != null && survivalTab.getContainer().isInstance(event.gui))
-            {
-                for (SurvivalTab tab : SurvivalTab.getSurvivalTabList())
-                {
-                    if (tab.getPage() == SurvivalTab.getCurrentPage())
-                    {
+        for (SurvivalTab survivalTab : SurvivalTab.getSurvivalTabList()) {
+            if (survivalTab.getContainer() != null && survivalTab.getContainer().isInstance(event.gui)) {
+                for (SurvivalTab tab : SurvivalTab.getSurvivalTabList()) {
+                    if (tab.getPage() == SurvivalTab.getCurrentPage()) {
                         event.buttonList.add(new GuiButtonSurvivalTab(count, tab));
                     }
                     count++;
@@ -140,38 +124,30 @@ public class ClientEventHandler
             }
         }
 
-        if (count > 11)
-        {
+        if (count > 11) {
             GuiContainer container = (GuiContainer) event.gui;
             event.buttonList.add(new GuiButtonPage(-1, container.guiLeft, container.guiTop - 50, event.gui));
             event.buttonList.add(new GuiButtonPage(-2, container.guiLeft + container.xSize - 20, container.guiTop - 50, event.gui));
         }
 
-        if (event.gui instanceof GuiMainMenu)
-        {
-            for (JsonModUpdate mod : VersionHandler.getOutdatedMods())
-            {
+        if (event.gui instanceof GuiMainMenu) {
+            for (JsonModUpdate mod : VersionHandler.getOutdatedMods()) {
                 Toast.makeText("Update available!", mod.name, mod.currentVersion + " -> " + mod.getUpdateVersion().getVersionString()).show();
             }
         }
     }
 
     @SubscribeEvent
-    public void onKeyInput(InputEvent.KeyInputEvent event)
-    {
-        if (LLibraryConfigHandler.threadedScreenshots && ClientEventHandler.screenshotKeyBinding.isPressed())
-        {
+    public void onKeyInput(InputEvent.KeyInputEvent event) {
+        if (LLibraryConfigHandler.threadedScreenshots && ClientEventHandler.screenshotKeyBinding.isPressed()) {
             ScreenshotHelper.takeScreenshot();
         }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onDrawScreen(GuiScreenEvent.DrawScreenEvent.Post event)
-    {
-        for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : GuiHelper.getOverrides().entrySet())
-        {
-            if (event.gui.getClass() == e.getValue())
-            {
+    public void onDrawScreen(GuiScreenEvent.DrawScreenEvent.Post event) {
+        for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : GuiHelper.getOverrides().entrySet()) {
+            if (event.gui.getClass() == e.getValue()) {
                 GuiOverride gui = e.getKey();
                 long currentTime = System.nanoTime();
                 deltaU += (currentTime - initialTime) / timeU;
@@ -181,29 +157,23 @@ public class ClientEventHandler
                 gui.height = event.gui.height;
                 gui.overriddenScreen = event.gui;
 
-                if (deltaU >= 1)
-                {
+                if (deltaU >= 1) {
                     gui.updateScreen();
                     deltaU--;
                 }
 
-                if (System.currentTimeMillis() - timer > 1000)
-                {
+                if (System.currentTimeMillis() - timer > 1000) {
                     timer += 1000;
                 }
 
                 gui.drawScreen(event.mouseX, event.mouseY, event.renderPartialTicks);
 
-                if (!gui.buttonList.isEmpty())
-                {
-                    for (GuiButton button : (List<GuiButton>) gui.buttonList)
-                    {
-                        for (int i = 0; i < event.gui.buttonList.size(); ++i)
-                        {
+                if (!gui.buttonList.isEmpty()) {
+                    for (GuiButton button : (List<GuiButton>) gui.buttonList) {
+                        for (int i = 0; i < event.gui.buttonList.size(); ++i) {
                             GuiButton button1 = (GuiButton) event.gui.buttonList.get(i);
 
-                            if (button.id == button1.id)
-                            {
+                            if (button.id == button1.id) {
                                 event.gui.buttonList.remove(button1);
                             }
                         }
@@ -214,56 +184,43 @@ public class ClientEventHandler
             }
         }
 
-        for (Toast toast : Toast.getToastList())
-        {
+        for (Toast toast : Toast.getToastList()) {
             toast.getGui().drawToast();
         }
     }
 
     @SubscribeEvent
-    public void onRenderGameOverlay(RenderGameOverlayEvent.Post event)
-    {
-        for (Toast toast : Toast.getToastList())
-        {
+    public void onRenderGameOverlay(RenderGameOverlayEvent.Post event) {
+        for (Toast toast : Toast.getToastList()) {
             toast.getGui().drawToast();
         }
     }
 
     @SubscribeEvent
-    public void onButtonPress(GuiScreenEvent.ActionPerformedEvent.Pre event)
-    {
-        for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : GuiHelper.getOverrides().entrySet())
-        {
-            if (event.gui.getClass() == e.getValue())
-            {
+    public void onButtonPress(GuiScreenEvent.ActionPerformedEvent.Pre event) {
+        for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : GuiHelper.getOverrides().entrySet()) {
+            if (event.gui.getClass() == e.getValue()) {
                 e.getKey().actionPerformed(event.button);
             }
         }
     }
 
     @SubscribeEvent
-    public void onInitGui(GuiScreenEvent.InitGuiEvent.Pre event)
-    {
-        for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : GuiHelper.getOverrides().entrySet())
-        {
-            if (event.gui.getClass() == e.getValue())
-            {
+    public void onInitGui(GuiScreenEvent.InitGuiEvent.Pre event) {
+        for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : GuiHelper.getOverrides().entrySet()) {
+            if (event.gui.getClass() == e.getValue()) {
                 e.getKey().setWorldAndResolution(mc, event.gui.width, event.gui.height);
             }
         }
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event)
-    {
-        if (event.phase == TickEvent.Phase.END)
-        {
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
             Iterator<Toast> iterator = Toast.getToastList().iterator();
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 Toast toast = iterator.next();
-                if (toast.tick() <= 0)
-                {
+                if (toast.tick() <= 0) {
                     iterator.remove();
                 }
             }
@@ -271,10 +228,8 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent
-    public void onSurvivalTabClick(SurvivalTab.ClickEvent event)
-    {
-        if (event.getSurvivalTab() == LLibrary.tabInventory)
-        {
+    public void onSurvivalTabClick(SurvivalTab.ClickEvent event) {
+        if (event.getSurvivalTab() == LLibrary.tabInventory) {
             mc.displayGuiScreen(new GuiInventory(event.getEntityPlayer()));
         }
     }

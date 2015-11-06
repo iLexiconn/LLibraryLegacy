@@ -10,8 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /**
  * @deprecated Use {@link SurvivalTab} instead.
  */
-public interface ISurvivalTab
-{
+public interface ISurvivalTab {
     /**
      * @return unlocalized name string
      * @since 0.2.0

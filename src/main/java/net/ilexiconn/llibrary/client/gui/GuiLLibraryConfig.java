@@ -19,29 +19,23 @@ import java.util.List;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public class GuiLLibraryConfig extends GuiConfig
-{
-    public GuiLLibraryConfig(GuiScreen p)
-    {
+public class GuiLLibraryConfig extends GuiConfig {
+    public GuiLLibraryConfig(GuiScreen p) {
         super(p, getConfigElements(), "llibrary", false, false, "LLibrary Config");
     }
 
-    private static List<IConfigElement> getConfigElements()
-    {
+    private static List<IConfigElement> getConfigElements() {
         List<IConfigElement> list = Lists.newArrayList();
         list.add(new DummyConfigElement.DummyCategoryElement("General", "General", ConfigLLibraryGeneral.class));
         return list;
     }
 
-    public static class ConfigLLibraryGeneral extends GuiConfigEntries.CategoryEntry
-    {
-        public ConfigLLibraryGeneral(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop)
-        {
+    public static class ConfigLLibraryGeneral extends GuiConfigEntries.CategoryEntry {
+        public ConfigLLibraryGeneral(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop) {
             super(owningScreen, owningEntryList, prop);
         }
 
-        public GuiScreen buildChildScreen()
-        {
+        public GuiScreen buildChildScreen() {
             return new GuiConfig(this.owningScreen, new ConfigElement(ConfigHelper.getConfigContainer("llibrary").getConfiguration().getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(), "llibrary", false, false, "LLibrary Config", "General");
         }
     }

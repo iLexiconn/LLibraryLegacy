@@ -17,32 +17,26 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 
 @SideOnly(Side.CLIENT)
-public class LayerLLibraryArrow implements LayerRenderer
-{
+public class LayerLLibraryArrow implements LayerRenderer {
     public RenderPlayer renderer;
 
-    public LayerLLibraryArrow(RenderPlayer r)
-    {
+    public LayerLLibraryArrow(RenderPlayer r) {
         renderer = r;
     }
 
-    public void doRenderLayer(EntityLivingBase entity, float f8, float f7, float partialTicks, float f5, float f4, float f9, float size)
-    {
-        if (MinecraftForge.EVENT_BUS.post(new RenderStuckArrowEvent.Pre(entity, renderer, partialTicks)))
-        {
+    public void doRenderLayer(EntityLivingBase entity, float f8, float f7, float partialTicks, float f5, float f4, float f9, float size) {
+        if (MinecraftForge.EVENT_BUS.post(new RenderStuckArrowEvent.Pre(entity, renderer, partialTicks))) {
             return;
         }
 
         int i = entity.getArrowCountInEntity();
 
-        if (i > 0)
-        {
+        if (i > 0) {
             EntityArrow entityarrow = new EntityArrow(entity.worldObj, entity.posX, entity.posY, entity.posZ);
             Random random = new Random((long) entity.getEntityId());
             RenderHelper.disableStandardItemLighting();
 
-            for (int j = 0; j < i; ++j)
-            {
+            for (int j = 0; j < i; ++j) {
                 GlStateManager.pushMatrix();
                 ModelRenderer modelrenderer = this.renderer.getMainModel().getRandomModelBox(random);
                 ModelBox modelbox = (ModelBox) modelrenderer.cubeList.get(random.nextInt(modelrenderer.cubeList.size()));
@@ -74,8 +68,7 @@ public class LayerLLibraryArrow implements LayerRenderer
         }
     }
 
-    public boolean shouldCombineTextures()
-    {
+    public boolean shouldCombineTextures() {
         return false;
     }
 }

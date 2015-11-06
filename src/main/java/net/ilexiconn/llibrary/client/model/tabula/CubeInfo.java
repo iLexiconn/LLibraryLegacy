@@ -8,8 +8,7 @@ import java.util.ArrayList;
  * @author iChun
  * @since 0.1.0
  */
-public class CubeInfo
-{
+public class CubeInfo {
     public String name;
     public int[] dimensions = new int[3];
 

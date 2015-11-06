@@ -23,8 +23,7 @@ import java.util.Map;
  * @author Ry_dog101
  * @since 0.1.0
  */
-public class EntityHelper
-{
+public class EntityHelper {
     static int startEntityId = 0;
 
     private static Field classToIDMappingField;
@@ -32,21 +31,15 @@ public class EntityHelper
 
     private static List<Class<? extends Entity>> removedEntities = Lists.newArrayList();
 
-    static
-    {
+    static {
         int i = 0;
 
-        for (Field field : EntityList.class.getDeclaredFields())
-        {
-            if (field.getType() == Map.class)
-            {
-                if (i == 3)
-                {
+        for (Field field : EntityList.class.getDeclaredFields()) {
+            if (field.getType() == Map.class) {
+                if (i == 3) {
                     field.setAccessible(true);
                     classToIDMappingField = field;
-                }
-                else if (i == 4)
-                {
+                } else if (i == 4) {
                     field.setAccessible(true);
                     stringToIDMappingField = field;
                     break;
@@ -57,34 +50,28 @@ public class EntityHelper
         }
     }
 
-    public static boolean hasEntityBeenRemoved(Class<? extends Entity> entity)
-    {
+    public static boolean hasEntityBeenRemoved(Class<? extends Entity> entity) {
         return removedEntities.contains(entity);
     }
 
-    public static void registerEntity(String entityName, Class<? extends Entity> entityClass)
-    {
+    public static void registerEntity(String entityName, Class<? extends Entity> entityClass) {
         int entityId = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId);
         EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
     }
 
-    public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int primaryColor, int secondaryColor)
-    {
+    public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int primaryColor, int secondaryColor) {
         int entityId = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId, primaryColor, secondaryColor);
         EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
     }
 
-    public static void removeLivingEntity(Class<? extends EntityLiving> clazz)
-    {
+    public static void removeLivingEntity(Class<? extends EntityLiving> clazz) {
         removeEntity(clazz);
         removeEntityEgg(clazz);
 
-        for (BiomeGenBase biome : BiomeGenBase.getBiomeGenArray())
-        {
-            if (biome != null)
-            {
+        for (BiomeGenBase biome : BiomeGenBase.getBiomeGenArray()) {
+            if (biome != null) {
                 EntityRegistry.removeSpawn(clazz, EnumCreatureType.AMBIENT, biome);
                 EntityRegistry.removeSpawn(clazz, EnumCreatureType.CREATURE, biome);
                 EntityRegistry.removeSpawn(clazz, EnumCreatureType.MONSTER, biome);
@@ -93,8 +80,7 @@ public class EntityHelper
         }
     }
 
-    public static void removeEntity(Class<? extends Entity> clazz)
-    {
+    public static void removeEntity(Class<? extends Entity> clazz) {
         removedEntities.add(clazz);
 
         EntityList.idToClassMapping.remove(clazz);
@@ -104,67 +90,52 @@ public class EntityHelper
         EntityList.stringToClassMapping.remove(name);
         EntityList.classToStringMapping.remove(clazz);
 
-        try
-        {
+        try {
             Map classToIDMapping = (Map) classToIDMappingField.get(null);
             Map stringToIDMapping = (Map) stringToIDMappingField.get(null);
             classToIDMapping.remove(clazz);
             stringToIDMapping.remove(name);
-        }
-        catch (IllegalArgumentException e)
-        {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
-        }
-        catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
 
-    public static void removeEntityEgg(Class<? extends EntityLiving> clazz)
-    {
+    public static void removeEntityEgg(Class<? extends EntityLiving> clazz) {
         Integer toRemove = null;
 
-        for (Object key : EntityList.entityEggs.keySet())
-        {
+        for (Object key : EntityList.entityEggs.keySet()) {
             Integer intKey = (Integer) key;
 
             Class<? extends Entity> entityClass = EntityList.getClassFromID(intKey);
 
-            if (clazz.equals(entityClass))
-            {
+            if (clazz.equals(entityClass)) {
                 toRemove = intKey;
 
                 break;
             }
         }
 
-        if (toRemove != null)
-        {
+        if (toRemove != null) {
             EntityList.entityEggs.remove(toRemove);
         }
     }
 
-    private static int getUniqueEntityId()
-    {
-        do
-        {
+    private static int getUniqueEntityId() {
+        do {
             startEntityId++;
         }
         while (EntityList.getStringFromID(startEntityId) != null);
         return startEntityId;
     }
 
-    public static Entity getEntityFromClass(Class entityClass, World world)
-    {
+    public static Entity getEntityFromClass(Class entityClass, World world) {
         Entity entity = null;
 
-        try
-        {
+        try {
             entity = (Entity) entityClass.getConstructor(new Class[]{World.class}).newInstance(world);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

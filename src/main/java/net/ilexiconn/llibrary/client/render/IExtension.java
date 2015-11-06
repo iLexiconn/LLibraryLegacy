@@ -10,8 +10,7 @@ import net.minecraft.client.model.ModelBase;
  * @since 0.2.0
  */
 @Deprecated
-public interface IExtension
-{
+public interface IExtension {
     /**
      * Initialize the custom model(s).
      *

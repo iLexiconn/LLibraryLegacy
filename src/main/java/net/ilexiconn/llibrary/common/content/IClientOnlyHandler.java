@@ -7,7 +7,6 @@ package net.ilexiconn.llibrary.common.content;
  * @see net.ilexiconn.llibrary.common.content.IContentHandler
  * @since 0.2.0
  */
-public interface IClientOnlyHandler
-{
+public interface IClientOnlyHandler {
 
 }

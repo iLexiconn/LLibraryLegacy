@@ -10,8 +10,7 @@ import java.io.ObjectOutputStream;
  * @author DanielHuisman
  * @since 0.3.0
  */
-public interface ISaveHandler
-{
+public interface ISaveHandler {
     /**
      * @return An array of file names
      */
@@ -51,8 +50,7 @@ public interface ISaveHandler
      */
     void saveNBT(String fileName, File file, NBTTagCompound nbt);
 
-    enum SaveType
-    {
+    enum SaveType {
         OBJECT,
         NBT
     }

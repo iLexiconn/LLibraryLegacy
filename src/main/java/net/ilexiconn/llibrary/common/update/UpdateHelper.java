@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.common.json.JsonFactory;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.web.WebHelper;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
 
@@ -17,8 +18,7 @@ import java.util.ArrayList;
  * @author iLexiconn
  * @since 0.1.0
  */
-public class UpdateHelper
-{
+public class UpdateHelper {
     public static ArrayList<JsonModUpdate> modList = Lists.newArrayList();
 
     /**
@@ -33,8 +33,7 @@ public class UpdateHelper
      * @throws java.io.IOException
      */
     @Deprecated
-    public static void registerUpdateChecker(Object mod, String url) throws IOException
-    {
+    public static void registerUpdateChecker(Object mod, String url) throws IOException {
         registerUpdateChecker(mod, new String[]{url});
     }
 
@@ -50,23 +49,29 @@ public class UpdateHelper
      * @throws java.io.IOException
      */
     @Deprecated
-    public static void registerUpdateChecker(Object mod, String[] urls) throws IOException
-    {
+    public static void registerUpdateChecker(Object mod, String[] urls) throws IOException {
         JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(urls), JsonModUpdate.class);
         Class<?> modClass = mod.getClass();
 
-        if (json == null)
-        {
+        if (json == null) {
             return;
         }
 
-        if (!modClass.isAnnotationPresent(Mod.class))
-        {
+        if (!modClass.isAnnotationPresent(Mod.class)) {
             return;
         }
 
         Mod annotation = modClass.getAnnotation(Mod.class);
 
+        ModContainer container = null;
+        for (ModContainer c : Loader.instance().getModList()) {
+            if (c.getModId().equals(annotation.modid())) {
+                container = c;
+                break;
+            }
+        }
+
+        json.modContainer = container;
         json.modid = annotation.modid();
         json.currentVersion = annotation.version();
         json.name = annotation.name();
@@ -87,8 +92,7 @@ public class UpdateHelper
      * @throws java.io.IOException
      */
     @Deprecated
-    public static void registerUpdateChecker(ModContainer mod, String url) throws IOException
-    {
+    public static void registerUpdateChecker(ModContainer mod, String url) throws IOException {
         registerUpdateChecker(mod, new String[]{url});
     }
 
@@ -104,15 +108,14 @@ public class UpdateHelper
      * @throws java.io.IOException
      */
     @Deprecated
-    public static void registerUpdateChecker(ModContainer mod, String[] urls) throws IOException
-    {
+    public static void registerUpdateChecker(ModContainer mod, String[] urls) throws IOException {
         JsonModUpdate json = JsonFactory.getGson().fromJson(WebHelper.downloadTextFile(urls), JsonModUpdate.class);
 
-        if (json == null)
-        {
+        if (json == null) {
             return;
         }
 
+        json.modContainer = mod;
         json.modid = mod.getModId();
         json.currentVersion = mod.getVersion();
         json.name = mod.getName();
@@ -121,12 +124,9 @@ public class UpdateHelper
         modList.add(json);
     }
 
-    public static JsonModUpdate getModContainerById(String modid)
-    {
-        for (JsonModUpdate mod : modList)
-        {
-            if (mod.modid.equals(modid))
-            {
+    public static JsonModUpdate getModContainerById(String modid) {
+        for (JsonModUpdate mod : modList) {
+            if (mod.modid.equals(modid)) {
                 return mod;
             }
         }

@@ -14,31 +14,23 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ServerEventHandler
-{
+public class ServerEventHandler {
     private boolean checkedForUpdates;
 
     @SubscribeEvent
-    public void entityTick(LivingEvent.LivingUpdateEvent event)
-    {
-        if (event.entityLiving instanceof IEntityMultiPart)
-        {
-            for (EntityPart part : ((IEntityMultiPart) event.entityLiving).getParts())
-            {
+    public void entityTick(LivingEvent.LivingUpdateEvent event) {
+        if (event.entityLiving instanceof IEntityMultiPart) {
+            for (EntityPart part : ((IEntityMultiPart) event.entityLiving).getParts()) {
                 part.onUpdate();
             }
         }
     }
 
     @SubscribeEvent
-    public void joinWorld(EntityJoinWorldEvent event)
-    {
-        if (event.world.isRemote)
-        {
-            if (event.entity instanceof EntityPlayer)
-            {
-                if (!checkedForUpdates)
-                {
+    public void joinWorld(EntityJoinWorldEvent event) {
+        if (event.world.isRemote) {
+            if (event.entity instanceof EntityPlayer) {
+                if (!checkedForUpdates) {
                     new UpdateCheckerThread().start();
 
                     checkedForUpdates = true;
@@ -46,38 +38,30 @@ public class ServerEventHandler
             }
         }
 
-        if (EntityHelper.hasEntityBeenRemoved(event.entity.getClass()))
-        {
+        if (EntityHelper.hasEntityBeenRemoved(event.entity.getClass())) {
             event.setCanceled(true);
         }
     }
 
     @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event)
-    {
-        if (!event.world.isRemote)
-        {
+    public void onWorldLoad(WorldEvent.Load event) {
+        if (!event.world.isRemote) {
             SaveHelper.load(event.world.getSaveHandler(), event.world);
         }
     }
 
     @SubscribeEvent
-    public void onWorldSave(WorldEvent.Save event)
-    {
-        if (!event.world.isRemote)
-        {
+    public void onWorldSave(WorldEvent.Save event) {
+        if (!event.world.isRemote) {
             SaveHelper.save(event.world.getSaveHandler(), event.world);
         }
     }
 
     @SubscribeEvent
-    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
-    {
-        if (ConfigHelper.hasConfiguration(event.modID))
-        {
+    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+        if (ConfigHelper.hasConfiguration(event.modID)) {
             ConfigContainer container = ConfigHelper.getConfigContainer(event.modID);
-            if (container != null)
-            {
+            if (container != null) {
                 container.getConfigHandler().loadConfig(container.getConfiguration());
                 container.getConfiguration().save();
             }

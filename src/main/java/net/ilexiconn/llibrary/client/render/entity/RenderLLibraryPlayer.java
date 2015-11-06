@@ -18,10 +18,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public final class RenderLLibraryPlayer extends RenderPlayer
-{
-    public RenderLLibraryPlayer()
-    {
+public final class RenderLLibraryPlayer extends RenderPlayer {
+    public RenderLLibraryPlayer() {
         super(Minecraft.getMinecraft().getRenderManager());
         mainModel = new ModelLLibraryBiped();
         layerRenderers.clear();
@@ -33,10 +31,8 @@ public final class RenderLLibraryPlayer extends RenderPlayer
         addLayer(new LayerCustomHead(((ModelLLibraryBiped) mainModel).bipedHead));
     }
 
-    public void func_177138_b(AbstractClientPlayer player)
-    {
-        if (!MinecraftForge.EVENT_BUS.post(new RenderFirstPersonEvent.Pre(player, this, ((ModelLLibraryBiped) mainModel))))
-        {
+    public void func_177138_b(AbstractClientPlayer player) {
+        if (!MinecraftForge.EVENT_BUS.post(new RenderFirstPersonEvent.Pre(player, this, ((ModelLLibraryBiped) mainModel)))) {
             super.func_177138_b(player);
         }
         MinecraftForge.EVENT_BUS.post(new RenderFirstPersonEvent.Post(player, this, ((ModelLLibraryBiped) mainModel)));

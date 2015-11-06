@@ -12,8 +12,7 @@ import org.lwjgl.opengl.GL11;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public class RenderHelper
-{
+public class RenderHelper {
     /**
      * Registers the given {@link net.ilexiconn.llibrary.client.render.IModelExtension}.
      *
@@ -21,16 +20,14 @@ public class RenderHelper
      * @since 0.1.0
      */
     @Deprecated
-    public static void registerModelExtension(IModelExtension modelExtension)
-    {
+    public static void registerModelExtension(IModelExtension modelExtension) {
 
     }
 
     /**
      * @since 0.2.0
      */
-    public static void setColorFromInt(int color)
-    {
+    public static void setColorFromInt(int color) {
         float r = (color >> 16 & 255) / 255f;
         float g = (color >> 8 & 255) / 255f;
         float b = (color & 255) / 255f;

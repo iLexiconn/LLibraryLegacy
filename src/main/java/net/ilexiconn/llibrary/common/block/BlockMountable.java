@@ -16,26 +16,20 @@ import java.util.List;
  * @author iLexiconn
  * @since 0.1.0
  */
-public abstract class BlockMountable extends BlockContainer
-{
+public abstract class BlockMountable extends BlockContainer {
     private float mountPosX = 0.5f;
     private float mountPosY = 1f;
     private float mountPosZ = 0.5f;
 
-    public BlockMountable(Material material)
-    {
+    public BlockMountable(Material material) {
         super(material);
     }
 
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (!world.isRemote)
-        {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (!world.isRemote) {
             List<EntityMountableBlock> mountableBlocks = world.getEntitiesWithinAABB(EntityMountableBlock.class, AxisAlignedBB.fromBounds(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1f, pos.getY() + 1f, pos.getZ() + 1f).expand(1f, 1f, 1f));
-            for (EntityMountableBlock mountableBlock : mountableBlocks)
-            {
-                if (mountableBlock.blockPos == pos)
-                {
+            for (EntityMountableBlock mountableBlock : mountableBlocks) {
+                if (mountableBlock.blockPos == pos) {
                     return mountableBlock.interactFirst(player);
                 }
             }
@@ -52,20 +46,16 @@ public abstract class BlockMountable extends BlockContainer
         return true;
     }
 
-    public void onBlockDestroyedByPlayer(World world, BlockPos pos, IBlockState state)
-    {
-        if (!world.isRemote)
-        {
+    public void onBlockDestroyedByPlayer(World world, BlockPos pos, IBlockState state) {
+        if (!world.isRemote) {
             List<EntityMountableBlock> mountableBlocks = world.getEntitiesWithinAABB(EntityMountableBlock.class, AxisAlignedBB.fromBounds(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1f, pos.getY() + 1f, pos.getZ() + 1f).expand(1f, 1f, 1f));
-            for (EntityMountableBlock mountableBlock : mountableBlocks)
-            {
+            for (EntityMountableBlock mountableBlock : mountableBlocks) {
                 mountableBlock.setDead();
             }
         }
     }
 
-    public void setMountingPosition(float x, float y, float z)
-    {
+    public void setMountingPosition(float x, float y, float z) {
         mountPosX = x;
         mountPosY = y;
         mountPosZ = z;

@@ -27,8 +27,7 @@ import java.util.Date;
  * @author iLexiconn
  * @since 0.2.0
  */
-public class ScreenshotHelper implements Runnable
-{
+public class ScreenshotHelper implements Runnable {
     private static IntBuffer pixelBuffer;
     private static int[] pixelValues;
     private int width;
@@ -37,8 +36,7 @@ public class ScreenshotHelper implements Runnable
     private int[] pixels;
     private Framebuffer frameBuffer;
 
-    public static void saveScreenshotAsync(int width, int height, int[] pixels, Framebuffer frameBuffer)
-    {
+    public static void saveScreenshotAsync(int width, int height, int[] pixels, Framebuffer frameBuffer) {
         ScreenshotHelper saver = new ScreenshotHelper();
         saver.width = width;
         saver.height = height;
@@ -48,23 +46,20 @@ public class ScreenshotHelper implements Runnable
         new Thread(saver).start();
     }
 
-    public static void takeScreenshot()
-    {
+    public static void takeScreenshot() {
         Minecraft mc = Minecraft.getMinecraft();
         Framebuffer frameBuffer = mc.getFramebuffer();
         int screenshotWidth = mc.displayWidth;
         int screenshotHeight = mc.displayHeight;
 
-        if (OpenGlHelper.isFramebufferEnabled())
-        {
+        if (OpenGlHelper.isFramebufferEnabled()) {
             screenshotWidth = frameBuffer.framebufferTextureWidth;
             screenshotHeight = frameBuffer.framebufferTextureHeight;
         }
 
         int targetCapacity = screenshotWidth * screenshotHeight;
 
-        if (ScreenshotHelper.pixelBuffer == null || ScreenshotHelper.pixelBuffer.capacity() < targetCapacity)
-        {
+        if (ScreenshotHelper.pixelBuffer == null || ScreenshotHelper.pixelBuffer.capacity() < targetCapacity) {
             ScreenshotHelper.pixelBuffer = BufferUtils.createIntBuffer(targetCapacity);
             ScreenshotHelper.pixelValues = new int[targetCapacity];
         }
@@ -73,13 +68,10 @@ public class ScreenshotHelper implements Runnable
         GL11.glPixelStorei(3317, 1);
         ScreenshotHelper.pixelBuffer.clear();
 
-        if (OpenGlHelper.isFramebufferEnabled())
-        {
+        if (OpenGlHelper.isFramebufferEnabled()) {
             GL11.glBindTexture(3553, frameBuffer.framebufferTexture);
             GL11.glGetTexImage(3553, 0, 32993, 33639, ScreenshotHelper.pixelBuffer);
-        }
-        else
-        {
+        } else {
             GL11.glReadPixels(0, 0, screenshotWidth, screenshotHeight, 32993, 33639, ScreenshotHelper.pixelBuffer);
         }
 
@@ -90,44 +82,34 @@ public class ScreenshotHelper implements Runnable
         ScreenshotHelper.saveScreenshotAsync(screenshotWidth, screenshotHeight, pixelCopy, frameBuffer);
     }
 
-    public void run()
-    {
+    public void run() {
         BufferedImage image;
 
-        if (OpenGlHelper.isFramebufferEnabled())
-        {
+        if (OpenGlHelper.isFramebufferEnabled()) {
             image = new BufferedImage(frameBuffer.framebufferWidth, frameBuffer.framebufferHeight, 1);
             int i;
-            for (int diff = i = frameBuffer.framebufferTextureHeight - frameBuffer.framebufferHeight; i < frameBuffer.framebufferTextureHeight; ++i)
-            {
-                for (int j = 0; j < frameBuffer.framebufferWidth; ++j)
-                {
+            for (int diff = i = frameBuffer.framebufferTextureHeight - frameBuffer.framebufferHeight; i < frameBuffer.framebufferTextureHeight; ++i) {
+                for (int j = 0; j < frameBuffer.framebufferWidth; ++j) {
                     int pixel = pixels[i * frameBuffer.framebufferTextureWidth + j];
                     image.setRGB(j, i - diff, pixel);
                 }
             }
-        }
-        else
-        {
+        } else {
             image = new BufferedImage(width, height, 1);
             image.setRGB(0, 0, width, height, pixels, 0, width);
         }
 
         File ssDir = new File("screenshots");
         File ssFile = new File("screenshots", captureTime + ".png");
-        for (int iterator = 0; ssFile.exists(); ssFile = new File("screenshots", captureTime + "_" + iterator + ".png"))
-        {
+        for (int iterator = 0; ssFile.exists(); ssFile = new File("screenshots", captureTime + "_" + iterator + ".png")) {
             ++iterator;
         }
 
-        try
-        {
+        try {
             ssDir.mkdirs();
             ImageIO.write(image, "png", ssFile);
             FMLClientHandler.instance().getClient().thePlayer.addChatComponentMessage(new ChatComponentText("Saved screenshot as ").appendSibling(new ChatComponentText(ssFile.getName()).setChatStyle(new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, ssDir.getAbsolutePath())).setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentText(StatCollector.translateToLocal("gui.llibrary.screenshot")))).setUnderlined(true))));
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

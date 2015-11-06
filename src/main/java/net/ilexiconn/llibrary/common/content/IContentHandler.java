@@ -7,8 +7,7 @@ package net.ilexiconn.llibrary.common.content;
  * @see net.ilexiconn.llibrary.common.content.ContentHandlerList
  * @since 0.1.0
  */
-public interface IContentHandler
-{
+public interface IContentHandler {
     /**
      * Initialize the items/blocks/entities/etc.
      *

@@ -13,39 +13,30 @@ import static net.ilexiconn.llibrary.common.dictionary.WeaponDictionary.Type.*;
  * @author FiskFille
  * @since 0.1.0
  */
-public class WeaponDictionary
-{
+public class WeaponDictionary {
     private static final int WEAPON_LIST_SIZE = 1024 * 10;
     private static WeaponInfo[] weaponList = new WeaponInfo[WEAPON_LIST_SIZE];
     private static ArrayList<Item>[] typeInfoList = new ArrayList[Type.values().length];
 
-    static
-    {
+    static {
         registerVanillaWeapons();
     }
 
-    public static boolean registerWeaponType(Item item, Type... types)
-    {
+    public static boolean registerWeaponType(Item item, Type... types) {
         types = listSubTags(types);
 
-        if (item != null)
-        {
-            for (Type type : types)
-            {
-                if (typeInfoList[type.ordinal()] == null)
-                {
+        if (item != null) {
+            for (Type type : types) {
+                if (typeInfoList[type.ordinal()] == null) {
                     typeInfoList[type.ordinal()] = new ArrayList<Item>();
                 }
 
                 typeInfoList[type.ordinal()].add(item);
             }
 
-            if (weaponList[Item.getIdFromItem(item)] == null)
-            {
+            if (weaponList[Item.getIdFromItem(item)] == null) {
                 weaponList[Item.getIdFromItem(item)] = new WeaponInfo(types);
-            }
-            else
-            {
+            } else {
                 Collections.addAll(weaponList[Item.getIdFromItem(item)].typeList, types);
             }
 
@@ -61,10 +52,8 @@ public class WeaponDictionary
      * @param type the Type to look for
      * @return a list of weapons of the specified type, null if there are none
      */
-    public static Item[] getWeaponsForType(Type type)
-    {
-        if (typeInfoList[type.ordinal()] != null)
-        {
+    public static Item[] getWeaponsForType(Type type) {
+        if (typeInfoList[type.ordinal()] != null) {
             return typeInfoList[type.ordinal()].toArray(new Item[0]);
         }
 
@@ -77,12 +66,10 @@ public class WeaponDictionary
      * @param item the weapon to check
      * @return the list of types, null if there are none
      */
-    public static Type[] getTypesForWeapon(Item item)
-    {
+    public static Type[] getTypesForWeapon(Item item) {
         checkRegistration(item);
 
-        if (weaponList[Item.getIdFromItem(item)] != null)
-        {
+        if (weaponList[Item.getIdFromItem(item)] != null) {
             return weaponList[Item.getIdFromItem(item)].typeList.toArray(new Type[0]);
         }
 
@@ -96,20 +83,16 @@ public class WeaponDictionary
      * @param itemB
      * @return returns true if a common type is found, false otherwise
      */
-    public static boolean areWeaponsEquivalent(Item itemA, Item itemB)
-    {
+    public static boolean areWeaponsEquivalent(Item itemA, Item itemB) {
         int a = Item.getIdFromItem(itemA);
         int b = Item.getIdFromItem(itemB);
 
         checkRegistration(itemA);
         checkRegistration(itemB);
 
-        if (weaponList[a] != null && weaponList[b] != null)
-        {
-            for (Type type : weaponList[a].typeList)
-            {
-                if (containsType(weaponList[b], type))
-                {
+        if (weaponList[a] != null && weaponList[b] != null) {
+            for (Type type : weaponList[a].typeList) {
+                if (containsType(weaponList[b], type)) {
                     return true;
                 }
             }
@@ -118,42 +101,33 @@ public class WeaponDictionary
         return false;
     }
 
-    public static boolean isWeaponOfType(Item item, Type type)
-    {
+    public static boolean isWeaponOfType(Item item, Type type) {
         checkRegistration(item);
 
         return weaponList[Item.getIdFromItem(item)] != null && containsType(weaponList[Item.getIdFromItem(item)], type);
 
     }
 
-    public static boolean isWeaponRegistered(Item item)
-    {
+    public static boolean isWeaponRegistered(Item item) {
         return weaponList[Item.getIdFromItem(item)] != null;
     }
 
-    public static boolean isWeaponRegistered(int itemID)
-    {
+    public static boolean isWeaponRegistered(int itemID) {
         return weaponList[itemID] != null;
     }
 
-    public static void makeBestGuess(Item item)
-    {
+    public static void makeBestGuess(Item item) {
 
     }
 
-    private static void checkRegistration(Item item)
-    {
+    private static void checkRegistration(Item item) {
 
     }
 
-    private static boolean containsType(WeaponInfo info, Type type)
-    {
-        if (type.hasSubTags())
-        {
-            for (Type remappedType : listSubTags(type))
-            {
-                if (info.typeList.contains(remappedType))
-                {
+    private static boolean containsType(WeaponInfo info, Type type) {
+        if (type.hasSubTags()) {
+            for (Type remappedType : listSubTags(type)) {
+                if (info.typeList.contains(remappedType)) {
                     return true;
                 }
             }
@@ -164,18 +138,13 @@ public class WeaponDictionary
         return info.typeList.contains(type);
     }
 
-    private static Type[] listSubTags(Type... types)
-    {
+    private static Type[] listSubTags(Type... types) {
         List<Type> subTags = Lists.newArrayList();
 
-        for (Type type : types)
-        {
-            if (type.hasSubTags())
-            {
+        for (Type type : types) {
+            if (type.hasSubTags()) {
                 subTags.addAll(type.subTags);
-            }
-            else
-            {
+            } else {
                 subTags.add(type);
             }
         }
@@ -183,8 +152,7 @@ public class WeaponDictionary
         return subTags.toArray(new Type[subTags.size()]);
     }
 
-    private static void registerVanillaWeapons()
-    {
+    private static void registerVanillaWeapons() {
         registerWeaponType(Items.wooden_sword, SWORD, SHARP, MELEE);
         registerWeaponType(Items.stone_sword, SWORD, SHARP, MELEE);
         registerWeaponType(Items.iron_sword, SWORD, SHARP, MELEE);
@@ -210,8 +178,7 @@ public class WeaponDictionary
         registerWeaponType(Items.golden_shovel, SHOVEL, DULL, MELEE);
     }
 
-    public enum Type
-    {
+    public enum Type {
         /* Generic types which a weapon can be */
         SWORD, AXE, PICKAXE, SHOVEL, NUNCHUCKS, SPEAR, WAND, BOW, HALBERD, GUN, MACE, HAMMER, SICLE, SCYTHE, KIFE, CLAW, GLOVE, WHIP, BOOMERANG,
 
@@ -225,8 +192,7 @@ public class WeaponDictionary
 
         private List<Type> subTags;
 
-        Type(Type... subTags)
-        {
+        Type(Type... subTags) {
             this.subTags = Arrays.asList(subTags);
         }
 
@@ -240,39 +206,32 @@ public class WeaponDictionary
          * @param name The name of this Type
          * @return An instance of Type for this name.
          */
-        public static Type getType(String name, Type... subTypes)
-        {
+        public static Type getType(String name, Type... subTypes) {
             name = name.toUpperCase();
 
-            for (Type t : values())
-            {
-                if (t.name().equals(name))
-                {
+            for (Type t : values()) {
+                if (t.name().equals(name)) {
                     return t;
                 }
             }
 
             Type ret = EnumHelper.addEnum(Type.class, name, new Class[]{Type[].class}, new Object[]{subTypes});
 
-            if (ret.ordinal() >= typeInfoList.length)
-            {
+            if (ret.ordinal() >= typeInfoList.length) {
                 typeInfoList = Arrays.copyOf(typeInfoList, ret.ordinal());
             }
             return ret;
         }
 
-        private boolean hasSubTags()
-        {
+        private boolean hasSubTags() {
             return subTags != null && !subTags.isEmpty();
         }
     }
 
-    private static class WeaponInfo
-    {
+    private static class WeaponInfo {
         public EnumSet<Type> typeList;
 
-        public WeaponInfo(Type[] types)
-        {
+        public WeaponInfo(Type[] types) {
             typeList = EnumSet.noneOf(Type.class);
 
             Collections.addAll(typeList, types);

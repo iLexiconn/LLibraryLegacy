@@ -7,8 +7,7 @@ import net.minecraft.nbt.*;
 
 import java.lang.reflect.Field;
 
-public class NBTIO
-{
+public class NBTIO {
     public static <T> T fromNbt(NBTTagCompound tag, Class<T> type) {
         try {
             T t = type.newInstance();

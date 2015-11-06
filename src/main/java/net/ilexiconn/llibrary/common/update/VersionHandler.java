@@ -13,30 +13,23 @@ import java.util.List;
  * @author iLexiconn
  * @since 0.1.0
  */
-public class VersionHandler
-{
+public class VersionHandler {
     private static List<JsonModUpdate> outdatedMods = Lists.newArrayList();
 
-    public static List<JsonModUpdate> searchForOutdatedModsInefficiently() throws IOException
-    {
+    public static List<JsonModUpdate> searchForOutdatedModsInefficiently() throws IOException {
         List<JsonModUpdate> outdatedMods = Lists.newArrayList();
 
-        for (JsonModUpdate mod : UpdateHelper.modList)
-        {
+        for (JsonModUpdate mod : UpdateHelper.modList) {
             ModContainer modContainer = null;
-            for (ModContainer c : Loader.instance().getModList())
-            {
-                if (c.getModId().equals(mod.modid))
-                {
+            for (ModContainer c : Loader.instance().getModList()) {
+                if (c.getModId().equals(mod.modid)) {
                     modContainer = c;
                 }
             }
-            if (modContainer == null)
-            {
+            if (modContainer == null) {
                 continue;
             }
-            if (mod.getUpdateVersion().compareTo(modContainer.getProcessedVersion()) > 0)
-            {
+            if (mod.getUpdateVersion().compareTo(modContainer.getProcessedVersion()) > 0) {
                 outdatedMods.add(mod);
             }
         }
@@ -45,22 +38,17 @@ public class VersionHandler
         return outdatedMods;
     }
 
-    public static List<JsonModUpdate> searchForOutdatedMods()
-    {
-        try
-        {
+    public static List<JsonModUpdate> searchForOutdatedMods() {
+        try {
             return searchForOutdatedModsInefficiently();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return Lists.newArrayList();
     }
 
-    public static List<JsonModUpdate> getOutdatedMods()
-    {
+    public static List<JsonModUpdate> getOutdatedMods() {
         return VersionHandler.outdatedMods;
     }
 }

@@ -13,25 +13,20 @@ import java.util.Set;
  * @since 0.4.0
  */
 @SideOnly(Side.CLIENT)
-public class GuiLLibraryConfigFactory implements IModGuiFactory
-{
-    public void initialize(Minecraft mc)
-    {
+public class GuiLLibraryConfigFactory implements IModGuiFactory {
+    public void initialize(Minecraft mc) {
 
     }
 
-    public Class<? extends GuiScreen> mainConfigGuiClass()
-    {
+    public Class<? extends GuiScreen> mainConfigGuiClass() {
         return GuiLLibraryConfig.class;
     }
 
-    public Set<RuntimeOptionCategoryElement> runtimeGuiCategories()
-    {
+    public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {
         return null;
     }
 
-    public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element)
-    {
+    public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
         return null;
     }
 }

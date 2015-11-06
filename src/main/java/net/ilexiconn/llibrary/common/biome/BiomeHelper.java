@@ -6,15 +6,13 @@ import net.minecraft.world.biome.BiomeGenBase;
  * @author gegy1000
  * @since 0.3.0
  */
-public class BiomeHelper
-{
+public class BiomeHelper {
     /**
      * @param oldBiomeId the id of the biome to replace
      * @param newBiome   the biome to replace the current one with
      * @since 0.3.0
      */
-    public static void overrideBiome(int oldBiomeId, BiomeGenBase newBiome)
-    {
+    public static void overrideBiome(int oldBiomeId, BiomeGenBase newBiome) {
         BiomeGenBase.getBiomeGenArray()[oldBiomeId] = newBiome;
     }
 
@@ -23,8 +21,7 @@ public class BiomeHelper
      * @param newBiome the biome to replace the current one with
      * @since 0.3.0
      */
-    public static void overrideBiome(BiomeGenBase oldBiome, BiomeGenBase newBiome)
-    {
+    public static void overrideBiome(BiomeGenBase oldBiome, BiomeGenBase newBiome) {
         overrideBiome(oldBiome.biomeID, newBiome);
     }
 
@@ -33,14 +30,11 @@ public class BiomeHelper
      *
      * @since 0.3.0
      */
-    public static int getUniqueBiomeId()
-    {
+    public static int getUniqueBiomeId() {
         BiomeGenBase[] biomes = BiomeGenBase.getBiomeGenArray();
 
-        for (int i = 0; i < biomes.length; i++)
-        {
-            if (biomes[i] == null)
-            {
+        for (int i = 0; i < biomes.length; i++) {
+            if (biomes[i] == null) {
                 return i;
             }
         }

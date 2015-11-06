@@ -1,7 +1,6 @@
 package net.ilexiconn.llibrary.common.update;
 
-public enum UpdateType
-{
+public enum UpdateType {
     RELEASE,
     BETA,
     ALPHA

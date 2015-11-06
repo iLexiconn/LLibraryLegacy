@@ -10,16 +10,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.HashMap;
 
 @SideOnly(Side.CLIENT)
-public class Animator
-{
+public class Animator {
     private int tempTick, prevTempTick;
     private boolean correctAnimation;
     private ModelBase mainModel;
     private IAnimated animatedEntity;
     private HashMap<ModelRenderer, Transform> transformMap, prevTransformMap;
 
-    public Animator(ModelBase model)
-    {
+    public Animator(ModelBase model) {
         tempTick = 0;
         correctAnimation = false;
         mainModel = model;
@@ -27,20 +25,17 @@ public class Animator
         prevTransformMap = new HashMap<ModelRenderer, Transform>();
     }
 
-    public IAnimated getEntity()
-    {
+    public IAnimated getEntity() {
         return animatedEntity;
     }
 
-    public void update(IAnimated entity)
-    {
+    public void update(IAnimated entity) {
         tempTick = prevTempTick = 0;
         correctAnimation = false;
         this.animatedEntity = entity;
         transformMap.clear();
         prevTransformMap.clear();
-        for (int i = 0; i < mainModel.boxList.size(); i++)
-        {
+        for (int i = 0; i < mainModel.boxList.size(); i++) {
             ModelRenderer box = (ModelRenderer) mainModel.boxList.get(i);
             box.rotateAngleX = 0F;
             box.rotateAngleY = 0F;
@@ -48,86 +43,65 @@ public class Animator
         }
     }
 
-    public boolean setAnimationId(int id)
-    {
+    public boolean setAnimationId(int id) {
         tempTick = prevTempTick = 0;
         correctAnimation = animatedEntity.getAnimation().animationId == id;
         return correctAnimation;
     }
 
-    public void startPhase(int duration)
-    {
-        if (!correctAnimation)
-        {
+    public void startPhase(int duration) {
+        if (!correctAnimation) {
             return;
         }
         prevTempTick = tempTick;
         tempTick += duration;
     }
 
-    public void setStationaryPhase(int duration)
-    {
+    public void setStationaryPhase(int duration) {
         startPhase(duration);
         endPhase(true);
     }
 
-    public void resetPhase(int duration)
-    {
+    public void resetPhase(int duration) {
         startPhase(duration);
         endPhase();
     }
 
-    public void rotate(ModelRenderer box, float x, float y, float z)
-    {
-        if (!correctAnimation)
-        {
+    public void rotate(ModelRenderer box, float x, float y, float z) {
+        if (!correctAnimation) {
             return;
         }
-        if (!transformMap.containsKey(box))
-        {
+        if (!transformMap.containsKey(box)) {
             transformMap.put(box, new Transform(x, y, z));
-        }
-        else
-        {
+        } else {
             transformMap.get(box).addRotation(x, y, z);
         }
     }
 
-    public void move(ModelRenderer box, float x, float y, float z)
-    {
-        if (!correctAnimation)
-        {
+    public void move(ModelRenderer box, float x, float y, float z) {
+        if (!correctAnimation) {
             return;
         }
-        if (!transformMap.containsKey(box))
-        {
+        if (!transformMap.containsKey(box)) {
             transformMap.put(box, new Transform(x, y, z, 0F, 0F, 0F));
-        }
-        else
-        {
+        } else {
             transformMap.get(box).addOffset(x, y, z);
         }
     }
 
-    public void endPhase()
-    {
+    public void endPhase() {
         endPhase(false);
     }
 
-    private void endPhase(boolean stationary)
-    {
-        if (!correctAnimation)
-        {
+    private void endPhase(boolean stationary) {
+        if (!correctAnimation) {
             return;
         }
         int animationTick = animatedEntity.getAnimationTick();
 
-        if (animationTick >= prevTempTick && animationTick < tempTick)
-        {
-            if (stationary)
-            {
-                for (ModelRenderer box : prevTransformMap.keySet())
-                {
+        if (animationTick >= prevTempTick && animationTick < tempTick) {
+            if (stationary) {
+                for (ModelRenderer box : prevTransformMap.keySet()) {
                     Transform transform = prevTransformMap.get(box);
                     box.rotateAngleX += transform.rotX;
                     box.rotateAngleY += transform.rotY;
@@ -136,13 +110,10 @@ public class Animator
                     box.rotationPointY += transform.offsetY;
                     box.rotationPointZ += transform.offsetZ;
                 }
-            }
-            else
-            {
+            } else {
                 float tick = (animationTick - prevTempTick + LLibrary.proxy.getPartialTicks()) / (tempTick - prevTempTick);
                 float inc = MathHelper.sin((float) (tick * Math.PI / 2F)), dec = 1F - inc;
-                for (ModelRenderer box : prevTransformMap.keySet())
-                {
+                for (ModelRenderer box : prevTransformMap.keySet()) {
                     Transform transform = prevTransformMap.get(box);
                     box.rotateAngleX += dec * transform.rotX;
                     box.rotateAngleY += dec * transform.rotY;
@@ -151,8 +122,7 @@ public class Animator
                     box.rotationPointY += dec * transform.offsetY;
                     box.rotationPointZ += dec * transform.offsetZ;
                 }
-                for (ModelRenderer box : transformMap.keySet())
-                {
+                for (ModelRenderer box : transformMap.keySet()) {
                     Transform transform = transformMap.get(box);
                     box.rotateAngleX += inc * transform.rotX;
                     box.rotateAngleY += inc * transform.rotY;
@@ -164,8 +134,7 @@ public class Animator
             }
         }
 
-        if (!stationary)
-        {
+        if (!stationary) {
             prevTransformMap.clear();
             prevTransformMap.putAll(transformMap);
             transformMap.clear();

@@ -13,8 +13,7 @@ import java.util.Arrays;
  * @since 0.1.0
  */
 @Deprecated
-public class ContentHandlerList extends ArrayList<IContentHandler>
-{
+public class ContentHandlerList extends ArrayList<IContentHandler> {
     /**
      * Create a new list with IContentHandlers. Use {@link net.ilexiconn.llibrary.common.content.ContentHelper#init(IContentHandler...)} instead.
      *
@@ -24,8 +23,7 @@ public class ContentHandlerList extends ArrayList<IContentHandler>
      * @since 0.1.0
      */
     @Deprecated
-    public static ContentHandlerList createList(IContentHandler... contentHandlers)
-    {
+    public static ContentHandlerList createList(IContentHandler... contentHandlers) {
         ContentHandlerList list = new ContentHandlerList();
         list.addAll(Arrays.asList(contentHandlers));
         return list;
@@ -38,31 +36,20 @@ public class ContentHandlerList extends ArrayList<IContentHandler>
      * @since 0.1.0
      */
     @Deprecated
-    public void init()
-    {
-        for (IContentHandler contentHandler : this)
-        {
-            if (contentHandler instanceof IClientOnlyHandler && FMLCommonHandler.instance().getEffectiveSide().isClient())
-            {
-                try
-                {
+    public void init() {
+        for (IContentHandler contentHandler : this) {
+            if (contentHandler instanceof IClientOnlyHandler && FMLCommonHandler.instance().getEffectiveSide().isClient()) {
+                try {
                     contentHandler.init();
                     contentHandler.gameRegistry();
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            else
-            {
-                try
-                {
+            } else {
+                try {
                     contentHandler.init();
                     contentHandler.gameRegistry();
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

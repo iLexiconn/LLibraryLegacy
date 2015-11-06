@@ -9,13 +9,11 @@ import net.minecraftforge.common.config.Configuration;
  * @see net.minecraftforge.common.config.Configuration
  * @since 0.1.0
  */
-public class ConfigContainer
-{
+public class ConfigContainer {
     private IConfigHandler configHandler;
     private Configuration configuration;
 
-    public ConfigContainer(IConfigHandler handler, Configuration config)
-    {
+    public ConfigContainer(IConfigHandler handler, Configuration config) {
         configHandler = handler;
         configuration = config;
     }
@@ -24,8 +22,7 @@ public class ConfigContainer
      * @see net.ilexiconn.llibrary.common.config.IConfigHandler
      * @since 0.1.0
      */
-    public IConfigHandler getConfigHandler()
-    {
+    public IConfigHandler getConfigHandler() {
         return configHandler;
     }
 
@@ -33,8 +30,7 @@ public class ConfigContainer
      * @see net.minecraftforge.common.config.Configuration
      * @since 0.1.0
      */
-    public Configuration getConfiguration()
-    {
+    public Configuration getConfiguration() {
         return configuration;
     }
 }

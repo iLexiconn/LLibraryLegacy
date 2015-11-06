@@ -14,8 +14,7 @@ import java.util.ArrayList;
  * @see net.ilexiconn.llibrary.client.model.tabula.ModelJson
  * @since 0.1.0
  */
-public class JsonTabulaModel
-{
+public class JsonTabulaModel {
     private int textureWidth = 64;
     private int textureHeight = 32;
 
@@ -27,38 +26,31 @@ public class JsonTabulaModel
 
     private int cubeCount;
 
-    public int getTextureWidth()
-    {
+    public int getTextureWidth() {
         return textureWidth;
     }
 
-    public int getTextureHeight()
-    {
+    public int getTextureHeight() {
         return textureHeight;
     }
 
-    public double[] getScale()
-    {
+    public double[] getScale() {
         return scale;
     }
 
-    public ArrayList<CubeGroup> getCubeGroups()
-    {
+    public ArrayList<CubeGroup> getCubeGroups() {
         return cubeGroups;
     }
 
-    public ArrayList<CubeInfo> getCubes()
-    {
+    public ArrayList<CubeInfo> getCubes() {
         return cubes;
     }
 
-    public ArrayList<Animation> getAnimations()
-    {
+    public ArrayList<Animation> getAnimations() {
         return anims;
     }
 
-    public int getCubeCount()
-    {
+    public int getCubeCount() {
         return cubeCount;
     }
 }

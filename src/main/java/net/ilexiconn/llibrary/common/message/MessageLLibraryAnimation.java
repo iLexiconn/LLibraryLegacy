@@ -6,47 +6,39 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MessageLLibraryAnimation extends AbstractMessage<MessageLLibraryAnimation>
-{
+public class MessageLLibraryAnimation extends AbstractMessage<MessageLLibraryAnimation> {
     public int animationId;
     public int entityId;
 
-    public MessageLLibraryAnimation()
-    {
+    public MessageLLibraryAnimation() {
 
     }
 
-    public MessageLLibraryAnimation(int animation, int entity)
-    {
+    public MessageLLibraryAnimation(int animation, int entity) {
         animationId = animation;
         entityId = entity;
     }
 
-    public void toBytes(ByteBuf buffer)
-    {
+    public void toBytes(ByteBuf buffer) {
         buffer.writeInt(animationId);
         buffer.writeInt(entityId);
     }
 
-    public void fromBytes(ByteBuf buffer)
-    {
+    public void fromBytes(ByteBuf buffer) {
         animationId = buffer.readInt();
         entityId = buffer.readInt();
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleClientMessage(MessageLLibraryAnimation message, EntityPlayer player)
-    {
+    public void handleClientMessage(MessageLLibraryAnimation message, EntityPlayer player) {
         IAnimated entity = (IAnimated) player.worldObj.getEntityByID(message.entityId);
-        if (entity != null && message.animationId != 0)
-        {
+        if (entity != null && message.animationId != 0) {
             entity.setAnimation(entity.animations()[message.animationId]);
             entity.setAnimationTick(0);
         }
     }
 
-    public void handleServerMessage(MessageLLibraryAnimation message, EntityPlayer player)
-    {
+    public void handleServerMessage(MessageLLibraryAnimation message, EntityPlayer player) {
 
     }
 }

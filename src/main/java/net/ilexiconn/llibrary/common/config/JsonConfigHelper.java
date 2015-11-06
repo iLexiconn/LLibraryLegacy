@@ -7,49 +7,33 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 
-public class JsonConfigHelper
-{
-    public static <T> T loadConfig(File f, Class<T> t)
-    {
-        if (!f.exists())
-        {
-            try
-            {
+public class JsonConfigHelper {
+    public static <T> T loadConfig(File f, Class<T> t) {
+        if (!f.exists()) {
+            try {
                 return t.newInstance();
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 LLibrary.logger.error(SimpleCrashReport.makeCrashReport(e, "Failed making a new instance of " + t.getName()));
                 return null;
             }
-        }
-        else
-        {
-            try
-            {
+        } else {
+            try {
                 return JsonFactory.getGson().fromJson(new FileReader(f), t);
-            }
-            catch (FileNotFoundException e)
-            {
+            } catch (FileNotFoundException e) {
                 LLibrary.logger.error(SimpleCrashReport.makeCrashReport(e, "Couldn't find config file " + f.getName())); //Huh?
                 return null;
             }
         }
     }
 
-    public static <T> T saveConfig(T t, File f)
-    {
+    public static <T> T saveConfig(T t, File f) {
         String json = JsonFactory.getPrettyGson().toJson(t);
-        try
-        {
-            if (!f.exists())
-            {
+        try {
+            if (!f.exists()) {
                 f.createNewFile();
             }
             IOUtils.write(json.getBytes(), new FileOutputStream(f));
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             LLibrary.logger.error(SimpleCrashReport.makeCrashReport(e, "Couldn't write to file " + f.getName()));
         }
         return t;

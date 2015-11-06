@@ -8,8 +8,7 @@ import java.util.ArrayList;
  * @author Gegy1000
  * @since 0.1.0
  */
-public class AnimationComponent
-{
+public class AnimationComponent {
     public double[] posChange = new double[3];
     public double[] rotChange = new double[3];
     public double[] scaleChange = new double[3];
