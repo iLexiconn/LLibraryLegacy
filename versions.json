@@ -1,70 +1,70 @@
 {
-    "release": "0.4.3",
-    "beta": "0.5.0-beta3",
-    "versions":
-    {
-        "0.4.0":
-        [
-            "Added new animation api",
-            "Added Java 6 support",
-            "Added config gui",
-            "Renamed 'List' to 'LLibraryEntityList'",
-            "Updated forge"
-        ],
-        "0.4.1":
-        [
-            "Fixed serverside crash"
-        ],
-        "0.4.2":
-        [
-            "Fixed animation api not syncing animation across all clients"
-        ],
-        "0.4.3":
-        [
-            "Added toast notification for updates",
-            "Added animation action api",
-            "Fixed white tint on models"
-        ],
-        "0.5.0-beta1":
-        [
-            "Added toast builder",
-            "Added survival tab builder",
-            "Added methods to scale entities",
-            "Added new event hook system for player model",
-            "Added update types to checker",
-            "Added new player render hooks",
-            "Added config option for update type",
-            "Added survival tab pages. Now you can have more than 12 survival tabs.",
-            "Revamped update gui",
-            "Fixed flickering images in gui",
-            "Fixed detection of outdated updates",
-            "Fixed toast fade-out animation",
-            "Removed update command",
-            "",
-            "Please remove your config file before installing this update!"
-        ],
-        "0.5.0-beta2":
-        [
-            "Added simple AbstractMessage register method",
-            "Added simple crash report implementation",
-            "Added JSON config helper",
-            "Added config option for extra tooltip info",
-            "Fixed server-side ChainBuffer crash",
-            "",
-            "Please remove your config file before installing this update!"
-        ],
-        "0.5.0-beta3":
-        [
-            "Added NBTIO",
-            "   - Load and save class containers to NBT",
-            "Added ParticleHelper",
-            "   - A handy enum with all particle types",
-            "",
-            "Please remove your config file before installing this update!"
-        ]
-    },
-    "updateUrl": "https://bitly.com/llibrary",
-    "iconUrl": "http://i.imgur.com/N2CJ80g.png",
-    "directUpdateUrl-1.8": "http://minecraft.curseforge.com/projects/llibrary/files/2265403/download",
-    "directUpdateUrl-1.7.10": "http://minecraft.curseforge.com/projects/llibrary/files/2265400/download"
+  "release": "0.4.3",
+  "beta": "0.5.0-beta4",
+  "versions": {
+    "0.4.0": [
+      "Added new animation api",
+      "Added Java 6 support",
+      "Added config gui",
+      "Renamed 'List' to 'LLibraryEntityList'",
+      "Updated forge"
+    ],
+    "0.4.1": [
+      "Fixed serverside crash"
+    ],
+    "0.4.2": [
+      "Fixed animation api not syncing animation across all clients"
+    ],
+    "0.4.3": [
+      "Added toast notification for updates",
+      "Added animation action api",
+      "Fixed white tint on models"
+    ],
+    "0.5.0-beta1": [
+      "Added toast builder",
+      "Added survival tab builder",
+      "Added methods to scale entities",
+      "Added new event hook system for player model",
+      "Added update types to checker",
+      "Added new player render hooks",
+      "Added config option for update type",
+      "Added survival tab pages. Now you can have more than 12 survival tabs.",
+      "Revamped update gui",
+      "Fixed flickering images in gui",
+      "Fixed detection of outdated updates",
+      "Fixed toast fade-out animation",
+      "Removed update command",
+      "",
+      "Please remove your config file before installing this update!"
+    ],
+    "0.5.0-beta2": [
+      "Added simple AbstractMessage register method",
+      "Added simple crash report implementation",
+      "Added JSON config helper",
+      "Added config option for extra tooltip info",
+      "Fixed server-side ChainBuffer crash",
+      "",
+      "Please remove your config file before installing this update!"
+    ],
+    "0.5.0-beta3": [
+      "Added NBTIO",
+      "   - Load and save class containers to NBT",
+      "Added ParticleHelper",
+      "   - A handy enum with all particle types",
+      "",
+      "Please remove your config file before installing this update!"
+    ],
+    "0.5.0-beta4": [
+      "Added automatic update installer",
+      "   - Install a mod update with just one press on a button!",
+      "   - Updates can only be downloaded from CurseForge",
+      "   - You have to restart Minecraft to apply the update",
+      "Fixed NBT save format",
+      "Fixed visual glitch with toast messages"
+    ]
+  },
+  "updateUrl": "https://bitly.com/llibrary",
+  "iconUrl": "http://i.imgur.com/N2CJ80g.png",
+  "directUpdateUrl-1.8": "http://minecraft.curseforge.com/projects/llibrary/files/2265403/download",
+  "directUpdateUrl-1.7.10": "http://minecraft.curseforge.com/projects/llibrary/files/2265400/download"
 }
