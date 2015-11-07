@@ -139,7 +139,7 @@ curseforge {
     def type = "release"
     def latestVersion = ""
     versions.versions.each{version, changelog -> latestVersion = version}
-    if (versions.beta == latestVersion) {
+    if (versions.beta && versions.beta == latestVersion) {
         type = "beta"
     }
 
