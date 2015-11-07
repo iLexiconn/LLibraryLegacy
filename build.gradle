@@ -93,10 +93,19 @@ publishing {
     repositories {
         maven {
             credentials {
-                username secret.username
-                password secret.password
+                if (secret) {
+                    username secret.username
+                    password secret.password
+                } else {
+                    username ""
+                    password ""
+                }
             }
-            url secret.repo
+            if (secret) {
+                url secret.repo
+            } else {
+                url ""
+            }
         }
     }
 }
@@ -113,7 +122,11 @@ curseforge {
         type = "beta"
     }
 
-    apiKey = secret.curseForgeApiKey
+    if (secret) {
+        apiKey = secret.curseForgeApiKey
+    } else {
+        apiKey = ""
+    }
 
     project {
         id = "230798"
