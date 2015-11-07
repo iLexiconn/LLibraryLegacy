@@ -1,7 +1,5 @@
 package net.ilexiconn.llibrary.common.plugin;
 
-import cpw.mods.fml.common.DummyModContainer;
-import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.relauncher.FMLInjectionData;
 import cpw.mods.fml.relauncher.IFMLCallHook;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
@@ -12,31 +10,21 @@ import net.ilexiconn.llibrary.common.json.container.JsonUpdate;
 import net.ilexiconn.llibrary.common.log.LoggerHelper;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import net.minecraftforge.common.MinecraftForge;
+import org.apache.commons.io.FileDeleteStrategy;
 import org.apache.commons.io.FileUtils;
-import sun.misc.URLClassPath;
-import sun.net.util.URLUtil;
 
-import java.io.Closeable;
 import java.io.File;
-import java.lang.reflect.Field;
+import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.List;
 import java.util.Map;
 
 @IFMLLoadingPlugin.Name("LLibrary")
 @IFMLLoadingPlugin.MCVersion(MinecraftForge.MC_VERSION)
-public class LLibraryPlugin extends DummyModContainer implements IFMLLoadingPlugin, IFMLCallHook {
-    public static LoggerHelper logger = new LoggerHelper("llibrary");
-
-    public LLibraryPlugin() {
-        super(new ModMetadata());
-        getMetadata().modId = "llibraryplugin";
-        getMetadata().name = "LLibrary Updater";
-    }
+public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
+    public static LoggerHelper logger = new LoggerHelper("LLibraryUpdater");
 
     public Void call() throws Exception {
+        logger.info("Searching for mod updates");
         File mcDir = (File) FMLInjectionData.data()[6];
         File tempMods = new File(mcDir, "tempmods");
         if (!tempMods.exists()) {
@@ -48,10 +36,10 @@ public class LLibraryPlugin extends DummyModContainer implements IFMLLoadingPlug
                 logger.info("Updating jar: " + file.getName());
                 FileUtils.copyFileToDirectory(file, mods);
                 addClasspath(new File(mods, file.getName()));
-                deleteModsFromFile(file);
+                FileDeleteStrategy.FORCE.delete(file);
             }
         }
-        deleteModsFromFile(new File(tempMods, "data.json"));
+        deleteModsFromFile(new File(tempMods, "update.json"), mods);
         return null;
     }
 
@@ -60,7 +48,7 @@ public class LLibraryPlugin extends DummyModContainer implements IFMLLoadingPlug
     }
 
     public String getModContainerClass() {
-        return getClass().getName();
+        return null;
     }
 
     public String getSetupClass() {
@@ -83,40 +71,22 @@ public class LLibraryPlugin extends DummyModContainer implements IFMLLoadingPlug
         }
     }
 
-    public void removeClasspath(File file) {
-        try {
-            ClassLoader cl = LLibraryPlugin.class.getClassLoader();
-            URL url = file.toURI().toURL();
-            Field ucp = URLClassLoader.class.getDeclaredField("ucp");
-            Field loaders = URLClassPath.class.getDeclaredField("loaders");
-            Field lmap = URLClassPath.class.getDeclaredField("lmap");
-            ucp.setAccessible(true);
-            loaders.setAccessible(true);
-            lmap.setAccessible(true);
-            URLClassPath urlClassPath = (URLClassPath) ucp.get(cl);
-            Closeable loader = ((Map<String, Closeable>) lmap.get(urlClassPath)).remove(URLUtil.urlNoFragString(url));
-            if (loader != null) {
-                loader.close();
-                ((List<?>) loaders.get(urlClassPath)).remove(loader);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteModsFromFile(File deleteFile) {
+    public void deleteModsFromFile(File deleteFile, File dir) {
         JsonUpdate update = JsonConfigHelper.loadConfig(deleteFile, JsonUpdate.class);
         for (String s : update.delete) {
-            File file = new File(s);
-            removeClasspath(file);
+            File file = new File(dir, s);
             if (file.exists()) {
-                if (!file.delete()) {
-                    file.deleteOnExit();
+                try {
+                    FileDeleteStrategy.FORCE.delete(file);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
-        if (!deleteFile.delete()) {
-            deleteFile.deleteOnExit();
+        try {
+            FileDeleteStrategy.FORCE.delete(deleteFile);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
