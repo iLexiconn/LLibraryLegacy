@@ -21,8 +21,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -152,50 +154,61 @@ public class GuiModUpdates extends GuiScreen {
                         return;
                     }
                     case 20: {
-                        new Thread() {
-                            public void run() {
-                                try {
-                                    buttonDone.enabled = false;
-                                    buttonUpdate.enabled = false;
-                                    buttonUpdate.displayString = "Downloading";
-                                    URL url = new URL(selectedMod.getDirectUpdateUrl());
-                                    HttpURLConnection httpConnection = (HttpURLConnection) (url.openConnection());
-                                    long completeFileSize = httpConnection.getContentLength();
+                        if (selectedMod.getDirectUpdateUrl() != null) {
+                            new Thread() {
+                                public void run() {
+                                    try {
+                                        buttonDone.enabled = false;
+                                        buttonUpdate.enabled = false;
+                                        buttonUpdate.displayString = "Downloading";
+                                        URL url = new URL(selectedMod.getDirectUpdateUrl());
+                                        HttpURLConnection httpConnection = (HttpURLConnection) (url.openConnection());
+                                        long completeFileSize = httpConnection.getContentLength();
 
-                                    BufferedInputStream in = new BufferedInputStream(httpConnection.getInputStream());
-                                    File file = new File("tempmods");
-                                    if (!file.exists()) {
-                                        file.mkdir();
+                                        BufferedInputStream in = new BufferedInputStream(httpConnection.getInputStream());
+                                        File file = new File("tempmods");
+                                        if (!file.exists()) {
+                                            file.mkdir();
+                                        }
+                                        File modfile = selectedMod.modContainer.getSource();
+                                        if (!modfile.getName().endsWith(".jar")) {
+                                            modfile = new File(selectedMod.name + "-" + selectedMod.getUpdateVersion().getVersionString() + ".jar");
+                                        }
+                                        FileOutputStream fos = new FileOutputStream(new File(file, modfile.getName()));
+                                        BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
+                                        byte[] data = new byte[1024];
+                                        long downloadedFileSize = 0;
+                                        int x;
+                                        while ((x = in.read(data, 0, 1024)) >= 0) {
+                                            downloadedFileSize += x;
+                                            int currentProgress = (int) ((((double) downloadedFileSize) / ((double) completeFileSize)) * 100d);
+                                            buttonUpdate.displayString = currentProgress + "%";
+                                            bout.write(data, 0, x);
+                                        }
+                                        bout.close();
+                                        in.close();
+                                        File json = new File(file, "update.json");
+                                        JsonUpdate update = JsonConfigHelper.loadConfig(json, JsonUpdate.class);
+                                        update.delete.add(modfile.getName());
+                                        JsonConfigHelper.saveConfig(update, json);
+                                        selectedMod.updated = true;
+                                        buttonUpdate.displayString = "Updated";
+                                        buttonDone.enabled = true;
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-                                    File modfile = selectedMod.modContainer.getSource();
-                                    if (!modfile.getName().endsWith(".jar")) {
-                                        modfile = new File(selectedMod.name + "-" + selectedMod.getUpdateVersion().getVersionString() + ".jar");
-                                    }
-                                    FileOutputStream fos = new FileOutputStream(new File(file, modfile.getName()));
-                                    BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
-                                    byte[] data = new byte[1024];
-                                    long downloadedFileSize = 0;
-                                    int x;
-                                    while ((x = in.read(data, 0, 1024)) >= 0) {
-                                        downloadedFileSize += x;
-                                        int currentProgress = (int) ((((double) downloadedFileSize) / ((double) completeFileSize)) * 100d);
-                                        buttonUpdate.displayString = currentProgress + "%";
-                                        bout.write(data, 0, x);
-                                    }
-                                    bout.close();
-                                    in.close();
-                                    File json = new File(file, "update.json");
-                                    JsonUpdate update = JsonConfigHelper.loadConfig(json, JsonUpdate.class);
-                                    update.delete.add(modfile.getName());
-                                    JsonConfigHelper.saveConfig(update, json);
-                                    selectedMod.updated = true;
-                                    buttonUpdate.displayString = "Updated";
-                                    buttonDone.enabled = true;
+                                }
+                            }.start();
+                        } else {
+                            Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+                            if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+                                try {
+                                    desktop.browse(new URI(selectedMod.getUpdateUrl()));
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
-                        }.start();
+                        }
                     }
                 }
             }
