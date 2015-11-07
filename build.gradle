@@ -28,6 +28,7 @@ configFile.withReader {
 }
 
 def secretFile = file "secret.properties"
+project.ext.secret = null
 if (secretFile.exists()) {
     secretFile.withReader {
         def prop = new Properties()
