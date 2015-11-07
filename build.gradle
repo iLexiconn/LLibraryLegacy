@@ -28,10 +28,12 @@ configFile.withReader {
 }
 
 def secretFile = file "secret.properties"
-secretFile.withReader {
-    def prop = new Properties()
-    prop.load(it)
-    project.ext.secret = new ConfigSlurper().parse prop
+if (secretFile.exists()) {
+    secretFile.withReader {
+        def prop = new Properties()
+        prop.load(it)
+        project.ext.secret = new ConfigSlurper().parse prop
+    }
 }
 
 version = config.mod_version + "-" + config.minecraft_version
