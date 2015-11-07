@@ -1,5 +1,5 @@
 {
-  "release": "0.5.0",
+  "release": "0.5.1",
   "versions": {
     "0.5.0": [
       "Added toast builder",
@@ -30,6 +30,9 @@
       "Removed update command",
       "",
       "Please remove your config file before installing this update!"
+    ],
+    "0.5.1": [
+      "Fixed update crash"
     ]
   },
   "updateUrl": "https://bitly.com/llibrary",
