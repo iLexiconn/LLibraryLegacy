@@ -5,24 +5,29 @@ import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.json.container.JsonUpdate;
 import net.ilexiconn.llibrary.common.update.ChangelogHandler;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.GuiUtilRenderComponents;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.StringUtils;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.client.GuiScrollingList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author FiskFile
@@ -32,167 +37,241 @@ import java.net.URL;
  */
 @SideOnly(Side.CLIENT)
 public class GuiModUpdates extends GuiScreen {
-    private GuiSlotModUpdateContainerList modList;
-    private int selectedIndex = -1;
+    private GuiScreen mainMenu;
+    private GuiModUpdateList modList;
+    private GuiScrollingList modInfo;
+    private int selected = -1;
+    private JsonModUpdate selectedMod;
     private int listWidth;
-
+    private ArrayList<JsonModUpdate> mods;
     private GuiButton buttonUpdate;
     private GuiButton buttonDone;
+    private int numButtons = SortType.values().length;
+    private String lastFilterText = "";
+    private GuiTextField search;
+    private boolean sorted = false;
+    private SortType sortType = SortType.NORMAL;
+
+    public GuiModUpdates(GuiScreen mainMenu) {
+        this.mainMenu = mainMenu;
+        this.mods = new ArrayList<JsonModUpdate>();
+        this.mods.addAll(VersionHandler.getOutdatedMods());
+    }
 
     public void initGui() {
-        buttonList.clear();
-
-        buttonList.add(buttonDone = new GuiButton(0, width / 2 - 75, height - 38, I18n.format("gui.done")));
-
-        for (JsonModUpdate mod : VersionHandler.getOutdatedMods()) {
-            int i = 20 + 32;
-            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.name) + i);
-            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.getUpdateVersion().getVersionString()) + i);
-            listWidth = Math.max(listWidth, getFontRenderer().getStringWidth(mod.updateType.name()) + i);
+        for (JsonModUpdate mod : mods) {
+            listWidth = Math.max(listWidth, fontRendererObj.getStringWidth(mod.name) + 47);
+            listWidth = Math.max(listWidth, fontRendererObj.getStringWidth(mod.currentVersion) + 47);
+            listWidth = Math.max(listWidth, fontRendererObj.getStringWidth(org.apache.commons.lang3.StringUtils.capitalize(mod.updateType.name().toLowerCase())) + 47);
         }
+        listWidth = Math.min(listWidth, 150);
+        this.modList = new GuiModUpdateList(this, mods, listWidth);
 
-        listWidth = Math.min(listWidth, 200);
-        modList = new GuiSlotModUpdateContainerList(this, listWidth);
-        modList.registerScrollButtons(buttonList, 7, 8);
-        buttonList.add(buttonUpdate = new GuiButton(1, 10, height - 38, listWidth, 20, I18n.format("gui.llibrary.updatecheck.update")));
-        buttonUpdate.visible = false;
+        this.buttonList.add(buttonDone = new GuiButton(6, ((modList.getRight() + this.width) / 2) - 100, this.height - 38, I18n.format("gui.done")));
+        this.buttonList.add(buttonUpdate = new GuiButton(20, 10, this.height - 38, this.listWidth, 20, "Update"));
 
-        centerDoneButton();
+        search = new GuiTextField(0, fontRendererObj, 12, modList.getBottom() + 17, modList.getListWidth() - 4, 14);
+        search.setFocused(true);
+        search.setCanLoseFocus(true);
+
+        int width = (modList.getListWidth() / numButtons);
+        int x = 10, y = 10;
+        int buttonMargin = 1;
+        GuiButton normalSort = new GuiButton(SortType.NORMAL.buttonID, x, y, width - buttonMargin, 20, I18n.format("fml.menu.mods.normal"));
+        normalSort.enabled = false;
+        buttonList.add(normalSort);
+        x += width + buttonMargin;
+        buttonList.add(new GuiButton(SortType.A_TO_Z.buttonID, x, y, width - buttonMargin, 20, "A-Z"));
+        x += width + buttonMargin;
+        buttonList.add(new GuiButton(SortType.Z_TO_A.buttonID, x, y, width - buttonMargin, 20, "Z-A"));
+
+        updateCache();
     }
 
-    public void centerDoneButton() {
-        int j = 0;
-        int k = 0;
+    protected void mouseClicked(int x, int y, int button) throws IOException {
+        super.mouseClicked(x, y, button);
+        search.mouseClicked(x, y, button);
+        if (button == 1 && x >= search.xPosition && x < search.xPosition + search.width && y >= search.yPosition && y < search.yPosition + search.height) {
+            search.setText("");
+        }
+    }
 
-        for (Object obj : buttonList) {
-            GuiButton button = (GuiButton) obj;
-            int id = button.id;
+    protected void keyTyped(char c, int keyCode) throws IOException {
+        super.keyTyped(c, keyCode);
+        search.textboxKeyTyped(c, keyCode);
+    }
 
-            if (id == 0) {
-                k = button.xPosition;
-            } else if (id == 1) {
-                j = button.xPosition + button.width;
+    public void updateScreen() {
+        super.updateScreen();
+        search.updateCursorCounter();
+
+        if (!search.getText().equals(lastFilterText)) {
+            reloadMods();
+            sorted = false;
+        }
+
+        if (!sorted) {
+            reloadMods();
+            Collections.sort(mods, sortType);
+            selected = mods.indexOf(selectedMod);
+            modList.setSelected(mods.indexOf(selectedMod));
+            sorted = true;
+        }
+    }
+
+    private void reloadMods() {
+        ArrayList<JsonModUpdate> mods = modList.getMods();
+        mods.clear();
+        for (JsonModUpdate m : VersionHandler.getOutdatedMods()) {
+            if (m.name.toLowerCase().contains(search.getText().toLowerCase())) {
+                mods.add(m);
             }
         }
-
-        if (j > k) {
-            ((GuiButton) buttonList.get(0)).xPosition += j - k + 20;
-        }
+        this.mods = mods;
+        lastFilterText = search.getText();
     }
 
-    protected void actionPerformed(GuiButton button) {
-        int id = button.id;
+    protected void actionPerformed(GuiButton button) throws IOException {
+        if (button.enabled) {
+            SortType type = SortType.getTypeForButton(button);
 
-        if (id == 0) {
-            mc.displayGuiScreen(new GuiMainMenu());
-        } else if (id == 1) {
-            if (selectedIndex != -1 && selectedIndex < VersionHandler.getOutdatedMods().size()) {
-                final JsonModUpdate mod = VersionHandler.getOutdatedMods().get(selectedIndex);
-
-                if (mod.getDirectUpdateUrl() == null || !mod.getDirectUpdateUrl().startsWith("http://minecraft.curseforge.com/")) {
-                    Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-                    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-                        try {
-                            desktop.browse(new URI(mod.getUpdateUrl()));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+            if (type != null) {
+                for (GuiButton b : (List<GuiButton>) buttonList) {
+                    if (SortType.getTypeForButton(b) != null) {
+                        b.enabled = true;
                     }
-                } else {
-                    new Thread() {
-                        public void run() {
-                            try {
-                                buttonDone.enabled = false;
-                                buttonUpdate.enabled = false;
-                                URL url = new URL(mod.getDirectUpdateUrl());
-                                HttpURLConnection httpConnection = (HttpURLConnection) (url.openConnection());
-                                long completeFileSize = httpConnection.getContentLength();
+                }
+                button.enabled = false;
+                sorted = false;
+                sortType = type;
+                this.mods = modList.getMods();
+            } else {
+                switch (button.id) {
+                    case 6: {
+                        this.mc.displayGuiScreen(this.mainMenu);
+                        return;
+                    }
+                    case 20: {
+                        new Thread() {
+                            public void run() {
+                                try {
+                                    buttonDone.enabled = false;
+                                    buttonUpdate.enabled = false;
+                                    buttonUpdate.displayString = "Downloading";
+                                    URL url = new URL(selectedMod.getDirectUpdateUrl());
+                                    HttpURLConnection httpConnection = (HttpURLConnection) (url.openConnection());
+                                    long completeFileSize = httpConnection.getContentLength();
 
-                                BufferedInputStream in = new BufferedInputStream(httpConnection.getInputStream());
-                                File file = new File("tempmods");
-                                if (!file.exists()) {
-                                    file.mkdir();
+                                    BufferedInputStream in = new BufferedInputStream(httpConnection.getInputStream());
+                                    File file = new File("tempmods");
+                                    if (!file.exists()) {
+                                        file.mkdir();
+                                    }
+                                    File modfile = selectedMod.modContainer.getSource();
+                                    if (!modfile.getName().endsWith(".jar")) {
+                                        modfile = new File(selectedMod.name + "-" + selectedMod.getUpdateVersion().getVersionString() + ".jar");
+                                    }
+                                    FileOutputStream fos = new FileOutputStream(new File(file, modfile.getName()));
+                                    BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
+                                    byte[] data = new byte[1024];
+                                    long downloadedFileSize = 0;
+                                    int x;
+                                    while ((x = in.read(data, 0, 1024)) >= 0) {
+                                        downloadedFileSize += x;
+                                        int currentProgress = (int) ((((double) downloadedFileSize) / ((double) completeFileSize)) * 100d);
+                                        buttonUpdate.displayString = currentProgress + "%";
+                                        bout.write(data, 0, x);
+                                    }
+                                    bout.close();
+                                    in.close();
+                                    File json = new File(file, "update.json");
+                                    JsonUpdate update = JsonConfigHelper.loadConfig(json, JsonUpdate.class);
+                                    update.delete.add(modfile.getName());
+                                    JsonConfigHelper.saveConfig(update, json);
+                                    selectedMod.updated = true;
+                                    buttonUpdate.displayString = "Updated";
+                                    buttonDone.enabled = true;
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                                File modfile = mod.modContainer.getSource();
-                                if (!modfile.getName().endsWith(".jar")) {
-                                    modfile = new File(mod.name + "-" + mod.getUpdateVersion().getVersionString() + ".jar");
-                                }
-                                FileOutputStream fos = new FileOutputStream(new File(file, modfile.getName()));
-                                BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
-                                byte[] data = new byte[1024];
-                                long downloadedFileSize = 0;
-                                int x;
-                                while ((x = in.read(data, 0, 1024)) >= 0) {
-                                    downloadedFileSize += x;
-                                    int currentProgress = (int) ((((double) downloadedFileSize) / ((double) completeFileSize)) * 100d);
-                                    buttonUpdate.displayString = currentProgress + "%";
-                                    bout.write(data, 0, x);
-                                }
-                                bout.close();
-                                in.close();
-                                File json = new File(file, "update.json");
-                                JsonUpdate update = JsonConfigHelper.loadConfig(json, JsonUpdate.class);
-                                update.delete.add(modfile.getName());
-                                JsonConfigHelper.saveConfig(update, json);
-                                mod.updated = true;
-                                buttonUpdate.displayString = "Updated";
-                                buttonDone.enabled = true;
-                            } catch (Exception e) {
-                                e.printStackTrace();
                             }
-                        }
-                    }.start();
+                        }.start();
+                    }
                 }
             }
         }
+        super.actionPerformed(button);
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        drawDefaultBackground();
-        int i = width / 2;
-        int j = height / 2;
-
-        if (modList != null) {
-            modList.drawScreen(mouseX, mouseY, partialTicks);
-        }
-
         if (VersionHandler.getOutdatedMods().isEmpty()) {
+            drawDefaultBackground();
+            int i = width / 2;
+            int j = height / 2;
             buttonDone.xPosition = width / 2 - 100;
             buttonDone.yPosition = height - 38;
-            buttonList.remove(buttonUpdate);
+            buttonList.clear();
+            buttonList.add(buttonDone);
             drawScaledString(I18n.format("gui.llibrary.updatecheck.no_updates.line1"), i, j - 40, 0xffffff, 2F);
             drawScaledString(I18n.format("gui.llibrary.updatecheck.no_updates.line2"), i, j - 20, 0xffffff, 1F);
         } else {
-            if (selectedIndex != -1 && selectedIndex < VersionHandler.getOutdatedMods().size()) {
-                buttonUpdate.visible = true;
-
-                JsonModUpdate mod = VersionHandler.getOutdatedMods().get(selectedIndex);
-                String[] changelog = ChangelogHandler.getChangelog(mod, mod.getUpdateVersion());
-
-                if (mod.updated) {
-                    buttonUpdate.displayString = "Updated";
-                    buttonUpdate.enabled = false;
-                } else {
-                    buttonUpdate.displayString = "Update";
-                    buttonUpdate.enabled = true;
-                }
-
-                int k = modList.getLeft() + listWidth + 20 - width / 2 + 180;
-                int l = modList.getTop() - height / 2 + 100;
-
-                drawString(fontRendererObj, mod.name + " " + mod.getUpdateVersion().getVersionString(), k + width / 2 - 190, l + height / 2 - 97, 0xffffff);
-
-                for (int x = 0; x < changelog.length; ++x) {
-                    if (changelog[x] != null) {
-                        drawString(fontRendererObj, changelog[x], k + width / 2 - 190, l + height / 2 - 65 + x * 10, 0xffffff);
-                    }
-                }
+            this.modList.drawScreen(mouseX, mouseY, partialTicks);
+            if (this.modInfo != null) {
+                this.modInfo.drawScreen(mouseX, mouseY, partialTicks);
             }
 
-            drawCenteredString(fontRendererObj, "Mod Updates", width / 2, 16, 0xFFFFFF);
+            int left = ((this.width - this.listWidth - 38) / 2) + this.listWidth + 30;
+            this.drawCenteredString(this.fontRendererObj, "Mod Updates", left, 16, 0xFFFFFF);
+
+            String text = I18n.format("fml.menu.mods.search");
+            int x = ((10 + modList.getRight()) / 2) - (fontRendererObj.getStringWidth(text) / 2);
+            fontRendererObj.drawString(text, x, modList.getBottom() + 5, 0xFFFFFF);
+            search.drawTextBox();
         }
 
         super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    public void selectModIndex(int index) {
+        if (index == this.selected) {
+            return;
+        }
+        this.selected = index;
+        this.selectedMod = (index >= 0 && index <= mods.size()) ? mods.get(selected) : null;
+
+        updateCache();
+    }
+
+    public boolean modIndexSelected(int index) {
+        return index == selected;
+    }
+
+    private void updateCache() {
+        buttonUpdate.visible = false;
+        modInfo = null;
+
+        if (selectedMod == null) {
+            return;
+        }
+
+        List<String> lines = new ArrayList<String>();
+
+        buttonUpdate.visible = true;
+        if (selectedMod.updated) {
+            buttonUpdate.enabled = false;
+            buttonUpdate.displayString = "Updated";
+        } else {
+            buttonUpdate.enabled = true;
+            buttonUpdate.displayString = "Update";
+        }
+
+        lines.add(selectedMod.name);
+        lines.add(String.format("Current version: %s", selectedMod.currentVersion));
+        lines.add(String.format("Newest version: %s (%s)", selectedMod.getUpdateVersion().getVersionString(), selectedMod.updateType.name()));
+        lines.add(null);
+        Collections.addAll(lines, ChangelogHandler.getChangelog(selectedMod, selectedMod.getUpdateVersion()));
+
+        modInfo = new Info(this.width - this.listWidth - 30, lines);
     }
 
     public void drawScaledString(String text, int x, int y, int color, float scale) {
@@ -202,19 +281,133 @@ public class GuiModUpdates extends GuiScreen {
         GL11.glPopMatrix();
     }
 
-    public void selectItemIndex(int var1) {
-        selectedIndex = var1;
+    private class Info extends GuiScrollingList {
+        private List<IChatComponent> lines = null;
+
+        public Info(int width, List<String> lines) {
+            super(GuiModUpdates.this.mc, width, GuiModUpdates.this.height, 32, GuiModUpdates.this.height - 77 + 4, GuiModUpdates.this.listWidth + 20, 60, GuiModUpdates.this.width, GuiModUpdates.this.height);
+            this.lines = resizeContent(lines);
+            this.setHeaderInfo(true, getHeaderHeight());
+        }
+
+        protected int getSize() {
+            return 0;
+        }
+
+        protected void elementClicked(int index, boolean doubleClick) {
+        }
+
+        protected boolean isSelected(int index) {
+            return false;
+        }
+
+        protected void drawBackground() {
+
+        }
+
+        protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, Tessellator tess) {
+
+        }
+
+        private List<IChatComponent> resizeContent(List<String> lines) {
+            List<IChatComponent> ret = new ArrayList<IChatComponent>();
+            for (String line : lines) {
+                if (line == null) {
+                    ret.add(null);
+                    continue;
+                }
+
+                IChatComponent chat = ForgeHooks.newChatWithLinks(line, false);
+                ret.addAll(GuiUtilRenderComponents.func_178908_a(chat, this.listWidth - 8, GuiModUpdates.this.fontRendererObj, false, true));
+            }
+            return ret;
+        }
+
+        private int getHeaderHeight() {
+            int height = (lines.size() * 10);
+            if (height < this.bottom - this.top - 8) {
+                height = this.bottom - this.top - 8;
+            }
+            return height;
+        }
+
+        protected void drawHeader(int entryRight, int relativeY, Tessellator tess) {
+            int top = relativeY;
+
+            for (IChatComponent line : lines) {
+                if (line != null) {
+                    GlStateManager.enableBlend();
+                    GuiModUpdates.this.fontRendererObj.drawStringWithShadow(line.getFormattedText(), this.left + 4, top, 0xFFFFFF);
+                    GlStateManager.disableAlpha();
+                    GlStateManager.disableBlend();
+                }
+                top += 10;
+            }
+        }
+
+        protected void clickHeader(int x, int y) {
+            if (y <= 0) {
+                return;
+            }
+
+            int lineIdx = y / 10;
+            if (lineIdx >= lines.size()) {
+                return;
+            }
+
+            IChatComponent line = lines.get(lineIdx);
+            if (line != null) {
+                int k = -4;
+                for (IChatComponent part : (Iterable<IChatComponent>) line) {
+                    if (!(part instanceof ChatComponentText)) {
+                        continue;
+                    }
+                    k += GuiModUpdates.this.fontRendererObj.getStringWidth(((ChatComponentText) part).getChatComponentText_TextValue());
+                    if (k >= x) {
+                        GuiModUpdates.this.func_175276_a(part);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
-    public boolean itemIndexSelected(int var1) {
-        return selectedIndex == var1;
-    }
+    private enum SortType implements Comparator<JsonModUpdate> {
+        NORMAL(24),
+        A_TO_Z(25) {
+            protected int compare(String name1, String name2) {
+                return name1.compareTo(name2);
+            }
+        },
+        Z_TO_A(26) {
+            protected int compare(String name1, String name2) {
+                return name2.compareTo(name1);
+            }
+        };
 
-    public FontRenderer getFontRenderer() {
-        return fontRendererObj;
-    }
+        private int buttonID;
 
-    public Minecraft getMinecraftInstance() {
-        return Minecraft.getMinecraft();
+        SortType(int buttonID) {
+            this.buttonID = buttonID;
+        }
+
+        public static SortType getTypeForButton(GuiButton button) {
+            for (SortType t : values()) {
+                if (t.buttonID == button.id) {
+                    return t;
+                }
+            }
+            return null;
+        }
+
+        protected int compare(String name1, String name2) {
+            return 0;
+        }
+
+        public int compare(JsonModUpdate o1, JsonModUpdate o2) {
+            String name1 = StringUtils.stripControlCodes(o1.name).toLowerCase();
+            String name2 = StringUtils.stripControlCodes(o2.name).toLowerCase();
+            return compare(name1, name2);
+        }
     }
 }

@@ -1,5 +1,5 @@
 {
-    "newestVersion": "0.4.3",
+    "newestVersion": "0.5.0",
     "versions":
     {
         "0.1.0":
@@ -72,6 +72,36 @@
             "Added toast notification for updates",
             "Added animation action api",
             "Fixed white tint on models"
+        ],
+        "0.5.0": [
+            "Added toast builder",
+            "Added survival tab builder",
+            "Added methods to scale entities",
+            "Added new event hook system for player model",
+            "Added update types to checker",
+            "Added new player render hooks",
+            "Added config option for update type",
+            "Added survival tab pages",
+            "Added simple AbstractMessage register method",
+            "Added simple crash report implementation",
+            "Added JSON config helper",
+            "Added config option for extra tooltip info",
+            "Added NBTIO",
+            "Added ParticleHelper",
+            "Added automatic update installer",
+            "",
+            "Revamped update gui",
+            "",
+            "Fixed server-side ChainBuffer crash",
+            "Fixed flickering images in gui",
+            "Fixed detection of outdated updates",
+            "Fixed toast fade-out animation",
+            "Fixed NBT save format",
+            "Fixed visual glitch with toast messages",
+            "",
+            "Removed update command",
+            "",
+            "Please remove your config file before installing this update!"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",

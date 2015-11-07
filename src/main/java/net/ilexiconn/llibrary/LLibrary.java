@@ -29,7 +29,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "0.5.0-beta4", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
+@Mod(modid = "llibrary", name = "LLibrary", version = "0.5.0", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
 public class LLibrary {
     @Mod.Instance("llibrary")
     public static LLibrary instance;

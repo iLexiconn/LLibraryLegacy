@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.client.gui;
 
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,7 +29,7 @@ public class GuiLLibraryMainMenu extends GuiOverride {
         int id = button.id;
 
         if (id == 85) {
-            mc.displayGuiScreen(new GuiModUpdates());
+            mc.displayGuiScreen(new GuiModUpdates(new GuiMainMenu()));
         }
     }
 }
