@@ -33,6 +33,9 @@
     ],
     "0.5.1": [
       "Fixed update crash"
+    ],
+    "0.5.2": [
+      "Fixed server crash"
     ]
   },
   "updateUrl": "https://bitly.com/llibrary",
