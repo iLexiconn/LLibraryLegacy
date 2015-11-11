@@ -4,6 +4,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
 import net.ilexiconn.llibrary.client.gui.GuiLLibraryMainMenu;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
@@ -11,6 +12,7 @@ import net.ilexiconn.llibrary.common.ServerProxy;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,6 +28,8 @@ public class ClientProxy extends ServerProxy {
 
     public void preInit(File config) {
         super.preInit(config);
+
+        LLibrary.tabInventory.setContainer(GuiInventory.class);
 
         timer = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "field_71428_T", "Q", "timer");
 
