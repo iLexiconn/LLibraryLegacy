@@ -11,7 +11,6 @@ import net.ilexiconn.llibrary.common.message.MessageLLibraryIntemittentAnimation
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
 import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -29,7 +28,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "0.5.1", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
+@Mod(modid = "llibrary", name = "LLibrary", version = "0.5.2", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
 public class LLibrary {
     @Mod.Instance("llibrary")
     public static LLibrary instance;
@@ -41,7 +40,7 @@ public class LLibrary {
 
     public static SimpleNetworkWrapper networkWrapper;
 
-    public static SurvivalTab tabInventory = SurvivalTab.create("container.inventory").setIcon(new ItemStack(Items.diamond_sword)).setContainer(GuiInventory.class);
+    public static SurvivalTab tabInventory = SurvivalTab.create("container.inventory").setIcon(new ItemStack(Items.diamond_sword));
 
     @Mod.EventHandler
     private void preInit(FMLPreInitializationEvent event) {
