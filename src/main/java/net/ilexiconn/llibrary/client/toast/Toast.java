@@ -48,14 +48,6 @@ public class Toast {
     }
 
     /**
-     * For internal use only.
-     */
-    @Deprecated
-    public static List<Toast> getToastList() {
-        return toastList;
-    }
-
-    /**
      * Set the toast's position. This can be set at any time. The default is x10, y10.
      *
      * @param x The x position.
@@ -65,6 +57,18 @@ public class Toast {
     public Toast setPosition(int x, int y) {
         posX = x;
         posY = y;
+        return this;
+    }
+
+    /**
+     * Set the toast's duration. This can be set at any time. The default is d60 (3 seconds).
+     *
+     * @param d The duration.
+     * @return The updated toast instance.
+     */
+    public Toast setDuration(int d) {
+        duration = d;
+        lastDuration = d;
         return this;
     }
 
@@ -109,15 +113,11 @@ public class Toast {
     /* =========================================== FOR INTERNAL USE ONLY =========================================== */
 
     /**
-     * Set the toast's duration. This can be set at any time. The default is d60 (3 seconds).
-     *
-     * @param d The duration.
-     * @return The updated toast instance.
+     * For internal use only.
      */
-    public Toast setDuration(int d) {
-        duration = d;
-        lastDuration = d;
-        return this;
+    @Deprecated
+    public static List<Toast> getToastList() {
+        return toastList;
     }
 
     /**
