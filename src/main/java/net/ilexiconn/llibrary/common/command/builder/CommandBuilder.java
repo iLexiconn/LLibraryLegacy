@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.common.command;
+package net.ilexiconn.llibrary.common.command.builder;
 
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import net.minecraft.command.ICommandSender;
