@@ -2,10 +2,7 @@ package net.ilexiconn.llibrary.common.command;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.WrongUsageException;
+import net.minecraft.command.*;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 import java.util.List;
@@ -209,5 +206,10 @@ public class CommandBuilder extends CommandBase {
     public int getRequiredPermissionLevel()
     {
         return requiredPermissionLevel;
+    }
+
+    public int compareTo(Object object)
+    {
+        return 0;
     }
 }
