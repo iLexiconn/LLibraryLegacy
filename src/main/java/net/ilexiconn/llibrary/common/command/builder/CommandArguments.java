@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.common.command;
+package net.ilexiconn.llibrary.common.command.builder;
 
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

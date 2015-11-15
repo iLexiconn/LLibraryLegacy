@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.common.command;
+package net.ilexiconn.llibrary.common.command.builder;
 
 import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.common.map.ListHashMap;

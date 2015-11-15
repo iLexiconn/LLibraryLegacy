@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.common.command;
+package net.ilexiconn.llibrary.common.command.builder;
 
 public class Argument {
     private String name;
