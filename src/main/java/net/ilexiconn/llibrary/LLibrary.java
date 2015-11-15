@@ -29,7 +29,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = LLibrary.VERSION, guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory", dependencies = "required-after:Forge@[11.13.4.1558,99999.13.0.0)")
+@Mod(modid = "llibrary", name = "LLibrary", version = LLibrary.VERSION, guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory", dependencies = "required-after:Forge@[11.13.4.1558)")
 public class LLibrary {
     @Mod.Instance("llibrary")
     public static LLibrary instance;
