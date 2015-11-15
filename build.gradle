@@ -95,6 +95,8 @@ publishing {
             artifactId "llibrary"
             version getVersionFromJava()
 
+            from components.java
+
             artifact devJar {
                 classifier "dev"
             }
