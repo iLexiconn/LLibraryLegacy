@@ -37,7 +37,7 @@ if (secretFile.exists()) {
     }
 }
 
-version = config.mod_version + "-" + config.minecraft_version
+version = getVersionFromJava()
 group = config.mod_group
 archivesBaseName = config.mod_name
 sourceCompatibility = targetCompatibility = 1.6
@@ -48,7 +48,7 @@ minecraft {
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.property "version", getVersionFromJavaWithoutMc()
     inputs.property "mcversion", project.minecraft.version
 
     from(sourceSets.main.resources.srcDirs) {
@@ -93,9 +93,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId "net.ilexiconn"
             artifactId "llibrary"
-            version config.mod_version + "-" + config.minecraft_version
-
-            from components.java
+            version getVersionFromJava()
 
             artifact devJar {
                 classifier "dev"
@@ -158,7 +156,7 @@ curseforge {
         addGameVersion config.minecraft_version
         
         mainArtifact(jar) {
-            displayName = "LLibrary " + config.mod_version + " for Minecraft " + config.minecraft_version
+            displayName = "LLibrary " + getVersionFromJavaWithoutMc() + " for Minecraft " + config.minecraft_version
         }
         
         addArtifact(devJar) {
@@ -169,4 +167,29 @@ curseforge {
             displayName = "Sources"
         }
     }
+}
+
+String getVersionFromJava() {
+    return getVersionFromJavaWithoutMc() + "-1.7.10";
+}
+
+String getVersionFromJavaWithoutMc() {
+    String major = "0";
+    String revision = "0";
+    String patch = "0";
+    String prefix = "public static final String VERSION = \"";
+    File file = file("src/main/java/net/ilexiconn/llibrary/LLibrary.java")
+    file.eachLine { String s ->
+        s = s.trim();
+        if (s.startsWith(prefix)) {
+            s = s.substring(prefix.length(), s.length() - 2);
+            String[] pts = s.split("\\.");
+
+            projNumber = pts[0];
+            major = pts[1];
+            revision = pts[2];
+        }
+    }
+
+    return "$major.$revision.$patch";
 }

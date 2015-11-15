@@ -32,8 +32,9 @@ public class ModelJson extends MowzieModelBase {
 
     private Animation playingAnimation;
     private int animationTimer;
-
     private int animationLength;
+
+    private int tick;
 
     public ModelJson(JsonTabulaModel model) {
         tabulaModel = model;
@@ -158,7 +159,12 @@ public class ModelJson extends MowzieModelBase {
         playingAnimation = null;
     }
 
+    @Deprecated
     public void updateAnimation(Entity entity) {
+        updateAnimation();
+    }
+
+    public void updateAnimation() {
         for (Entry<String, ArrayList<AnimationComponent>> entry : playingAnimation.sets.entrySet()) {
             MowzieModelRenderer animating = identifierMap.get(entry.getKey());
 
@@ -182,7 +188,7 @@ public class ModelJson extends MowzieModelBase {
             }
         }
 
-        animationTimer = entity.ticksExisted % animationLength;
+        animationTimer = tick % animationLength;
 
         if (animationTimer > animationLength) {
             if (playingAnimation.loops) {
@@ -190,6 +196,11 @@ public class ModelJson extends MowzieModelBase {
             } else {
                 stopAnimation();
             }
+        }
+
+        tick++;
+        if (tick > Integer.MAX_VALUE - 100) {
+            tick = 0;
         }
     }
 
@@ -210,5 +221,13 @@ public class ModelJson extends MowzieModelBase {
 
     public boolean isAnimationInProgress() {
         return playingAnimation != null;
+    }
+
+    public int getAnimationLength() {
+        return animationLength;
+    }
+
+    public int getAnimationTimer() {
+        return animationTimer;
     }
 }

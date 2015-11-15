@@ -1,5 +1,5 @@
 {
-    "newestVersion": "0.5.0",
+    "newestVersion": "0.5.3",
     "versions":
     {
         "0.1.0":
@@ -102,6 +102,18 @@
             "Removed update command",
             "",
             "Please remove your config file before installing this update!"
+        ],
+        "0.5.1": [
+            "Fixed update crash"
+        ],
+        "0.5.2": [
+            "Fixed server crash"
+        ],
+        "0.5.3": [
+            "Added CommandBuilder",
+            "Fixed Tabula files not animating",
+            "Fixed crash report header",
+            "Updated forge and added as dependency"
         ]
     },
     "updateUrl": "https://bitly.com/llibrary",

@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * @see CommandBuilder
  * @author iLexiconn
- * @since 0.6.0
+ * @since 0.5.3
  */
 public class CommandArguments {
     private Map<String, String> arguments;

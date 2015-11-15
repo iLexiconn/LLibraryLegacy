@@ -4,17 +4,18 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import net.ilexiconn.llibrary.common.ServerProxy;
-import net.ilexiconn.llibrary.common.command.CommandArguments;
-import net.ilexiconn.llibrary.common.command.CommandBuilder;
-import net.ilexiconn.llibrary.common.command.ICommandExecutor;
 import net.ilexiconn.llibrary.common.content.ContentHelper;
 import net.ilexiconn.llibrary.common.content.IContentHandler;
 import net.ilexiconn.llibrary.common.content.InitializationState;
+import net.ilexiconn.llibrary.common.crash.SimpleCrashReport;
 import net.ilexiconn.llibrary.common.log.LoggerHelper;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimation;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimationAction;
@@ -22,25 +23,22 @@ import net.ilexiconn.llibrary.common.message.MessageLLibraryIntemittentAnimation
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
 import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = "0.6.0-develop", guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory")
+@Mod(modid = "llibrary", name = "LLibrary", version = LLibrary.VERSION, guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory", dependencies = "required-after:Forge@[11.13.4.1558,99999.13.0.0)")
 public class LLibrary {
     @Mod.Instance("llibrary")
     public static LLibrary instance;
-
     @SidedProxy(serverSide = "net.ilexiconn.llibrary.common.ServerProxy", clientSide = "net.ilexiconn.llibrary.client.ClientProxy")
     public static ServerProxy proxy;
-
     public static LoggerHelper logger = new LoggerHelper("llibrary");
-
     public static SimpleNetworkWrapper networkWrapper;
+
+    public static final String VERSION = "0.5.3";
 
     public static SurvivalTab tabInventory = SurvivalTab.create("container.inventory").setIcon(new ItemStack(Items.diamond_sword));
 
@@ -76,20 +74,6 @@ public class LLibrary {
     }
 
     @Mod.EventHandler
-    public void serverLoad(FMLServerStartingEvent event) {
-        CommandBuilder.create("test").withRequiredArgument("test1").withOptionalArgument("test2").register(event, new ICommandExecutor() {
-            @Override
-            public void execute(ICommandSender sender, CommandArguments arguments) {
-                if (arguments.has("test2")) {
-                    sender.addChatMessage(new ChatComponentText("Two arguments! (" + arguments.get("test1") + ", " + arguments.get("test2") + ")"));
-                } else {
-                    sender.addChatMessage(new ChatComponentText("One argument! (" + arguments.get("test1") + ")"));
-                }
-            }
-        });
-    }
-
-    @Mod.EventHandler
     public void messageReceived(FMLInterModComms.IMCEvent event) {
         for (FMLInterModComms.IMCMessage message : event.getMessages()) {
             if (message.key.equalsIgnoreCase("update-checker") && message.isStringMessage()) {
@@ -101,7 +85,7 @@ public class LLibrary {
                         }
                     }
                     if (modContainer == null) {
-                        throw new Exception();
+                        logger.error(SimpleCrashReport.makeCrashReport(new NullPointerException(), ""));
                     }
                     UpdateHelper.registerUpdateChecker(modContainer, message.getStringValue());
                 } catch (Exception e) {
