@@ -4,5 +4,6 @@ out/
 *.iml
 *.ipr
 *.iws
+build/
 
 secret.properties
