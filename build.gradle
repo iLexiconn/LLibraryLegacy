@@ -185,9 +185,9 @@ String getVersionFromJavaWithoutMc() {
             s = s.substring(prefix.length(), s.length() - 2);
             String[] pts = s.split("\\.");
 
-            projNumber = pts[0];
-            major = pts[1];
-            revision = pts[2];
+            major = pts[0];
+            revision = pts[1];
+            patch = pts[2];
         }
     }
 
