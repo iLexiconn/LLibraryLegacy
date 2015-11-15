@@ -6,6 +6,9 @@
         "authorList": ["iLexiconn"],
         "credits": "Gegy1000, FiskFille, BobMowzie, jglrxavpok, RafaMv, coolAlias, JTGhawk137, DanielHuisman, Alexthe666",
         "url": "https://ilexiconn.net/",
-        "description": "A lightweight library for Minecraft mods."
+        "description": "A lightweight library for Minecraft mods.",
+        "dependencies": [
+            "Forge"
+        ]
     }
 ]

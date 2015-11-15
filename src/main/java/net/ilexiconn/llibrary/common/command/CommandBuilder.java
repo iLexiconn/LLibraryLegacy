@@ -15,7 +15,7 @@ import java.util.Map;
  * Command builder. Use this to easily create and register server commands.
  *
  * @author iLexiconn
- * @since 0.6.0
+ * @since 0.5.3
  */
 public class CommandBuilder extends CommandBase {
     private String commandName;

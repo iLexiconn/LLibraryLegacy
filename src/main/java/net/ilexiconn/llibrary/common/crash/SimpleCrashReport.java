@@ -21,7 +21,7 @@ public class SimpleCrashReport {
     }
 
     public String getCompleteReport() {
-        return "---- LLibraryUpdater Crash Report ----\n\nDescription: " + description + "\n\n-- Crash Log --\n" + getStackTrace() + "\n-- System Details --\n" + getSystemDetails();
+        return "---- Crash Report ----\n\nDescription: " + description + "\n\n-- Crash Log --\n" + getStackTrace() + "\n-- System Details --\n" + getSystemDetails();
     }
 
     public String getSystemDetails() {

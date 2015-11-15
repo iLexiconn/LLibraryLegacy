@@ -8,7 +8,7 @@ import net.minecraft.command.ICommandSender;
  *
  * @see net.ilexiconn.llibrary.common.command.CommandBuilder
  * @author iLexiconn
- * @since 0.6.0
+ * @since 0.5.3
  */
 public interface ICommandExecutor {
 
