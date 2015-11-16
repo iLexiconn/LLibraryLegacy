@@ -25,9 +25,9 @@ public abstract class WorldHeightmapGenerator {
 
     public abstract double getWorldScale();
 
-    public abstract double getHeightScale();
+    public abstract double getHeightScale(int height);
 
-    public int getHeightOffset() {
+    public int getHeightOffset(int height) {
         return 0;
     }
 
@@ -42,6 +42,12 @@ public abstract class WorldHeightmapGenerator {
     public abstract int getWorldOffsetX();
 
     public abstract int getWorldOffsetZ();
+
+    public abstract boolean hasOcean();
+
+    public abstract IBlockState getOceanLiquid();
+
+    public abstract int getOceanHeight(int x, int z);
 
     public void loadHeightmap() {
         LLibrary.logger.info("Loading " + getName() + " Heightmap...");
@@ -58,7 +64,10 @@ public abstract class WorldHeightmapGenerator {
 
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    int height = (int) (((image.getRGB(x, y) & 0x0000FF) * getHeightScale()) + getHeightOffset());
+                    int height = ((image.getRGB(x, y) & 0x0000FF));
+
+                    height *= getHeightScale(height);
+                    height += getHeightOffset(height);
 
                     if (height + 5 > 255) {
                         height = 250;
@@ -67,7 +76,7 @@ public abstract class WorldHeightmapGenerator {
                     if (height <= 1) {
                         heightmap[x][y] = (byte) ((random.nextInt(5) + 25) - 128);
                     } else {
-                        heightmap[x][y] = (byte) ((height - 128) + 5);
+                        heightmap[x][y] = (byte) ((height - 128));
                     }
                 }
             }
@@ -137,16 +146,29 @@ public abstract class WorldHeightmapGenerator {
         int scaledWidth = (int) (width * scale);
         int scaledHeight = (int) (height * scale);
 
+        double offsetX = getWorldOffsetX();
+        double offsetZ = getWorldOffsetZ();
+
+        if (offsetX != 0)
+        {
+            offsetX /= scale;
+        }
+
+        if (offsetZ != 0)
+        {
+            offsetZ /= scale;
+        }
+
+        x -= offsetX;
+        z -= offsetZ;
+
         if (x < 0 || z < 0 || x >= scaledWidth || z >= scaledHeight) {
             return 10;
         }
 
-        double offsetX = getWorldOffsetX() / scale;
-        double offsetZ = getWorldOffsetZ() / scale;
-
         BicubicInterpolator bi = new BicubicInterpolator();
 
-        return bi.getValue(heightmap, x - offsetX, z - offsetZ, scale) + 128;
+        return bi.getValue(heightmap, x, z, scale) + 128;
     }
 
     public BiomeGenBase getBiomeAt(int x, int z) {
@@ -156,17 +178,31 @@ public abstract class WorldHeightmapGenerator {
             int scaledWidth = (int) (width * scale);
             int scaledHeight = (int) (height * scale);
 
-            if (x < 0 || z < 0 || x >= scaledWidth || z >= scaledHeight) {
+            double offsetX = getWorldOffsetX();
+            double offsetZ = getWorldOffsetZ();
+
+            if (offsetX != 0)
+            {
+                offsetX /= scale;
+            }
+
+            if (offsetZ != 0)
+            {
+                offsetZ /= scale;
+            }
+
+            x -= offsetX;
+            z -= offsetZ;
+
+            if (x < 0 || z < 0 || x >= scaledWidth || z >= scaledHeight)
+            {
                 return getDefaultBiome();
             }
 
-            double offsetX = getWorldOffsetX() / scale;
-            double offsetZ = getWorldOffsetZ() / scale;
+            double newX = (x * biomemapToHeightmapWidthRatio / scale);
+            double newZ = (z * biomemapToHeightmapHeightRatio / scale);
 
-            double newX = ((x - offsetX) * biomemapToHeightmapWidthRatio / scale);
-            double newZ = ((z - offsetZ) * biomemapToHeightmapHeightRatio / scale);
-
-            return BiomeGenBase.getBiome(biomemap[((int) newX)][((int) newZ)]);
+            return BiomeGenBase.getBiome(biomemap[((int) Math.round(newX))][((int) Math.round(newZ))]);
         }
 
         return getDefaultBiome();
