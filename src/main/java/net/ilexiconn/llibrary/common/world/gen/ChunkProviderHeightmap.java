@@ -75,12 +75,13 @@ public class ChunkProviderHeightmap implements IChunkProvider {
             return;
         }
 
-        double d0 = 0.03125D;
-
         for (int k = 0; k < 16; ++k) {
             for (int l = 0; l < 16; ++l) {
                 BiomeGenBase biome = biomes[l + k * 16];
-                biome.genTerrainBlocks(this.worldObj, this.rand, chunkPrimer, chunkX * 16 + k, chunkZ * 16 + l, 0);
+
+                if (biome != null) {
+                    biome.genTerrainBlocks(this.worldObj, this.rand, chunkPrimer, chunkX * 16 + k, chunkZ * 16 + l, 0);
+                }
             }
         }
     }
