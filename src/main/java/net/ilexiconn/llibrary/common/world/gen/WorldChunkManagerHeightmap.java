@@ -84,23 +84,17 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager {
             listToReuse = new float[width * length];
         }
 
-        for (int partX = 0; partX < width; ++partX)
-        {
-            for (int partZ = 0; partZ < length; ++partZ)
-            {
-                try
-                {
+        for (int partX = 0; partX < width; ++partX) {
+            for (int partZ = 0; partZ < length; ++partZ) {
+                try {
                     float f = (float) BiomeGenBase.getBiomeFromBiomeList(getBiomeAt(partX + x, partZ + z).biomeID, BiomeGenBase.field_180279_ad).getIntRainfall() / 65536.0F;
 
-                    if (f > 1.0F)
-                    {
+                    if (f > 1.0F) {
                         f = 1.0F;
                     }
 
                     listToReuse[partX * partZ] = f;
-                }
-                catch (Throwable throwable)
-                {
+                } catch (Throwable throwable) {
                     CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Invalid Biome id");
                     CrashReportCategory crashreportcategory = crashreport.makeCategory("DownfallBlock");
                     crashreportcategory.addCrashSection("downfalls[] size", Integer.valueOf(listToReuse.length));
@@ -134,20 +128,15 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager {
             biomes = new BiomeGenBase[width * height];
         }
 
-        try
-        {
-            for (int partX = 0; partX < width; ++partX)
-            {
-                for (int partZ = 0; partZ < height; ++partZ)
-                {
+        try {
+            for (int partX = 0; partX < width; ++partX) {
+                for (int partZ = 0; partZ < height; ++partZ) {
                     biomes[partX * partZ] = getBiomeAt(partX + x, partZ + z);
                 }
             }
 
             return biomes;
-        }
-        catch (Throwable throwable)
-        {
+        } catch (Throwable throwable) {
             CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Invalid Biome id");
             CrashReportCategory crashreportcategory = crashreport.makeCategory("RawBiomeBlock");
             crashreportcategory.addCrashSection("biomes[] size", Integer.valueOf(biomes.length));
@@ -184,13 +173,9 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager {
             BiomeGenBase[] abiomegenbase1 = this.biomeCache.getCachedBiomes(x, z);
             System.arraycopy(abiomegenbase1, 0, listToReuse, 0, width * length);
             return listToReuse;
-        }
-        else
-        {
-            for (int partX = 0; partX < width; ++partX)
-            {
-                for (int partZ = 0; partZ < length; ++partZ)
-                {
+        } else {
+            for (int partX = 0; partX < width; ++partX) {
+                for (int partZ = 0; partZ < length; ++partZ) {
                     listToReuse[partX * partZ] = getBiomeAt(x + partX, z + partZ);
                 }
             }
@@ -211,16 +196,12 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager {
         int width = j1 - l + 1;
         int length = k1 - i1 + 1;
 
-        try
-        {
-            for (int partX = 0; partX < width; ++partX)
-            {
-                for (int partZ = 0; partZ < length; ++partZ)
-                {
+        try {
+            for (int partX = 0; partX < width; ++partX) {
+                for (int partZ = 0; partZ < length; ++partZ) {
                     BiomeGenBase biomegenbase = getBiomeAt(partX + x, partZ + z);
 
-                    if (!allowed.contains(biomegenbase))
-                    {
+                    if (!allowed.contains(biomegenbase)) {
                         return false;
                     }
                 }
@@ -249,18 +230,15 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager {
         BlockPos blockpos = null;
         int j2 = 0;
 
-        for (int partX = 0; partX < width; ++partX)
-        {
-            for (int partZ = 0; partZ < length; ++partZ)
-            {
+        for (int partX = 0; partX < width; ++partX) {
+            for (int partZ = 0; partZ < length; ++partZ) {
                 int index = partX * partZ;
 
                 int chunkX = l + index % width << 2;
                 int chunkZ = i1 + index / width << 2;
                 BiomeGenBase biomegenbase = getBiomeAt(partX + x, partZ + z);
 
-                if (biomes.contains(biomegenbase) && (blockpos == null || random.nextInt(j2 + 1) == 0))
-                {
+                if (biomes.contains(biomegenbase) && (blockpos == null || random.nextInt(j2 + 1) == 0)) {
                     blockpos = new BlockPos(chunkX, 0, chunkZ);
                     ++j2;
                 }

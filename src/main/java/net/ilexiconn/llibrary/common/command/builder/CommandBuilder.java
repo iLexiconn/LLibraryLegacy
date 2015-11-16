@@ -90,7 +90,7 @@ public class CommandBuilder {
      * fill in the argument, an error will be shown.
      *
      * @param argument The required argument.
-     * @param type The argument type.
+     * @param type     The argument type.
      * @return The updated {@link CommandBuilder} instance.
      */
     public CommandBuilder withRequiredArgument(String argument, ArgumentType type) {
@@ -115,7 +115,7 @@ public class CommandBuilder {
      * fill in the argument, the command will be executed anyway.
      *
      * @param argument The optional argument.
-     * @param type The argument type.
+     * @param type     The argument type.
      * @return The updated {@link CommandBuilder} instance.
      */
     public CommandBuilder withOptionalArgument(String argument, ArgumentType type) {

@@ -40,6 +40,7 @@ public abstract class WorldHeightmapGenerator {
     public abstract int getColourForBiome(BiomeGenBase biome);
 
     public abstract int getWorldOffsetX();
+
     public abstract int getWorldOffsetZ();
 
     public void loadHeightmap() {

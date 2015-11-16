@@ -115,4 +115,8 @@ public class Command extends CommandBase {
         }
         return false;
     }
+
+    public int compareTo(Object o) {
+        return 0;
+    }
 }
