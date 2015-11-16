@@ -44,6 +44,11 @@ public class ChunkProviderCustom implements IChunkProvider
         this.worldObj = world;
         this.rand = new Random(seed);
         this.generator = generator;
+
+        if (!generator.isLoaded())
+        {
+            this.generator.load();
+        }
     }
 
     public void func_147424_a(int chunkX, int chunkZ, Block[] blocks)
