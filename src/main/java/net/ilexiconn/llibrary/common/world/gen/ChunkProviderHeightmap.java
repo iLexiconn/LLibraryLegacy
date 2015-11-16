@@ -1,37 +1,30 @@
 package net.ilexiconn.llibrary.common.world.gen;
 
-import java.util.List;
-import java.util.Random;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.SpawnerAnimals;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.ChunkProviderGenerate;
-import net.minecraft.world.gen.feature.WorldGenDungeons;
-import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.structure.MapGenMineshaft;
-import net.minecraft.world.gen.structure.MapGenScatteredFeature;
-import net.minecraft.world.gen.structure.MapGenStronghold;
-import net.minecraft.world.gen.structure.MapGenVillage;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.terraingen.ChunkProviderEvent;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
 
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.*;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.*;
-import net.minecraftforge.common.*;
-import cpw.mods.fml.common.eventhandler.Event.*;
-import net.minecraftforge.event.terraingen.*;
+import java.util.List;
+import java.util.Random;
 
-public class ChunkProviderCustom implements IChunkProvider
-{
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
+
+public class ChunkProviderHeightmap implements IChunkProvider {
     private Random rand;
     private World worldObj;
 
@@ -39,8 +32,7 @@ public class ChunkProviderCustom implements IChunkProvider
 
     private BiomeGenBase[] biomesForGeneration;
 
-    public ChunkProviderCustom(World world, long seed, WorldHeightmapGenerator generator)
-    {
+    public ChunkProviderHeightmap(World world, long seed, WorldHeightmapGenerator generator) {
         this.worldObj = world;
         this.rand = new Random(seed);
         this.generator = generator;
@@ -51,41 +43,35 @@ public class ChunkProviderCustom implements IChunkProvider
         }
     }
 
-    public void func_147424_a(int chunkX, int chunkZ, Block[] blocks)
-    {
+    public void func_147424_a(int chunkX, int chunkZ, Block[] blocks) {
         this.biomesForGeneration = this.worldObj.getWorldChunkManager().getBiomesForGeneration(this.biomesForGeneration, chunkX * 4 - 2, chunkZ * 4 - 2, 10, 10);
 
-        for (int x = 0; x < 16; x++)
-        {
-            for (int z = 0; z < 16; z++)
-            {
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
                 int height = (generator.getHeightForCoords(x + (chunkX * 16), z + (chunkZ * 16)));
 
-                for (int y = 0; y < height; y++)
-                {
+                for (int y = 0; y < height; y++) {
                     blocks[(x + z * 16) * y] = generator.getStoneBlock();
                 }
             }
         }
     }
 
-    public void replaceBlocksForBiome(int chunkX, int chunkZ, Block[] blocks, byte[] meta, BiomeGenBase[] biomes)
-    {
+    public void replaceBlocksForBiome(int chunkX, int chunkZ, Block[] blocks, byte[] meta, BiomeGenBase[] biomes) {
         ChunkProviderEvent.ReplaceBiomeBlocks event = new ChunkProviderEvent.ReplaceBiomeBlocks(this, chunkX, chunkZ, blocks, meta, biomes, this.worldObj);
         MinecraftForge.EVENT_BUS.post(event);
-        if (event.getResult() == Result.DENY) return;
+        if (event.getResult() == Result.DENY) {
+            return;
+        }
 
-        for (int x = 0; x < 16; ++x)
-        {
-            for (int z = 0; z < 16; ++z)
-            {
+        for (int x = 0; x < 16; ++x) {
+            for (int z = 0; z < 16; ++z) {
                 generateBiome(worldObj, meta, biomes[z + x * 16], rand, blocks, x, z);
             }
         }
     }
 
-    private void generateBiome(World world, byte[] meta, BiomeGenBase biome, Random rand, Block[] blocks, int x, int z)
-    {
+    private void generateBiome(World world, byte[] meta, BiomeGenBase biome, Random rand, Block[] blocks, int x, int z) {
         int xInChunk = x & 15;
         int zInChunk = z & 15;
         int chunkWidth = blocks.length / 256;
@@ -93,32 +79,21 @@ public class ChunkProviderCustom implements IChunkProvider
         boolean reachedSurface = false;
         int depthSinceSurface = 0;
 
-        for (int y = 255; y >= 0; --y)
-        {
+        for (int y = 255; y >= 0; --y) {
             int arrayPos = (zInChunk * 16 + xInChunk) * chunkWidth + y;
 
-            if (y <= rand.nextInt(5))
-            {
+            if (y <= rand.nextInt(5)) {
                 blocks[arrayPos] = Blocks.bedrock;
-            }
-            else
-            {
+            } else {
                 Block previousBlock = blocks[arrayPos];
 
-                if (previousBlock == null || previousBlock.getMaterial() == Material.air)
-                {
+                if (previousBlock == null || previousBlock.getMaterial() == Material.air) {
                     reachedSurface = true;
-                }
-                else if (previousBlock == generator.getStoneBlock())
-                {
-                    if (reachedSurface)
-                    {
-                        if (depthSinceSurface == 0)
-                        {
+                } else if (previousBlock == generator.getStoneBlock()) {
+                    if (reachedSurface) {
+                        if (depthSinceSurface == 0) {
                             blocks[arrayPos] = biome.topBlock;
-                        }
-                        else
-                        {
+                        } else {
                             blocks[arrayPos] = biome.fillerBlock;
                         }
 
@@ -132,8 +107,7 @@ public class ChunkProviderCustom implements IChunkProvider
     /**
      * loads or generates the chunk at the chunk location specified
      */
-    public Chunk loadChunk(int p_73158_1_, int p_73158_2_)
-    {
+    public Chunk loadChunk(int p_73158_1_, int p_73158_2_) {
         return this.provideChunk(p_73158_1_, p_73158_2_);
     }
 
@@ -141,9 +115,8 @@ public class ChunkProviderCustom implements IChunkProvider
      * Will return back a chunk, if it doesn't exist and its not a MP client it will generates all the blocks for the
      * specified chunk from the map seed and chunk seed
      */
-    public Chunk provideChunk(int p_73154_1_, int p_73154_2_)
-    {
-        this.rand.setSeed((long)p_73154_1_ * 341873128712L + (long)p_73154_2_ * 132897987541L);
+    public Chunk provideChunk(int p_73154_1_, int p_73154_2_) {
+        this.rand.setSeed((long) p_73154_1_ * 341873128712L + (long) p_73154_2_ * 132897987541L);
         Block[] ablock = new Block[65536];
         byte[] abyte = new byte[65536];
         this.func_147424_a(p_73154_1_, p_73154_2_, ablock);
@@ -153,9 +126,8 @@ public class ChunkProviderCustom implements IChunkProvider
         Chunk chunk = new Chunk(this.worldObj, ablock, abyte, p_73154_1_, p_73154_2_);
         byte[] abyte1 = chunk.getBiomeArray();
 
-        for (int k = 0; k < abyte1.length; ++k)
-        {
-            abyte1[k] = (byte)this.biomesForGeneration[k].biomeID;
+        for (int k = 0; k < abyte1.length; ++k) {
+            abyte1[k] = (byte) this.biomesForGeneration[k].biomeID;
         }
 
         chunk.generateSkylightMap();
@@ -165,16 +137,14 @@ public class ChunkProviderCustom implements IChunkProvider
     /**
      * Checks to see if a chunk exists at x, y
      */
-    public boolean chunkExists(int x, int y)
-    {
+    public boolean chunkExists(int x, int y) {
         return true;
     }
 
     /**
      * Populates chunk with ores etc etc
      */
-    public void populate(IChunkProvider chunkProvider, int chunkX, int chunkZ)
-    {
+    public void populate(IChunkProvider chunkProvider, int chunkX, int chunkZ) {
         BlockFalling.fallInstantly = true;
         int x = chunkX * 16;
         int z = chunkZ * 16;
@@ -193,8 +163,7 @@ public class ChunkProviderCustom implements IChunkProvider
 
         biomegenbase.decorate(this.worldObj, this.rand, x, z);
 
-        if (TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, hasVillageGenerated, ANIMALS))
-        {
+        if (TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, hasVillageGenerated, ANIMALS)) {
             SpawnerAnimals.performWorldGenSpawning(this.worldObj, biomegenbase, x + 8, z + 8, 16, 16, this.rand);
         }
 
@@ -202,19 +171,15 @@ public class ChunkProviderCustom implements IChunkProvider
         z += 8;
 
         boolean doGen = TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, hasVillageGenerated, ICE);
-        for (xInChunk = 0; doGen && xInChunk < 16; ++xInChunk)
-        {
-            for (zInChunk = 0; zInChunk < 16; ++zInChunk)
-            {
+        for (xInChunk = 0; doGen && xInChunk < 16; ++xInChunk) {
+            for (zInChunk = 0; zInChunk < 16; ++zInChunk) {
                 y = this.worldObj.getPrecipitationHeight(x + xInChunk, z + zInChunk);
 
-                if (this.worldObj.isBlockFreezable(xInChunk + x, y - 1, zInChunk + z))
-                {
+                if (this.worldObj.isBlockFreezable(xInChunk + x, y - 1, zInChunk + z)) {
                     this.worldObj.setBlock(xInChunk + x, y - 1, zInChunk + z, Blocks.ice, 0, 2);
                 }
 
-                if (this.worldObj.func_147478_e(xInChunk + x, y, zInChunk + z, true))
-                {
+                if (this.worldObj.func_147478_e(xInChunk + x, y, zInChunk + z, true)) {
                     this.worldObj.setBlock(xInChunk + x, y, zInChunk + z, Blocks.snow_layer, 0, 2);
                 }
             }
@@ -229,8 +194,7 @@ public class ChunkProviderCustom implements IChunkProvider
      * Two modes of operation: if passed true, save all Chunks in one go.  If passed false, save up to two chunks.
      * Return true if all chunks have been saved.
      */
-    public boolean saveChunks(boolean p_73151_1_, IProgressUpdate update)
-    {
+    public boolean saveChunks(boolean p_73151_1_, IProgressUpdate update) {
         return true;
     }
 
@@ -238,51 +202,45 @@ public class ChunkProviderCustom implements IChunkProvider
      * Save extra data not associated with any Chunk.  Not saved during autosave, only during world unload.  Currently
      * unimplemented.
      */
-    public void saveExtraData() {}
+    public void saveExtraData() {
+    }
 
     /**
      * Unloads chunks that are marked to be unloaded. This is not guaranteed to unload every such chunk.
      */
-    public boolean unloadQueuedChunks()
-    {
+    public boolean unloadQueuedChunks() {
         return false;
     }
 
     /**
      * Returns if the IChunkProvider supports saving.
      */
-    public boolean canSave()
-    {
+    public boolean canSave() {
         return true;
     }
 
     /**
      * Converts the instance data to a readable string.
      */
-    public String makeString()
-    {
+    public String makeString() {
         return "RandomLevelSource";
     }
 
     /**
      * Returns a list of creatures of the specified type that can spawn at the given location.
      */
-    public List getPossibleCreatures(EnumCreatureType creatureType, int x, int y, int z)
-    {
+    public List getPossibleCreatures(EnumCreatureType creatureType, int x, int y, int z) {
         return this.worldObj.getBiomeGenForCoords(x, z).getSpawnableList(creatureType);
     }
 
-    public ChunkPosition func_147416_a(World world, String structure, int x, int y, int z)
-    {
+    public ChunkPosition func_147416_a(World world, String structure, int x, int y, int z) {
         return null;
     }
 
-    public int getLoadedChunkCount()
-    {
+    public int getLoadedChunkCount() {
         return 0;
     }
 
-    public void recreateStructures(int p_82695_1_, int p_82695_2_)
-    {
+    public void recreateStructures(int p_82695_1_, int p_82695_2_) {
     }
 }
