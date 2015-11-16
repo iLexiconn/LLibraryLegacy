@@ -1,7 +1,6 @@
 package net.ilexiconn.llibrary.common.world.gen;
 
 import com.google.common.collect.Lists;
-import net.ilexiconn.llibrary.common.world.gen.WorldHeightmapGenerator;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.util.BlockPos;
@@ -25,19 +24,21 @@ import java.util.Random;
  * @author gegy1000
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class WorldChunkManagerCustom extends WorldChunkManager
-{
-    /** The biome list. */
+public class WorldChunkManagerHeightmap extends WorldChunkManager {
+    /**
+     * The biome list.
+     */
     private BiomeCache biomeCache;
-    /** A list of biomes that the player can spawn in. */
+    /**
+     * A list of biomes that the player can spawn in.
+     */
     private List biomesToSpawnIn;
     private String field_180301_f;
     private long seed;
 
     private WorldHeightmapGenerator generator;
 
-    protected WorldChunkManagerCustom(WorldHeightmapGenerator generator)
-    {
+    protected WorldChunkManagerHeightmap(WorldHeightmapGenerator generator) {
         this.biomeCache = new BiomeCache(this);
         this.field_180301_f = "";
         this.biomesToSpawnIn = Lists.newArrayList();
@@ -45,48 +46,41 @@ public class WorldChunkManagerCustom extends WorldChunkManager
         this.generator = generator;
     }
 
-    public WorldChunkManagerCustom(long seed, WorldType worldType, String p_i45744_4_, WorldHeightmapGenerator generator)
-    {
+    public WorldChunkManagerHeightmap(long seed, WorldType worldType, String p_i45744_4_, WorldHeightmapGenerator generator) {
         this(generator);
         this.field_180301_f = p_i45744_4_;
         this.seed = seed;
     }
 
-    public WorldChunkManagerCustom(World worldIn, WorldHeightmapGenerator generator)
-    {
+    public WorldChunkManagerHeightmap(World worldIn, WorldHeightmapGenerator generator) {
         this(worldIn.getSeed(), worldIn.getWorldInfo().getTerrainType(), worldIn.getWorldInfo().getGeneratorOptions(), generator);
     }
 
     /**
      * Gets the list of valid biomes for the player to spawn in.
      */
-    public List getBiomesToSpawnIn()
-    {
+    public List getBiomesToSpawnIn() {
         return this.biomesToSpawnIn;
     }
 
     /**
      * Returns the biome generator
      */
-    public BiomeGenBase getBiomeGenerator(BlockPos pos)
-    {
+    public BiomeGenBase getBiomeGenerator(BlockPos pos) {
         return this.func_180300_a(pos, null);
     }
 
-    public BiomeGenBase func_180300_a(BlockPos pos, BiomeGenBase biome)
-    {
+    public BiomeGenBase func_180300_a(BlockPos pos, BiomeGenBase biome) {
         return this.biomeCache.func_180284_a(pos.getX(), pos.getZ(), biome);
     }
 
     /**
      * Returns a list of rainfall values for the specified blocks. Args: listToReuse, x, z, width, length.
      */
-    public float[] getRainfall(float[] listToReuse, int x, int z, int width, int length)
-    {
+    public float[] getRainfall(float[] listToReuse, int x, int z, int width, int length) {
         IntCache.resetIntCache();
 
-        if (listToReuse == null || listToReuse.length < width * length)
-        {
+        if (listToReuse == null || listToReuse.length < width * length) {
             listToReuse = new float[width * length];
         }
 
@@ -96,7 +90,7 @@ public class WorldChunkManagerCustom extends WorldChunkManager
             {
                 try
                 {
-                    float f = (float)BiomeGenBase.getBiomeFromBiomeList(getBiomeAt(partX + x, partZ + z).biomeID, BiomeGenBase.field_180279_ad).getIntRainfall() / 65536.0F;
+                    float f = (float) BiomeGenBase.getBiomeFromBiomeList(getBiomeAt(partX + x, partZ + z).biomeID, BiomeGenBase.field_180279_ad).getIntRainfall() / 65536.0F;
 
                     if (f > 1.0F)
                     {
@@ -126,20 +120,17 @@ public class WorldChunkManagerCustom extends WorldChunkManager
      * Return an adjusted version of a given temperature based on the y height
      */
     @SideOnly(Side.CLIENT)
-    public float getTemperatureAtHeight(float p_76939_1_, int p_76939_2_)
-    {
+    public float getTemperatureAtHeight(float p_76939_1_, int p_76939_2_) {
         return p_76939_1_;
     }
 
     /**
      * Returns an array of biomes for the location input.
      */
-    public BiomeGenBase[] getBiomesForGeneration(BiomeGenBase[] biomes, int x, int z, int width, int height)
-    {
+    public BiomeGenBase[] getBiomesForGeneration(BiomeGenBase[] biomes, int x, int z, int width, int height) {
         IntCache.resetIntCache();
 
-        if (biomes == null || biomes.length < width * height)
-        {
+        if (biomes == null || biomes.length < width * height) {
             biomes = new BiomeGenBase[width * height];
         }
 
@@ -172,8 +163,7 @@ public class WorldChunkManagerCustom extends WorldChunkManager
      * Returns biomes to use for the blocks and loads the other data like temperature and humidity onto the
      * WorldChunkManager Args: oldBiomeList, x, z, width, depth
      */
-    public BiomeGenBase[] loadBlockGeneratorData(BiomeGenBase[] oldBiomeList, int x, int z, int width, int depth)
-    {
+    public BiomeGenBase[] loadBlockGeneratorData(BiomeGenBase[] oldBiomeList, int x, int z, int width, int depth) {
         return this.getBiomeGenAt(oldBiomeList, x, z, width, depth, true);
     }
 
@@ -183,17 +173,14 @@ public class WorldChunkManagerCustom extends WorldChunkManager
      *
      * @param cacheFlag If false, don't check biomeCache to avoid infinite loop in BiomeCacheBlock
      */
-    public BiomeGenBase[] getBiomeGenAt(BiomeGenBase[] listToReuse, int x, int z, int width, int length, boolean cacheFlag)
-    {
+    public BiomeGenBase[] getBiomeGenAt(BiomeGenBase[] listToReuse, int x, int z, int width, int length, boolean cacheFlag) {
         IntCache.resetIntCache();
 
-        if (listToReuse == null || listToReuse.length < width * length)
-        {
+        if (listToReuse == null || listToReuse.length < width * length) {
             listToReuse = new BiomeGenBase[width * length];
         }
 
-        if (cacheFlag && width == 16 && length == 16 && (x & 15) == 0 && (z & 15) == 0)
-        {
+        if (cacheFlag && width == 16 && length == 16 && (x & 15) == 0 && (z & 15) == 0) {
             BiomeGenBase[] abiomegenbase1 = this.biomeCache.getCachedBiomes(x, z);
             System.arraycopy(abiomegenbase1, 0, listToReuse, 0, width * length);
             return listToReuse;
@@ -215,8 +202,7 @@ public class WorldChunkManagerCustom extends WorldChunkManager
     /**
      * checks given Chunk's Biomes against List of allowed ones
      */
-    public boolean areBiomesViable(int x, int z, int radius, List allowed)
-    {
+    public boolean areBiomesViable(int x, int z, int radius, List allowed) {
         IntCache.resetIntCache();
         int l = x - radius >> 2;
         int i1 = z - radius >> 2;
@@ -241,9 +227,7 @@ public class WorldChunkManagerCustom extends WorldChunkManager
             }
 
             return true;
-        }
-        catch (Throwable throwable)
-        {
+        } catch (Throwable throwable) {
             CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Invalid Biome id");
             CrashReportCategory crashreportcategory = crashreport.makeCategory("Layer");
             crashreportcategory.addCrashSection("x", Integer.valueOf(x));
@@ -254,8 +238,7 @@ public class WorldChunkManagerCustom extends WorldChunkManager
         }
     }
 
-    public BlockPos findBiomePosition(int x, int z, int range, List biomes, Random random)
-    {
+    public BlockPos findBiomePosition(int x, int z, int range, List biomes, Random random) {
         IntCache.resetIntCache();
         int l = x - range >> 2;
         int i1 = z - range >> 2;
@@ -287,21 +270,18 @@ public class WorldChunkManagerCustom extends WorldChunkManager
         return blockpos;
     }
 
-    private BiomeGenBase getBiomeAt(int x, int z)
-    {
+    private BiomeGenBase getBiomeAt(int x, int z) {
         return generator.getBiomeAt(x, z);
     }
 
     /**
      * Calls the WorldChunkManager's biomeCache.cleanupCache()
      */
-    public void cleanupCache()
-    {
+    public void cleanupCache() {
         this.biomeCache.cleanupCache();
     }
 
-    public GenLayer[] getModdedBiomeGenerators(WorldType worldType, long seed, GenLayer[] original)
-    {
+    public GenLayer[] getModdedBiomeGenerators(WorldType worldType, long seed, GenLayer[] original) {
         WorldTypeEvent.InitBiomeGens event = new WorldTypeEvent.InitBiomeGens(worldType, seed, original);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
         return event.newBiomeGens;

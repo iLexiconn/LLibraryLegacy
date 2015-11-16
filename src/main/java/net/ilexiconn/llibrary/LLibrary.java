@@ -28,7 +28,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.Map;
 
-@Mod(modid = "llibrary", name = "LLibrary", version = LLibrary.VERSION, guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory", dependencies = "required-after:Forge@[11.14.4.1563)")
+@Mod(modid = "llibrary", name = "LLibrary", version = LLibrary.VERSION, guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory", dependencies = "required-after:Forge")
 public class LLibrary {
     @Mod.Instance("llibrary")
     public static LLibrary instance;
@@ -37,7 +37,7 @@ public class LLibrary {
     public static LoggerHelper logger = new LoggerHelper("llibrary");
     public static SimpleNetworkWrapper networkWrapper;
 
-    public static final String VERSION = "0.5.3";
+    public static final String VERSION = "0.5.4";
 
     public static SurvivalTab tabInventory = SurvivalTab.create("container.inventory").setIcon(new ItemStack(Items.diamond_sword));
 

@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.common.command;
+package net.ilexiconn.llibrary.common.command.builder;
 
 import net.minecraft.command.ICommandSender;
 
@@ -6,7 +6,7 @@ import net.minecraft.command.ICommandSender;
  * Command executor. The {@link ICommandExecutor#execute(ICommandSender, CommandArguments)} method will be called
  * when a player executes the command and filled in all the required arguments.
  *
- * @see net.ilexiconn.llibrary.common.command.CommandBuilder
+ * @see CommandBuilder
  * @author iLexiconn
  * @since 0.5.3
  */
