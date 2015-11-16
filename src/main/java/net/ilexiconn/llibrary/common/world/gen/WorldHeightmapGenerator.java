@@ -40,7 +40,6 @@ public abstract class WorldHeightmapGenerator {
     public abstract int getColourForBiome(BiomeGenBase biome);
 
     public abstract int getWorldOffsetX();
-
     public abstract int getWorldOffsetZ();
 
     public void loadHeightmap() {
@@ -137,16 +136,29 @@ public abstract class WorldHeightmapGenerator {
         int scaledWidth = (int) (width * scale);
         int scaledHeight = (int) (height * scale);
 
+        double offsetX = getWorldOffsetX();
+        double offsetZ = getWorldOffsetZ();
+
+        if (offsetX != 0)
+        {
+            offsetX /= scale;
+        }
+
+        if (offsetZ != 0)
+        {
+            offsetZ /= scale;
+        }
+
+        x -= offsetX;
+        z -= offsetZ;
+
         if (x < 0 || z < 0 || x >= scaledWidth || z >= scaledHeight) {
             return 10;
         }
 
         BicubicInterpolator bi = new BicubicInterpolator();
 
-        double offsetX = getWorldOffsetX() / scale;
-        double offsetZ = getWorldOffsetZ() / scale;
-
-        return bi.getValue(heightmap, x - offsetX, z - offsetZ, scale) + 128;
+        return bi.getValue(heightmap, x, z, scale) + 128;
     }
 
     public BiomeGenBase getBiomeAt(int x, int z) {
@@ -156,15 +168,29 @@ public abstract class WorldHeightmapGenerator {
             int scaledWidth = (int) (width * scale);
             int scaledHeight = (int) (height * scale);
 
-            if (x < 0 || z < 0 || x >= scaledWidth || z >= scaledHeight) {
+            double offsetX = getWorldOffsetX();
+            double offsetZ = getWorldOffsetZ();
+
+            if (offsetX != 0)
+            {
+                offsetX /= scale;
+            }
+
+            if (offsetZ != 0)
+            {
+                offsetZ /= scale;
+            }
+
+            x -= offsetX;
+            z -= offsetZ;
+
+            if (x < 0 || z < 0 || x >= scaledWidth || z >= scaledHeight)
+            {
                 return getDefaultBiome();
             }
 
-            double offsetX = getWorldOffsetX() / scale;
-            double offsetZ = getWorldOffsetZ() / scale;
-
-            double newX = ((x - offsetX) * biomemapToHeightmapWidthRatio / scale);
-            double newZ = ((z - offsetZ) * biomemapToHeightmapHeightRatio / scale);
+            double newX = (x * biomemapToHeightmapWidthRatio / scale);
+            double newZ = (z * biomemapToHeightmapHeightRatio / scale);
 
             return BiomeGenBase.getBiome(biomemap[((int) newX)][((int) newZ)]);
         }
