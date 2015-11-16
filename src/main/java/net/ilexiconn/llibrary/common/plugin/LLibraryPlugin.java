@@ -31,6 +31,8 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
             return null;
         }
         File mods = new File(mcDir, "mods");
+        File updateJson = null;
+
         for (File file : tempMods.listFiles()) {
             if (file.getName().endsWith(".jar")) {
                 logger.info("Updating jar: " + file.getName());
@@ -40,9 +42,12 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
             }
             else if (file.getName().equalsIgnoreCase("update.json"))
             {
-                deleteModsFromFile(file, mods);
+                updateJson = file;
             }
         }
+
+        deleteModsFromFile(updateJson, mods);
+
         return null;
     }
 
