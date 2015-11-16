@@ -1,5 +1,6 @@
 minecraft/
 .gradle/
+build/
 out/
 *.iml
 *.ipr
