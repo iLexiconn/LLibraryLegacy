@@ -1,6 +1,8 @@
 package net.ilexiconn.llibrary.common.world.gen;
 
 import net.minecraft.block.BlockFalling;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -25,7 +27,8 @@ import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCAT
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
 
-public class ChunkProviderHeightmap implements IChunkProvider {
+public class ChunkProviderHeightmap implements IChunkProvider
+{
     /**
      * RNG.
      */
@@ -61,8 +64,16 @@ public class ChunkProviderHeightmap implements IChunkProvider {
             for (int z = 0; z < 16; z++) {
                 int height = (heightmapGenerator.getHeightForCoords(x + (chunkX * 16), z + (chunkZ * 16)));
 
-                for (int y = 0; y < height; y++) {
-                    chunkPrimer.setBlockState(x, y, z, heightmapGenerator.getStoneBlock());
+                for (int y = 0; y < Math.max(heightmapGenerator.getOceanHeight(x, z), height); y++)
+                {
+                    if(y < height)
+                    {
+                        chunkPrimer.setBlockState(x, y, z, heightmapGenerator.getStoneBlock());
+                    }
+                    else if (heightmapGenerator.hasOcean())
+                    {
+                        chunkPrimer.setBlockState(x, y, z, heightmapGenerator.getOceanLiquid());
+                    }
                 }
             }
         }
@@ -75,12 +86,58 @@ public class ChunkProviderHeightmap implements IChunkProvider {
             return;
         }
 
-        for (int k = 0; k < 16; ++k) {
-            for (int l = 0; l < 16; ++l) {
-                BiomeGenBase biome = biomes[l + k * 16];
+        for (int z = 0; z < 16; ++z) {
+            for (int x = 0; x < 16; ++x) {
+                BiomeGenBase biome = biomes[x + z * 16];
 
                 if (biome != null) {
-                    biome.genTerrainBlocks(this.worldObj, this.rand, chunkPrimer, chunkX * 16 + k, chunkZ * 16 + l, 0);
+                    genTerrainBlocks(biome, this.worldObj, this.rand, chunkPrimer, chunkX * 16 + z, chunkZ * 16 + x);
+                }
+            }
+        }
+    }
+
+    public void genTerrainBlocks(BiomeGenBase biome, World world, Random random, ChunkPrimer chunkPrimer, int x, int z)
+    {
+        IBlockState topBlock = biome.topBlock;
+        IBlockState fillerBlock = biome.fillerBlock;
+        int chunkX = x & 15;
+        int chunkZ = z & 15;
+
+        IBlockState stoneBlock = heightmapGenerator.getStoneBlock();
+
+        boolean reachedSurface = false;
+        int depthSinceSurface = 0;
+
+        for (int y = 255; y >= 0; --y)
+        {
+            if (y <= random.nextInt(5))
+            {
+                chunkPrimer.setBlockState(chunkZ, y, chunkX, Blocks.bedrock.getDefaultState());
+            }
+            else
+            {
+                IBlockState previousBlock = chunkPrimer.getBlockState(chunkZ, y, chunkX);
+
+                if (previousBlock.getBlock().getMaterial() == Material.air)
+                {
+                    reachedSurface = true;
+                }
+                else if (previousBlock == stoneBlock)
+                {
+                    if (reachedSurface)
+                    {
+                        if (depthSinceSurface == 0)
+                        {
+                            chunkPrimer.setBlockState(chunkZ, y, chunkX, topBlock);
+                        }
+                        else if (depthSinceSurface < 4)
+                        {
+                            chunkPrimer.setBlockState(chunkZ, y, chunkX, fillerBlock);
+                        }
+
+                        depthSinceSurface++;
+                    }
                 }
             }
         }
@@ -100,8 +157,6 @@ public class ChunkProviderHeightmap implements IChunkProvider {
         Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
 
         byte[] biomeArray = chunk.getBiomeArray();
-
-        //Set biomes
 
         for (int biomeIndex = 0; biomeIndex < biomeArray.length; ++biomeIndex) {
             biomeArray[biomeIndex] = (byte) this.biomesForGeneration[biomeIndex].biomeID;

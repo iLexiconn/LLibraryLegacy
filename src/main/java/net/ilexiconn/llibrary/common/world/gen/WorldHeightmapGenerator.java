@@ -25,9 +25,9 @@ public abstract class WorldHeightmapGenerator {
 
     public abstract double getWorldScale();
 
-    public abstract double getHeightScale();
+    public abstract double getHeightScale(int height);
 
-    public int getHeightOffset() {
+    public int getHeightOffset(int height) {
         return 0;
     }
 
@@ -42,6 +42,12 @@ public abstract class WorldHeightmapGenerator {
     public abstract int getWorldOffsetX();
 
     public abstract int getWorldOffsetZ();
+
+    public abstract boolean hasOcean();
+
+    public abstract IBlockState getOceanLiquid();
+
+    public abstract int getOceanHeight(int x, int z);
 
     public void loadHeightmap() {
         LLibrary.logger.info("Loading " + getName() + " Heightmap...");
@@ -58,7 +64,10 @@ public abstract class WorldHeightmapGenerator {
 
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    int height = (int) (((image.getRGB(x, y) & 0x0000FF) * getHeightScale()) + getHeightOffset());
+                    int height = ((image.getRGB(x, y) & 0x0000FF));
+
+                    height *= getHeightScale(height);
+                    height += getHeightOffset(height);
 
                     if (height + 5 > 255) {
                         height = 250;
@@ -67,7 +76,7 @@ public abstract class WorldHeightmapGenerator {
                     if (height <= 1) {
                         heightmap[x][y] = (byte) ((random.nextInt(5) + 25) - 128);
                     } else {
-                        heightmap[x][y] = (byte) ((height - 128) + 5);
+                        heightmap[x][y] = (byte) ((height - 128));
                     }
                 }
             }
@@ -193,7 +202,7 @@ public abstract class WorldHeightmapGenerator {
             double newX = (x * biomemapToHeightmapWidthRatio / scale);
             double newZ = (z * biomemapToHeightmapHeightRatio / scale);
 
-            return BiomeGenBase.getBiome(biomemap[((int) newX)][((int) newZ)]);
+            return BiomeGenBase.getBiome(biomemap[((int) Math.round(newX))][((int) Math.round(newZ))]);
         }
 
         return getDefaultBiome();
