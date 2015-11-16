@@ -38,8 +38,11 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
                 addClasspath(new File(mods, file.getName()));
                 FileDeleteStrategy.FORCE.delete(file);
             }
+            else if (file.getName().equalsIgnoreCase("update.json"))
+            {
+                deleteModsFromFile(file, mods);
+            }
         }
-        deleteModsFromFile(new File(tempMods, "update.json"), mods);
         return null;
     }
 
