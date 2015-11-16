@@ -39,6 +39,9 @@ public abstract class WorldHeightmapGenerator {
 
     public abstract int getColourForBiome(BiomeGenBase biome);
 
+    public abstract int getWorldOffsetX();
+    public abstract int getWorldOffsetZ();
+
     public void loadHeightmap() {
         LLibrary.logger.info("Loading " + getName() + " Heightmap...");
 
@@ -137,9 +140,12 @@ public abstract class WorldHeightmapGenerator {
             return 10;
         }
 
+        double offsetX = getWorldOffsetX() / scale;
+        double offsetZ = getWorldOffsetZ() / scale;
+
         BicubicInterpolator bi = new BicubicInterpolator();
 
-        return bi.getValue(heightmap, x, z, scale) + 128;
+        return bi.getValue(heightmap, x - offsetX, z - offsetZ, scale) + 128;
     }
 
     public BiomeGenBase getBiomeAt(int x, int z) {
@@ -153,8 +159,11 @@ public abstract class WorldHeightmapGenerator {
                 return getDefaultBiome();
             }
 
-            double newX = ((x) * biomemapToHeightmapWidthRatio / scale);
-            double newZ = ((z) * biomemapToHeightmapHeightRatio / scale);
+            double offsetX = getWorldOffsetX() / scale;
+            double offsetZ = getWorldOffsetZ() / scale;
+
+            double newX = ((x - offsetX) * biomemapToHeightmapWidthRatio / scale);
+            double newZ = ((z - offsetZ) * biomemapToHeightmapHeightRatio / scale);
 
             return BiomeGenBase.getBiome(biomemap[((int) newX)][((int) newZ)]);
         }
