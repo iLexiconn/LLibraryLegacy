@@ -1,21 +1,22 @@
 package net.ilexiconn.llibrary.common.plugin;
 
-import cpw.mods.fml.relauncher.FMLInjectionData;
+import com.google.gson.reflect.TypeToken;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.IFMLCallHook;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
-import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.common.config.JsonConfigHelper;
-import net.ilexiconn.llibrary.common.crash.SimpleCrashReport;
-import net.ilexiconn.llibrary.common.json.container.JsonUpdate;
+import net.ilexiconn.llibrary.common.json.JsonFactory;
+import net.ilexiconn.llibrary.common.json.container.JsonUpdateEntry;
 import net.ilexiconn.llibrary.common.log.LoggerHelper;
-import net.minecraft.launchwrapper.LaunchClassLoader;
 import net.minecraftforge.common.MinecraftForge;
 import org.apache.commons.io.FileDeleteStrategy;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 @IFMLLoadingPlugin.Name("LLibrary")
@@ -25,29 +26,37 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
 
     public Void call() throws Exception {
         logger.info("Searching for mod updates");
-        File mcDir = (File) FMLInjectionData.data()[6];
-        File tempMods = new File(mcDir, "tempmods");
-        if (!tempMods.exists()) {
-            return null;
-        }
-        File mods = new File(mcDir, "mods");
-
-        File updateJson = null;
-
-        for (File file : tempMods.listFiles()) {
-            if (file.getName().endsWith(".jar")) {
-                logger.info("Updating jar: " + file.getName());
-                FileUtils.copyFileToDirectory(file, mods);
-                addClasspath(new File(mods, file.getName()));
+        File mods = new File("mods");
+        File file = new File("updatequeue.json");
+        if (file.exists()) {
+            List<JsonUpdateEntry> updateQueue;
+            try {
+                updateQueue = JsonFactory.getGson().fromJson(new FileReader(file), new TypeToken<List<JsonUpdateEntry>>() {}.getType());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                return null;
+            }
+            for (JsonUpdateEntry entry : updateQueue) {
+                File modFile = new File(mods, entry.getFile());
+                if (modFile.exists()) {
+                    logger.info("Deleting old mod jar " + modFile.getName() + " from mod " + entry.getName() + " (" + entry.getModid() + ")");
+                    try {
+                        FileDeleteStrategy.FORCE.delete(modFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                File mod = new File(mods, entry.getName() + "-" + entry.getVersion() + "-" + Loader.MC_VERSION + ".jar");
+                logger.info("Downloading new mod jar " + mod.getName() + " for mod " + entry.getName() + " (" + entry.getModid() + ")");
+                FileUtils.copyURLToFile(new URL(entry.getUrl()), mod);
+            }
+            try {
+                System.gc();
                 FileDeleteStrategy.FORCE.delete(file);
-            }
-            else if (file.getName().equalsIgnoreCase("update.json"))
-            {
-                updateJson = file;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-
-        deleteModsFromFile(updateJson, mods);
 
         return null;
     }
@@ -70,32 +79,5 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
 
     public String getAccessTransformerClass() {
         return null;
-    }
-
-    public void addClasspath(File file) {
-        try {
-            ((LaunchClassLoader) LLibraryPlugin.class.getClassLoader()).addURL(file.toURI().toURL());
-        } catch (MalformedURLException e) {
-            LLibrary.logger.error(SimpleCrashReport.makeCrashReport(e, "Failed adding file " + file + " to the classpath"));
-        }
-    }
-
-    public void deleteModsFromFile(File deleteFile, File dir) {
-        JsonUpdate update = JsonConfigHelper.loadConfig(deleteFile, JsonUpdate.class);
-        for (String s : update.delete) {
-            File file = new File(dir, s);
-            if (file.exists()) {
-                try {
-                    FileDeleteStrategy.FORCE.delete(file);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        try {
-            FileDeleteStrategy.FORCE.delete(deleteFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
