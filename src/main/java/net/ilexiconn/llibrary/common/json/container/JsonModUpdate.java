@@ -40,7 +40,7 @@ public class JsonModUpdate {
     private String beta;
     private String alpha;
     @SerializedName("directUpdateUrl-" + MinecraftForge.MC_VERSION)
-    private String directUpdateUrl = "http://minecraft.curseforge.com/projects/showcase/files/2266857/download";
+    private String directUpdateUrl;
 
     public Map<String, List<String>> getVersions() {
         return versions;
