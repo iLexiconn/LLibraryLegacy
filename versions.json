@@ -1,5 +1,5 @@
 {
-  "release": "0.5.4",
+  "release": "0.5.5",
   "versions": {
     "0.5.0": [
       "Added toast builder",
@@ -47,6 +47,12 @@
       "Added CommandBuilder argument types",
       "Added heightmap world generator",
       "Added ByteBuf helper"
+    ],
+    "0.5.5": [
+      "Fixed automatic update installer",
+      "Fixed heightmap generator crash",
+      "Fixed duplicate update messages",
+      "Removed heightmap generator from 1.7 branch"
     ]
   },
   "updateUrl": "https://bitly.com/llibrary",
