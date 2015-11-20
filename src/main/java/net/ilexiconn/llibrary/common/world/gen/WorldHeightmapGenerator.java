@@ -10,7 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public abstract class WorldHeightmapGenerator {
+public abstract class WorldHeightmapGenerator
+{
     public byte[][] heightmap, biomemap;
     public int width, height, biomeWidth, biomeHeight;
 
@@ -27,7 +28,8 @@ public abstract class WorldHeightmapGenerator {
 
     public abstract double getHeightScale(int height);
 
-    public int getHeightOffset(int height) {
+    public int getHeightOffset(int height)
+    {
         return 0;
     }
 
@@ -39,9 +41,15 @@ public abstract class WorldHeightmapGenerator {
 
     public abstract int getColourForBiome(BiomeGenBase biome);
 
-    public abstract int getWorldOffsetX();
+    public int getWorldOffsetX()
+    {
+        return width / 2;
+    }
 
-    public abstract int getWorldOffsetZ();
+    public int getWorldOffsetZ()
+    {
+        return height / 2;
+    }
 
     public abstract boolean hasOcean();
 
@@ -146,21 +154,8 @@ public abstract class WorldHeightmapGenerator {
         int scaledWidth = (int) (width * scale);
         int scaledHeight = (int) (height * scale);
 
-        double offsetX = getWorldOffsetX();
-        double offsetZ = getWorldOffsetZ();
-
-        if (offsetX != 0)
-        {
-            offsetX /= scale;
-        }
-
-        if (offsetZ != 0)
-        {
-            offsetZ /= scale;
-        }
-
-        x -= offsetX;
-        z -= offsetZ;
+        x += (getWorldOffsetX() * scale);
+        z += (getWorldOffsetZ() * scale);
 
         if (x < 0 || z < 0 || x >= scaledWidth || z >= scaledHeight) {
             return 10;
@@ -178,24 +173,10 @@ public abstract class WorldHeightmapGenerator {
             int scaledWidth = (int) (width * scale);
             int scaledHeight = (int) (height * scale);
 
-            double offsetX = getWorldOffsetX();
-            double offsetZ = getWorldOffsetZ();
+            x += (getWorldOffsetX() * scale);
+            z += (getWorldOffsetZ() * scale);
 
-            if (offsetX != 0)
-            {
-                offsetX /= scale;
-            }
-
-            if (offsetZ != 0)
-            {
-                offsetZ /= scale;
-            }
-
-            x -= offsetX;
-            z -= offsetZ;
-
-            if (x < 0 || z < 0 || x >= scaledWidth || z >= scaledHeight)
-            {
+            if (x < 0 || z < 0 || x >= scaledWidth || z >= scaledHeight) {
                 return getDefaultBiome();
             }
 
