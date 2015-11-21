@@ -11,13 +11,13 @@ import net.ilexiconn.llibrary.common.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart;
 import net.ilexiconn.llibrary.common.save.SaveHelper;
 import net.ilexiconn.llibrary.common.update.UpdateCheckerThread;
+import net.ilexiconn.llibrary.common.vecmath.Vector2f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 
-import javax.vecmath.Vector2f;
 import java.util.Map;
 
 public class ServerEventHandler {
