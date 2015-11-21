@@ -149,7 +149,9 @@ public class ClientEventHandler {
 
         if (event.gui instanceof GuiMainMenu) {
             for (JsonModUpdate mod : VersionHandler.getOutdatedMods()) {
-                Toast.makeText("Update available!", mod.name, mod.currentVersion + " -> " + mod.getUpdateVersion().getVersionString()).show();
+                if (!mod.updated) {
+                    Toast.makeText("Update available!", mod.name, mod.currentVersion + " -> " + mod.getUpdateVersion().getVersionString()).show();
+                }
             }
         }
     }
