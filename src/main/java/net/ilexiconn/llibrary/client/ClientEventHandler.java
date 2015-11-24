@@ -129,22 +129,24 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onInitGui(GuiScreenEvent.InitGuiEvent.Post event) {
-        int count = 2;
-        for (SurvivalTab survivalTab : SurvivalTab.getSurvivalTabList()) {
-            if (survivalTab.getContainer() != null && survivalTab.getContainer().isInstance(event.gui)) {
-                for (SurvivalTab tab : SurvivalTab.getSurvivalTabList()) {
-                    if (tab.getPage() == SurvivalTab.getCurrentPage()) {
-                        event.buttonList.add(new GuiButtonSurvivalTab(count, tab));
+        if (SurvivalTab.getSurvivalTabList().size() > 1) {
+            int count = 2;
+            for (SurvivalTab survivalTab : SurvivalTab.getSurvivalTabList()) {
+                if (survivalTab.getContainer() != null && survivalTab.getContainer().isInstance(event.gui)) {
+                    for (SurvivalTab tab : SurvivalTab.getSurvivalTabList()) {
+                        if (tab.getPage() == SurvivalTab.getCurrentPage()) {
+                            event.buttonList.add(new GuiButtonSurvivalTab(count, tab));
+                        }
+                        count++;
                     }
-                    count++;
                 }
             }
-        }
 
-        if (count > 11) {
-            GuiContainer container = (GuiContainer) event.gui;
-            event.buttonList.add(new GuiButtonPage(-1, container.guiLeft, container.guiTop - 50, event.gui));
-            event.buttonList.add(new GuiButtonPage(-2, container.guiLeft + container.xSize - 20, container.guiTop - 50, event.gui));
+            if (count > 11) {
+                GuiContainer container = (GuiContainer) event.gui;
+                event.buttonList.add(new GuiButtonPage(-1, container.guiLeft, container.guiTop - 50, event.gui));
+                event.buttonList.add(new GuiButtonPage(-2, container.guiLeft + container.xSize - 20, container.guiTop - 50, event.gui));
+            }
         }
 
         if (event.gui instanceof GuiMainMenu) {
