@@ -53,10 +53,15 @@
       "Fixed heightmap generator crash",
       "Fixed duplicate update messages",
       "Removed heightmap generator from 1.7 branch"
+    ],
+    "0.6.0": [
+      "Updated to Minecraft 1.8.8",
+      "Fixed server crash",
+      "Added ArrayList support to ByteBufHelper"
     ]
   },
   "updateUrl": "https://bitly.com/llibrary",
-  "wrapper-1.8": "http://minecraft.curseforge.com/projects/llibrary/files/2267210/download",
+  "wrapper-1.8.8": "http://minecraft.curseforge.com/projects/llibrary/files/2267210/download",
   "wrapper-1.7.10": "http://minecraft.curseforge.com/projects/llibrary/files/2267207/download",
   "iconUrl": "http://i.imgur.com/N2CJ80g.png"
 }
