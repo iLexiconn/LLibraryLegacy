@@ -14,7 +14,7 @@ public class GuiSlotItemStackList extends GuiScrollingList {
     private GuiPickItem parent;
 
     public GuiSlotItemStackList(GuiPickItem parent, int listWidth) {
-        super(Minecraft.getMinecraft(), listWidth, parent.height, 55, parent.height - 45, 20, 18);
+        super(Minecraft.getMinecraft(), listWidth, parent.height, 55, parent.height - 45, 20, 18, parent.width, parent.height);
         this.parent = parent;
     }
 

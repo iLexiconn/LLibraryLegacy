@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.client.gui;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiLabel;
@@ -10,7 +11,6 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,19 +25,19 @@ public class GuiOverride extends GuiScreen {
     public Random rand = new Random();
     public GuiScreen overriddenScreen;
 
-    public List buttonList = new ArrayList();
+    public List<GuiButton> buttonList = Lists.newArrayList();
 
     public void drawScreen(int mouseX, int mouseY, float partalTicks) {
         super.drawScreen(mouseX, mouseY, partalTicks);
-        List labelList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, overriddenScreen, "labelList", "field_146293_o");
+        List<GuiLabel> labelList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, overriddenScreen, "labelList", "field_146293_o");
         int k1;
 
         for (k1 = 0; k1 < buttonList.size(); ++k1) {
-            ((GuiButton) buttonList.get(k1)).drawButton(mc, mouseX, mouseY);
+            buttonList.get(k1).drawButton(mc, mouseX, mouseY);
         }
 
         for (k1 = 0; k1 < labelList.size(); ++k1) {
-            ((GuiLabel) labelList.get(k1)).drawLabel(mc, mouseX, mouseY);
+            labelList.get(k1).drawLabel(mc, mouseX, mouseY);
         }
     }
 

@@ -14,17 +14,6 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
     /**
-     * Registers the given {@link net.ilexiconn.llibrary.client.render.IModelExtension}.
-     *
-     * @see net.ilexiconn.llibrary.client.render.IModelExtension
-     * @since 0.1.0
-     */
-    @Deprecated
-    public static void registerModelExtension(IModelExtension modelExtension) {
-
-    }
-
-    /**
      * @since 0.2.0
      */
     public static void setColorFromInt(int color) {

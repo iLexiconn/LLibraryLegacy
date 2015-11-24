@@ -99,7 +99,6 @@ public class ClientEventHandler {
 
                 for (AxisAlignedBB box : bounds) {
                     RenderGlobal.func_181561_a(box.offset(blockPos.getX(), blockPos.getY(), blockPos.getZ()).offset(-pos.getX(), -pos.getY(), -pos.getZ()));
-                    // RenderGlobal.drawOutlinedBoundingBox(box.offset(blockPos.getX(), blockPos.getY(), blockPos.getZ()).offset(-pos.getX(), -pos.getY(), -pos.getZ()), -1);
                 }
 
                 GL11.glDepthMask(true);
@@ -113,22 +112,24 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onInitGui(GuiScreenEvent.InitGuiEvent.Post event) {
-        int count = 2;
-        for (SurvivalTab survivalTab : SurvivalTab.getSurvivalTabList()) {
-            if (survivalTab.getContainer() != null && survivalTab.getContainer().isInstance(event.gui)) {
-                for (SurvivalTab tab : SurvivalTab.getSurvivalTabList()) {
-                    if (tab.getPage() == SurvivalTab.getCurrentPage()) {
-                        event.buttonList.add(new GuiButtonSurvivalTab(count, tab));
+        if (SurvivalTab.getSurvivalTabList().size() > 1) {
+            int count = 2;
+            for (SurvivalTab survivalTab : SurvivalTab.getSurvivalTabList()) {
+                if (survivalTab.getContainer() != null && survivalTab.getContainer().isInstance(event.gui)) {
+                    for (SurvivalTab tab : SurvivalTab.getSurvivalTabList()) {
+                        if (tab.getPage() == SurvivalTab.getCurrentPage()) {
+                            event.buttonList.add(new GuiButtonSurvivalTab(count, tab));
+                        }
+                        count++;
                     }
-                    count++;
                 }
             }
-        }
 
-        if (count > 11) {
-            GuiContainer container = (GuiContainer) event.gui;
-            event.buttonList.add(new GuiButtonPage(-1, container.guiLeft, container.guiTop - 50, event.gui));
-            event.buttonList.add(new GuiButtonPage(-2, container.guiLeft + container.xSize - 20, container.guiTop - 50, event.gui));
+            if (count > 11) {
+                GuiContainer container = (GuiContainer) event.gui;
+                event.buttonList.add(new GuiButtonPage(-1, container.guiLeft, container.guiTop - 50, event.gui));
+                event.buttonList.add(new GuiButtonPage(-2, container.guiLeft + container.xSize - 20, container.guiTop - 50, event.gui));
+            }
         }
 
         if (event.gui instanceof GuiMainMenu) {
@@ -172,9 +173,9 @@ public class ClientEventHandler {
                 gui.drawScreen(event.mouseX, event.mouseY, event.renderPartialTicks);
 
                 if (!gui.buttonList.isEmpty()) {
-                    for (GuiButton button : (List<GuiButton>) gui.buttonList) {
+                    for (GuiButton button : gui.buttonList) {
                         for (int i = 0; i < event.gui.buttonList.size(); ++i) {
-                            GuiButton button1 = (GuiButton) event.gui.buttonList.get(i);
+                            GuiButton button1 = event.gui.buttonList.get(i);
 
                             if (button.id == button1.id) {
                                 event.gui.buttonList.remove(button1);

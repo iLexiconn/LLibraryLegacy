@@ -1,6 +1,7 @@
 package net.ilexiconn.llibrary.common.update;
 
 import com.google.common.collect.Lists;
+import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
@@ -30,6 +31,7 @@ public class VersionHandler {
                 continue;
             }
             if (mod.getUpdateVersion().compareTo(modContainer.getProcessedVersion()) > 0) {
+                LLibrary.logger.info("Found update for mod " + modContainer.getName() + " (" + mod.getUpdateVersion().getVersionString() + ")");
                 outdatedMods.add(mod);
             }
         }

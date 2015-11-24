@@ -2,7 +2,6 @@ package net.ilexiconn.llibrary.client.gui;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import net.ilexiconn.llibrary.client.toast.Toast;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,19 +19,6 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class GuiHelper {
     private static Map<GuiOverride, Class<? extends GuiScreen>> overrideMap = Maps.newHashMap();
-
-    /* x */
-
-    /**
-     * @param x    The x position.
-     * @param y    The y position.
-     * @param text The text to display. Every string is rendered on a new line.
-     * @deprecated Use {@link Toast#makeText(String...)} instead.
-     */
-    @Deprecated
-    public static void createToast(int x, int y, String... text) {
-        Toast.makeText(text).setPosition(x, y).show();
-    }
 
     /**
      * A method for adding {@link GuiOverride} to an existing {@link GuiScreen} or {@link net.minecraft.client.gui.inventory.GuiContainer} {@link GuiOverride} classes may get added twice.

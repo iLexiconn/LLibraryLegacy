@@ -42,7 +42,7 @@ archivesBaseName = config.mod_name
 sourceCompatibility = targetCompatibility = 1.6
 
 minecraft {
-    version = config.minecraft_version + "-" + config.forge_version + "-1.8.8" //temp, because it's a non-master branch
+    version = config.minecraft_version + "-" + config.forge_version + "-" + config.minecraft_version //temp, because it's a non-master branch
     runDir = "minecraft"
     mappings = "snapshot_nodoc_20151122"
 }
@@ -167,7 +167,7 @@ curseforge {
 }
 
 String getVersionFromJava() {
-    return getVersionFromJavaWithoutMc() + "-1.8";
+    return getVersionFromJavaWithoutMc() + "-" + config.minecraft_version;
 }
 
 String getVersionFromJavaWithoutMc() {

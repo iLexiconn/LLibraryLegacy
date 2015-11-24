@@ -36,7 +36,7 @@ public class Animator {
         transformMap.clear();
         prevTransformMap.clear();
         for (int i = 0; i < mainModel.boxList.size(); i++) {
-            ModelRenderer box = (ModelRenderer) mainModel.boxList.get(i);
+            ModelRenderer box = mainModel.boxList.get(i);
             box.rotateAngleX = 0F;
             box.rotateAngleY = 0F;
             box.rotateAngleZ = 0F;

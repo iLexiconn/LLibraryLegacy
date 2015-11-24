@@ -39,7 +39,7 @@ public class LayerLLibraryArrow implements LayerRenderer {
             for (int j = 0; j < i; ++j) {
                 GlStateManager.pushMatrix();
                 ModelRenderer modelrenderer = this.renderer.getMainModel().getRandomModelBox(random);
-                ModelBox modelbox = (ModelBox) modelrenderer.cubeList.get(random.nextInt(modelrenderer.cubeList.size()));
+                ModelBox modelbox = modelrenderer.cubeList.get(random.nextInt(modelrenderer.cubeList.size()));
                 modelrenderer.postRender(0.0625F);
                 float f14 = random.nextFloat();
                 float f15 = random.nextFloat();

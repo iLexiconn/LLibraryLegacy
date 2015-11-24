@@ -54,13 +54,13 @@ public abstract class GuiPickItem extends GuiScreen {
         textField = new GuiTextField(0, fontRendererObj, 20, 30, 103, 12);
         textField.setMaxStringLength(40);
 
-        for (Item item : (Iterable<Item>) Item.itemRegistry) {
+        for (Item item : Item.itemRegistry) {
             ItemStack itemstack = new ItemStack(item);
 
             if (item != null) {
                 try {
                     items.add(itemstack);
-                    List subItems = Lists.newArrayList();
+                    List<ItemStack> subItems = Lists.newArrayList();
                     item.getSubItems(item, null, subItems);
                     int maxDamage = subItems.size() - 1;
 

@@ -1,9 +1,6 @@
 package net.ilexiconn.llibrary;
 
 import net.ilexiconn.llibrary.common.ServerProxy;
-import net.ilexiconn.llibrary.common.content.ContentHelper;
-import net.ilexiconn.llibrary.common.content.IContentHandler;
-import net.ilexiconn.llibrary.common.content.InitializationState;
 import net.ilexiconn.llibrary.common.log.LoggerHelper;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimation;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimationAction;
@@ -18,15 +15,12 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
-
-import java.util.Map;
 
 @Mod(modid = "llibrary", name = "LLibrary", version = LLibrary.VERSION, guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory", dependencies = "required-after:Forge")
 public class LLibrary {
@@ -37,7 +31,7 @@ public class LLibrary {
     public static LoggerHelper logger = new LoggerHelper("llibrary");
     public static SimpleNetworkWrapper networkWrapper;
 
-    public static final String VERSION = "0.5.5";
+    public static final String VERSION = "0.1.0";
 
     public static SurvivalTab tabInventory = SurvivalTab.create("container.inventory").setIcon(new ItemStack(Items.diamond_sword));
 
@@ -53,23 +47,8 @@ public class LLibrary {
     }
 
     @Mod.EventHandler
-    private void init(FMLInitializationEvent event) {
-        for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet()) {
-            if (contentHandlerEntry.getKey() == InitializationState.INIT) {
-                ContentHelper.init(true, contentHandlerEntry.getValue());
-            }
-        }
-    }
-
-    @Mod.EventHandler
     private void postInit(FMLPostInitializationEvent event) {
         proxy.postInit();
-
-        for (Map.Entry<InitializationState, IContentHandler> contentHandlerEntry : ContentHelper.getTimedHandlers().entrySet()) {
-            if (contentHandlerEntry.getKey() == InitializationState.POSTINIT) {
-                ContentHelper.init(true, contentHandlerEntry.getValue());
-            }
-        }
     }
 
     @Mod.EventHandler

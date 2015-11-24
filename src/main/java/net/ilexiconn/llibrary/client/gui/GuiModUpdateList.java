@@ -6,6 +6,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.fml.client.GuiScrollingList;
@@ -90,17 +91,16 @@ public class GuiModUpdateList extends GuiScrollingList {
                 scale = 1.0 / Math.max(scaleX, scaleY);
             }
 
-            double iwidth = cachedLogoDimensions.get(idx).width * scale;
-            double iheight = cachedLogoDimensions.get(idx).height * scale;
+            float iwidth = (float) (cachedLogoDimensions.get(idx).width * scale);
+            float iheight = (float) (cachedLogoDimensions.get(idx).height * scale);
             int offset = 12;
-            //TODO: update rendering
-//            WorldRenderer renderer = tess.getWorldRenderer();
-//            renderer.startDrawingQuads();
-//            renderer.addVertexWithUV(offset, top + iheight, 0, 0, 1);
-//            renderer.addVertexWithUV(offset + iwidth, top + iheight, 0, 1, 1);
-//            renderer.addVertexWithUV(offset + iwidth, top, 0, 1, 0);
-//            renderer.addVertexWithUV(offset, top, 0, 0, 0);
-//            tess.draw();
+            WorldRenderer renderer = tess.getWorldRenderer();
+            renderer.func_181668_a(7, DefaultVertexFormats.field_181707_g);
+            renderer.func_181662_b(offset, top + iheight, 0).func_181673_a(0, 1).func_181675_d();
+            renderer.func_181662_b(offset + iwidth, top + iheight, 0).func_181673_a(1, 1).func_181675_d();
+            renderer.func_181662_b(offset + iwidth, top, 0).func_181673_a(1, 0).func_181675_d();
+            renderer.func_181662_b(offset, top, 0).func_181673_a(0, 0).func_181675_d();
+            tess.draw();
         }
     }
 

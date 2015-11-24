@@ -317,8 +317,8 @@ public class MowzieModelRenderer extends ModelRenderer {
     private void compileDisplayList(float partialTicks) {
         displayList = GLAllocation.generateDisplayLists(1);
         GL11.glNewList(displayList, GL11.GL_COMPILE);
-        for (Object object : cubeList) {
-            ((ModelBox) object).render(Tessellator.getInstance().getWorldRenderer(), partialTicks);
+        for (ModelBox box : cubeList) {
+            box.render(Tessellator.getInstance().getWorldRenderer(), partialTicks);
         }
         GL11.glEndList();
         compiled = true;
