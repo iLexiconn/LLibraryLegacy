@@ -46,7 +46,7 @@ public abstract class GuiPickItem extends GuiScreen {
         parentScreen = Minecraft.getMinecraft().currentScreen;
 
         Minecraft mc = Minecraft.getMinecraft();
-        ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+        ScaledResolution scaledresolution = new ScaledResolution(mc);
         int w = scaledresolution.getScaledWidth();
         int h = scaledresolution.getScaledHeight();
         setWorldAndResolution(mc, w, h);

@@ -98,7 +98,8 @@ public class ClientEventHandler {
                 GL11.glDepthMask(false);
 
                 for (AxisAlignedBB box : bounds) {
-                    RenderGlobal.drawOutlinedBoundingBox(box.offset(blockPos.getX(), blockPos.getY(), blockPos.getZ()).offset(-pos.getX(), -pos.getY(), -pos.getZ()), -1);
+                    RenderGlobal.func_181561_a(box.offset(blockPos.getX(), blockPos.getY(), blockPos.getZ()).offset(-pos.getX(), -pos.getY(), -pos.getZ()));
+                    // RenderGlobal.drawOutlinedBoundingBox(box.offset(blockPos.getX(), blockPos.getY(), blockPos.getZ()).offset(-pos.getX(), -pos.getY(), -pos.getZ()), -1);
                 }
 
                 GL11.glDepthMask(true);
