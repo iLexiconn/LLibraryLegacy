@@ -30,10 +30,10 @@ public final class RenderLLibraryPlayer extends RenderPlayer {
         addLayer(new LayerCape(this));
         addLayer(new LayerCustomHead(((ModelLLibraryBiped) mainModel).bipedHead));
     }
-
-    public void func_177138_b(AbstractClientPlayer player) {
+    
+    public void renderRightArm(AbstractClientPlayer player) {
         if (!MinecraftForge.EVENT_BUS.post(new RenderFirstPersonEvent.Pre(player, this, ((ModelLLibraryBiped) mainModel)))) {
-            super.func_177138_b(player);
+            super.renderRightArm(player);
         }
         MinecraftForge.EVENT_BUS.post(new RenderFirstPersonEvent.Post(player, this, ((ModelLLibraryBiped) mainModel)));
     }

@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.ilexiconn.llibrary.common.map.ListHashMap;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.item.Item;
@@ -24,7 +25,7 @@ public class Command extends CommandBase {
     ListHashMap<String, ArgumentType> requiredArguments = new ListHashMap<String, ArgumentType>();
     ListHashMap<String, ArgumentType> optionalArguments = new ListHashMap<String, ArgumentType>();
 
-    public String getName() {
+    public String getCommandName() {
         return commandName;
     }
 
@@ -33,7 +34,7 @@ public class Command extends CommandBase {
             if (generatedUsage == null) {
                 StringBuilder builder = new StringBuilder();
                 builder.append("/");
-                builder.append(getName());
+                builder.append(getCommandName());
                 for (String requiredArgument : requiredArguments.keySet()) {
                     builder.append(" ");
                     builder.append("<");
@@ -56,7 +57,7 @@ public class Command extends CommandBase {
         }
     }
 
-    public void execute(ICommandSender sender, String[] args) throws CommandException {
+    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length < requiredArguments.size()) {
             throw new WrongUsageException(getCommandUsage(sender));
         } else if (args.length > requiredArguments.size() + optionalArguments.size()) {
@@ -81,14 +82,14 @@ public class Command extends CommandBase {
             if (requiredArguments.getValue(args.length - 1) == ArgumentType.PLAYER) {
                 return getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames());
             } else if (requiredArguments.getValue(args.length - 1) == ArgumentType.STACK) {
-                return func_175762_a(args, Item.itemRegistry.getKeys());
+                return getListOfStringsMatchingLastWord(args, Item.itemRegistry.getKeys());
             }
         }
         if (optionalArguments.size() >= args.length - requiredArguments.size()) {
             if (optionalArguments.getValue(args.length - 1 - requiredArguments.size()) == ArgumentType.PLAYER) {
                 return getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames());
             } else if (optionalArguments.getValue(args.length - 1 - requiredArguments.size()) == ArgumentType.STACK) {
-                return func_175762_a(args, Item.itemRegistry.getKeys());
+                return getListOfStringsMatchingLastWord(args, Item.itemRegistry.getKeys());
             }
         }
         return null;
@@ -115,8 +116,9 @@ public class Command extends CommandBase {
         }
         return false;
     }
-
-    public int compareTo(Object o) {
+    
+    @Override
+    public int compareTo(ICommand other) {
         return 0;
     }
 }

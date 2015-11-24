@@ -93,13 +93,14 @@ public class GuiModUpdateList extends GuiScrollingList {
             double iwidth = cachedLogoDimensions.get(idx).width * scale;
             double iheight = cachedLogoDimensions.get(idx).height * scale;
             int offset = 12;
-            WorldRenderer renderer = tess.getWorldRenderer();
-            renderer.startDrawingQuads();
-            renderer.addVertexWithUV(offset, top + iheight, 0, 0, 1);
-            renderer.addVertexWithUV(offset + iwidth, top + iheight, 0, 1, 1);
-            renderer.addVertexWithUV(offset + iwidth, top, 0, 1, 0);
-            renderer.addVertexWithUV(offset, top, 0, 0, 0);
-            tess.draw();
+            //TODO: update rendering
+//            WorldRenderer renderer = tess.getWorldRenderer();
+//            renderer.startDrawingQuads();
+//            renderer.addVertexWithUV(offset, top + iheight, 0, 0, 1);
+//            renderer.addVertexWithUV(offset + iwidth, top + iheight, 0, 1, 1);
+//            renderer.addVertexWithUV(offset + iwidth, top, 0, 1, 0);
+//            renderer.addVertexWithUV(offset, top, 0, 0, 0);
+//            tess.draw();
         }
     }
 

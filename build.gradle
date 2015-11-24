@@ -1,8 +1,23 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath "net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT"
+    }
+}
+
 plugins {
-    id "net.minecraftforge.gradle.forge" version "2.0.2"
+    // id "net.minecraftforge.gradle.forge" version "2.0.2"
     id "com.matthewprenger.cursegradle" version "1.0.3"
     id "maven-publish"
 }
+
+apply plugin: "net.minecraftforge.gradle.forge"
 
 ext.configFile = file "build.properties"
 configFile.withReader {
@@ -27,9 +42,9 @@ archivesBaseName = config.mod_name
 sourceCompatibility = targetCompatibility = 1.6
 
 minecraft {
-    version = config.minecraft_version + "-" + config.forge_version
+    version = config.minecraft_version + "-" + config.forge_version + "-1.8.8" //temp, because it's a non-master branch
     runDir = "minecraft"
-    mappings = "snapshot_20141130"
+    mappings = "snapshot_nodoc_20151122"
 }
 
 processResources {

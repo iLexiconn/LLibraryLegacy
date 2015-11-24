@@ -10,6 +10,7 @@ import net.minecraft.util.IProgressUpdate;
 import net.minecraft.world.SpawnerAnimals;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -206,7 +207,7 @@ public class ChunkProviderHeightmap implements IChunkProvider
                 BlockPos blockpos1 = this.worldObj.getPrecipitationHeight(blockpos.add(k1, 0, l1));
                 BlockPos blockpos2 = blockpos1.down();
 
-                if (this.worldObj.func_175675_v(blockpos2)) {
+                if (this.worldObj.canBlockFreezeWater(blockpos2)) {
                     this.worldObj.setBlockState(blockpos2, Blocks.ice.getDefaultState(), 2);
                 }
 
@@ -260,7 +261,7 @@ public class ChunkProviderHeightmap implements IChunkProvider
         return "RandomLevelSource";
     }
 
-    public List func_177458_a(EnumCreatureType creatureType, BlockPos pos) {
+    public List getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
         return worldObj.getBiomeGenForCoords(pos).getSpawnableList(creatureType);
     }
 

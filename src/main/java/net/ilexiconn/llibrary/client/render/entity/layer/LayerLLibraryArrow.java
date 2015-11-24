@@ -60,7 +60,7 @@ public class LayerLLibraryArrow implements LayerRenderer {
                 double d0 = 0.0D;
                 double d1 = 0.0D;
                 double d2 = 0.0D;
-                this.renderer.func_177068_d().renderEntityWithPosYaw(entityarrow, d0, d1, d2, 0.0F, partialTicks);
+                this.renderer.getRenderManager().renderEntityWithPosYaw(entityarrow, d0, d1, d2, 0.0F, partialTicks);
                 GlStateManager.popMatrix();
             }
 
