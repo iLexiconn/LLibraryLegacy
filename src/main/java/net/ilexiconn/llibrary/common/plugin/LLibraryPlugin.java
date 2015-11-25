@@ -21,6 +21,7 @@ import java.util.Map;
 
 @IFMLLoadingPlugin.Name("LLibrary")
 @IFMLLoadingPlugin.MCVersion(MinecraftForge.MC_VERSION)
+@IFMLLoadingPlugin.TransformerExclusions({"net.ilexiconn.llibrary.asm"})
 public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
     public static LoggerHelper logger = new LoggerHelper("LLibraryUpdater");
 
@@ -62,7 +63,7 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
     }
 
     public String[] getASMTransformerClass() {
-        return null;
+        return new String[] {"net.ilexiconn.llibrary.asm.ClassHeirachyManager"};
     }
 
     public String getModContainerClass() {
