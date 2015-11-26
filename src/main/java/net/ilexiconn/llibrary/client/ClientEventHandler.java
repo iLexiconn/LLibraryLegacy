@@ -151,7 +151,7 @@ public class ClientEventHandler {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onDrawScreen(GuiScreenEvent.DrawScreenEvent.Post event) {
         for (Map.Entry<GuiOverride, Class<? extends GuiScreen>> e : GuiHelper.getOverrides().entrySet()) {
-            if (event.gui.getClass() == e.getValue()) {
+            if (event.gui != null && event.gui.getClass() == e.getValue()) {
                 GuiOverride gui = e.getKey();
                 long currentTime = System.nanoTime();
                 deltaU += (currentTime - initialTime) / timeU;
