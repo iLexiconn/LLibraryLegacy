@@ -2,8 +2,8 @@ package net.ilexiconn.llibrary.common.nbt.io;
 
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.common.crash.SimpleCrashReport;
-import net.ilexiconn.llibrary.common.nbt.tag.NBTTagBoolean;
-import net.minecraft.nbt.*;
+import net.ilexiconn.llibrary.common.nbt.NbtHelper;
+import net.minecraft.nbt.NBTTagCompound;
 
 import java.lang.reflect.Field;
 
@@ -17,8 +17,13 @@ public class NBTIO {
                 Field[] fields = type.getFields();
                 for (Field field : fields) {
                     if (tag.hasKey(field.getName())) {
+                        Object value = NbtHelper.getValueFromNbtTag(tag.getTag(field.getName()));
                         field.setAccessible(true);
-                        field.set(t, getValue(tag.getTag(field.getName())));
+                        if (field.getType().equals(boolean.class)) {
+                            field.setBoolean(t, (Byte) value != 0);
+                        } else {
+                            field.set(t, value);
+                        }
                     }
                 }
                 return t;
@@ -34,62 +39,11 @@ public class NBTIO {
         try {
             Field[] fields = type.getFields();
             for (Field field : fields) {
-                tag.setTag(field.getName(), getType(field.get(object)));
+                tag.setTag(field.getName(), NbtHelper.getNbtTagFromValue(field.get(object)));
             }
         } catch (Exception e) {
             LLibrary.logger.error(SimpleCrashReport.makeCrashReport(e, "Unable to save " + type + " to nbt " + tag));
         }
     }
 
-    private static Object getValue(NBTBase type) {
-        if (type instanceof NBTTagBoolean) {
-            return ((NBTTagBoolean) type).getByte() == 1;
-        } else if (type instanceof NBTTagByte) {
-            return ((NBTTagByte) type).getByte();
-        } else if (type instanceof NBTTagShort) {
-            return ((NBTTagShort) type).getShort();
-        } else if (type instanceof NBTTagInt) {
-            return ((NBTTagInt) type).getInt();
-        } else if (type instanceof NBTTagLong) {
-            return ((NBTTagLong) type).getLong();
-        } else if (type instanceof NBTTagFloat) {
-            return ((NBTTagFloat) type).getFloat();
-        } else if (type instanceof NBTTagDouble) {
-            return ((NBTTagDouble) type).getDouble();
-        } else if (type instanceof NBTTagString) {
-            return type.toString();
-        } else if (type instanceof NBTTagByteArray) {
-            return ((NBTTagByteArray) type).getByteArray();
-        } else if (type instanceof NBTTagIntArray) {
-            return ((NBTTagIntArray) type).getIntArray();
-        } else {
-            return type;
-        }
-    }
-
-    private static NBTBase getType(Object value) {
-        if (value instanceof Boolean) {
-            return new NBTTagBoolean((Boolean) value);
-        } else if (value instanceof Byte) {
-            return new NBTTagByte((Byte) value);
-        } else if (value instanceof Short) {
-            return new NBTTagShort((Short) value);
-        } else if (value instanceof Integer) {
-            return new NBTTagInt((Integer) value);
-        } else if (value instanceof Long) {
-            return new NBTTagLong((Long) value);
-        } else if (value instanceof Float) {
-            return new NBTTagFloat((Float) value);
-        } else if (value instanceof Double) {
-            return new NBTTagDouble((Double) value);
-        } else if (value instanceof String) {
-            return new NBTTagString((String) value);
-        } else if (value instanceof byte[]) {
-            return new NBTTagByteArray((byte[]) value);
-        } else if (value instanceof int[]) {
-            return new NBTTagIntArray((int[]) value);
-        } else {
-            return null;
-        }
-    }
 }

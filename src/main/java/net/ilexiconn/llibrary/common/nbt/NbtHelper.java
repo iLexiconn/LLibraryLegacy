@@ -2,8 +2,7 @@ package net.ilexiconn.llibrary.common.nbt;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.*;
 
 /**
  * @author iLexiconn
@@ -47,5 +46,61 @@ public class NbtHelper {
 
     public static ItemStack readStackFromNbt(NBTTagCompound nbtTag, String name) {
         return ItemStack.loadItemStackFromNBT(nbtTag.getCompoundTag(name));
+    }
+
+    /**
+     * @since 0.6.1
+     */
+    public static Object getValueFromNbtTag(NBTBase type) {
+        if (type instanceof NBTTagByte) {
+            return ((NBTTagByte) type).getByte();
+        } else if (type instanceof NBTTagShort) {
+            return ((NBTTagShort) type).getShort();
+        } else if (type instanceof NBTTagInt) {
+            return ((NBTTagInt) type).getInt();
+        } else if (type instanceof NBTTagLong) {
+            return ((NBTTagLong) type).getLong();
+        } else if (type instanceof NBTTagFloat) {
+            return ((NBTTagFloat) type).getFloat();
+        } else if (type instanceof NBTTagDouble) {
+            return ((NBTTagDouble) type).getDouble();
+        } else if (type instanceof NBTTagString) {
+            return type.toString();
+        } else if (type instanceof NBTTagByteArray) {
+            return ((NBTTagByteArray) type).getByteArray();
+        } else if (type instanceof NBTTagIntArray) {
+            return ((NBTTagIntArray) type).getIntArray();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @since 0.6.1
+     */
+    public static NBTBase getNbtTagFromValue(Object value) {
+        if (value instanceof Boolean) {
+            return new NBTTagByte((Boolean) value ? (byte) 1 : 0);
+        } else if (value instanceof Byte) {
+            return new NBTTagByte((Byte) value);
+        } else if (value instanceof Short) {
+            return new NBTTagShort((Short) value);
+        } else if (value instanceof Integer) {
+            return new NBTTagInt((Integer) value);
+        } else if (value instanceof Long) {
+            return new NBTTagLong((Long) value);
+        } else if (value instanceof Float) {
+            return new NBTTagFloat((Float) value);
+        } else if (value instanceof Double) {
+            return new NBTTagDouble((Double) value);
+        } else if (value instanceof String) {
+            return new NBTTagString((String) value);
+        } else if (value instanceof byte[]) {
+            return new NBTTagByteArray((byte[]) value);
+        } else if (value instanceof int[]) {
+            return new NBTTagIntArray((int[]) value);
+        } else {
+            return null;
+        }
     }
 }
