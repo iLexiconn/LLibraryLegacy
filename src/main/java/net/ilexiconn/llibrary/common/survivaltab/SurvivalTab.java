@@ -17,6 +17,7 @@ import java.util.List;
  * @author iLexiconn
  * @since 0.5.0
  */
+@Deprecated //Marked for removal in 0.7.0
 public class SurvivalTab {
     private static List<SurvivalTab> survivalTabList = Lists.newArrayList();
     private static int page;

@@ -28,7 +28,7 @@ public class ClientProxy extends ServerProxy {
     public void preInit(File config) {
         super.preInit(config);
 
-        LLibrary.tabInventory.setContainer(GuiInventory.class);
+        //LLibrary.tabInventory.setContainer(GuiInventory.class);
 
         timer = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "field_71428_T", "S", "timer");
 

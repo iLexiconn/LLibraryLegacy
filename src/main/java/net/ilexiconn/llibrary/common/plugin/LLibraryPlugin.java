@@ -43,13 +43,13 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
                     logger.info("Deleting old mod jar " + modFile.getName() + " from mod " + entry.getName() + " (" + entry.getModid() + ")");
                     try {
                         FileDeleteStrategy.FORCE.delete(modFile);
+                        File mod = new File(mods, entry.getName() + "-" + entry.getVersion() + "-" + Loader.MC_VERSION + ".jar");
+                        logger.info("Downloading new mod jar " + mod.getName() + " for mod " + entry.getName() + " (" + entry.getModid() + ")");
+                        FileUtils.copyURLToFile(new URL(entry.getUrl()), mod);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-                File mod = new File(mods, entry.getName() + "-" + entry.getVersion() + "-" + Loader.MC_VERSION + ".jar");
-                logger.info("Downloading new mod jar " + mod.getName() + " for mod " + entry.getName() + " (" + entry.getModid() + ")");
-                FileUtils.copyURLToFile(new URL(entry.getUrl()), mod);
             }
             try {
                 System.gc();
