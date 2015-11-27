@@ -1,13 +1,16 @@
-package net.ilexiconn.llibrary.common.animation;
+package net.ilexiconn.llibrary.client.model.modelbase;
 
 import net.minecraft.util.MathHelper;
 
 /**
+ * @deprecated use {@link net.ilexiconn.llibrary.common.animation.ControlledAnimation} instead.
+ *
  * @author RafaMv0
  * @author BobMowzie
  * @author Paul Fulham
  * @since 0.1.0
  */
+@Deprecated
 public class ControlledAnimation {
     /**
      * It is the timer used to animate

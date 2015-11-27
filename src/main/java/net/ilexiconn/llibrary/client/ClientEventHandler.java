@@ -129,7 +129,7 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onInitGui(GuiScreenEvent.InitGuiEvent.Post event) {
-        if (SurvivalTab.getSurvivalTabList().size() > 1) {
+        if (SurvivalTab.getSurvivalTabList().size() > 0) {
             int count = 2;
             for (SurvivalTab survivalTab : SurvivalTab.getSurvivalTabList()) {
                 if (survivalTab.getContainer() != null && survivalTab.getContainer().isInstance(event.gui)) {
@@ -265,10 +265,10 @@ public class ClientEventHandler {
         }
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public void onSurvivalTabClick(SurvivalTab.ClickEvent event) {
         if (event.getSurvivalTab() == LLibrary.tabInventory) {
             mc.displayGuiScreen(new GuiInventory(event.getEntityPlayer()));
         }
-    }
+    }*/
 }
