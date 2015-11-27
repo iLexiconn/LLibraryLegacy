@@ -18,12 +18,11 @@ public class NBTIO {
                 for (Field field : fields) {
                     if (tag.hasKey(field.getName())) {
                         Object value = NbtHelper.getValueFromNbtTag(tag.getTag(field.getName()));
-                        field.setAccessible(true);
-                        if (field.getType().equals(boolean.class)) {
-                            field.setBoolean(t, (Byte) value != 0);
-                        } else {
-                            field.set(t, value);
+                        if (field.getType().equals(boolean.class) || field.getType().equals(Boolean.class)) {
+                            value = (Byte) value != 0;
                         }
+                        field.setAccessible(true);
+                        field.set(t, value);
                     }
                 }
                 return t;
