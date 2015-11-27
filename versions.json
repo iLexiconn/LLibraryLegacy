@@ -1,5 +1,5 @@
 {
-  "release": "0.5.5",
+  "release": "0.6.1",
   "versions": {
     "0.5.0": [
       "Added toast builder",
@@ -58,6 +58,13 @@
       "Updated to Minecraft 1.8.8",
       "Fixed server crash",
       "Added ArrayList support to ByteBufHelper"
+    ],
+    "0.6.1": [
+      "Added ASM helpers to 1.8.8 branch",
+      "Added new NBT utils",
+      "Fixed gui override crash",
+      "Fixed auto updater crash",
+      "Updated forge"
     ]
   },
   "updateUrl": "https://bitly.com/llibrary",
