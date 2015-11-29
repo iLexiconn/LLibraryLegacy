@@ -58,7 +58,6 @@ public class ModularASMTransformer {
     }
 
     public static abstract class ClassNodeTransformer {
-
         public int writeFlags;
 
         public ClassNodeTransformer(int writeFlags) {
@@ -77,7 +76,6 @@ public class ModularASMTransformer {
     }
 
     public static abstract class MethodTransformer extends ClassNodeTransformer {
-
         public final ObfMapping method;
 
         public MethodTransformer(ObfMapping method) {
@@ -106,7 +104,6 @@ public class ModularASMTransformer {
     }
 
     public static class MethodWriter extends ClassNodeTransformer {
-
         public final int access;
         public final ObfMapping method;
         public final String[] exceptions;
@@ -170,7 +167,6 @@ public class ModularASMTransformer {
     }
 
     public static class MethodInjector extends MethodTransformer {
-
         public ASMBlock needle;
         public ASMBlock injection;
         public boolean before;
@@ -224,7 +220,6 @@ public class ModularASMTransformer {
     }
 
     public static class MethodReplacer extends MethodTransformer {
-
         public ASMBlock needle;
         public ASMBlock replacement;
 
@@ -254,7 +249,6 @@ public class ModularASMTransformer {
     }
 
     public static class FieldWriter extends ClassNodeTransformer {
-
         public final ObfMapping field;
         public final int access;
         public final Object value;
@@ -281,7 +275,6 @@ public class ModularASMTransformer {
     }
 
     public static class FieldTypeChanger extends ClassNodeTransformer {
-
         public final ObfMapping field;
         public final String desc;
 

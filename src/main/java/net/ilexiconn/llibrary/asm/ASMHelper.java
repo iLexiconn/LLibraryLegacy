@@ -25,7 +25,6 @@ import org.objectweb.asm.util.TraceClassVisitor;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 
 public class ASMHelper {
-
     public static interface Acceptor {
         public void accept(ClassVisitor cv) throws IOException;
     }

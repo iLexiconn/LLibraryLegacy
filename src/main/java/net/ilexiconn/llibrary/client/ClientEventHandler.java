@@ -1,5 +1,11 @@
 package net.ilexiconn.llibrary.client;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.lwjgl.opengl.GL11;
+
 import net.ilexiconn.llibrary.client.gui.GuiButtonPage;
 import net.ilexiconn.llibrary.client.gui.GuiButtonSurvivalTab;
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
@@ -14,6 +20,7 @@ import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
@@ -37,11 +44,6 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public class ClientEventHandler {
@@ -53,6 +55,7 @@ public class ClientEventHandler {
     private double deltaU = 0;
     private long timer = System.currentTimeMillis();
 
+    //TODO: RenderPlayerEvent.Specials.Post is deprecated and is never fired by Forge
     @SubscribeEvent
     public void onRenderPlayerPost(RenderPlayerEvent.Specials.Post event) {
         if (event.entityPlayer == mc.thePlayer) {
@@ -67,7 +70,7 @@ public class ClientEventHandler {
         EntityPlayer player = event.entityPlayer;
 
         if (mc.thePlayer == player) {
-            Render entityRenderObject = mc.getRenderManager().getEntityRenderObject(event.entityPlayer);
+            Render<AbstractClientPlayer> entityRenderObject = mc.getRenderManager().getEntityRenderObject(event.entityPlayer);
 
             if (!(entityRenderObject instanceof RenderLLibraryPlayer)) {
                 prevRenderPlayer = (RenderPlayer) entityRenderObject;

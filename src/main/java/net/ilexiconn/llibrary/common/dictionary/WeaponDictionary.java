@@ -16,6 +16,7 @@ import static net.ilexiconn.llibrary.common.dictionary.WeaponDictionary.Type.*;
 public class WeaponDictionary {
     private static final int WEAPON_LIST_SIZE = 1024 * 10;
     private static WeaponInfo[] weaponList = new WeaponInfo[WEAPON_LIST_SIZE];
+    @SuppressWarnings("unchecked")
     private static ArrayList<Item>[] typeInfoList = new ArrayList[Type.values().length];
 
     static {

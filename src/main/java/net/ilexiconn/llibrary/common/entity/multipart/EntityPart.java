@@ -128,11 +128,10 @@ public class EntityPart extends Entity {
     }
 
     public void collideWithNearbyEntities() {
-        List entities = worldObj.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().expand(0.20000000298023224d, 0d, 0.20000000298023224d));
+        List<Entity> entities = worldObj.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().expand(0.20000000298023224d, 0d, 0.20000000298023224d));
 
         if (entities != null && !entities.isEmpty()) {
-            for (Object object : entities) {
-                Entity entity = (Entity) object;
+            for (Entity entity : entities) {
                 if (entity != parent && !(entity instanceof EntityPart) && entity.canBePushed()) {
                     entity.applyEntityCollision(parent);
                 }

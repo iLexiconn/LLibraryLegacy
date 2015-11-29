@@ -1,5 +1,12 @@
 package net.ilexiconn.llibrary.common.world.gen;
 
+import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
+
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -10,6 +17,7 @@ import net.minecraft.util.IProgressUpdate;
 import net.minecraft.world.SpawnerAnimals;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -19,13 +27,6 @@ import net.minecraftforge.event.terraingen.ChunkProviderEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
-
-import java.util.List;
-import java.util.Random;
-
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
 
 public class ChunkProviderHeightmap implements IChunkProvider
 {
@@ -195,7 +196,6 @@ public class ChunkProviderHeightmap implements IChunkProvider
 
         int k1;
         int l1;
-        int i2;
 
         biomegenbase.decorate(this.worldObj, this.rand, new BlockPos(k, 0, l));
         if (TerrainGen.populate(provider, worldObj, rand, p_73153_2_, p_73153_3_, flag, ANIMALS)) {
@@ -270,7 +270,7 @@ public class ChunkProviderHeightmap implements IChunkProvider
     }
 
     @Override
-    public List getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
+    public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
         return worldObj.getBiomeGenForCoords(pos).getSpawnableList(creatureType);
     }
 

@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author iLexiconn
  * @since 0.5.0
  */
-public abstract class AbstractMessage<M extends AbstractMessage> implements IMessage, IMessageHandler<M, IMessage> {
+public abstract class AbstractMessage<M extends AbstractMessage<?>> implements IMessage, IMessageHandler<M, IMessage> {
     /**
      * Register the message to the {@link net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper}.
      *

@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class ListHashMap<K, V> extends LinkedHashMap<K, V> {
+    private static final long serialVersionUID = 4893000880008273211L;
+
     public V getValue(int i) {
         Map.Entry<K, V> entry = this.getEntry(i);
         if (entry == null) {

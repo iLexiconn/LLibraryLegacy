@@ -10,10 +10,10 @@ import org.objectweb.asm.commons.Remapper;
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 
 public class ObfRemapper extends Remapper {
-
     private HashMap<String, String> fields = new HashMap<String, String>();
     private HashMap<String, String> funcs = new HashMap<String, String>();
 
+    @SuppressWarnings("unchecked")
     public ObfRemapper() {
         try {
             Field rawFieldMapsField = FMLDeobfuscatingRemapper.class.getDeclaredField("rawFieldMaps");

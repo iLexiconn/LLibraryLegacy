@@ -33,6 +33,7 @@ public class CommandArguments {
         return false;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T get(String name) {
         for (Argument argument : arguments) {
             if (argument.getName().equals(name)) {
@@ -46,7 +47,7 @@ public class CommandArguments {
         return null;
     }
 
-    public ArgumentType type(String name) {
+    public ArgumentType<?> type(String name) {
         for (Argument argument : arguments) {
             if (argument.getName().equals(name)) {
                 return argument.getType();

@@ -1,7 +1,11 @@
 package net.ilexiconn.llibrary.common.entity;
 
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
+
 import com.google.common.collect.Lists;
-import net.ilexiconn.llibrary.LLibrary;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -9,10 +13,6 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
-
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Class for registering entities, removing entities and getting entities.
@@ -24,8 +24,6 @@ import java.util.Map;
  * @since 0.1.0
  */
 public class EntityHelper {
-    static int startEntityId = 0;
-
     private static Field classToIDMappingField;
     private static Field stringToIDMappingField;
 
@@ -49,21 +47,35 @@ public class EntityHelper {
             }
         }
     }
+    
+    /**
+     * Registers an entity for a mod with default tracking range and update frequency
+     * 
+     * @param entityName Name of the entity
+     * @param entityClass Class of the entity
+     * @param modEntityId A mod specific entity id
+     * @param mod An instance of a mod to register the entity for
+     */
+    public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int modEntityId, Object mod) {
+        EntityRegistry.registerModEntity(entityClass, entityName, modEntityId, mod, 64, 1, true);
+    }
+
+    /**
+     * Registers an entity for a mod with default tracking range and update frequency
+     * 
+     * @param entityName Name of the entity
+     * @param entityClass Class of the entity
+     * @param modEntityID A mod specific entity id
+     * @param mod An instance of a mod to register the entity for
+     * @param primaryEggColor Primary egg color
+     * @param secondaryEggColor Secondary egg color
+     */
+    public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int modEntityId, Object mod, int primaryEggColor, int secondaryEggColor) {
+        EntityRegistry.registerModEntity(entityClass, entityName, modEntityId, mod, 64, 1, true, primaryEggColor, secondaryEggColor);
+    }
 
     public static boolean hasEntityBeenRemoved(Class<? extends Entity> entity) {
         return removedEntities.contains(entity);
-    }
-
-    public static void registerEntity(String entityName, Class<? extends Entity> entityClass) {
-        int entityId = EntityRegistry.findGlobalUniqueEntityId();
-        EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId);
-        EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
-    }
-
-    public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int primaryColor, int secondaryColor) {
-        int entityId = EntityRegistry.findGlobalUniqueEntityId();
-        EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityId, primaryColor, secondaryColor);
-        EntityRegistry.registerModEntity(entityClass, entityName, entityId, LLibrary.instance, 64, 1, true);
     }
 
     public static void removeLivingEntity(Class<? extends EntityLiving> clazz) {
@@ -80,6 +92,7 @@ public class EntityHelper {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void removeEntity(Class<? extends Entity> clazz) {
         removedEntities.add(clazz);
 
@@ -91,8 +104,8 @@ public class EntityHelper {
         EntityList.classToStringMapping.remove(clazz);
 
         try {
-            Map classToIDMapping = (Map) classToIDMappingField.get(null);
-            Map stringToIDMapping = (Map) stringToIDMappingField.get(null);
+            Map<Class<? extends Entity>, Integer> classToIDMapping = (Map<Class<? extends Entity>, Integer>) classToIDMappingField.get(null);
+            Map<String, Integer> stringToIDMapping = (Map<String, Integer>) stringToIDMappingField.get(null);
             classToIDMapping.remove(clazz);
             stringToIDMapping.remove(name);
         } catch (IllegalArgumentException e) {
@@ -122,19 +135,11 @@ public class EntityHelper {
         }
     }
 
-    private static int getUniqueEntityId() {
-        do {
-            startEntityId++;
-        }
-        while (EntityList.getStringFromID(startEntityId) != null);
-        return startEntityId;
-    }
-
-    public static Entity getEntityFromClass(Class entityClass, World world) {
+    public static Entity getEntityFromClass(Class<? extends Entity> entityClass, World world) {
         Entity entity = null;
 
         try {
-            entity = (Entity) entityClass.getConstructor(new Class[]{World.class}).newInstance(world);
+            entity = entityClass.getConstructor(World.class).newInstance(world);
         } catch (Exception e) {
             e.printStackTrace();
         }

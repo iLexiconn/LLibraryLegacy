@@ -3,7 +3,6 @@ package net.ilexiconn.llibrary.asm;
 import org.objectweb.asm.ClassWriter;
 
 public class CC_ClassWriter extends ClassWriter {
-
     private final boolean runtime;
 
     public CC_ClassWriter(int flags) {

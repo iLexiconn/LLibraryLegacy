@@ -18,7 +18,6 @@ import com.google.common.base.Objects;
 import net.minecraft.launchwrapper.Launch;
 
 public class ObfMapping {
-
     public static ObfRemapper obfMapper = new ObfRemapper();
     public static Remapper mcpMapper = null;
 

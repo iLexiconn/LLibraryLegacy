@@ -8,7 +8,6 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.LocalVariablesSorter;
 
 public class LocalVariablesSorterVisitor extends ClassVisitor {
-
     public Set<ObfMapping> methods;
     public String owner;
 

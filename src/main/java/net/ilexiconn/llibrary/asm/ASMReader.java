@@ -20,7 +20,6 @@ import org.objectweb.asm.tree.MultiANewArrayInsnNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public class ASMReader {
-
     public static Map<String, Integer> opCodes = new HashMap<String, Integer>();
     public static byte[] TYPE;
 
@@ -186,8 +185,9 @@ public class ASMReader {
         // derived from classWriter, mapped to AbstractInsnNode
         TYPE = new byte[200];
         String s = "AAAAAAAAAAAAAAAABBJ__CCCCC____________________AAAAAAAACC" + "CCC____________________AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + "AAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHCLMAA" + "AAAAEEEEFFFFGDBDAADDAA_NHH";
-        for (int i = 0; i < s.length(); i++)
+        for (int i = 0; i < s.length(); i++) {
             TYPE[i] = (byte) (s.charAt(i) - 'A');
+        }
     }
 
     public static Map<String, ASMBlock> loadResource(String res) {

@@ -1,13 +1,14 @@
 package net.ilexiconn.llibrary.common.config;
 
+import java.io.File;
+import java.util.Map;
+
 import com.google.common.collect.Maps;
+
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-
-import java.io.File;
-import java.util.Map;
 
 /**
  * Helper class for registering {@link net.minecraftforge.common.config.Configuration} for a specific {@link net.minecraftforge.fml.common.Mod}
@@ -58,6 +59,6 @@ public class ConfigHelper {
             return;
         }
         getConfigContainer(modid).getConfiguration().getCategory(category).put(name, new Property(name, value, type));
-        FMLCommonHandler.instance().bus().post(new ConfigChangedEvent.OnConfigChangedEvent(modid, "", false, false));
+        MinecraftForge.EVENT_BUS.post(new ConfigChangedEvent.OnConfigChangedEvent(modid, "", false, false));
     }
 }

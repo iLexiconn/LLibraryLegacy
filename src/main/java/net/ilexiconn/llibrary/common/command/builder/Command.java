@@ -22,8 +22,8 @@ public class Command extends CommandBase {
     ICommandExecutor commandExecutor;
 
     List<String> commandAliases = Lists.newArrayList();
-    ListHashMap<String, ArgumentType> requiredArguments = new ListHashMap<String, ArgumentType>();
-    ListHashMap<String, ArgumentType> optionalArguments = new ListHashMap<String, ArgumentType>();
+    ListHashMap<String, ArgumentType<?>> requiredArguments = new ListHashMap<String, ArgumentType<?>>();
+    ListHashMap<String, ArgumentType<?>> optionalArguments = new ListHashMap<String, ArgumentType<?>>();
 
     @Override
     public String getCommandName() {
@@ -69,10 +69,10 @@ public class Command extends CommandBase {
             List<Argument> arguments = Lists.newArrayList();
             for (int i = 0; i < args.length; i++) {
                 if (i < requiredArguments.size()) {
-                    Map.Entry<String, ArgumentType> entry = requiredArguments.getEntry(i);
+                    Map.Entry<String, ArgumentType<?>> entry = requiredArguments.getEntry(i);
                     arguments.add(new Argument(entry.getKey(), args[i], entry.getValue()));
                 } else {
-                    Map.Entry<String, ArgumentType> entry = optionalArguments.getEntry(i - requiredArguments.size());
+                    Map.Entry<String, ArgumentType<?>> entry = optionalArguments.getEntry(i - requiredArguments.size());
                     arguments.add(new Argument(entry.getKey(), args[i], entry.getValue()));
                 }
             }
@@ -81,7 +81,7 @@ public class Command extends CommandBase {
     }
 
     @Override
-    public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
         if (requiredArguments.size() >= args.length - 1) {
             if (requiredArguments.getValue(args.length - 1) == ArgumentType.PLAYER) {
                 return getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames());
@@ -99,7 +99,8 @@ public class Command extends CommandBase {
         return null;
     }
 
-    public List getAliases() {
+    @Override
+    public List<String> getCommandAliases() {
         return commandAliases;
     }
 

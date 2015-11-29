@@ -93,7 +93,7 @@ public class CommandBuilder {
      * @param type     The argument type.
      * @return The updated {@link CommandBuilder} instance.
      */
-    public CommandBuilder withRequiredArgument(String argument, ArgumentType type) {
+    public CommandBuilder withRequiredArgument(String argument, ArgumentType<?> type) {
         command.requiredArguments.put(argument, type);
         return this;
     }
@@ -118,7 +118,7 @@ public class CommandBuilder {
      * @param type     The argument type.
      * @return The updated {@link CommandBuilder} instance.
      */
-    public CommandBuilder withOptionalArgument(String argument, ArgumentType type) {
+    public CommandBuilder withOptionalArgument(String argument, ArgumentType<?> type) {
         command.optionalArguments.put(argument, type);
         return this;
     }

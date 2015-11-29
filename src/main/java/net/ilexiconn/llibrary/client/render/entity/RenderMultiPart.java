@@ -1,5 +1,7 @@
 package net.ilexiconn.llibrary.client.render.entity;
 
+import org.lwjgl.opengl.GL11;
+
 import net.ilexiconn.llibrary.common.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart;
 import net.minecraft.client.Minecraft;
@@ -9,7 +11,6 @@ import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.EntityLiving;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 /**
  * Basic class for debugging entity classes with {@link net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart}.
@@ -20,13 +21,13 @@ import org.lwjgl.opengl.GL11;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public abstract class RenderMultiPart extends RenderLiving {
+public abstract class RenderMultiPart<T extends EntityLiving> extends RenderLiving<T> {
     public RenderMultiPart(ModelBase model, float shadow) {
         super(Minecraft.getMinecraft().getRenderManager(), model, shadow);
     }
 
     @Override
-    public void doRender(EntityLiving entity, double x, double y, double z, float rotationYaw, float partialTicks) {
+    public void doRender(T entity, double x, double y, double z, float rotationYaw, float partialTicks) {
         super.doRender(entity, x, y, z, rotationYaw, partialTicks);
         doRender((IEntityMultiPart) entity, x, y, z, rotationYaw, partialTicks);
     }

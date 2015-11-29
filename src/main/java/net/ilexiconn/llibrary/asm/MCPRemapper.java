@@ -20,7 +20,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
 
 public class MCPRemapper extends Remapper implements LineProcessor<Void> {
-
     private static final int DIR_GUESSES = 4;
     private static final int DIR_ASKS = 3;
 

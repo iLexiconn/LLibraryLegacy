@@ -8,7 +8,6 @@ import org.objectweb.asm.tree.MethodNode;
 public class ImportantInsnVisitor extends ClassVisitor {
 
     public class ImportantInsnMethodVisitor extends MethodVisitor {
-
         private MethodVisitor delegate;
 
         public ImportantInsnMethodVisitor(int access, String name, String desc, String signature, String[] exceptions) {

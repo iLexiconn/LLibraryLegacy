@@ -22,7 +22,7 @@ import org.objectweb.asm.util.TraceMethodVisitor;
 public class InsnListSection implements Iterable<AbstractInsnNode> {
 
     private class InsnListSectionIterator implements Iterator<AbstractInsnNode> {
-        int i = 0;
+        private int i = 0;
 
         @Override
         public boolean hasNext() {

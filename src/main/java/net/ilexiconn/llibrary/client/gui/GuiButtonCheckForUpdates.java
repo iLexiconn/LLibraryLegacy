@@ -62,7 +62,7 @@ public class GuiButtonCheckForUpdates extends GuiButton {
         }
     }
 
-    protected void drawHoveringText(List text, int x, int y, FontRenderer font) {
+    protected void drawHoveringText(List<String> text, int x, int y, FontRenderer font) {
         if (!text.isEmpty()) {
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             RenderHelper.disableStandardItemLighting();

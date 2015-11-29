@@ -14,7 +14,6 @@ import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRema
 public class ClassHeirachyManager implements IClassTransformer {
 
     public static class SuperCache {
-
         private String superclass;
         public HashSet<String> parents = new HashSet<String>();
         private boolean flattened;

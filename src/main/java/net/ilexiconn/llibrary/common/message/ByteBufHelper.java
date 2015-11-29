@@ -72,7 +72,7 @@ public class ByteBufHelper
         }
         else if (type.isInstance(List.class))
         {
-            List list = (List) field.get(object);
+            List<?> list = (List<?>) field.get(object);
 
             buffer.writeInt(list.size());
 
@@ -123,7 +123,7 @@ public class ByteBufHelper
         }
         else if (type.isInstance(List.class)) //TODO we shouldn't replacing this with an array list
         {
-            List list = Lists.newArrayList();
+            List<Object> list = Lists.newArrayList();
 
             for (int i = 0; i < buffer.readInt(); i++)
             {

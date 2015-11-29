@@ -1,23 +1,23 @@
 package net.ilexiconn.llibrary.client.render.entity.layer;
 
+import java.util.Random;
+
 import net.ilexiconn.llibrary.common.event.RenderStuckArrowEvent;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Random;
-
 @SideOnly(Side.CLIENT)
-public class LayerLLibraryArrow implements LayerRenderer {
+public class LayerLLibraryArrow implements LayerRenderer<AbstractClientPlayer> {
     public RenderPlayer renderer;
 
     public LayerLLibraryArrow(RenderPlayer r) {
@@ -25,7 +25,7 @@ public class LayerLLibraryArrow implements LayerRenderer {
     }
 
     @Override
-    public void doRenderLayer(EntityLivingBase entity, float f8, float f7, float partialTicks, float f5, float f4, float f9, float size) {
+    public void doRenderLayer(AbstractClientPlayer entity, float f8, float f7, float partialTicks, float f5, float f4, float f9, float size) {
         if (MinecraftForge.EVENT_BUS.post(new RenderStuckArrowEvent.Pre(entity, renderer, partialTicks))) {
             return;
         }

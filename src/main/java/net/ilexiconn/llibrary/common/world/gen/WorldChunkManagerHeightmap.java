@@ -34,14 +34,14 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
      * A list of biomes that the player can spawn in.
      */
     private List biomesToSpawnIn;
-    private String field_180301_f;
+    private String generatorOptions;
     private long seed;
 
     private WorldHeightmapGenerator generator;
 
     protected WorldChunkManagerHeightmap(WorldHeightmapGenerator generator) {
         this.biomeCache = new BiomeCache(this);
-        this.field_180301_f = "";
+        this.generatorOptions = "";
         this.biomesToSpawnIn = Lists.newArrayList();
         this.biomesToSpawnIn.addAll(allowedBiomes);
         this.generator = generator;
@@ -49,7 +49,7 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
 
     public WorldChunkManagerHeightmap(long seed, WorldType worldType, String p_i45744_4_, WorldHeightmapGenerator generator) {
         this(generator);
-        this.field_180301_f = p_i45744_4_;
+        this.generatorOptions = p_i45744_4_;
         this.seed = seed;
     }
 

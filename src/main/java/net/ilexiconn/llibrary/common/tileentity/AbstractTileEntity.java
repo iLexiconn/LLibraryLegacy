@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
  * @since 0.1.0
  */
 public abstract class AbstractTileEntity extends TileEntity {
+    @SuppressWarnings("rawtypes")
     @Override
     public Packet getDescriptionPacket() {
         NBTTagCompound nbtTag = new NBTTagCompound();

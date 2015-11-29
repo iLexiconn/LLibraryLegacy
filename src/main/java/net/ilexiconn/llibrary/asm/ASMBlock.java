@@ -17,7 +17,6 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableMap;
 
 public class ASMBlock {
-
     public InsnListSection list;
     private BiMap<String, LabelNode> labels;
 
@@ -77,7 +76,7 @@ public class ASMBlock {
     }
 
     public void replaceLabels(Map<LabelNode, LabelNode> labelMap) {
-        replaceLabels(labelMap, Collections.EMPTY_SET);
+        replaceLabels(labelMap, Collections.<LabelNode>emptySet());
     }
 
     public void replaceLabel(String s, LabelNode l) {

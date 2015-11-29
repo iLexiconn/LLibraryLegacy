@@ -24,7 +24,6 @@ import com.google.common.base.Function;
 import com.google.common.collect.Maps;
 
 public class InsnComparator {
-
     public static boolean varInsnEqual(VarInsnNode insn1, VarInsnNode insn2) {
         return insn1.var == -1 || insn2.var == -1 || insn1.var == insn2.var;
     }
