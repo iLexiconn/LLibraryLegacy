@@ -145,7 +145,7 @@ public abstract class WorldHeightmapGenerator
     }
 
     private int getHeight(int x, int y) {
-        return ((int) heightmap[x][y]) + 128;
+        return (heightmap[x][y]) + 128;
     }
 
     public int getHeightForCoords(int x, int z) {

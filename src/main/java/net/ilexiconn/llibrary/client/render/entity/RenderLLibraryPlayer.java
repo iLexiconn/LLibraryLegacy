@@ -31,6 +31,7 @@ public final class RenderLLibraryPlayer extends RenderPlayer {
         addLayer(new LayerCustomHead(((ModelLLibraryBiped) mainModel).bipedHead));
     }
     
+    @Override
     public void renderRightArm(AbstractClientPlayer player) {
         if (!MinecraftForge.EVENT_BUS.post(new RenderFirstPersonEvent.Pre(player, this, ((ModelLLibraryBiped) mainModel)))) {
             super.renderRightArm(player);

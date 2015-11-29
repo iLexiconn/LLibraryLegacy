@@ -14,18 +14,22 @@ import java.util.Set;
  */
 @SideOnly(Side.CLIENT)
 public class GuiLLibraryConfigFactory implements IModGuiFactory {
+    @Override
     public void initialize(Minecraft mc) {
 
     }
 
+    @Override
     public Class<? extends GuiScreen> mainConfigGuiClass() {
         return GuiLLibraryConfig.class;
     }
 
+    @Override
     public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {
         return null;
     }
 
+    @Override
     public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
         return null;
     }

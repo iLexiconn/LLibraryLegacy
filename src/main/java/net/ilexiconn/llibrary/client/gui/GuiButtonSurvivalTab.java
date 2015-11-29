@@ -29,6 +29,7 @@ public class GuiButtonSurvivalTab extends GuiButton {
         survivalTab = tab;
     }
 
+    @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         if (visible) {
             GL11.glColor4f(1f, 1f, 1f, 1f);
@@ -71,6 +72,7 @@ public class GuiButtonSurvivalTab extends GuiButton {
         }
     }
 
+    @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
         if (super.mousePressed(mc, mouseX, mouseY)) {
             if (mc.currentScreen.getClass() != survivalTab.getContainer()) {
@@ -141,6 +143,7 @@ public class GuiButtonSurvivalTab extends GuiButton {
         }
     }
 
+    @Override
     public void playPressSound(SoundHandler soundHandler) {
 
     }

@@ -36,6 +36,7 @@ public class Time {
         return hours > 12 ? pm : am;
     }
 
+    @Override
     public String toString() {
         Object[] aobject = {hours, minutes, seconds, ticks};
         return String.format("%sh %smin %ss %st", aobject);

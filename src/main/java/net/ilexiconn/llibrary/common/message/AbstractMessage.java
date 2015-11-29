@@ -29,6 +29,7 @@ public abstract class AbstractMessage<M extends AbstractMessage> implements IMes
         networkWrapper.registerMessage(clazz, clazz, id, side);
     }
 
+    @Override
     public IMessage onMessage(M message, MessageContext ctx) {
         if (ctx.side.isClient()) {
             handleClientMessage(message, LLibrary.proxy.getClientPlayer());

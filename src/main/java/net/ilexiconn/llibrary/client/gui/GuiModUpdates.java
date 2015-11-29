@@ -64,6 +64,7 @@ public class GuiModUpdates extends GuiScreen {
         this.mods.addAll(VersionHandler.getOutdatedMods());
     }
 
+    @Override
     public void initGui() {
         for (JsonModUpdate mod : mods) {
             listWidth = Math.max(listWidth, fontRendererObj.getStringWidth(mod.name) + 47);
@@ -94,6 +95,7 @@ public class GuiModUpdates extends GuiScreen {
         updateCache();
     }
 
+    @Override
     protected void mouseClicked(int x, int y, int button) throws IOException {
         super.mouseClicked(x, y, button);
         search.mouseClicked(x, y, button);
@@ -102,11 +104,13 @@ public class GuiModUpdates extends GuiScreen {
         }
     }
 
+    @Override
     protected void keyTyped(char c, int keyCode) throws IOException {
         super.keyTyped(c, keyCode);
         search.textboxKeyTyped(c, keyCode);
     }
 
+    @Override
     public void updateScreen() {
         super.updateScreen();
         search.updateCursorCounter();
@@ -137,12 +141,13 @@ public class GuiModUpdates extends GuiScreen {
         lastFilterText = search.getText();
     }
 
+    @Override
     protected void actionPerformed(GuiButton button) throws IOException {
         if (button.enabled) {
             SortType type = SortType.getTypeForButton(button);
 
             if (type != null) {
-                for (GuiButton b : (List<GuiButton>) buttonList) {
+                for (GuiButton b : buttonList) {
                     if (SortType.getTypeForButton(b) != null) {
                         b.enabled = true;
                     }
@@ -194,6 +199,7 @@ public class GuiModUpdates extends GuiScreen {
         super.actionPerformed(button);
     }
 
+    @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         if (VersionHandler.getOutdatedMods().isEmpty()) {
             drawDefaultBackground();
@@ -281,21 +287,26 @@ public class GuiModUpdates extends GuiScreen {
             this.setHeaderInfo(true, getHeaderHeight());
         }
 
+        @Override
         protected int getSize() {
             return 0;
         }
 
+        @Override
         protected void elementClicked(int index, boolean doubleClick) {
         }
 
+        @Override
         protected boolean isSelected(int index) {
             return false;
         }
 
+        @Override
         protected void drawBackground() {
 
         }
 
+        @Override
         protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, Tessellator tess) {
 
         }
@@ -322,6 +333,7 @@ public class GuiModUpdates extends GuiScreen {
             return height;
         }
 
+        @Override
         protected void drawHeader(int entryRight, int relativeY, Tessellator tess) {
             int top = relativeY;
 
@@ -336,6 +348,7 @@ public class GuiModUpdates extends GuiScreen {
             }
         }
 
+        @Override
         protected void clickHeader(int x, int y) {
             if (y <= 0) {
                 return;
@@ -349,7 +362,7 @@ public class GuiModUpdates extends GuiScreen {
             IChatComponent line = lines.get(lineIdx);
             if (line != null) {
                 int k = -4;
-                for (IChatComponent part : (Iterable<IChatComponent>) line) {
+                for (IChatComponent part : line) {
                     if (!(part instanceof ChatComponentText)) {
                         continue;
                     }
@@ -366,11 +379,13 @@ public class GuiModUpdates extends GuiScreen {
     private enum SortType implements Comparator<JsonModUpdate> {
         NORMAL(24),
         A_TO_Z(25) {
+            @Override
             protected int compare(String name1, String name2) {
                 return name1.compareTo(name2);
             }
         },
         Z_TO_A(26) {
+            @Override
             protected int compare(String name1, String name2) {
                 return name2.compareTo(name1);
             }
@@ -395,6 +410,7 @@ public class GuiModUpdates extends GuiScreen {
             return 0;
         }
 
+        @Override
         public int compare(JsonModUpdate o1, JsonModUpdate o2) {
             String name1 = StringUtils.stripControlCodes(o1.name).toLowerCase();
             String name2 = StringUtils.stripControlCodes(o2.name).toLowerCase();

@@ -20,6 +20,7 @@ public final class ModelLLibraryBiped extends ModelBiped {
         MinecraftForge.EVENT_BUS.post(new InitializePlayerModelEvent(this));
     }
 
+    @Override
     public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks) {
         setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
 

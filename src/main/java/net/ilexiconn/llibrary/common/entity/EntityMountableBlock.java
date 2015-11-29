@@ -31,6 +31,7 @@ public class EntityMountableBlock extends Entity {
         setSize(0f, 0f);
     }
 
+    @Override
     public boolean interactFirst(EntityPlayer player) {
         if (riddenByEntity != null && riddenByEntity instanceof EntityPlayer && riddenByEntity != player) {
             return true;
@@ -42,6 +43,7 @@ public class EntityMountableBlock extends Entity {
         }
     }
 
+    @Override
     public void onEntityUpdate() {
         if (!worldObj.isRemote) {
             worldObj.theProfiler.startSection("entityBaseTick");
@@ -55,14 +57,17 @@ public class EntityMountableBlock extends Entity {
         }
     }
 
+    @Override
     public void entityInit() {
         setSize(0f, 0f);
     }
 
+    @Override
     public void readEntityFromNBT(NBTTagCompound nbtTag) {
 
     }
 
+    @Override
     public void writeEntityToNBT(NBTTagCompound nbtTag) {
 
     }

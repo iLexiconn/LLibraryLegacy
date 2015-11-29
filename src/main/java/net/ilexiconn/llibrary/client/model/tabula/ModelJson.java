@@ -60,6 +60,7 @@ public class ModelJson extends MowzieModelBase {
         this.animator = animator;
     }
 
+    @Override
     public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks) {
         this.setRotationAngles(limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
 
@@ -79,6 +80,7 @@ public class ModelJson extends MowzieModelBase {
      * @see net.minecraft.entity.Entity
      * @since 0.1.0
      */
+    @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float rotation, float rotationYaw, float rotationPitch, float partialTicks, Entity entity) {
         super.setRotationAngles(limbSwing, limbSwingAmount, rotation, rotationYaw, rotationPitch, partialTicks, entity);
 

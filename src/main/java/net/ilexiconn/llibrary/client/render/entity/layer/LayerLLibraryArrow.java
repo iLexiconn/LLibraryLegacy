@@ -24,6 +24,7 @@ public class LayerLLibraryArrow implements LayerRenderer {
         renderer = r;
     }
 
+    @Override
     public void doRenderLayer(EntityLivingBase entity, float f8, float f7, float partialTicks, float f5, float f4, float f9, float size) {
         if (MinecraftForge.EVENT_BUS.post(new RenderStuckArrowEvent.Pre(entity, renderer, partialTicks))) {
             return;
@@ -33,7 +34,7 @@ public class LayerLLibraryArrow implements LayerRenderer {
 
         if (i > 0) {
             EntityArrow entityarrow = new EntityArrow(entity.worldObj, entity.posX, entity.posY, entity.posZ);
-            Random random = new Random((long) entity.getEntityId());
+            Random random = new Random(entity.getEntityId());
             RenderHelper.disableStandardItemLighting();
 
             for (int j = 0; j < i; ++j) {
@@ -55,8 +56,8 @@ public class LayerLLibraryArrow implements LayerRenderer {
                 f15 *= -1.0F;
                 f16 *= -1.0F;
                 float f13 = MathHelper.sqrt_float(f14 * f14 + f16 * f16);
-                entityarrow.prevRotationYaw = entityarrow.rotationYaw = (float) (Math.atan2((double) f14, (double) f16) * 180.0D / Math.PI);
-                entityarrow.prevRotationPitch = entityarrow.rotationPitch = (float) (Math.atan2((double) f15, (double) f13) * 180.0D / Math.PI);
+                entityarrow.prevRotationYaw = entityarrow.rotationYaw = (float) (Math.atan2(f14, f16) * 180.0D / Math.PI);
+                entityarrow.prevRotationPitch = entityarrow.rotationPitch = (float) (Math.atan2(f15, f13) * 180.0D / Math.PI);
                 double d0 = 0.0D;
                 double d1 = 0.0D;
                 double d2 = 0.0D;
@@ -68,6 +69,7 @@ public class LayerLLibraryArrow implements LayerRenderer {
         }
     }
 
+    @Override
     public boolean shouldCombineTextures() {
         return false;
     }

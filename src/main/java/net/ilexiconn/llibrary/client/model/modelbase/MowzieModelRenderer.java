@@ -53,6 +53,7 @@ public class MowzieModelRenderer extends ModelRenderer {
         super(modelBase);
     }
 
+    @Override
     public void addChild(ModelRenderer renderer) {
         super.addChild(renderer);
 
@@ -240,6 +241,7 @@ public class MowzieModelRenderer extends ModelRenderer {
 
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void render(float partialTicks) {
         GL11.glPushMatrix();

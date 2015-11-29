@@ -27,6 +27,7 @@ public class GuiOverride extends GuiScreen {
 
     public List<GuiButton> buttonList = Lists.newArrayList();
 
+    @Override
     public void drawScreen(int mouseX, int mouseY, float partalTicks) {
         super.drawScreen(mouseX, mouseY, partalTicks);
         List<GuiLabel> labelList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, overriddenScreen, "labelList", "field_146293_o");
@@ -41,6 +42,7 @@ public class GuiOverride extends GuiScreen {
         }
     }
 
+    @Override
     public void setWorldAndResolution(Minecraft mc, int width, int height) {
         this.mc = mc;
         this.fontRendererObj = mc.fontRendererObj;
@@ -53,6 +55,7 @@ public class GuiOverride extends GuiScreen {
         MinecraftForge.EVENT_BUS.post(new InitGuiEvent.Post(this, this.buttonList));
     }
 
+    @Override
     public void actionPerformed(GuiButton button) {
 
     }

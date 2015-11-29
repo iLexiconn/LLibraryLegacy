@@ -3,9 +3,9 @@ package net.ilexiconn.llibrary.common.command.builder;
 public class Argument {
     private String name;
     private String value;
-    private ArgumentType type;
+    private ArgumentType<?> type;
 
-    public Argument(String name, String value, ArgumentType type) {
+    public Argument(String name, String value, ArgumentType<?> type) {
         this.name = name;
         this.value = value;
         this.type = type;
@@ -19,7 +19,7 @@ public class Argument {
         return value;
     }
 
-    public ArgumentType getType() {
+    public ArgumentType<?> getType() {
         return type;
     }
 }

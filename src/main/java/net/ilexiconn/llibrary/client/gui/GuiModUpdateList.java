@@ -41,26 +41,32 @@ public class GuiModUpdateList extends GuiScrollingList {
         cachedLogoDimensions = new HashMap<Integer, Dimension>();
     }
 
+    @Override
     protected int getSize() {
         return mods.size();
     }
 
+    @Override
     protected void elementClicked(int index, boolean doubleClick) {
         this.parent.selectModIndex(index);
     }
 
+    @Override
     protected boolean isSelected(int index) {
         return this.parent.modIndexSelected(index);
     }
 
+    @Override
     protected void drawBackground() {
         this.parent.drawDefaultBackground();
     }
 
+    @Override
     protected int getContentHeight() {
         return (this.getSize()) * 35 + 1;
     }
 
+    @Override
     protected void drawSlot(int idx, int right, int top, int height, Tessellator tess) {
         Minecraft minecraft = Minecraft.getMinecraft();
         JsonModUpdate mc = mods.get(idx);

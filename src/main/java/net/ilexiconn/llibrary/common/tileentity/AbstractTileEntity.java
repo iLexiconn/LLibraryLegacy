@@ -11,21 +11,25 @@ import net.minecraft.tileentity.TileEntity;
  * @since 0.1.0
  */
 public abstract class AbstractTileEntity extends TileEntity {
+    @Override
     public Packet getDescriptionPacket() {
         NBTTagCompound nbtTag = new NBTTagCompound();
         saveClientDataToNBT(nbtTag);
         return new S35PacketUpdateTileEntity(pos, 0, nbtTag);
     }
 
+    @Override
     public void onDataPacket(NetworkManager manager, S35PacketUpdateTileEntity packet) {
         loadClientDataFromNBT(packet.getNbtCompound());
     }
 
+    @Override
     public void readFromNBT(NBTTagCompound nbtTag) {
         super.readFromNBT(nbtTag);
         loadFromNBT(nbtTag);
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound nbtTag) {
         super.writeToNBT(nbtTag);
         saveToNBT(nbtTag);

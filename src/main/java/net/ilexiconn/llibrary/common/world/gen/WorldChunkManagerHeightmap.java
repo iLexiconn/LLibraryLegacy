@@ -60,6 +60,7 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
     /**
      * Gets the list of valid biomes for the player to spawn in.
      */
+    @Override
     public List getBiomesToSpawnIn() {
         return this.biomesToSpawnIn;
     }
@@ -67,6 +68,7 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
     /**
      * Returns the biome generator
      */
+    @Override
     public BiomeGenBase getBiomeGenerator(BlockPos pos) {
         return this.func_180300_a(pos, null);
     }
@@ -78,6 +80,7 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
     /**
      * Returns a list of rainfall values for the specified blocks. Args: listToReuse, x, z, width, length.
      */
+    @Override
     public float[] getRainfall(float[] listToReuse, int x, int z, int width, int length) {
         IntCache.resetIntCache();
 
@@ -90,7 +93,7 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
         for (int partZ = 0; partZ < length; ++partZ) {
             for (int partX = 0; partX < width; ++partX) {
                 try {
-                    float f = (float) BiomeGenBase.getBiomeFromBiomeList(getBiomeAt(x, z).biomeID, BiomeGenBase.field_180279_ad).getIntRainfall() / 65536.0F;
+                    float f = BiomeGenBase.getBiomeFromBiomeList(getBiomeAt(x, z).biomeID, BiomeGenBase.field_180279_ad).getIntRainfall() / 65536.0F;
 
                     if (f > 1.0F) {
                         f = 1.0F;
@@ -118,6 +121,7 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
     /**
      * Return an adjusted version of a given temperature based on the y height
      */
+    @Override
     @SideOnly(Side.CLIENT)
     public float getTemperatureAtHeight(float p_76939_1_, int p_76939_2_) {
         return p_76939_1_;
@@ -126,6 +130,7 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
     /**
      * Returns an array of biomes for the location input.
      */
+    @Override
     public BiomeGenBase[] getBiomesForGeneration(BiomeGenBase[] biomes, int x, int z, int width, int height) {
         IntCache.resetIntCache();
 
@@ -161,6 +166,7 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
      * Returns biomes to use for the blocks and loads the other data like temperature and humidity onto the
      * WorldChunkManager Args: oldBiomeList, x, z, width, depth
      */
+    @Override
     public BiomeGenBase[] loadBlockGeneratorData(BiomeGenBase[] oldBiomeList, int x, int z, int width, int depth) {
         return this.getBiomeGenAt(oldBiomeList, x, z, width, depth, true);
     }
@@ -171,6 +177,7 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
      *
      * @param cacheFlag If false, don't check biomeCache to avoid infinite loop in BiomeCacheBlock
      */
+    @Override
     public BiomeGenBase[] getBiomeGenAt(BiomeGenBase[] listToReuse, int x, int z, int width, int length, boolean cacheFlag) {
         IntCache.resetIntCache();
 
@@ -199,6 +206,7 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
     /**
      * checks given Chunk's Biomes against List of allowed ones
      */
+    @Override
     public boolean areBiomesViable(int x, int z, int radius, List allowed) {
         IntCache.resetIntCache();
         int l = x - radius >> 2;
@@ -231,6 +239,7 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
         }
     }
 
+    @Override
     public BlockPos findBiomePosition(int x, int z, int range, List biomes, Random random) {
         IntCache.resetIntCache();
         int l = x - range >> 2;
@@ -270,10 +279,12 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
     /**
      * Calls the WorldChunkManager's biomeCache.cleanupCache()
      */
+    @Override
     public void cleanupCache() {
         this.biomeCache.cleanupCache();
     }
 
+    @Override
     public GenLayer[] getModdedBiomeGenerators(WorldType worldType, long seed, GenLayer[] original) {
         WorldTypeEvent.InitBiomeGens event = new WorldTypeEvent.InitBiomeGens(worldType, seed, original);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);

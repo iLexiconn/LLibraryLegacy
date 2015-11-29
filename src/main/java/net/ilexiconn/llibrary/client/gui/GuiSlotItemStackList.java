@@ -18,26 +18,32 @@ public class GuiSlotItemStackList extends GuiScrollingList {
         this.parent = parent;
     }
 
+    @Override
     protected int getSize() {
         return parent.itemsFiltered.size();
     }
 
+    @Override
     protected void elementClicked(int index, boolean doubleClick) {
         parent.selectItemIndex(index);
     }
 
+    @Override
     protected boolean isSelected(int index) {
         return parent.itemIndexSelected(index);
     }
 
+    @Override
     protected void drawBackground() {
         parent.drawDefaultBackground();
     }
 
+    @Override
     protected int getContentHeight() {
         return (getSize()) * 18 + 1;
     }
 
+    @Override
     protected void drawSlot(int listIndex, int x, int y, int par4, Tessellator tessellator) {
         if (listIndex < parent.itemsFiltered.size()) {
             ItemStack itemstack = parent.itemsFiltered.get(listIndex);

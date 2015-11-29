@@ -72,6 +72,7 @@ public class EntityPart extends Entity {
         solid = s;
     }
 
+    @Override
     public void onUpdate() {
         super.onUpdate();
 
@@ -82,30 +83,37 @@ public class EntityPart extends Entity {
         }
     }
 
+    @Override
     public boolean canBePushed() {
         return true;
     }
 
+    @Override
     public boolean attackEntityFrom(DamageSource source, float damage) {
         return !isEntityInvulnerable(source) && parent.attackEntityFrom(source, damage * damageMultiplier);
     }
 
+    @Override
     public boolean isEntityEqual(Entity entity) {
         return this == entity || parent == entity;
     }
 
+    @Override
     public void entityInit() {
 
     }
 
+    @Override
     public void readEntityFromNBT(NBTTagCompound nbtTag) {
 
     }
 
+    @Override
     public void writeEntityToNBT(NBTTagCompound nbtTag) {
 
     }
 
+    @Override
     public AxisAlignedBB getCollisionBox(Entity entity) {
         return solid ? entity.getEntityBoundingBox() : null;
     }
@@ -114,6 +122,7 @@ public class EntityPart extends Entity {
         return solid ? getEntityBoundingBox() : null;
     }
 
+    @Override
     public boolean canBeCollidedWith() {
         return true;
     }
