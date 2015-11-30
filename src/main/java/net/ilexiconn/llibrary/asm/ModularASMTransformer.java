@@ -16,7 +16,6 @@ import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodNode;
 
 import net.ilexiconn.llibrary.LLibrary;
-import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 
 public class ModularASMTransformer {
 
@@ -46,7 +45,7 @@ public class ModularASMTransformer {
                 }
 
                 bytes = ASMHelper.createBytes(cnode, writeFlags);
-                if (LLibraryConfigHandler.asmDump) {
+                if (ASMHelper.asmDump) {
                     ASMHelper.dump(bytes, new File("asm/ccl_modular/" + cnode.name.replace('/', '#') + ".txt"), false, false);
                 }
                 return bytes;

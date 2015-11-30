@@ -14,7 +14,6 @@ import com.google.common.io.LineProcessor;
 import com.google.common.io.Resources;
 
 import net.ilexiconn.llibrary.common.config.ConfigHelper;
-import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
@@ -82,7 +81,7 @@ public class MCPRemapper extends Remapper implements LineProcessor<Void> {
         }
 
         for (int i = 0; i < DIR_GUESSES + DIR_ASKS; i++) {
-            File dir = confDirectoryGuess(i, LLibraryConfigHandler.asmMappingDir);
+            File dir = confDirectoryGuess(i, "");
             if (dir == null || dir.isFile()) {
                 continue;
             }

@@ -22,12 +22,13 @@ import org.objectweb.asm.util.ASMifier;
 import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceClassVisitor;
 
-import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
-
 public class ASMHelper {
     public static interface Acceptor {
         public void accept(ClassVisitor cv) throws IOException;
     }
+    
+    public static boolean asmDump = true;
+    public static boolean asmTextify = true;
 
     public static MethodNode findMethod(ObfMapping methodmap, ClassNode cnode) {
         for (MethodNode mnode : cnode.methods) {
@@ -156,7 +157,7 @@ public class ASMHelper {
     }
 
     public static void dump(Acceptor acceptor, File file, boolean filterImportant, boolean sortLocals) {
-        dump(acceptor, file, filterImportant, sortLocals, LLibraryConfigHandler.asmTextify);
+        dump(acceptor, file, filterImportant, sortLocals, asmTextify);
     }
 
     public static void dump(final byte[] bytes, File file, boolean filterImportant, boolean sortLocals) {
