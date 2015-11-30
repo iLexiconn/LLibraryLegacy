@@ -16,6 +16,7 @@ public class RenderLLibraryEntity extends EntityRenderer {
         mc = minecraft;
     }
 
+    @Override
     public void updateCameraAndRender(float partialTick) {
         EntityPlayer player = mc.thePlayer;
 

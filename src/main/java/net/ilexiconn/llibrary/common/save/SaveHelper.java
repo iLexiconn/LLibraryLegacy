@@ -175,11 +175,13 @@ public class SaveHelper {
             if (!destFile.exists()) {
                 destFile.createNewFile();
             }
-            source = new FileInputStream(sourceFile).getChannel();
-            destination = new FileOutputStream(destFile).getChannel();
+            FileInputStream in = new FileInputStream(sourceFile);
+            FileOutputStream out= new FileOutputStream(destFile);
+            source = in.getChannel();
+            destination = out.getChannel();
             destination.transferFrom(source, 0L, source.size());
-            source.close();
-            destination.close();
+            in.close();
+            out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

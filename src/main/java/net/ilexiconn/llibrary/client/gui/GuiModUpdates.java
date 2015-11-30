@@ -61,6 +61,7 @@ public class GuiModUpdates extends GuiScreen {
         this.mods.addAll(VersionHandler.getOutdatedMods());
     }
 
+    @Override
     public void initGui() {
         for (JsonModUpdate mod : mods) {
             listWidth = Math.max(listWidth, fontRendererObj.getStringWidth(mod.name) + 47);
@@ -91,6 +92,7 @@ public class GuiModUpdates extends GuiScreen {
         updateCache();
     }
 
+    @Override
     protected void mouseClicked(int x, int y, int button) {
         super.mouseClicked(x, y, button);
         search.mouseClicked(x, y, button);
@@ -99,11 +101,13 @@ public class GuiModUpdates extends GuiScreen {
         }
     }
 
+    @Override
     protected void keyTyped(char c, int keyCode) {
         super.keyTyped(c, keyCode);
         search.textboxKeyTyped(c, keyCode);
     }
 
+    @Override
     public void updateScreen() {
         super.updateScreen();
         search.updateCursorCounter();
@@ -133,6 +137,7 @@ public class GuiModUpdates extends GuiScreen {
         lastFilterText = search.getText();
     }
 
+    @Override
     protected void actionPerformed(GuiButton button) {
         if (button.enabled) {
             SortType type = SortType.getTypeForButton(button);
@@ -191,6 +196,7 @@ public class GuiModUpdates extends GuiScreen {
         super.actionPerformed(button);
     }
 
+    @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         if (VersionHandler.getOutdatedMods().isEmpty()) {
             drawDefaultBackground();
@@ -278,21 +284,26 @@ public class GuiModUpdates extends GuiScreen {
             this.func_27259_a(true, getHeaderHeight());
         }
 
+        @Override
         protected int getSize() {
             return 0;
         }
 
+        @Override
         protected void elementClicked(int index, boolean doubleClick) {
         }
 
+        @Override
         protected boolean isSelected(int index) {
             return false;
         }
 
+        @Override
         protected void drawBackground() {
 
         }
 
+        @Override
         protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, Tessellator tess) {
 
         }
@@ -319,6 +330,7 @@ public class GuiModUpdates extends GuiScreen {
             return height;
         }
 
+        @Override
         protected void func_27260_a(int entryRight, int relativeY, Tessellator tess) {
             int top = relativeY;
 
@@ -333,6 +345,7 @@ public class GuiModUpdates extends GuiScreen {
             }
         }
 
+        @Override
         protected void func_27255_a(int x, int y) {
             if (y <= 0) {
                 return;
@@ -363,11 +376,13 @@ public class GuiModUpdates extends GuiScreen {
     private enum SortType implements Comparator<JsonModUpdate> {
         NORMAL(24),
         A_TO_Z(25) {
+            @Override
             protected int compare(String name1, String name2) {
                 return name1.compareTo(name2);
             }
         },
         Z_TO_A(26) {
+            @Override
             protected int compare(String name1, String name2) {
                 return name2.compareTo(name1);
             }
@@ -392,6 +407,7 @@ public class GuiModUpdates extends GuiScreen {
             return 0;
         }
 
+        @Override
         public int compare(JsonModUpdate o1, JsonModUpdate o2) {
             String name1 = StringUtils.stripControlCodes(o1.name).toLowerCase();
             String name2 = StringUtils.stripControlCodes(o2.name).toLowerCase();

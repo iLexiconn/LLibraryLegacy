@@ -35,6 +35,7 @@ public class GuiLLibraryConfig extends GuiConfig {
             super(owningScreen, owningEntryList, prop);
         }
 
+        @Override
         public GuiScreen buildChildScreen() {
             return new GuiConfig(this.owningScreen, new ConfigElement(ConfigHelper.getConfigContainer("llibrary").getConfiguration().getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(), "llibrary", false, false, "LLibrary Config", "General");
         }

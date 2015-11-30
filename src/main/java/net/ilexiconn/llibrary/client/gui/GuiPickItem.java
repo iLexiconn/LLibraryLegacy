@@ -79,6 +79,7 @@ public abstract class GuiPickItem extends GuiScreen {
         }
     }
 
+    @Override
     public void initGui() {
         super.initGui();
 
@@ -100,6 +101,7 @@ public abstract class GuiPickItem extends GuiScreen {
 
     public abstract void onSelectEntry(ItemStack itemstack, EntityPlayer player);
 
+    @Override
     protected void actionPerformed(GuiButton button) {
         int id = button.id;
 
@@ -108,6 +110,7 @@ public abstract class GuiPickItem extends GuiScreen {
         }
     }
 
+    @Override
     protected void keyTyped(char c, int key) {
         Keyboard.enableRepeatEvents(true);
         textField.textboxKeyTyped(c, key);
@@ -117,15 +120,18 @@ public abstract class GuiPickItem extends GuiScreen {
         }
     }
 
+    @Override
     public boolean doesGuiPauseGame() {
         return false;
     }
 
+    @Override
     protected void mouseClicked(int mouseX, int mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
         textField.mouseClicked(mouseX, mouseY, button);
     }
 
+    @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         filterItemsBySearch();
         itemList.drawScreen(mouseX, mouseY, partialTicks);

@@ -24,6 +24,7 @@ import java.util.Map;
 public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
     public static LoggerHelper logger = new LoggerHelper("LLibraryUpdater");
 
+    @Override
     public Void call() throws Exception {
         logger.info("Searching for mod updates");
         File mods = new File("mods");
@@ -61,22 +62,27 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
         return null;
     }
 
+    @Override
     public String[] getASMTransformerClass() {
         return null;
     }
 
+    @Override
     public String getModContainerClass() {
         return null;
     }
 
+    @Override
     public String getSetupClass() {
         return getClass().getName();
     }
 
+    @Override
     public void injectData(Map<String, Object> data) {
 
     }
 
+    @Override
     public String getAccessTransformerClass() {
         return null;
     }
