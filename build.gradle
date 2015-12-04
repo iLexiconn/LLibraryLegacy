@@ -45,6 +45,7 @@ minecraft {
     version = config.minecraft_version + "-" + config.forge_version + "-" + config.minecraft_version //temp, because it's a non-master branch
     runDir = "minecraft"
     mappings = "snapshot_nodoc_20151122"
+    makeObfSourceJar = false
 }
 
 processResources {
@@ -79,8 +80,9 @@ task devJar(type: Jar) {
     }
 }
 
+
 artifacts {
-    archives devJar, sourceJar
+    archives devJar
 }
 
 publishing {
@@ -94,10 +96,6 @@ publishing {
 
             artifact devJar {
                 classifier "dev"
-            }
-
-            artifact sourceJar {
-                classifier "sources"
             }
 
             pom.withXml {
@@ -158,10 +156,6 @@ curseforge {
 
         addArtifact(devJar) {
             displayName = "Development"
-        }
-
-        addArtifact(sourceJar) {
-            displayName = "Sources"
         }
     }
 }

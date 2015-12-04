@@ -204,7 +204,11 @@ public abstract class WorldHeightmapGenerator
 
     private static class BiCubic
     {
-        private static ThreadLocal<double[]> ARR_THREADSAFE = ThreadLocal.withInitial(() -> new double[4]);
+        private static ThreadLocal<double[]> ARR_THREADSAFE = new ThreadLocal<double[]>() {
+            protected double[] initialValue() {
+                return new double[4];
+            }
+        };
 
         public static double bicubic(double[][] p, double x, double y) {
             double[] arr = ARR_THREADSAFE.get();
