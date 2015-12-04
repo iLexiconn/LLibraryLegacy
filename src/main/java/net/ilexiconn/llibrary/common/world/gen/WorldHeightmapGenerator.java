@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public abstract class WorldHeightmapGenerator
 {
@@ -26,12 +25,7 @@ public abstract class WorldHeightmapGenerator
 
     public abstract double getWorldScale();
 
-    public abstract double getHeightScale(int height);
-
-    public int getHeightOffset(int height)
-    {
-        return 0;
-    }
+    public abstract int adjustHeight(int height);
 
     public abstract IBlockState getStoneBlock();
 
@@ -57,6 +51,8 @@ public abstract class WorldHeightmapGenerator
 
     public abstract int getOceanHeight(int x, int z);
 
+    public abstract int getOutOfBoundsHeight();
+
     public void loadHeightmap() {
         LLibrary.logger.info("Loading " + getName() + " Heightmap...");
 
@@ -68,24 +64,13 @@ public abstract class WorldHeightmapGenerator
 
             heightmap = new byte[width][height];
 
-            Random random = new Random(Long.MAX_VALUE);
-
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    int height = ((image.getRGB(x, y) & 0x0000FF));
+                    int height = image.getColorModel().getRed(image.getRaster().getDataElements(x, y, null));
 
-                    height *= getHeightScale(height);
-                    height += getHeightOffset(height);
+                    height = Math.min(adjustHeight(height), 255);
 
-                    if (height + 5 > 255) {
-                        height = 250;
-                    }
-
-                    if (height <= 1) {
-                        heightmap[x][y] = (byte) ((random.nextInt(5) + 25) - 128);
-                    } else {
-                        heightmap[x][y] = (byte) ((height - 128));
-                    }
+                    heightmap[x][y] = (byte) ((height - 128));
                 }
             }
         } catch (Exception e) {
@@ -144,10 +129,6 @@ public abstract class WorldHeightmapGenerator
         return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2) < 10;
     }
 
-    private int getHeight(int x, int y) {
-        return (heightmap[x][y]) + 128;
-    }
-
     public int getHeightForCoords(int x, int z) {
         double scale = getWorldScale();
 
@@ -158,12 +139,28 @@ public abstract class WorldHeightmapGenerator
         z += (getWorldOffsetZ() * scale);
 
         if (x < 0 || z < 0 || x >= scaledWidth || z >= scaledHeight) {
-            return 10;
+            return getOutOfBoundsHeight();
         }
 
-        BicubicInterpolator bi = new BicubicInterpolator();
+        double[][] buffer = new double[4][4];
 
-        return bi.getValue(heightmap, x, z, scale) + 128;
+        double xScaled = (double) x / (scaledWidth - 1) * (width - 1);
+        double yScaled = (double) z / (scaledHeight - 1) * (height - 1);
+        int xOrigin = (int) xScaled;
+        int yOrigin = (int) yScaled;
+        double xIntermediate = xScaled - xOrigin;
+        double yIntermediate = yScaled - yOrigin;
+
+        for (int u = 0; u < 4; u++) {
+            for (int v = 0; v < 4; v++) {
+                buffer[u][v] = extract(heightmap, xOrigin - 1 + u, yOrigin - 1 + v);
+            }
+        }
+
+        int value = (int) Math.round(BiCubic.bicubic(buffer, xIntermediate, yIntermediate)) + 128;
+        value = Math.min(0xff, Math.max(value, 0));
+
+        return value;
     }
 
     public BiomeGenBase getBiomeAt(int x, int z) {
@@ -200,33 +197,30 @@ public abstract class WorldHeightmapGenerator
         return loaded;
     }
 
-    public static class CubicInterpolator {
-        public static byte getValue(byte[] p, double x, double scale) {
-            x /= scale;
+    public static double cubic(double[] p, double x) {
+        return p[1] + 0.5 * x * (p[2] - p[0]
+                + x * (2.0 * p[0] - 5.0 * p[1] + 4.0 * p[2] - p[3] + x * (3.0 * (p[1] - p[2]) + p[3] - p[0])));
+    }
 
-            int xi = (int) x;
-            x -= xi;
-            double p0 = p[Math.max(0, xi - 1)];
-            double p1 = p[xi];
-            double p2 = p[Math.min(p.length - 1, xi + 1)];
-            double p3 = p[Math.min(p.length - 1, xi + 2)];
-            return (byte) Math.round(p1 + 0.5 * x * (p2 - p0 + x * (2.0 * p0 - 5.0 * p1 + 4.0 * p2 - p3 + x * (3.0 * (p1 - p2) + p3 - p0))));
+    private static class BiCubic
+    {
+        private static ThreadLocal<double[]> ARR_THREADSAFE = ThreadLocal.withInitial(() -> new double[4]);
+
+        public static double bicubic(double[][] p, double x, double y) {
+            double[] arr = ARR_THREADSAFE.get();
+            arr[0] = cubic(p[0], y);
+            arr[1] = cubic(p[1], y);
+            arr[2] = cubic(p[2], y);
+            arr[3] = cubic(p[3], y);
+            return cubic(arr, x);
         }
     }
 
-    public static class BicubicInterpolator extends CubicInterpolator {
-        private byte[] arr = new byte[4];
-
-        public byte getValue(byte[][] p, double x, double y, double scale) {
-            x /= scale;
-
-            int xi = (int) x;
-            x -= xi;
-            arr[0] = getValue(p[Math.max(0, xi - 1)], y, scale);
-            arr[1] = getValue(p[xi], y, scale);
-            arr[2] = getValue(p[Math.min(p.length - 1, xi + 1)], y, scale);
-            arr[3] = getValue(p[Math.min(p.length - 1, xi + 2)], y, scale);
-            return getValue(arr, x + 1, scale);
-        }
+    public static double extract(byte[][] arr, int x, int y)
+    {
+        x = Math.min(arr.length - 1, Math.max(0, x));
+        byte[] col = arr[x];
+        y = Math.min(col.length - 1, Math.max(0, y));
+        return col[y];
     }
 }
