@@ -14,6 +14,8 @@ public abstract class WorldHeightmapGenerator
     public byte[][] heightmap, biomemap;
     public int width, height, biomeWidth, biomeHeight;
 
+    public BufferedImage heightmapImage, biomemapImage;
+
     private Map<Integer, BiomeGenBase> biomes = new HashMap<Integer, BiomeGenBase>();
 
     private double biomemapToHeightmapWidthRatio, biomemapToHeightmapHeightRatio;
@@ -25,7 +27,7 @@ public abstract class WorldHeightmapGenerator
 
     public abstract double getWorldScale();
 
-    public abstract int adjustHeight(int height);
+    public abstract int adjustHeight(int x, int y, int height);
 
     public abstract IBlockState getStoneBlock();
 
@@ -51,7 +53,11 @@ public abstract class WorldHeightmapGenerator
 
     public abstract int getOceanHeight(int x, int z);
 
-    public abstract int getOutOfBoundsHeight();
+    public abstract int getOutOfBoundsHeight(int x, int z);
+
+    public abstract boolean loadHeightmapIntoArray();
+
+    public abstract boolean loadBiomemapIntoArray();
 
     public void loadHeightmap() {
         LLibrary.logger.info("Loading " + getName() + " Heightmap...");
@@ -62,16 +68,19 @@ public abstract class WorldHeightmapGenerator
             width = image.getWidth();
             height = image.getHeight();
 
-            heightmap = new byte[width][height];
+            if (loadHeightmapIntoArray())
+            {
+                heightmap = new byte[width][height];
 
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    int height = image.getColorModel().getRed(image.getRaster().getDataElements(x, y, null));
-
-                    height = Math.min(adjustHeight(height), 255);
-
-                    heightmap[x][y] = (byte) ((height - 128));
+                for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < width; x++) {
+                        heightmap[x][y] = (byte) ((getHeightmapImageValue(image, x, y) - 128));
+                    }
                 }
+            }
+            else
+            {
+                heightmapImage = image;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,19 +103,19 @@ public abstract class WorldHeightmapGenerator
                 biomeWidth = biomeImage.getWidth();
                 biomeHeight = biomeImage.getHeight();
 
-                biomemap = new byte[biomeWidth][biomeHeight];
+                if (loadBiomemapIntoArray())
+                {
+                    biomemap = new byte[biomeWidth][biomeHeight];
 
-                for (int y = 0; y < biomeHeight; y++) {
-                    for (int x = 0; x < biomeWidth; x++) {
-                        biomemap[x][y] = (byte) getDefaultBiome().biomeID;
-
-                        for (Map.Entry<Integer, BiomeGenBase> entry : biomes.entrySet()) {
-                            if (isSimilarColour(biomeImage.getRGB(x, y), entry.getKey())) {
-                                biomemap[x][y] = (byte) entry.getValue().biomeID;
-                                break;
-                            }
+                    for (int y = 0; y < biomeHeight; y++) {
+                        for (int x = 0; x < biomeWidth; x++) {
+                            biomemap[x][y] = (byte) getBiomeImageValue(biomeImage, x, y).biomeID;
                         }
                     }
+                }
+                else
+                {
+                    biomemapImage = biomeImage;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -114,6 +123,39 @@ public abstract class WorldHeightmapGenerator
 
             biomemapToHeightmapHeightRatio = (double) biomeHeight / (double) height;
             biomemapToHeightmapWidthRatio = (double) biomeWidth / (double) width;
+        }
+    }
+
+    public BiomeGenBase getBiomeImageValue(BufferedImage image, int x, int y)
+    {
+        BiomeGenBase biome = getDefaultBiome();
+
+        int rgb = image.getRGB(x, y);
+
+        for (Map.Entry<Integer, BiomeGenBase> entry : biomes.entrySet()) {
+            if (isSimilarColour(rgb, entry.getKey())) {
+                biome = entry.getValue();
+                break;
+            }
+        }
+
+        return biome;
+    }
+
+    public int getHeightmapImageValue(BufferedImage image, int x, int y)
+    {
+        return Math.min(adjustHeight(x, y, image.getColorModel().getRed(image.getRaster().getDataElements(x, y, null))), 255);
+    }
+
+    public int getHeight(int x, int y)
+    {
+        if (loadHeightmapIntoArray())
+        {
+            return ((int) heightmap[x][y]) + 128;
+        }
+        else
+        {
+            return getHeightmapImageValue(heightmapImage, x, y);
         }
     }
 
@@ -138,10 +180,6 @@ public abstract class WorldHeightmapGenerator
         x += (getWorldOffsetX() * scale);
         z += (getWorldOffsetZ() * scale);
 
-        if (x < 0 || z < 0 || x >= scaledWidth || z >= scaledHeight) {
-            return getOutOfBoundsHeight();
-        }
-
         double[][] buffer = new double[4][4];
 
         double xScaled = (double) x / (scaledWidth - 1) * (width - 1);
@@ -153,17 +191,17 @@ public abstract class WorldHeightmapGenerator
 
         for (int u = 0; u < 4; u++) {
             for (int v = 0; v < 4; v++) {
-                buffer[u][v] = extract(heightmap, xOrigin - 1 + u, yOrigin - 1 + v);
+                buffer[u][v] = extract(xOrigin - 1 + u, yOrigin - 1 + v);
             }
         }
 
-        int value = (int) Math.round(BiCubic.bicubic(buffer, xIntermediate, yIntermediate)) + 128;
+        int value = (int) Math.round(BiCubic.bicubic(buffer, xIntermediate, yIntermediate));
         value = Math.min(0xff, Math.max(value, 0));
 
         return value;
     }
 
-    public BiomeGenBase getBiomeAt(int x, int z) {
+    public BiomeGenBase getBiomeForCoords(int x, int z) {
         if (biomemap != null) {
             double scale = getWorldScale();
 
@@ -180,10 +218,22 @@ public abstract class WorldHeightmapGenerator
             double newX = (x * biomemapToHeightmapWidthRatio / scale);
             double newZ = (z * biomemapToHeightmapHeightRatio / scale);
 
-            return BiomeGenBase.getBiome(biomemap[((int) Math.round(newX))][((int) Math.round(newZ))]);
+            return getBiome((int) Math.round(newX), (int) Math.round(newZ));
         }
 
         return getDefaultBiome();
+    }
+
+    public BiomeGenBase getBiome(int x, int y)
+    {
+        if (loadBiomemapIntoArray())
+        {
+            return BiomeGenBase.getBiome(biomemap[x][y]);
+        }
+        else
+        {
+            return(getBiomeImageValue(biomemapImage, x, y));
+        }
     }
 
     public void load() {
@@ -220,11 +270,13 @@ public abstract class WorldHeightmapGenerator
         }
     }
 
-    public static double extract(byte[][] arr, int x, int y)
+    public double extract(int x, int y)
     {
-        x = Math.min(arr.length - 1, Math.max(0, x));
-        byte[] col = arr[x];
-        y = Math.min(col.length - 1, Math.max(0, y));
-        return col[y];
+        if (x < 0 || x >= width || y < 0 || y >= height)
+        {
+            return Math.min(Math.max(0, getOutOfBoundsHeight(x, y)), 255);
+        }
+
+        return getHeight(x, y);
     }
 }

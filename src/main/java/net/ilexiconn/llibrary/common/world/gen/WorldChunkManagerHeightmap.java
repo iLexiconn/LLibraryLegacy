@@ -273,7 +273,7 @@ public class WorldChunkManagerHeightmap extends WorldChunkManager
     }
 
     private BiomeGenBase getBiomeAt(int x, int z) {
-        return generator.getBiomeAt(x, z);
+        return generator.getBiomeForCoords(x, z);
     }
 
     /**
