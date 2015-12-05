@@ -1,5 +1,5 @@
 {
-  "release": "0.6.1",
+  "release": "0.6.2",
   "versions": {
     "0.5.0": [
       "Added toast builder",
@@ -65,6 +65,13 @@
       "Fixed gui override crash",
       "Fixed auto updater crash",
       "Updated forge"
+    ],
+    "0.6.2": [
+      "Fixed ASM issues",
+      "Fixed heightmap issues",
+      "Fixed tabula texture issues",
+      "Fixed Java 6 issues",
+      "Fixed issue issues"
     ]
   },
   "updateUrl": "https://bitly.com/llibrary",
