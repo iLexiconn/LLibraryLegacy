@@ -1,11 +1,11 @@
 package net.ilexiconn.llibrary.common.json.container;
 
 public class JsonUpdateEntry {
-    public final String url;
-    public final String modid;
-    public final String name;
-    public final String file;
-    public final String version;
+    public String url;
+    public String modid;
+    public String name;
+    public String file;
+    public String version;
 
     public JsonUpdateEntry(String url, String modid, String name, String file, String version) {
         this.url = url;

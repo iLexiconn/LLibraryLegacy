@@ -31,32 +31,16 @@ public class JsonModUpdate {
     private transient ArtifactVersion releaseVersion;
     private transient ArtifactVersion betaVersion;
     private transient ArtifactVersion alphaVersion;
-    public final Map<String, List<String>> versions;
-    public final String updateUrl;
-    public final String iconUrl;
+    public Map<String, List<String>> versions;
+    public String updateUrl;
+    public String iconUrl;
     @Deprecated
-    public final String newestVersion;
-    public final String release;
-    public final String beta;
-    public final String alpha;
+    public String newestVersion;
+    public String release;
+    public String beta;
+    public String alpha;
     @SerializedName("directUpdateUrl-" + MinecraftForge.MC_VERSION)
-    public final String directUpdateUrl;
-
-    @Deprecated
-    public JsonModUpdate() {
-        this(null, null, "", "", "", "", "", "");
-    }
-
-    public JsonModUpdate(Map<String, List<String>> versions, String updateUrl, String iconUrl, String newestVersion, String release, String beta, String alpha, String directUpdateUrl) {
-        this.versions = versions;
-        this.updateUrl = updateUrl;
-        this.iconUrl = iconUrl;
-        this.newestVersion = newestVersion;
-        this.release = release;
-        this.beta = beta;
-        this.alpha = alpha;
-        this.directUpdateUrl = directUpdateUrl;
-    }
+    public String directUpdateUrl;
 
     public Map<String, List<String>> getVersions() {
         return versions;
