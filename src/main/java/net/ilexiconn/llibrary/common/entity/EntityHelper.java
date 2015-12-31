@@ -1,7 +1,6 @@
 package net.ilexiconn.llibrary.common.entity;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.common.item.SpawnEgg;
@@ -16,6 +15,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * Class for registering entities, removing entities and getting entities.
@@ -34,7 +34,7 @@ public class EntityHelper {
 
     private static Method setSize;
 
-    private static Map<Entity, Float> scales = Maps.newHashMap();
+    private static Map<Entity, Float> scales = new WeakHashMap<Entity, Float>();
 
     private static List<Class<? extends Entity>> removedEntities = Lists.newArrayList();
 

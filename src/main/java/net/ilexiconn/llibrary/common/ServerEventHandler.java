@@ -1,6 +1,5 @@
 package net.ilexiconn.llibrary.common;
 
-import com.google.common.collect.Maps;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -19,9 +18,10 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 
 import java.util.Map;
+import java.util.WeakHashMap;
 
 public class ServerEventHandler {
-    private Map<Entity, Vector2f> sizeCache = Maps.newHashMap();
+    private Map<Entity, Vector2f> sizeCache = new WeakHashMap<Entity, Vector2f>();
     private boolean checkedForUpdates;
 
     @SubscribeEvent
