@@ -62,6 +62,10 @@ processResources {
     }
 }
 
+dependencies{
+	compile "com.cloudbees:diff4j:1.2"
+}
+
 jar {
     manifest {
         attributes "FMLAT" : "llibrary_at.cfg"
