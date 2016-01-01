@@ -12,7 +12,7 @@ buildscript {
     }
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT"
-        classpath "com.matthewprenger:CurseGradle:1.0.3-SNAPSHOT"
+        classpath "com.matthewprenger:CurseGradle:1.0-SNAPSHOT"
     }
 }
 
@@ -176,9 +176,6 @@ String getVersionFromJava() {
 }
 
 String getVersionFromJavaWithoutMc() {
-    String major = "0";
-    String revision = "0";
-    String patch = "0";
     String prefix = "public static final String VERSION = \"";
     File file = file("src/main/java/net/ilexiconn/llibrary/LLibrary.java")
     file.eachLine { String s ->
@@ -186,12 +183,7 @@ String getVersionFromJavaWithoutMc() {
         if (s.startsWith(prefix)) {
             s = s.substring(prefix.length(), s.length() - 2);
             String[] pts = s.split("\\.");
-
-            major = pts[0];
-            revision = pts[1];
-            patch = pts[2];
+            return pts[0] + "." + pts[1] + "." + pts[2];
         }
     }
-
-    return "$major.$revision.$patch";
 }
