@@ -28,9 +28,12 @@ public abstract class AbstractMessage<M extends AbstractMessage<?>> implements I
     public static <T extends AbstractMessage<T> & IMessageHandler<T, IMessage>> void registerMessage(SimpleNetworkWrapper networkWrapper, Class<T> clazz, int id, Side side) {
         networkWrapper.registerMessage(clazz, clazz, id, side);
     }
+    
+    protected MessageContext messageContext;
 
     @Override
     public IMessage onMessage(M message, MessageContext ctx) {
+        messageContext = ctx;
         if (ctx.side.isClient()) {
             handleClientMessage(message, LLibrary.proxy.getClientPlayer());
         } else {
