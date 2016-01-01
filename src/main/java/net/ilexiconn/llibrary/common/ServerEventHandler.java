@@ -7,14 +7,21 @@ import net.ilexiconn.llibrary.common.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart;
 import net.ilexiconn.llibrary.common.save.SaveHelper;
 import net.ilexiconn.llibrary.common.update.UpdateCheckerThread;
+import net.ilexiconn.llibrary.common.vecmath.Vector2f;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+
+import java.util.Map;
+import java.util.WeakHashMap;
 
 public class ServerEventHandler {
+    private Map<Entity, Vector2f> sizeCache = new WeakHashMap<Entity, Vector2f>();
     private boolean checkedForUpdates;
 
     @SubscribeEvent
@@ -24,6 +31,30 @@ public class ServerEventHandler {
                 part.onUpdate();
             }
         }
+
+        float scale = EntityHelper.getScale(event.entity);
+
+        if (sizeCache.containsKey(event.entity)) {
+            Vector2f size = sizeCache.get(event.entity);
+            try {
+                EntityHelper.setSize(event.entity, size.x * scale, size.y * scale);
+            } catch (ReflectiveOperationException e) {
+                e.printStackTrace();
+            }
+        } else {
+            sizeCache.put(event.entity, new Vector2f(event.entity.width, event.entity.height));
+            try {
+                EntityHelper.setSize(event.entity, event.entity.width * scale, event.entity.height * scale);
+            } catch (ReflectiveOperationException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        float scale = EntityHelper.getScale(event.player);
+        event.player.eyeHeight = (scale - 1) * 1.62f + event.player.getDefaultEyeHeight() * scale - event.player.getDefaultEyeHeight() * (scale - 1);
     }
 
     @SubscribeEvent

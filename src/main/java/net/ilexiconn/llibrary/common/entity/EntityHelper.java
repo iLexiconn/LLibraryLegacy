@@ -1,11 +1,6 @@
 package net.ilexiconn.llibrary.common.entity;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -13,6 +8,12 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * Class for registering entities, removing entities and getting entities.
@@ -24,8 +25,14 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
  * @since 0.1.0
  */
 public class EntityHelper {
+    private static int startEntityId = 0;
+
     private static Field classToIDMappingField;
     private static Field stringToIDMappingField;
+
+    private static Method setSize;
+
+    private static Map<Entity, Float> scales = new WeakHashMap<Entity, Float>();
 
     private static List<Class<? extends Entity>> removedEntities = Lists.newArrayList();
 
@@ -44,6 +51,16 @@ public class EntityHelper {
                 }
 
                 i++;
+            }
+        }
+
+        for (Method method : Entity.class.getDeclaredMethods()) {
+            for (String name : new String[]{"setSize", "func_70105_a"}) {
+                if (method.getName().equals(name)) {
+                    method.setAccessible(true);
+                    setSize = method;
+                    break;
+                }
             }
         }
     }
@@ -65,7 +82,7 @@ public class EntityHelper {
      * 
      * @param entityName Name of the entity
      * @param entityClass Class of the entity
-     * @param modEntityID A mod specific entity id
+     * @param modEntityId A mod specific entity id
      * @param mod An instance of a mod to register the entity for
      * @param primaryEggColor Primary egg color
      * @param secondaryEggColor Secondary egg color
@@ -135,6 +152,14 @@ public class EntityHelper {
         }
     }
 
+    private static int getUniqueEntityId() {
+        do {
+            startEntityId++;
+        }
+        while (EntityList.getStringFromID(startEntityId) != null);
+        return startEntityId;
+    }
+
     public static Entity getEntityFromClass(Class<? extends Entity> entityClass, World world) {
         Entity entity = null;
 
@@ -145,5 +170,17 @@ public class EntityHelper {
         }
 
         return entity;
+    }
+
+    public static void setSize(Entity entity, float x, float y) throws ReflectiveOperationException {
+        setSize.invoke(entity, x, y);
+    }
+
+    public static void setScale(Entity entity, float scale) {
+        scales.put(entity, scale);
+    }
+
+    public static float getScale(Entity entity) {
+        return scales.containsKey(entity) ? scales.get(entity) : 1f;
     }
 }
