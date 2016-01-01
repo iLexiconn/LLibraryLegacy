@@ -101,11 +101,11 @@ public class GuiModUpdateList extends GuiScrollingList {
             float iheight = (float) (cachedLogoDimensions.get(idx).height * scale);
             int offset = 12;
             WorldRenderer renderer = tess.getWorldRenderer();
-            renderer.func_181668_a(7, DefaultVertexFormats.field_181707_g);
-            renderer.func_181662_b(offset, top + iheight, 0).func_181673_a(0, 1).func_181675_d();
-            renderer.func_181662_b(offset + iwidth, top + iheight, 0).func_181673_a(1, 1).func_181675_d();
-            renderer.func_181662_b(offset + iwidth, top, 0).func_181673_a(1, 0).func_181675_d();
-            renderer.func_181662_b(offset, top, 0).func_181673_a(0, 0).func_181675_d();
+            renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+            renderer.pos(offset, top + iheight, 0).tex(0, 1).endVertex();
+            renderer.pos(offset + iwidth, top + iheight, 0).tex(1, 1).endVertex();
+            renderer.pos(offset + iwidth, top, 0).tex(1, 0).endVertex();
+            renderer.pos(offset, top, 0).tex(0, 0).endVertex();
             tess.draw();
         }
     }

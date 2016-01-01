@@ -1,13 +1,5 @@
 package net.ilexiconn.llibrary.client;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.lwjgl.opengl.GL11;
-
-import net.ilexiconn.llibrary.client.gui.GuiButtonPage;
-import net.ilexiconn.llibrary.client.gui.GuiButtonSurvivalTab;
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
 import net.ilexiconn.llibrary.client.gui.GuiOverride;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
@@ -16,7 +8,6 @@ import net.ilexiconn.llibrary.client.toast.Toast;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
-import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -24,7 +15,6 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.entity.Render;
@@ -44,6 +34,11 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public class ClientEventHandler {
@@ -57,7 +52,7 @@ public class ClientEventHandler {
 
     //TODO: RenderPlayerEvent.Specials.Post is deprecated and is never fired by Forge
     @SubscribeEvent
-    public void onRenderPlayerPost(RenderPlayerEvent.Specials.Post event) {
+    public void onRenderPlayerPost(RenderPlayerEvent.Post event) {
         if (event.entityPlayer == mc.thePlayer) {
             if (prevRenderPlayer != null) {
                 mc.getRenderManager().entityRenderMap.put(event.entityPlayer.getClass(), prevRenderPlayer);
@@ -99,7 +94,7 @@ public class ClientEventHandler {
                 GL11.glDepthMask(false);
 
                 for (AxisAlignedBB box : bounds) {
-                    RenderGlobal.func_181561_a(box.offset(blockPos.getX(), blockPos.getY(), blockPos.getZ()).offset(-pos.getX(), -pos.getY(), -pos.getZ()));
+                    RenderGlobal.drawSelectionBoundingBox(box.offset(blockPos.getX(), blockPos.getY(), blockPos.getZ()).offset(-pos.getX(), -pos.getY(), -pos.getZ()));
                 }
 
                 GL11.glDepthMask(true);
@@ -113,26 +108,6 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onInitGui(GuiScreenEvent.InitGuiEvent.Post event) {
-        if (SurvivalTab.getSurvivalTabList().size() > 0) {
-            int count = 2;
-            for (SurvivalTab survivalTab : SurvivalTab.getSurvivalTabList()) {
-                if (survivalTab.getContainer() != null && survivalTab.getContainer().isInstance(event.gui)) {
-                    for (SurvivalTab tab : SurvivalTab.getSurvivalTabList()) {
-                        if (tab.getPage() == SurvivalTab.getCurrentPage()) {
-                            event.buttonList.add(new GuiButtonSurvivalTab(count, tab));
-                        }
-                        count++;
-                    }
-                }
-            }
-
-            if (count > 11) {
-                GuiContainer container = (GuiContainer) event.gui;
-                event.buttonList.add(new GuiButtonPage(-1, container.guiLeft, container.guiTop - 50, event.gui));
-                event.buttonList.add(new GuiButtonPage(-2, container.guiLeft + container.xSize - 20, container.guiTop - 50, event.gui));
-            }
-        }
-
         if (event.gui instanceof GuiMainMenu) {
             for (JsonModUpdate mod : VersionHandler.getOutdatedMods()) {
                 if (!mod.updated) {

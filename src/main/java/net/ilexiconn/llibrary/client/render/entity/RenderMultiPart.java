@@ -40,7 +40,7 @@ public abstract class RenderMultiPart<T extends EntityLiving> extends RenderLivi
             GL11.glDisable(GL11.GL_CULL_FACE);
             GL11.glDisable(GL11.GL_BLEND);
             for (EntityPart e : entity.getParts()) {
-                RenderGlobal.func_181561_a(e.getBoundingBox().offset(-renderManager.viewerPosX, -renderManager.viewerPosY, -renderManager.viewerPosZ));
+                RenderGlobal.drawSelectionBoundingBox(e.getBoundingBox().offset(-renderManager.viewerPosX, -renderManager.viewerPosY, -renderManager.viewerPosZ));
             }
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glEnable(GL11.GL_LIGHTING);

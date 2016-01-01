@@ -12,9 +12,8 @@ buildscript {
 }
 
 plugins {
-    // id "net.minecraftforge.gradle.forge" version "2.0.2"
-    id "com.matthewprenger.cursegradle" version "1.0.3"
     id "maven-publish"
+    id "com.matthewprenger.cursegradle" version "1.0.5"
 }
 
 apply plugin: "net.minecraftforge.gradle.forge"
@@ -42,9 +41,9 @@ archivesBaseName = config.mod_name
 sourceCompatibility = targetCompatibility = 1.6
 
 minecraft {
-    version = config.minecraft_version + "-" + config.forge_version + "-" + config.minecraft_version //temp, because it's a non-master branch
+    version = config.minecraft_version + "-" + config.forge_version
     runDir = "minecraft"
-    mappings = "snapshot_nodoc_20151122"
+    mappings = "stable_20"
     makeObfSourceJar = false
 }
 
@@ -71,6 +70,10 @@ jar {
         attributes "FMLAT" : "llibrary_at.cfg"
         attributes "FMLCorePlugin": "net.ilexiconn.llibrary.common.plugin.LLibraryPlugin"
         attributes "FMLCorePluginContainsFMLMod": "true"
+    }
+    
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
     }
 }
 
@@ -169,9 +172,6 @@ String getVersionFromJava() {
 }
 
 String getVersionFromJavaWithoutMc() {
-    String major = "0";
-    String revision = "0";
-    String patch = "0";
     String prefix = "public static final String VERSION = \"";
     File file = file("src/main/java/net/ilexiconn/llibrary/LLibrary.java")
     file.eachLine { String s ->
@@ -179,12 +179,7 @@ String getVersionFromJavaWithoutMc() {
         if (s.startsWith(prefix)) {
             s = s.substring(prefix.length(), s.length() - 2);
             String[] pts = s.split("\\.");
-
-            major = pts[0];
-            revision = pts[1];
-            patch = pts[2];
+            return pts[0] + "." + pts[1] + "." + pts[2];
         }
     }
-
-    return "$major.$revision.$patch";
 }
