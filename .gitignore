@@ -11,4 +11,5 @@ bin/
 .project
 *.launch
 
+mappings.txt
 secret.properties

@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.asm.patch;
+package net.ilexiconn.llibrary.common.asm.patch;
 
 import com.cloudbees.diff.ContextualPatch;
 import com.cloudbees.diff.PatchException;

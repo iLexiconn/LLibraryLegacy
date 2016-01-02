@@ -1,12 +1,6 @@
-package net.ilexiconn.llibrary.asm;
+package net.ilexiconn.llibrary.common.asm;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
+import net.ilexiconn.llibrary.LLibrary;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
@@ -15,7 +9,8 @@ import org.objectweb.asm.tree.FieldNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodNode;
 
-import net.ilexiconn.llibrary.LLibrary;
+import java.io.File;
+import java.util.*;
 
 public class ModularASMTransformer {
 
@@ -46,11 +41,11 @@ public class ModularASMTransformer {
 
                 bytes = ASMHelper.createBytes(cnode, writeFlags);
                 if (ASMHelper.asmDump) {
-                    ASMHelper.dump(bytes, new File("asm/ccl_modular/" + cnode.name.replace('/', '#') + ".txt"), false, false);
+                    ASMHelper.dump(bytes, new File("asm/llibrary_modular/" + cnode.name.replace('/', '#') + ".txt"), false, false);
                 }
                 return bytes;
             } catch (RuntimeException e) {
-                ASMHelper.dump(bytes, new File("asm/ccl_modular/" + cnode.name.replace('/', '#') + ".txt"), false, false);
+                ASMHelper.dump(bytes, new File("asm/llibrary_modular/" + cnode.name.replace('/', '#') + ".txt"), false, false);
                 throw e;
             }
         }

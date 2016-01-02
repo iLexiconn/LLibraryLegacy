@@ -1,15 +1,14 @@
-package net.ilexiconn.llibrary.asm;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-
-import org.objectweb.asm.tree.ClassNode;
+package net.ilexiconn.llibrary.common.asm;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
+import org.objectweb.asm.tree.ClassNode;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class ClassHeirachyManager implements IClassTransformer {
 
