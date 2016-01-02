@@ -77,28 +77,35 @@ public class HookPatchManager implements IClassTransformer {
                     desc += "L" + hook.hookClass.name + ";";
                     insnList.add(new VarInsnNode(Opcodes.ALOAD, 0));
                 }
-                for (int j = 0; j < hook.hookMethod.args.length; j++) {
-                    insnList.add(new VarInsnNode(Opcodes.ALOAD, j + 1));
-                }
+                int j = 0;
                 for (String s : hook.hookMethod.args) {
                     if (s.equals("int")) {
                         desc += "I";
+                        insnList.add(new VarInsnNode(Opcodes.ILOAD, j++));
                     } else if (s.equals("boolean")) {
                         desc += "Z";
+                        insnList.add(new VarInsnNode(Opcodes.ILOAD, j++));
                     } else if (s.equals("float")) {
                         desc += "F";
+                        insnList.add(new VarInsnNode(Opcodes.FLOAD, j++));
                     } else if (s.equals("double")) {
                         desc += "D";
+                        insnList.add(new VarInsnNode(Opcodes.DLOAD, j++));
                     } else if (s.equals("long")) {
                         desc += "J";
+                        insnList.add(new VarInsnNode(Opcodes.LLOAD, j++));
                     } else if (s.equals("byte")) {
                         desc += "B";
+                        insnList.add(new VarInsnNode(Opcodes.ILOAD, j++));
                     } else if (s.equals("char")) {
                         desc += "C";
+                        insnList.add(new VarInsnNode(Opcodes.ILOAD, j++));
                     } else if (s.equals("string")) {
                         desc += "Ljava/lang/String;";
+                        insnList.add(new VarInsnNode(Opcodes.ALOAD, j++));
                     } else {
                         desc += "L" + s + ";";
+                        insnList.add(new VarInsnNode(Opcodes.ALOAD, j++));
                     }
                 }
                 desc += ")V";
