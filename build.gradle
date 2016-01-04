@@ -176,6 +176,9 @@ String getVersionFromJava() {
 }
 
 String getVersionFromJavaWithoutMc() {
+    String major = "0";
+    String revision = "0";
+    String patch = "0";
     String prefix = "public static final String VERSION = \"";
     File file = file("src/main/java/net/ilexiconn/llibrary/LLibrary.java")
     file.eachLine { String s ->
@@ -183,15 +186,20 @@ String getVersionFromJavaWithoutMc() {
         if (s.startsWith(prefix)) {
             s = s.substring(prefix.length(), s.length() - 2);
             String[] pts = s.split("\\.");
-            return pts[0] + "." + pts[1] + "." + pts[2];
+
+            major = pts[0];
+            revision = pts[1];
+            patch = pts[2];
         }
     }
+
+    return "$major.$revision.$patch";
 }
 
 task generateMappings << {
     def methodDescriptions = new HashMap<String, String>()
     def mappingReplacements = new HashMap<String, String>()
-    def mappingFile = new File(System.properties['user.home'] + "/.gradle/caches/minecraft/net/minecraftforge/forge/m" + config.minecraft_version + "-" + config.forge_version + "-" + config.minecraft_version + "/srgs/mcp-notch.srg")
+    def mappingFile = new File(System.properties['user.home'] + "/.gradle/caches/minecraft/net/minecraftforge/forge/" + config.minecraft_version + "-" + config.forge_version + "-" + config.minecraft_version + "/srgs/mcp-notch.srg")
     if (mappingFile.exists()) {
         mappingFile.eachLine { line ->
             def parts = line.split(' ')
