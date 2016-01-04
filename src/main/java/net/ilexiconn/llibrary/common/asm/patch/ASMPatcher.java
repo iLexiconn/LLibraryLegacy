@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author gegy1000
@@ -40,8 +41,9 @@ public class ASMPatcher
 
     public byte[] patch() throws IOException, ClassNotFoundException, PatchException
     {
-        File originalTemp = createTempDirectory("original_patch");
-        File patchFile = createTempDirectory("patch_file");
+        File patchDir = createTempDirectory("llibrary_patch");
+        File originalTemp = new File(patchDir, "original_patch");
+        File patchFile = new File(patchDir, "patch_file");
 
         FileOutputStream originalOut = new FileOutputStream(originalTemp);
         originalOut.write(originalBytes);
@@ -54,7 +56,15 @@ public class ASMPatcher
         newOut.write(patchBytes);
 
         ContextualPatch contextualPatch = ContextualPatch.create(patchFile, originalTemp);
-        contextualPatch.patch(true);
+        List<ContextualPatch.PatchReport> reports = contextualPatch.patch(false);
+
+        for (ContextualPatch.PatchReport report : reports)
+        {
+            if (report.getFailure() != null)
+            {
+                report.getFailure().printStackTrace();
+            }
+        }
 
         byte[] patchedBytes = IOUtils.toByteArray(new FileInputStream(originalTemp));
 
@@ -70,7 +80,7 @@ public class ASMPatcher
 
     private File createTempDirectory(String name) throws IOException
     {
-        File temp = File.createTempFile("temp_" + name, Long.toString(System.nanoTime()));
+        File temp = File.createTempFile("temp_", name);
 
         if (!(temp.delete()))
         {
