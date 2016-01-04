@@ -32,13 +32,20 @@ public abstract class AbstractMessage<M extends AbstractMessage<?>> implements I
     protected MessageContext messageContext;
 
     @Override
-    public IMessage onMessage(M message, MessageContext ctx) {
+    public IMessage onMessage(final M message, final MessageContext ctx) {
         messageContext = ctx;
-        if (ctx.side.isClient()) {
-            handleClientMessage(message, LLibrary.proxy.getClientPlayer());
-        } else {
-            handleServerMessage(message, ctx.getServerHandler().playerEntity);
-        }
+
+        LLibrary.proxy.scheduleTask(ctx, new Runnable() {
+            @Override
+            public void run() {
+                if (ctx.side.isClient()) {
+                    handleClientMessage(message, LLibrary.proxy.getClientPlayer());
+                } else {
+                    handleServerMessage(message, ctx.getServerHandler().playerEntity);
+                }
+            }
+        });
+
         return null;
     }
 

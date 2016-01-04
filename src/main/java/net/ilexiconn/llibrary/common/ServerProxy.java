@@ -9,8 +9,10 @@ import net.ilexiconn.llibrary.common.entity.EntityHelper;
 import net.ilexiconn.llibrary.common.entity.EntityMountableBlock;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class ServerProxy {
     public void preInit(File config) {
@@ -31,5 +33,11 @@ public class ServerProxy {
 
     public float getPartialTicks() {
         return 0f;
+    }
+
+    public void scheduleTask(MessageContext ctx, Runnable runnable)
+    {
+        WorldServer worldObj = (WorldServer) ctx.getServerHandler().playerEntity.worldObj;
+        worldObj.addScheduledTask(runnable);
     }
 }

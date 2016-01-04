@@ -13,6 +13,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Timer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -61,5 +62,11 @@ public class ClientProxy extends ServerProxy {
     @Override
     public float getPartialTicks() {
         return timer.renderPartialTicks;
+    }
+
+    @Override
+    public void scheduleTask(MessageContext ctx, Runnable runnable)
+    {
+        Minecraft.getMinecraft().addScheduledTask(runnable);
     }
 }
