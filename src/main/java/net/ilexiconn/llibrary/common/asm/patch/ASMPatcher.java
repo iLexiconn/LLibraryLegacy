@@ -19,8 +19,9 @@ import java.util.List;
  * @author gegy1000
  *
  * Feed it a patch file, and it automatically does the ASM
+ * UNFINISHED
  */
-public class ASMPatcher
+class ASMPatcher
 {
     private String name, deobfName;
     private String patchFile;
