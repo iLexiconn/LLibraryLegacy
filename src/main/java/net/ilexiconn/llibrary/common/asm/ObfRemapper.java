@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.asm;
+package net.ilexiconn.llibrary.common.asm;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

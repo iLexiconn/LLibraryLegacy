@@ -1,7 +1,9 @@
 package net.ilexiconn.llibrary.common.plugin;
 
 import com.google.gson.reflect.TypeToken;
+import net.ilexiconn.llibrary.common.asm.mappings.Mappings;
 import net.ilexiconn.llibrary.common.json.JsonFactory;
+import net.ilexiconn.llibrary.common.json.container.JsonHook;
 import net.ilexiconn.llibrary.common.json.container.JsonUpdateEntry;
 import net.ilexiconn.llibrary.common.log.LoggerHelper;
 import net.minecraftforge.common.MinecraftForge;
@@ -11,19 +13,21 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.apache.commons.io.FileDeleteStrategy;
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 @IFMLLoadingPlugin.Name("LLibrary")
 @IFMLLoadingPlugin.MCVersion(MinecraftForge.MC_VERSION)
-@IFMLLoadingPlugin.TransformerExclusions({"net.ilexiconn.llibrary.asm"})
+@IFMLLoadingPlugin.TransformerExclusions({"net.ilexiconn.llibrary.common.asm"})
 public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
     public static LoggerHelper logger = new LoggerHelper("LLibraryUpdater");
+    public static List<JsonHook> hookList = new ArrayList<JsonHook>();
 
     @Override
     public Void call() throws Exception {
@@ -33,7 +37,8 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
         if (file.exists()) {
             List<JsonUpdateEntry> updateQueue;
             try {
-                updateQueue = JsonFactory.getGson().fromJson(new FileReader(file), new TypeToken<List<JsonUpdateEntry>>() {}.getType());
+                updateQueue = JsonFactory.getGson().fromJson(new FileReader(file), new TypeToken<List<JsonUpdateEntry>>() {
+                }.getType());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 return null;
@@ -60,12 +65,27 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
             }
         }
 
+        for (File mod : mods.listFiles()) {
+            if (mod.getName().endsWith(".jar") || mod.getName().endsWith(".zip")) {
+                ZipFile zip = new ZipFile(mod);
+                ZipEntry entry = zip.getEntry("llibrary_hooks.json");
+                if (entry != null) {
+                    Collections.addAll(hookList, JsonFactory.getGson().fromJson(new InputStreamReader(zip.getInputStream(entry)), JsonHook[].class));
+                }
+                ZipEntry entry1 = zip.getEntry("mappings.txt");
+                if (mod.getName().contains("llibrary") && entry1 != null) {
+                    Mappings.parseMappings(zip.getInputStream(entry1));
+                }
+                zip.close();
+            }
+        }
+
         return null;
     }
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[] {"net.ilexiconn.llibrary.asm.ClassHeirachyManager"};
+        return new String[]{"net.ilexiconn.llibrary.common.asm.ClassHeirachyManager", "net.ilexiconn.llibrary.common.asm.HookPatchManager"};
     }
 
     @Override

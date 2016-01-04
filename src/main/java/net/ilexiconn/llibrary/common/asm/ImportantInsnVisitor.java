@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.asm;
+package net.ilexiconn.llibrary.common.asm;
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;

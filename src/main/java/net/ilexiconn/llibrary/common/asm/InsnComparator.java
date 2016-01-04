@@ -1,4 +1,4 @@
-package net.ilexiconn.llibrary.asm;
+package net.ilexiconn.llibrary.common.asm;
 
 import java.util.HashSet;
 import java.util.LinkedList;
