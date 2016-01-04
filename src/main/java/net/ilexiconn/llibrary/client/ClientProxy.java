@@ -1,7 +1,5 @@
 package net.ilexiconn.llibrary.client;
 
-import java.io.File;
-
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
 import net.ilexiconn.llibrary.client.gui.GuiLLibraryMainMenu;
 import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
@@ -18,6 +16,8 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.File;
+
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends ServerProxy {
     public static RenderLLibraryPlayer renderCustomPlayer;
@@ -26,8 +26,6 @@ public class ClientProxy extends ServerProxy {
     @Override
     public void preInit(File config) {
         super.preInit(config);
-
-        //LLibrary.tabInventory.setContainer(GuiInventory.class);
 
         timer = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "field_71428_T", "S", "timer");
 

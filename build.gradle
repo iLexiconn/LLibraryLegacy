@@ -61,19 +61,11 @@ processResources {
     }
 }
 
-dependencies{
-	compile "com.cloudbees:diff4j:1.2"
-}
-
 jar {
     manifest {
         attributes "FMLAT" : "llibrary_at.cfg"
         attributes "FMLCorePlugin": "net.ilexiconn.llibrary.common.plugin.LLibraryPlugin"
         attributes "FMLCorePluginContainsFMLMod": "true"
-    }
-    
-    from configurations.compile.collect {
-        it.isDirectory() ? it : zipTree(it)
     }
 }
 
@@ -171,6 +163,9 @@ String getVersionFromJava() {
 }
 
 String getVersionFromJavaWithoutMc() {
+    String major = "0";
+    String revision = "0";
+    String patch = "0";
     String prefix = "public static final String VERSION = \"";
     File file = file("src/main/java/net/ilexiconn/llibrary/LLibrary.java")
     file.eachLine { String s ->
@@ -178,9 +173,14 @@ String getVersionFromJavaWithoutMc() {
         if (s.startsWith(prefix)) {
             s = s.substring(prefix.length(), s.length() - 2);
             String[] pts = s.split("\\.");
-            return pts[0] + "." + pts[1] + "." + pts[2];
+
+            major = pts[0];
+            revision = pts[1];
+            patch = pts[2];
         }
     }
+
+    return "$major.$revision.$patch";
 }
 
 task generateMappings << {
