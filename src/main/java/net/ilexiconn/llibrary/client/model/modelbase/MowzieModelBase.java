@@ -16,6 +16,8 @@ import java.util.Random;
  */
 @SideOnly(Side.CLIENT)
 public class MowzieModelBase extends ModelBase {
+    private float movementScale = 1.0F;
+
     /**
      * Store every MowzieModelRenderer in this array
      */
@@ -28,6 +30,10 @@ public class MowzieModelBase extends ModelBase {
         }
 
         return super.getRandomModelBox(rand);
+    }
+
+    public void setMovementScale(float scale) {
+        this.movementScale = scale;
     }
 
     /**
@@ -149,6 +155,10 @@ public class MowzieModelBase extends ModelBase {
         if (invert) {
             inverted = -1;
         }
+
+        degree *= movementScale;
+        speed *= movementScale;
+
         box.rotateAngleX += MathHelper.cos(f * speed + offset) * degree * inverted * f1 + weight * f1;
     }
 
@@ -171,6 +181,10 @@ public class MowzieModelBase extends ModelBase {
         if (invert) {
             inverted = -1;
         }
+
+        degree *= movementScale;
+        speed *= movementScale;
+
         box.rotateAngleZ += MathHelper.cos(f * speed + offset) * degree * inverted * f1 + weight * f1;
     }
 
@@ -193,6 +207,10 @@ public class MowzieModelBase extends ModelBase {
         if (invert) {
             inverted = -1;
         }
+
+        degree *= movementScale;
+        speed *= movementScale;
+
         box.rotateAngleY += MathHelper.cos(f * speed + offset) * degree * inverted * f1 + weight * f1;
     }
 
@@ -213,6 +231,10 @@ public class MowzieModelBase extends ModelBase {
         if (bounce) {
             bob = (float) -Math.abs((Math.sin(f * speed) * f1 * degree));
         }
+
+        degree *= movementScale;
+        speed *= movementScale;
+
         box.rotationPointY += bob;
     }
 
@@ -231,6 +253,10 @@ public class MowzieModelBase extends ModelBase {
     public void chainSwing(MowzieModelRenderer[] boxes, float speed, float degree, double rootOffset, float f, float f1) {
         int numberOfSegments = boxes.length;
         float offset = (float) ((rootOffset * Math.PI) / (2 * numberOfSegments));
+
+        degree *= movementScale;
+        speed *= movementScale;
+
         for (int i = 0; i < numberOfSegments; i++) {
             boxes[i].rotateAngleY += MathHelper.cos(f * speed + offset * i) * f1 * degree;
         }
@@ -251,6 +277,10 @@ public class MowzieModelBase extends ModelBase {
     public void chainWave(MowzieModelRenderer[] boxes, float speed, float degree, double rootOffset, float f, float f1) {
         int numberOfSegments = boxes.length;
         float offset = (float) ((rootOffset * Math.PI) / (2 * numberOfSegments));
+
+        degree *= movementScale;
+        speed *= movementScale;
+
         for (int i = 0; i < numberOfSegments; i++) {
             boxes[i].rotateAngleX += MathHelper.cos(f * speed + offset * i) * f1 * degree;
         }
@@ -271,6 +301,10 @@ public class MowzieModelBase extends ModelBase {
     public void chainFlap(MowzieModelRenderer[] boxes, float speed, float degree, double rootOffset, float f, float f1) {
         int numberOfSegments = boxes.length;
         float offset = (float) ((rootOffset * Math.PI) / (2 * numberOfSegments));
+
+        degree *= movementScale;
+        speed *= movementScale;
+
         for (int i = 0; i < numberOfSegments; i++) {
             boxes[i].rotateAngleZ += MathHelper.cos(f * speed + offset * i) * f1 * degree;
         }
