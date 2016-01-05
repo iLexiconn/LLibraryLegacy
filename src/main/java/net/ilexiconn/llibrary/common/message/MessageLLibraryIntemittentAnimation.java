@@ -21,19 +21,16 @@ public class MessageLLibraryIntemittentAnimation extends AbstractMessage<Message
         intermittentAnimationId = id;
     }
 
-    @Override
     public void toBytes(ByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeByte(intermittentAnimationId);
     }
 
-    @Override
     public void fromBytes(ByteBuf buf) {
         entityId = buf.readInt();
         intermittentAnimationId = buf.readByte();
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
     public void handleClientMessage(MessageLLibraryIntemittentAnimation message, EntityPlayer player) {
         Entity entity = Minecraft.getMinecraft().theWorld.getEntityByID(message.entityId);
@@ -42,7 +39,6 @@ public class MessageLLibraryIntemittentAnimation extends AbstractMessage<Message
         }
     }
 
-    @Override
     public void handleServerMessage(MessageLLibraryIntemittentAnimation message, EntityPlayer player) {
 
     }

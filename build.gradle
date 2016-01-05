@@ -172,7 +172,7 @@ curseforge {
 }
 
 String getVersionFromJava() {
-    return getVersionFromJavaWithoutMc() + "-" + config.minecraft_version;
+    return getVersionFromJavaWithoutMc() + "-1.7.10";
 }
 
 String getVersionFromJavaWithoutMc() {

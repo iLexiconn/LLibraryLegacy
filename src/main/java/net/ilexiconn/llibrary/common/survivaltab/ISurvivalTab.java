@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 /**
  * @deprecated Use {@link SurvivalTab} instead.
  */
-@Deprecated
 public interface ISurvivalTab {
     /**
      * @return unlocalized name string

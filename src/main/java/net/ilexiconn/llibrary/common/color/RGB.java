@@ -14,7 +14,6 @@ public class RGB {
         this.alpha = alpha;
     }
 
-    @Override
     public boolean equals(Object obj) {
         if (obj instanceof RGB) {
             RGB rgb = (RGB) obj;
@@ -25,7 +24,6 @@ public class RGB {
         return false;
     }
 
-    @Override
     public int hashCode() {
         int hash = 3;
         hash = 53 * hash + r;

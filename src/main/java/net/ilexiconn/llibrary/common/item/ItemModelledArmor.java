@@ -28,13 +28,11 @@ public class ItemModelledArmor extends ItemArmor {
         armorModelReceiver = receiver;
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
         itemIcon = iconRegister.registerIcon(getIconString());
     }
 
-    @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
         ItemArmor item = (ItemArmor) stack.getItem();
         switch (item.armorType) {
@@ -45,7 +43,6 @@ public class ItemModelledArmor extends ItemArmor {
         }
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
     public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot) {
         int type = ((ItemArmor) itemStack.getItem()).armorType;

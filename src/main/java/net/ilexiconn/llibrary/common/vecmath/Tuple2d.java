@@ -28,8 +28,8 @@ public abstract class Tuple2d implements Serializable, Cloneable {
     }
 
     public Tuple2d(Tuple2f var1) {
-        this.x = var1.x;
-        this.y = var1.y;
+        this.x = (double)var1.x;
+        this.y = (double)var1.y;
     }
 
     public Tuple2d() {
@@ -53,8 +53,8 @@ public abstract class Tuple2d implements Serializable, Cloneable {
     }
 
     public final void set(Tuple2f var1) {
-        this.x = var1.x;
-        this.y = var1.y;
+        this.x = (double)var1.x;
+        this.y = (double)var1.y;
     }
 
     public final void get(double[] var1) {
@@ -112,7 +112,6 @@ public abstract class Tuple2d implements Serializable, Cloneable {
         this.y = var1 * this.y + var3.y;
     }
 
-    @Override
     public int hashCode() {
         long var1 = 1L;
         var1 = 31L * var1 + Double.doubleToLongBits(this.x);
@@ -128,7 +127,6 @@ public abstract class Tuple2d implements Serializable, Cloneable {
         }
     }
 
-    @Override
     public boolean equals(Object var1) {
         try {
             Tuple2d var2 = (Tuple2d)var1;
@@ -150,7 +148,6 @@ public abstract class Tuple2d implements Serializable, Cloneable {
         }
     }
 
-    @Override
     public String toString() {
         return "(" + this.x + ", " + this.y + ")";
     }
@@ -261,7 +258,6 @@ public abstract class Tuple2d implements Serializable, Cloneable {
         this.y = (1.0D - var2) * this.y + var2 * var1.y;
     }
 
-    @Override
     public Object clone() {
         try {
             return super.clone();

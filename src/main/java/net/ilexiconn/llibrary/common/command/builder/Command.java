@@ -23,12 +23,10 @@ public class Command extends CommandBase {
     ListHashMap<String, ArgumentType> requiredArguments = new ListHashMap<String, ArgumentType>();
     ListHashMap<String, ArgumentType> optionalArguments = new ListHashMap<String, ArgumentType>();
 
-    @Override
     public String getCommandName() {
         return commandName;
     }
 
-    @Override
     public String getCommandUsage(ICommandSender sender) {
         if (commandUsage == null) {
             if (generatedUsage == null) {
@@ -57,7 +55,6 @@ public class Command extends CommandBase {
         }
     }
 
-    @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length < requiredArguments.size()) {
             throw new WrongUsageException(getCommandUsage(sender));
@@ -78,7 +75,6 @@ public class Command extends CommandBase {
         }
     }
 
-    @Override
     public List addTabCompletionOptions(ICommandSender sender, String[] args) {
         if (requiredArguments.size() >= args.length - 1) {
             if (requiredArguments.getValue(args.length - 1) == ArgumentType.PLAYER) {
@@ -97,17 +93,14 @@ public class Command extends CommandBase {
         return null;
     }
 
-    @Override
     public List getCommandAliases() {
         return commandAliases;
     }
 
-    @Override
     public int getRequiredPermissionLevel() {
         return requiredPermissionLevel;
     }
 
-    @Override
     public boolean isUsernameIndex(String[] args, int index) {
         if (requiredArguments.size() >= index) {
             if (requiredArguments.getValue(index) == ArgumentType.PLAYER) {

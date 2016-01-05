@@ -28,12 +28,10 @@ public class StructureGenerator extends StructureGeneratorBase {
         super(entity, blocks, structureFacing, offX, offY, offZ);
     }
 
-    @Override
     public int getRealBlockID(int fakeID, int customData1) {
         return 0;
     }
 
-    @Override
     public void onCustomBlockAdded(World world, int x, int y, int z, int fakeID, int customData1, int customData2) {
 
     }

@@ -12,7 +12,6 @@ public abstract class CreativeTabSearch extends CreativeTabs {
         setBackgroundImageName("item_search.png");
     }
 
-    @Override
     public boolean hasSearchBar() {
         return true;
     }

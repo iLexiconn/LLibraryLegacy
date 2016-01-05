@@ -30,17 +30,14 @@ public class Item3dRenderer implements IItemRenderer {
         texture = t;
     }
 
-    @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {
         return type != ItemRenderType.FIRST_PERSON_MAP;
     }
 
-    @Override
     public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
         return helper != ItemRendererHelper.BLOCK_3D;
     }
 
-    @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         switch (type) {
             case ENTITY:

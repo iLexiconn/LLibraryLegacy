@@ -18,13 +18,11 @@ public class MessageLLibrarySurvivalTab extends AbstractMessage<MessageLLibraryS
         tabIndex = index;
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
     public void handleClientMessage(MessageLLibrarySurvivalTab message, EntityPlayer player) {
 
     }
 
-    @Override
     public void handleServerMessage(MessageLLibrarySurvivalTab message, EntityPlayer player) {
         for (SurvivalTab survivalTab : SurvivalTab.getSurvivalTabList()) {
             if (survivalTab.getIndex() == message.tabIndex) {
@@ -33,12 +31,10 @@ public class MessageLLibrarySurvivalTab extends AbstractMessage<MessageLLibraryS
         }
     }
 
-    @Override
     public void fromBytes(ByteBuf buf) {
         tabIndex = buf.readInt();
     }
 
-    @Override
     public void toBytes(ByteBuf buf) {
         buf.writeInt(tabIndex);
     }

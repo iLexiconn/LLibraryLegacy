@@ -15,28 +15,16 @@ import java.util.ArrayList;
  * @since 0.1.0
  */
 public class JsonTabulaModel {
-    public final int textureWidth = 64;
-    public final int textureHeight = 32;
+    private int textureWidth = 64;
+    private int textureHeight = 32;
 
-    public final double[] scale = new double[]{1d, 1d, 1d};
+    private double[] scale = new double[]{1d, 1d, 1d};
 
-    public final ArrayList<CubeGroup> cubeGroups;
-    public final ArrayList<CubeInfo> cubes;
-    public final ArrayList<Animation> anims;
+    private ArrayList<CubeGroup> cubeGroups;
+    private ArrayList<CubeInfo> cubes;
+    private ArrayList<Animation> anims;
 
-    public final int cubeCount;
-
-    @Deprecated
-    public JsonTabulaModel() {
-        this(null, null, null, 0);
-    }
-
-    public JsonTabulaModel(ArrayList<CubeGroup> cubeGroups, ArrayList<CubeInfo> cubes, ArrayList<Animation> anims, int cubeCount) {
-        this.cubeGroups = cubeGroups;
-        this.cubes = cubes;
-        this.anims = anims;
-        this.cubeCount = cubeCount;
-    }
+    private int cubeCount;
 
     public int getTextureWidth() {
         return textureWidth;

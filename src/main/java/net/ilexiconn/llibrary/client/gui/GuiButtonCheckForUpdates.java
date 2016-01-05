@@ -39,7 +39,6 @@ public class GuiButtonCheckForUpdates extends GuiButton {
         }
     }
 
-    @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         boolean flag = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
 

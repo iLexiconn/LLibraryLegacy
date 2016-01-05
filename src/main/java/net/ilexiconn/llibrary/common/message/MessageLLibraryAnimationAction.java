@@ -22,7 +22,6 @@ public class MessageLLibraryAnimationAction extends AbstractMessage<MessageLLibr
         activationTick = tick;
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
     public void handleClientMessage(MessageLLibraryAnimationAction message, EntityPlayer player) {
         Entity entity = player.worldObj.getEntityByID(message.entityId);
@@ -32,19 +31,16 @@ public class MessageLLibraryAnimationAction extends AbstractMessage<MessageLLibr
         }
     }
 
-    @Override
     public void handleServerMessage(MessageLLibraryAnimationAction message, EntityPlayer player) {
 
     }
 
-    @Override
     public void toBytes(ByteBuf buffer) {
         buffer.writeInt(animationId);
         buffer.writeInt(entityId);
         buffer.writeInt(activationTick);
     }
 
-    @Override
     public void fromBytes(ByteBuf buffer) {
         animationId = buffer.readInt();
         entityId = buffer.readInt();

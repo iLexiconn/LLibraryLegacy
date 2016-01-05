@@ -21,8 +21,12 @@ import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimation;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimationAction;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryIntemittentAnimation;
 import net.ilexiconn.llibrary.common.message.MessageLLibrarySurvivalTab;
+import net.ilexiconn.llibrary.common.survivaltab.SurvivalTab;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
 import net.minecraft.crash.CrashReport;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+
 import java.util.Map;
 
 @Mod(modid = "llibrary", name = "LLibrary", version = LLibrary.VERSION, guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory", dependencies = "required-after:Forge")
@@ -34,9 +38,9 @@ public class LLibrary {
     public static LoggerHelper logger = new LoggerHelper("llibrary");
     public static SimpleNetworkWrapper networkWrapper;
 
-    public static final String VERSION = "0.6.1";
+    public static final String VERSION = "0.5.5";
 
-    //public static SurvivalTab tabInventory = SurvivalTab.create("container.inventory").setIcon(new ItemStack(Items.diamond_sword));
+    public static SurvivalTab tabInventory = SurvivalTab.create("container.inventory").setIcon(new ItemStack(Items.diamond_sword));
 
     @Mod.EventHandler
     private void preInit(FMLPreInitializationEvent event) {

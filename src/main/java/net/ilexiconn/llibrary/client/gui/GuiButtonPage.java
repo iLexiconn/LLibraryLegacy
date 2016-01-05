@@ -18,7 +18,6 @@ public class GuiButtonPage extends GuiButton {
         screen = s;
     }
 
-    @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
         if (super.mousePressed(mc, mouseX, mouseY)) {
             if (id == -1) {

@@ -112,11 +112,10 @@ public abstract class Tuple2f implements Serializable, Cloneable {
         this.y = var1 * this.y + var2.y;
     }
 
-    @Override
     public int hashCode() {
         long var1 = 1L;
-        var1 = 31L * var1 + Float.floatToIntBits(this.x);
-        var1 = 31L * var1 + Float.floatToIntBits(this.y);
+        var1 = 31L * var1 + (long)Float.floatToIntBits(this.x);
+        var1 = 31L * var1 + (long)Float.floatToIntBits(this.y);
         return (int)(var1 ^ var1 >> 32);
     }
 
@@ -128,7 +127,6 @@ public abstract class Tuple2f implements Serializable, Cloneable {
         }
     }
 
-    @Override
     public boolean equals(Object var1) {
         try {
             Tuple2f var2 = (Tuple2f)var1;
@@ -150,7 +148,6 @@ public abstract class Tuple2f implements Serializable, Cloneable {
         }
     }
 
-    @Override
     public String toString() {
         return "(" + this.x + ", " + this.y + ")";
     }
@@ -261,7 +258,6 @@ public abstract class Tuple2f implements Serializable, Cloneable {
         this.y = (1.0F - var2) * this.y + var2 * var1.y;
     }
 
-    @Override
     public Object clone() {
         try {
             return super.clone();
