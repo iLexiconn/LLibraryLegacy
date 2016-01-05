@@ -28,6 +28,7 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
     public static LoggerHelper logger = new LoggerHelper("LLibraryUpdater");
     public static List<JsonHook> hookList = new ArrayList<JsonHook>();
 
+    @Override
     public Void call() throws Exception {
         logger.info("Searching for mod updates");
         File mods = new File("mods");
@@ -47,13 +48,13 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
                     logger.info("Deleting old mod jar " + modFile.getName() + " from mod " + entry.getName() + " (" + entry.getModid() + ")");
                     try {
                         FileDeleteStrategy.FORCE.delete(modFile);
+                        File mod = new File(mods, entry.getName() + "-" + entry.getVersion() + "-" + Loader.MC_VERSION + ".jar");
+                        logger.info("Downloading new mod jar " + mod.getName() + " for mod " + entry.getName() + " (" + entry.getModid() + ")");
+                        FileUtils.copyURLToFile(new URL(entry.getUrl()), mod);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-                File mod = new File(mods, entry.getName() + "-" + entry.getVersion() + "-" + Loader.MC_VERSION + ".jar");
-                logger.info("Downloading new mod jar " + mod.getName() + " for mod " + entry.getName() + " (" + entry.getModid() + ")");
-                FileUtils.copyURLToFile(new URL(entry.getUrl()), mod);
             }
             try {
                 System.gc();
@@ -81,22 +82,27 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
         return null;
     }
 
+    @Override
     public String[] getASMTransformerClass() {
         return new String[]{"net.ilexiconn.llibrary.common.asm.HookPatchManager"};
     }
 
+    @Override
     public String getModContainerClass() {
         return null;
     }
 
+    @Override
     public String getSetupClass() {
         return getClass().getName();
     }
 
+    @Override
     public void injectData(Map<String, Object> data) {
 
     }
 
+    @Override
     public String getAccessTransformerClass() {
         return null;
     }

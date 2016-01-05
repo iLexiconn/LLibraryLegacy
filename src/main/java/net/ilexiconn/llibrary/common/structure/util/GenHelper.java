@@ -151,7 +151,7 @@ public class GenHelper {
      * Returns an AxisAlignedBB suitable for a hanging entity at x/y/z facing direction
      */
     public static AxisAlignedBB getHangingEntityAxisAligned(int x, int y, int z, int direction) {
-        double minX = (double) x, minZ = (double) z, maxX = minX, maxZ = minZ;
+        double minX = x, minZ = z, maxX = minX, maxZ = minZ;
         switch (direction) {
             case 2: // frame facing NORTH
                 minX += 0.25D;
@@ -179,7 +179,7 @@ public class GenHelper {
                 break;
         }
 
-        return AxisAlignedBB.getBoundingBox(minX, (double) y, minZ, maxX, (double) y + 1, maxZ);
+        return AxisAlignedBB.getBoundingBox(minX, y, minZ, maxX, (double) y + 1, maxZ);
     }
 
     /**

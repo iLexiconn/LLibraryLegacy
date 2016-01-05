@@ -59,6 +59,7 @@ public class SpawnEgg extends ItemMonsterPlacer {
         }
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack p_77653_1_) {
         String s = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
         String s1 = LLibraryEntityList.entities.get(p_77653_1_.getItemDamage()).entityName;
@@ -70,6 +71,7 @@ public class SpawnEgg extends ItemMonsterPlacer {
         return s;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack p_82790_1_, int p_82790_2_) {
         LLibraryEntityList.Entities entityegginfo = LLibraryEntityList.entities.get(Integer.valueOf(p_82790_1_.getItemDamage()));
@@ -79,6 +81,7 @@ public class SpawnEgg extends ItemMonsterPlacer {
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, java.util.List p_150895_3_) {
         Iterator iterator = LLibraryEntityList.entities.values().iterator();

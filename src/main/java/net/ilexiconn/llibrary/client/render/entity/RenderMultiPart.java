@@ -25,6 +25,7 @@ public abstract class RenderMultiPart extends RenderLiving {
         super(model, shadow);
     }
 
+    @Override
     public void doRender(EntityLiving entity, double x, double y, double z, float rotationYaw, float partialTicks) {
         super.doRender(entity, x, y, z, rotationYaw, partialTicks);
         doRender((IEntityMultiPart) entity, x, y, z, rotationYaw, partialTicks);

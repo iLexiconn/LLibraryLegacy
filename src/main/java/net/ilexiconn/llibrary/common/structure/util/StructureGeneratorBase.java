@@ -347,7 +347,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator {
      * Returns an AxisAlignedBB suitable for a hanging entity at x/y/z facing direction
      */
     public static AxisAlignedBB getHangingEntityAxisAligned(int x, int y, int z, int direction) {
-        double minX = (double) x, minZ = (double) z, maxX = minX, maxZ = minZ;
+        double minX = x, minZ = z, maxX = minX, maxZ = minZ;
 
         switch (direction) {
             case 2: // frame facing NORTH
@@ -376,7 +376,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator {
                 break;
         }
 
-        return AxisAlignedBB.getBoundingBox(minX, (double) y, minZ, maxX, (double) y + 1, maxZ);
+        return AxisAlignedBB.getBoundingBox(minX, y, minZ, maxX, (double) y + 1, maxZ);
     }
 
     /**
@@ -564,7 +564,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator {
      * opposite of player view (so player will be looking at front when finished)
      */
     public final void setPlayerFacing(Entity entity) {
-        facing = MathHelper.floor_double((double) ((entity.rotationYaw * 4F) / 360f) + 0.5D) & 3;
+        facing = MathHelper.floor_double((entity.rotationYaw * 4F) / 360f + 0.5D) & 3;
     }
 
     /**
@@ -794,6 +794,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator {
      * Generates each consecutive blockArray in the current list at location posX, posZ,
      * with posY incremented by the height of each previously generated blockArray.
      */
+    @Override
     public final boolean generate(World world, Random random, int posX, int posY, int posZ) {
         if (world.isRemote || !canGenerate()) {
             return false;

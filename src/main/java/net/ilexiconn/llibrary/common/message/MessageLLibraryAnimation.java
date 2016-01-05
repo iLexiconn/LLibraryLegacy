@@ -19,16 +19,19 @@ public class MessageLLibraryAnimation extends AbstractMessage<MessageLLibraryAni
         entityId = entity;
     }
 
+    @Override
     public void toBytes(ByteBuf buffer) {
         buffer.writeInt(animationId);
         buffer.writeInt(entityId);
     }
 
+    @Override
     public void fromBytes(ByteBuf buffer) {
         animationId = buffer.readInt();
         entityId = buffer.readInt();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void handleClientMessage(MessageLLibraryAnimation message, EntityPlayer player) {
         IAnimated entity = (IAnimated) player.worldObj.getEntityByID(message.entityId);
@@ -38,6 +41,7 @@ public class MessageLLibraryAnimation extends AbstractMessage<MessageLLibraryAni
         }
     }
 
+    @Override
     public void handleServerMessage(MessageLLibraryAnimation message, EntityPlayer player) {
 
     }

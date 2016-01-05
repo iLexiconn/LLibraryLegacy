@@ -82,6 +82,7 @@ public class ScreenshotHelper implements Runnable {
         ScreenshotHelper.saveScreenshotAsync(screenshotWidth, screenshotHeight, pixelCopy, frameBuffer);
     }
 
+    @Override
     public void run() {
         BufferedImage image;
 

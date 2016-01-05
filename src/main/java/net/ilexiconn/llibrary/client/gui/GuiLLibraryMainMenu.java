@@ -14,17 +14,20 @@ import net.minecraft.client.gui.GuiMainMenu;
 public class GuiLLibraryMainMenu extends GuiOverride {
     private GuiButtonCheckForUpdates buttonCheckForUpdates;
 
+    @Override
     public void initGui() {
         super.initGui();
         buttonList.add(buttonCheckForUpdates = new GuiButtonCheckForUpdates(85, width / 2 - 124, height / 4 + 48));
     }
 
+    @Override
     public void updateScreen() {
         buttonCheckForUpdates.update();
         buttonCheckForUpdates.screenWidth = width;
         buttonCheckForUpdates.screenHeight = height;
     }
 
+    @Override
     public void actionPerformed(GuiButton button) {
         int id = button.id;
 
