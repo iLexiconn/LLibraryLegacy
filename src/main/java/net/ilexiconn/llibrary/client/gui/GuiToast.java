@@ -4,7 +4,7 @@ import net.ilexiconn.llibrary.client.toast.Toast;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -36,16 +36,15 @@ public class GuiToast extends Gui {
 
             if (opacity > 0) {
                 GL11.glPushMatrix();
-                GL11.glDisable(GL11.GL_LIGHTING);
+                GlStateManager.enableBlend();
+                GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
                 drawBackdrop(toast.getPosX(), toast.getPosY(), width, height, opacity);
-                GL11.glEnable(GL11.GL_BLEND);
-                OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+                GlStateManager.enableBlend();
                 int color = 0xffffff | (opacity << 24);
                 for (int i = 0; i < message.size(); i++) {
                     String s = message.get(i);
                     fontRenderer.drawStringWithShadow(s, (toast.getPosX() + width / 2) - (fontRenderer.getStringWidth(s) / 2), toast.getPosY() + 4 + (fontRenderer.FONT_HEIGHT * i), color);
                 }
-                GL11.glDisable(GL11.GL_BLEND);
                 GL11.glPopMatrix();
             }
         }
