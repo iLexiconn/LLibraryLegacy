@@ -1,5 +1,5 @@
 {
-  "release": "0.6.2",
+  "release": "0.7.1",
   "versions": {
     "0.5.0": [
       "Added toast builder",
@@ -86,6 +86,11 @@
       "-> Removed extension interfaces",
       "Probably some other things I forgot about",
       "Do people even reads these things?"
+    ],
+    "0.7.1": [
+      "Optimized MowzieModelRenderer",
+      "Added setMovementScale to MowzieModelRenderer",
+      "Fixed source jar"
     ]
   },
   "updateUrl": "http://www.planetminecraft.com/mod/llibrary/",
