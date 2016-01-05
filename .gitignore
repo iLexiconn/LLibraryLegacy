@@ -5,5 +5,11 @@ out/
 *.iml
 *.ipr
 *.iws
+bin/
+.settings/
+.classpath
+.project
+*.launch
 
+mappings.txt
 secret.properties

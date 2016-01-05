@@ -115,7 +115,6 @@ public class Toast {
     /**
      * For internal use only.
      */
-    @Deprecated
     public static List<Toast> getToastList() {
         return toastList;
     }
@@ -123,7 +122,6 @@ public class Toast {
     /**
      * For internal use only.
      */
-    @Deprecated
     public int tick() {
         return duration--;
     }
@@ -131,7 +129,6 @@ public class Toast {
     /**
      * For internal use only.
      */
-    @Deprecated
     public GuiToast getGui() {
         return gui;
     }

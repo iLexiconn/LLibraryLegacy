@@ -29,17 +29,6 @@ public class RenderHelper {
     private static ResourceLocation glintTexture = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 
     /**
-     * Registers the given {@link net.ilexiconn.llibrary.client.render.IModelExtension}.
-     *
-     * @see net.ilexiconn.llibrary.client.render.IModelExtension
-     * @since 0.1.0
-     */
-    @Deprecated
-    public static void registerModelExtension(IModelExtension modelExtension) {
-
-    }
-
-    /**
      * Renders the given {@link net.minecraft.item.ItemStack} in 3D.
      *
      * @param stack the ItemStack you want to render.

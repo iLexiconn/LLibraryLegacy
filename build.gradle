@@ -12,7 +12,7 @@ buildscript {
     }
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT"
-        classpath "com.matthewprenger:CurseGradle:1.0.3-SNAPSHOT"
+        classpath "com.matthewprenger:CurseGradle:1.0-SNAPSHOT"
     }
 }
 
@@ -195,3 +195,28 @@ String getVersionFromJavaWithoutMc() {
 
     return "$major.$revision.$patch";
 }
+
+task generateMappings << {
+    def methodDescriptions = new HashMap<String, String>()
+    def mappingReplacements = new HashMap<String, String>()
+    def mappingFile = new File(System.properties['user.home'] + "/.gradle/caches/minecraft/net/minecraftforge/forge/" + config.minecraft_version + "-" + config.forge_version + "-" + config.minecraft_version + "/srgs/mcp-notch.srg")
+    if (mappingFile.exists()) {
+        mappingFile.eachLine { line ->
+            def parts = line.split(' ')
+            if (line.startsWith('CL') || line.startsWith('FD')) {
+                mappingReplacements[parts[1]] = parts[2]
+            } else if (line.startsWith('MD')) {
+                mappingReplacements[parts[1] + parts[2]] = parts[3] + parts[4]
+                methodDescriptions[parts[2]] = parts[4]
+            }
+        }
+    }
+
+    def mappingsFile = new File('src/main/resources/mappings.txt')
+    mappingsFile.withWriter('UTF-8') { writer ->
+        mappingReplacements.each{k, v -> writer.write(k + '=' + v + '\n')}
+        methodDescriptions.each{k, v -> writer.write(k + '=' + v + '\n')}
+    }
+}
+
+compileJava.dependsOn generateMappings

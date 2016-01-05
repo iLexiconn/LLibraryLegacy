@@ -1,6 +1,5 @@
 package net.ilexiconn.llibrary.common;
 
-import com.google.common.collect.Maps;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -19,13 +18,14 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 
 import java.util.Map;
+import java.util.WeakHashMap;
 
 public class ServerEventHandler {
-    private Map<Entity, Vector2f> sizeCache = Maps.newHashMap();
+    private Map<Entity, Vector2f> sizeCache = new WeakHashMap<Entity, Vector2f>();
     private boolean checkedForUpdates;
 
     @SubscribeEvent
-    public void onEntityTick(LivingEvent.LivingUpdateEvent event) throws ReflectiveOperationException {
+    public void onEntityTick(LivingEvent.LivingUpdateEvent event) {
         if (event.entityLiving instanceof IEntityMultiPart) {
             for (EntityPart part : ((IEntityMultiPart) event.entityLiving).getParts()) {
                 part.onUpdate();
@@ -36,10 +36,18 @@ public class ServerEventHandler {
 
         if (sizeCache.containsKey(event.entity)) {
             Vector2f size = sizeCache.get(event.entity);
-            EntityHelper.setSize(event.entity, size.x * scale, size.y * scale);
+            try {
+                EntityHelper.setSize(event.entity, size.x * scale, size.y * scale);
+            } catch (ReflectiveOperationException e) {
+                e.printStackTrace();
+            }
         } else {
             sizeCache.put(event.entity, new Vector2f(event.entity.width, event.entity.height));
-            EntityHelper.setSize(event.entity, event.entity.width * scale, event.entity.height * scale);
+            try {
+                EntityHelper.setSize(event.entity, event.entity.width * scale, event.entity.height * scale);
+            } catch (ReflectiveOperationException e) {
+                e.printStackTrace();
+            }
         }
     }
 
