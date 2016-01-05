@@ -44,7 +44,6 @@ minecraft {
     version = config.minecraft_version + "-" + config.forge_version
     runDir = "minecraft"
     mappings = "stable_20"
-    makeObfSourceJar = false
 }
 
 processResources {
@@ -127,13 +126,6 @@ curseforge {
     def url = "https://github.com/iLexiconn/LLibrary/raw/version/versions.json".toURL()
     def versions = new JsonSlurper().parseText url.text
 
-    def type = "release"
-    def latestVersion = ""
-    versions.versions.each{version, changelog -> latestVersion = version}
-    if (versions.beta && versions.beta == latestVersion) {
-        type = "beta"
-    }
-
     if (secret) {
         apiKey = secret.curseForgeApiKey
     } else {
@@ -143,8 +135,8 @@ curseforge {
     project {
         id = "230798"
 
-        releaseType = type
-        changelog = versions.versions[versions.getAt(type)].join("\n")
+        releaseType = "release"
+        changelog = versions.versions[versions.getAt(releaseType)].join("\n")
 
         addGameVersion config.minecraft_version
 

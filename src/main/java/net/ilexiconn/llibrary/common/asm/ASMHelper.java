@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ASMHelper {
-    public static interface Acceptor {
-        public void accept(ClassVisitor cv) throws IOException;
+    public interface Acceptor {
+        void accept(ClassVisitor cv) throws IOException;
     }
     
     public static boolean asmDump = true;
