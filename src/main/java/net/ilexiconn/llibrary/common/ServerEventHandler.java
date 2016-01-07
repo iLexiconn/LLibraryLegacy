@@ -32,21 +32,23 @@ public class ServerEventHandler {
             }
         }
 
-        float scale = EntityHelper.getScale(event.entity);
+        if (EntityHelper.hasScale(event.entity)) {
+            float scale = EntityHelper.getScale(event.entity);
 
-        if (sizeCache.containsKey(event.entity)) {
-            Vector2f size = sizeCache.get(event.entity);
-            try {
-                EntityHelper.setSize(event.entity, size.x * scale, size.y * scale);
-            } catch (ReflectiveOperationException e) {
-                e.printStackTrace();
-            }
-        } else {
-            sizeCache.put(event.entity, new Vector2f(event.entity.width, event.entity.height));
-            try {
-                EntityHelper.setSize(event.entity, event.entity.width * scale, event.entity.height * scale);
-            } catch (ReflectiveOperationException e) {
-                e.printStackTrace();
+            if (sizeCache.containsKey(event.entity)) {
+                Vector2f size = sizeCache.get(event.entity);
+                try {
+                    EntityHelper.setSize(event.entity, size.x * scale, size.y * scale);
+                } catch (ReflectiveOperationException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                sizeCache.put(event.entity, new Vector2f(event.entity.width, event.entity.height));
+                try {
+                    EntityHelper.setSize(event.entity, event.entity.width * scale, event.entity.height * scale);
+                } catch (ReflectiveOperationException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
