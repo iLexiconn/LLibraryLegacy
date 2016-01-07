@@ -179,6 +179,11 @@ public class EntityHelper {
     }
 
     public static float getScale(Entity entity) {
-        return scales.containsKey(entity) ? scales.get(entity) : 1f;
+        return hasScale(entity) ? scales.get(entity) : 1f;
+    }
+
+    public static boolean hasScale(Entity entity)
+    {
+        return scales.containsKey(entity);
     }
 }
