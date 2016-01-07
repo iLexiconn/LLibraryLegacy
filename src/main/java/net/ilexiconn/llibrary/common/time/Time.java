@@ -26,8 +26,7 @@ public class Time {
 
     public static int getWorldTimeInHours(World world) {
         long time = world.getWorldTime() % 24000;
-        int hours = (int) time / 1000 + 6 > 24 ? (int) time / 1000 + 6 - 24 : (int) time / 1000 + 6;
-        return hours;
+        return (int) time / 1000 + 6 > 24 ? (int) time / 1000 + 6 - 24 : (int) time / 1000 + 6;
     }
 
     public static String toAmPm(int hours) {

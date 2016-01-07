@@ -22,9 +22,6 @@ public class ItemHelper {
     /**
      * Use {@link net.ilexiconn.llibrary.common.nbt.NbtHelper#readStackFromNbt(NBTTagCompound, String)} instead.
      *
-     * @param nbtTag
-     * @param name
-     * @return
      * @since 0.1.0
      */
     @Deprecated
@@ -35,9 +32,6 @@ public class ItemHelper {
     /**
      * Use {@link net.ilexiconn.llibrary.common.nbt.NbtHelper#writeStackToNbt(NBTTagCompound, String, ItemStack)} instead.
      *
-     * @param nbtTag
-     * @param name
-     * @param stack
      * @since 0.1.0
      */
     @Deprecated
@@ -64,7 +58,6 @@ public class ItemHelper {
     /**
      * removes the item from all the world generated chests
      *
-     * @param item
      * @since 0.2.1
      */
     public static void removeItemFromChests(ItemStack item) {

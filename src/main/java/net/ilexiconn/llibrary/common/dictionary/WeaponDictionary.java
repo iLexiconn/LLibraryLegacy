@@ -55,7 +55,7 @@ public class WeaponDictionary {
      */
     public static Item[] getWeaponsForType(Type type) {
         if (typeInfoList[type.ordinal()] != null) {
-            return typeInfoList[type.ordinal()].toArray(new Item[0]);
+            return typeInfoList[type.ordinal()].toArray(new Item[typeInfoList[type.ordinal()].size()]);
         }
 
         return new Item[0];
@@ -71,7 +71,7 @@ public class WeaponDictionary {
         checkRegistration(item);
 
         if (weaponList[Item.getIdFromItem(item)] != null) {
-            return weaponList[Item.getIdFromItem(item)].typeList.toArray(new Type[0]);
+            return weaponList[Item.getIdFromItem(item)].typeList.toArray(new Type[weaponList[Item.getIdFromItem(item)].typeList.size()]);
         }
 
         return new Type[0];
@@ -80,8 +80,6 @@ public class WeaponDictionary {
     /**
      * Checks to see if two weapons are registered as having the same type
      *
-     * @param itemA
-     * @param itemB
      * @return returns true if a common type is found, false otherwise
      */
     public static boolean areWeaponsEquivalent(Item itemA, Item itemB) {

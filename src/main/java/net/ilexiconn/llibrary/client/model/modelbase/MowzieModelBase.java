@@ -2,6 +2,7 @@ package net.ilexiconn.llibrary.client.model.modelbase;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -15,7 +16,7 @@ import java.util.Random;
  * @since 0.1.0
  */
 @SideOnly(Side.CLIENT)
-public class MowzieModelBase extends ModelBase {
+public class MowzieModelBase<T extends Entity> extends ModelBase {
     private float movementScale = 1.0F;
 
     /**
@@ -40,8 +41,8 @@ public class MowzieModelBase extends ModelBase {
      * Saves the initial rotate angles and initial rotation points. Note: Call this at the end of the constructor.
      */
     protected void setInitPose() {
-        for (int i = 0; i < this.parts.size(); i++) {
-            this.parts.get(i).setInitValuesToCurrentPose();
+        for (MowzieModelRenderer part : this.parts) {
+            part.setInitValuesToCurrentPose();
         }
     }
 
@@ -51,8 +52,8 @@ public class MowzieModelBase extends ModelBase {
      * @see #setInitPose() method in MowzieModelBase class.
      */
     public void setToInitPose() {
-        for (int i = 0; i < this.parts.size(); i++) {
-            parts.get(i).setCurrentPoseToInitValues();
+        for (MowzieModelRenderer part : this.parts) {
+            part.setCurrentPoseToInitValues();
         }
     }
 
