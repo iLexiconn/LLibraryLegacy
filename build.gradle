@@ -131,17 +131,10 @@ publishing {
     }
 }
 
-import groovy.json.JsonSlurper
+import groovy.json.JsonSlurper;
 curseforge {
     def url = "https://github.com/iLexiconn/LLibrary/raw/version/versions.json".toURL()
     def versions = new JsonSlurper().parseText url.text
-
-    def type = "release"
-    def latestVersion = ""
-    versions.versions.each{version, changelog -> latestVersion = version}
-    if (versions.beta && versions.beta == latestVersion) {
-        type = "beta"
-    }
 
     if (secret) {
         apiKey = secret.curseForgeApiKey
@@ -151,22 +144,18 @@ curseforge {
 
     project {
         id = "230798"
-    
-        releaseType = type
-        changelog = versions.versions[versions.getAt(type)].join("\n")
+
+        releaseType = "release"
+        changelog = versions.versions[versions.getAt(releaseType)].join("\n")
 
         addGameVersion config.minecraft_version
-        
+
         mainArtifact(jar) {
             displayName = "LLibrary " + getVersionFromJavaWithoutMc() + " for Minecraft " + config.minecraft_version
         }
-        
+
         addArtifact(devJar) {
             displayName = "Development"
-        }
-        
-        addArtifact(sourceJar) {
-            displayName = "Sources"
         }
     }
 }

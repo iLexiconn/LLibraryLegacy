@@ -33,7 +33,7 @@ public class LLibrary {
     public static LoggerHelper logger = new LoggerHelper("llibrary");
     public static SimpleNetworkWrapper networkWrapper;
 
-    public static final String VERSION = "0.7.0";
+    public static final String VERSION = "0.7.1";
 
     @Mod.EventHandler
     private void preInit(FMLPreInitializationEvent event) {
