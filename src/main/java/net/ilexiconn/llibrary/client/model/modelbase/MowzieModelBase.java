@@ -7,9 +7,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author BobMowzie, gegy1000
@@ -348,5 +346,12 @@ public class MowzieModelBase<T extends Entity> extends ModelBase {
         }
 
         parts.add(mowzieModelRenderer);
+    }
+
+    public void render(T entity, float f, float f1, float rotation, float rotationYaw, float rotationPitch) {
+    }
+
+    public List<MowzieModelRenderer> getParts() {
+        return parts;
     }
 }
