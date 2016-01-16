@@ -148,7 +148,7 @@ curseforge {
             displayName = "Development"
         }
 		
-		addArtifact(sourceJar) {
+        addArtifact(sourceJar) {
             displayName = "Sources"
         }
     }

@@ -2,7 +2,6 @@ package net.ilexiconn.llibrary.client;
 
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
 import net.ilexiconn.llibrary.client.gui.GuiOverride;
-import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.client.screenshot.ScreenshotHelper;
 import net.ilexiconn.llibrary.client.toast.Toast;
 import net.ilexiconn.llibrary.common.block.IHighlightedBlock;
@@ -11,23 +10,18 @@ import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 import net.ilexiconn.llibrary.common.update.VersionHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -44,35 +38,10 @@ import java.util.Map;
 public class ClientEventHandler {
     private static final double timeU = 1000000000 / 20;
     public static KeyBinding screenshotKeyBinding;
-    private RenderPlayer prevRenderPlayer;
     private Minecraft mc = Minecraft.getMinecraft();
     private long initialTime = System.nanoTime();
     private double deltaU = 0;
     private long timer = System.currentTimeMillis();
-
-    //TODO: RenderPlayerEvent.Specials.Post is deprecated and is never fired by Forge
-    @SubscribeEvent
-    public void onRenderPlayerPost(RenderPlayerEvent.Post event) {
-        if (event.entityPlayer == mc.thePlayer) {
-            if (prevRenderPlayer != null) {
-                mc.getRenderManager().entityRenderMap.put(event.entityPlayer.getClass(), prevRenderPlayer);
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onRenderPlayerPre(RenderPlayerEvent.Pre event) {
-        EntityPlayer player = event.entityPlayer;
-
-        if (mc.thePlayer == player) {
-            Render<AbstractClientPlayer> entityRenderObject = mc.getRenderManager().getEntityRenderObject(event.entityPlayer);
-
-            if (!(entityRenderObject instanceof RenderLLibraryPlayer)) {
-                prevRenderPlayer = (RenderPlayer) entityRenderObject;
-                mc.getRenderManager().entityRenderMap.put(player.getClass(), ClientProxy.renderCustomPlayer);
-            }
-        }
-    }
 
     @SubscribeEvent
     public void onBlockHighlight(DrawBlockHighlightEvent event) {
@@ -206,11 +175,4 @@ public class ClientEventHandler {
             }
         }
     }
-
-    /*@SubscribeEvent
-    public void onSurvivalTabClick(SurvivalTab.ClickEvent event) {
-        if (event.getSurvivalTab() == LLibrary.tabInventory) {
-            mc.displayGuiScreen(new GuiInventory(event.getEntityPlayer()));
-        }
-    }*/
 }

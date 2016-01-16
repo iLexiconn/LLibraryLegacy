@@ -1,5 +1,6 @@
 package net.ilexiconn.llibrary.client;
 
+import net.ilexiconn.llibrary.client.book.BookWikiAPI;
 import net.ilexiconn.llibrary.client.component.ColorComponent;
 import net.ilexiconn.llibrary.client.component.EntityComponent;
 import net.ilexiconn.llibrary.client.component.RecipeComponent;
@@ -8,9 +9,7 @@ import net.ilexiconn.llibrary.client.component.recipe.CraftingRecipe;
 import net.ilexiconn.llibrary.client.component.recipe.FurnaceRecipe;
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
 import net.ilexiconn.llibrary.client.gui.GuiLLibraryMainMenu;
-import net.ilexiconn.llibrary.client.render.entity.RenderLLibraryPlayer;
 import net.ilexiconn.llibrary.common.ServerProxy;
-import net.ilexiconn.llibrary.client.book.BookWikiAPI;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -27,7 +26,6 @@ import java.io.File;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends ServerProxy {
-    public static RenderLLibraryPlayer renderCustomPlayer;
     public Timer timer;
 
     @Override
@@ -61,9 +59,6 @@ public class ClientProxy extends ServerProxy {
     @Override
     public void postInit() {
         super.postInit();
-
-        renderCustomPlayer = new RenderLLibraryPlayer();
-        Minecraft.getMinecraft().getRenderManager().entityRenderMap.put(EntityPlayer.class, renderCustomPlayer);
     }
 
     @Override
