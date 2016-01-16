@@ -133,7 +133,7 @@ publishing {
 
 import groovy.json.JsonSlurper;
 curseforge {
-    def url = "https://github.com/iLexiconn/LLibrary/raw/version/versions.json".toURL()
+    def url = "https://github.com/iLexiconn/LLibrary/raw/1.7.10/versions.json".toURL()
     def versions = new JsonSlurper().parseText url.text
 
     if (secret) {
@@ -158,7 +158,7 @@ curseforge {
             displayName = "Development"
         }
 		
-		addArtifact(sourceJar) {
+        addArtifact(sourceJar) {
             displayName = "Sources"
         }
     }

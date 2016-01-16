@@ -19,7 +19,7 @@ public class ServerProxy {
         EntityHelper.registerEntity("mountableBlock", EntityMountableBlock.class);
         ConfigHelper.registerConfigHandler("llibrary", config, new LLibraryConfigHandler());
 
-        FMLInterModComms.sendMessage("llibrary", "update-checker", "https://github.com/iLexiconn/LLibrary/raw/version/versions.json");
+        FMLInterModComms.sendMessage("llibrary", "update-checker", "https://github.com/iLexiconn/LLibrary/raw/1.7.10/versions.json");
     }
 
     public void postInit() {
