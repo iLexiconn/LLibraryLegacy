@@ -63,11 +63,11 @@ public class Vector2d extends Tuple2d implements Serializable {
 
     public final double angle(Vector2d var1) {
         double var2 = this.dot(var1) / (this.length() * var1.length());
-        if(var2 < -1.0D) {
+        if (var2 < -1.0D) {
             var2 = -1.0D;
         }
 
-        if(var2 > 1.0D) {
+        if (var2 > 1.0D) {
             var2 = 1.0D;
         }
 

@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
 import net.ilexiconn.llibrary.LLibrary;
+import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.ilexiconn.llibrary.common.json.container.JsonModUpdate;
 
 import java.io.IOException;
@@ -20,19 +21,21 @@ public class VersionHandler {
     public static List<JsonModUpdate> searchForOutdatedModsInefficiently() throws IOException {
         List<JsonModUpdate> outdatedMods = Lists.newArrayList();
 
-        for (JsonModUpdate mod : UpdateHelper.modList) {
-            ModContainer modContainer = null;
-            for (ModContainer c : Loader.instance().getModList()) {
-                if (c.getModId().equals(mod.modid)) {
-                    modContainer = c;
+        if (LLibraryConfigHandler.checkForUpdates) {
+            for (JsonModUpdate mod : UpdateHelper.modList) {
+                ModContainer modContainer = null;
+                for (ModContainer c : Loader.instance().getModList()) {
+                    if (c.getModId().equals(mod.modid)) {
+                        modContainer = c;
+                    }
                 }
-            }
-            if (modContainer == null) {
-                continue;
-            }
-            if (mod.getUpdateVersion().compareTo(modContainer.getProcessedVersion()) > 0) {
-                LLibrary.logger.info("Found update for mod " + modContainer.getName() + " (" + mod.getUpdateVersion().getVersionString() + ")");
-                outdatedMods.add(mod);
+                if (modContainer == null) {
+                    continue;
+                }
+                if (mod.getUpdateVersion().compareTo(modContainer.getProcessedVersion()) > 0) {
+                    LLibrary.logger.info("Found update for mod " + modContainer.getName() + " (" + mod.getUpdateVersion().getVersionString() + ")");
+                    outdatedMods.add(mod);
+                }
             }
         }
 

@@ -167,7 +167,8 @@ public class GuiModUpdates extends GuiScreen {
                                 updateQueue = Lists.newArrayList();
                             } else {
                                 try {
-                                    updateQueue = JsonFactory.getGson().fromJson(new FileReader(configFile), new TypeToken<List<JsonModUpdate>>(){}.getType());
+                                    updateQueue = JsonFactory.getGson().fromJson(new FileReader(configFile), new TypeToken<List<JsonModUpdate>>() {
+                                    }.getType());
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                     return;

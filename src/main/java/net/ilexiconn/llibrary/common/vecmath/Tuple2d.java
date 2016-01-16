@@ -117,7 +117,7 @@ public abstract class Tuple2d implements Serializable, Cloneable {
         long var1 = 1L;
         var1 = 31L * var1 + Double.doubleToLongBits(this.x);
         var1 = 31L * var1 + Double.doubleToLongBits(this.y);
-        return (int)(var1 ^ var1 >> 32);
+        return (int) (var1 ^ var1 >> 32);
     }
 
     public boolean equals(Tuple2d var1) {
@@ -131,7 +131,7 @@ public abstract class Tuple2d implements Serializable, Cloneable {
     @Override
     public boolean equals(Object var1) {
         try {
-            Tuple2d var2 = (Tuple2d)var1;
+            Tuple2d var2 = (Tuple2d) var1;
             return this.x == var2.x && this.y == var2.y;
         } catch (NullPointerException var4) {
             return false;
@@ -142,11 +142,11 @@ public abstract class Tuple2d implements Serializable, Cloneable {
 
     public boolean epsilonEquals(Tuple2d var1, double var2) {
         double var4 = this.x - var1.x;
-        if((var4 < 0.0D?-var4:var4) > var2) {
+        if ((var4 < 0.0D ? -var4 : var4) > var2) {
             return false;
         } else {
             var4 = this.y - var1.y;
-            return (var4 < 0.0D?-var4:var4) <= var2;
+            return (var4 < 0.0D ? -var4 : var4) <= var2;
         }
     }
 
@@ -156,17 +156,17 @@ public abstract class Tuple2d implements Serializable, Cloneable {
     }
 
     public final void clamp(double var1, double var3, Tuple2d var5) {
-        if(var5.x > var3) {
+        if (var5.x > var3) {
             this.x = var3;
-        } else if(var5.x < var1) {
+        } else if (var5.x < var1) {
             this.x = var1;
         } else {
             this.x = var5.x;
         }
 
-        if(var5.y > var3) {
+        if (var5.y > var3) {
             this.y = var3;
-        } else if(var5.y < var1) {
+        } else if (var5.y < var1) {
             this.y = var1;
         } else {
             this.y = var5.y;
@@ -175,13 +175,13 @@ public abstract class Tuple2d implements Serializable, Cloneable {
     }
 
     public final void clampMin(double var1, Tuple2d var3) {
-        if(var3.x < var1) {
+        if (var3.x < var1) {
             this.x = var1;
         } else {
             this.x = var3.x;
         }
 
-        if(var3.y < var1) {
+        if (var3.y < var1) {
             this.y = var1;
         } else {
             this.y = var3.y;
@@ -190,13 +190,13 @@ public abstract class Tuple2d implements Serializable, Cloneable {
     }
 
     public final void clampMax(double var1, Tuple2d var3) {
-        if(var3.x > var1) {
+        if (var3.x > var1) {
             this.x = var1;
         } else {
             this.x = var3.x;
         }
 
-        if(var3.y > var1) {
+        if (var3.y > var1) {
             this.y = var1;
         } else {
             this.y = var3.y;
@@ -210,37 +210,37 @@ public abstract class Tuple2d implements Serializable, Cloneable {
     }
 
     public final void clamp(double var1, double var3) {
-        if(this.x > var3) {
+        if (this.x > var3) {
             this.x = var3;
-        } else if(this.x < var1) {
+        } else if (this.x < var1) {
             this.x = var1;
         }
 
-        if(this.y > var3) {
+        if (this.y > var3) {
             this.y = var3;
-        } else if(this.y < var1) {
+        } else if (this.y < var1) {
             this.y = var1;
         }
 
     }
 
     public final void clampMin(double var1) {
-        if(this.x < var1) {
+        if (this.x < var1) {
             this.x = var1;
         }
 
-        if(this.y < var1) {
+        if (this.y < var1) {
             this.y = var1;
         }
 
     }
 
     public final void clampMax(double var1) {
-        if(this.x > var1) {
+        if (this.x > var1) {
             this.x = var1;
         }
 
-        if(this.y > var1) {
+        if (this.y > var1) {
             this.y = var1;
         }
 

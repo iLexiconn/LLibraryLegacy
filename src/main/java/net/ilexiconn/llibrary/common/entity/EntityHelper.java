@@ -182,8 +182,7 @@ public class EntityHelper {
         return hasScale(entity) ? scales.get(entity) : 1f;
     }
 
-    public static boolean hasScale(Entity entity)
-    {
+    public static boolean hasScale(Entity entity) {
         return scales.containsKey(entity);
     }
 }
