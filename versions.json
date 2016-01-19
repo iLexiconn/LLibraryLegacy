@@ -4,7 +4,7 @@
     "0.8.0": [
       "Added BookWiki API",
       "Removed deprecated APIs",
-      "Added config option tyo disable update checker",
+      "Added config option to disable update checker",
       "Fixed caching of wrong entities"
     ],
     "0.8.1": [
