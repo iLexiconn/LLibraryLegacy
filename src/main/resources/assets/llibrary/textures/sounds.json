@@ -1,0 +1,10 @@
+{
+	"page-flip": {
+        "category": "master",
+        "sounds": [
+            "bookwiki/page-flip-1",
+            "bookwiki/page-flip-2",
+            "bookwiki/page-flip-3"
+        ]
+    }
+}

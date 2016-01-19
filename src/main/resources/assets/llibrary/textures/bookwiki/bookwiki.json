@@ -1,0 +1,77 @@
+{
+  "generalCategory": "getting_started",
+  "categories": [
+    {
+      "id": "getting_started",
+      "name": "category.getting_started.name",
+      "icon": "minecraft:crafting_table",
+      "defaultPage": "main"
+    }
+  ],
+  "pages": [
+    {
+      "id": "main",
+      "content": "After first establishing yourself in the Minecraft world, you can start the first few steps towards creating dinosaurs and other prehistoric organisms.",
+      "category": "getting_started"
+    },
+	{
+      "id": "peat_and_moss_1",
+      "content": "<c:bold>Peat, and farming <c:bold>Moss\n\nIf you spawn in or discover a <c:italic>Forest<c:reset>, <c:italic>Birch Forest<c:reset>, <c:italic>Flower <c:italic>Forest<c:reset>, <c:italic>Taiga<c:reset>, <c:italic>Mega <c:italic>Taiga<c:reset>, <c:italic>Jungle<c:reset> or <c:italic>Swampland<c:reset> biome, you will notice flat patches of <c:italic>Moss<c:reset> (roughly the same shape as pressure plates) growing on grass or other dirt variants. Moss is a small but hardy plant, and it can easily be mined and picked up by hand or basically any tool/item, although it is fastest with <c:italic>Shears<c:reset>. In  <c:italic>Swampland<c:reset> biomes specifically, you will also find pockets or layers of <c:italic>Peat<c:reset> blocks among the dirt, typically located just beneath the grass layer. You can mine these with any tool, although it is fastest with a <c:italic>Shovel<c:reset>.",
+      "category": "getting_started"
+    },
+	{
+		"id": "peat_and_moss_2",
+		"content": "Once you have a decent amount of <c:italic>Peat<c:reset>, <c:underline>be careful where and <c:underline>how you place it!<c:reset> If you're in a <c:italic>Swampland<c:reset> biome, you can place it anywhere you want without consequences. However, in any other biome it'll soon dry out and turn into dirt unless you keep it moist. Luckily, <c:italic>Peat<c:reset> obeys the same rules as farmland, meaning that any <c:italic>Peat<c:reset> blocks within 4 blocks of water stay irrigated regardless of the biome they are in. Unlike farmland however, <c:italic>Peat<c:reset> blocks won't be damaged if you jump on them.",
+		"category": "getting_started"
+	},
+	{
+		"id": "peat_and_moss_3",
+		"content": "Once you have a decent amount of <c:italic>Peat<c:reset> and some <c:italic>Moss<c:reset>, you can start farming the <c:italic>Moss<c:reset>. Moss can be placed on <c:italic>Peat<c:reset>, <c:italic>Gravel<c:reset>, <c:italic>Cobblestone<c:reset> or any dirt variant, and over time it will spread. However, it will spread MUCH faster if placed on <c:italic>Peat<c:reset>! <c:italic>Peat Moss<c:reset> blocks will become useful once you start hatching dinosaurs.\n\n<r:moss_cobblestone><r:moss_stone>",
+		"category": "getting_started"
+	},
+    {
+      "id": "making_compost_1",
+      "content": "<c:bold>Making Compost\n\n<c:italic>Compost<c:reset> is one of the key ingredients of <c:italic>Plant Fertilizer<c:reset>. In order to make it, you will need a <c:italic>Compost Bin<c:reset>, which has the following recipe: \n<r:compost_bin>The Compost Bin GUI has an input slot for <c:italic>Dirt<c:reset> blocks, an input slot for <c:italic>mushrooms<c:reset> or <c:italic>Mycelium<c:reset> blocks, a window with about 9 input slots for <c:italic>soft organic plant matter<c:reset> (sugar cane, vegetables, saplings, leaves, moss, seaweed, seeds, etc), and an output slot for Compost. In order to make Compost, the appropriate slots must",
+      "category": "getting_started"
+    },
+	{
+      "id": "making_compost_2",
+      "content": "have <c:underline>at least one dirt block, at least one mushroom, and at least three organic plant matter items<c:reset> (they can be the same type, or different). After a <c:italic>very<c:reset> long time time (about 1 Minecraft day), each portion of these things will be used up into 5x Compost items. Compost will become useful once you start propagating ancient plants...\n<c:bold>Making Agar:<c:reset>\n\nAgar is an essential thing to have when genetically engineering ancient plants. In order to make <c:italic>Agar Jelly<c:reset>, you will first need to find some <c:italic>Gracilaria seaweed<c:reset>. Luckily, this is pretty easy to find. It can either be found growing deep underwater, or much more rarely, be",
+      "category": "getting_started"
+    },
+	{
+      "id": "making_agar_2",
+      "content": "obtained as a random catch with a fishing rod. <c:italic>Gracilaria seaweed<c:reset> can be planted on <c:italic>Sand, Gravel, Clay (soft)<c:reset>, or any dirt variant. If planted at level 62 or lower, it will spread over time like a mushroom (though somewhat faster, and regardless of light level), meaning that if you have a big/deep enough pool or bay handy, you can easily farm it! Once you’ve collected or farmed enough Gracilaria, next you’ll want to make <c:italic>Liquid Agar><c:reset>: 1x Gracilaria seaweed in a furnace = 1x Liquid Agar Once you have some <c:italic>Liquid Agar<c:reset>, combine it with some <c:italic>Petri Dishes<c:reset>: 4x Petri Dishes + 1x Liquid Agar = 4x Petri Dish with Agar. These will become useful when making plant seeds...",
+      "category": "getting_started"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "moss_cobblestone",
+      "recipe": [
+        "", "minecraft:cobblestone", "",
+        "minecraft:cobblestone", "", "minecraft:cobblestone",
+        "", "minecraft:cobblestone", ""
+      ],
+      "result": "minecraft:mossy_cobblestone*4"
+    },
+    {
+      "id": "moss_stone",
+      "recipe": [
+        "", "minecraft:stone", "",
+        "minecraft:stone", "", "minecraft:stone",
+        "", "minecraft:stone", ""
+      ],
+      "result": "minecraft:stonebrick*4*1"
+    },
+	{
+		"id": "compost_bin",
+		"recipe": [
+		  "minecraft:wooden_button", "minecraft:wooden_pressure_plate", "minecraft:stick",
+		  "minecraft:wooden_slab", " ", "minecraft:wooden_slab",
+		  "minecraft:wooden_slab", "minecraft:wooden_slab", "minecraft:wooden_slab"
+		],
+		"result": "minecraft:dirt"
+	}
+  ]
+}
