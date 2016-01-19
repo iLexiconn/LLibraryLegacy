@@ -1,11 +1,14 @@
 {
-  "release": "0.8.0",
+  "release": "0.8.1",
   "versions": {
     "0.8.0": [
       "Added BookWiki API",
       "Removed deprecated APIs",
       "Added config option tyo disable update checker",
       "Fixed caching of wrong entities"
+    ],
+    "0.8.1": [
+      "Fixed Bookwiki tetxures and sounds"
     ]
   },
   "updateUrl": "http://www.planetminecraft.com/mod/llibrary/",
