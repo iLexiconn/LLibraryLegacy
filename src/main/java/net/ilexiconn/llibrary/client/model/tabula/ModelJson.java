@@ -22,19 +22,19 @@ import java.util.Map.Entry;
  */
 @SideOnly(Side.CLIENT)
 public class ModelJson extends MowzieModelBase {
-    private JsonTabulaModel tabulaModel;
-    private Map<MowzieModelRenderer, MowzieModelRenderer> childParentMap = Maps.newHashMap();
-    private Map<String, MowzieModelRenderer> nameMap = Maps.newHashMap();
-    private Map<String, MowzieModelRenderer> identifierMap = Maps.newHashMap();
-    private IModelAnimator animator;
+    protected JsonTabulaModel tabulaModel;
+    protected Map<MowzieModelRenderer, MowzieModelRenderer> childParentMap = Maps.newHashMap();
+    protected Map<String, MowzieModelRenderer> nameMap = Maps.newHashMap();
+    protected Map<String, MowzieModelRenderer> identifierMap = Maps.newHashMap();
+    protected IModelAnimator animator;
 
-    private ArrayList<Animation> animations = Lists.newArrayList();
+    protected ArrayList<Animation> animations = Lists.newArrayList();
 
-    private Animation playingAnimation;
-    private int animationTimer;
-    private int animationLength;
+    protected Animation playingAnimation;
+    protected int animationTimer;
+    protected int animationLength;
 
-    private int tick;
+    protected int tick;
 
     public ModelJson(JsonTabulaModel model) {
         tabulaModel = model;
