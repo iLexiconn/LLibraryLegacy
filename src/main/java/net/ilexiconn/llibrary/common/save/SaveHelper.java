@@ -176,7 +176,7 @@ public class SaveHelper {
                 destFile.createNewFile();
             }
             FileInputStream in = new FileInputStream(sourceFile);
-            FileOutputStream out= new FileOutputStream(destFile);
+            FileOutputStream out = new FileOutputStream(destFile);
             source = in.getChannel();
             destination = out.getChannel();
             destination.transferFrom(source, 0L, source.size());

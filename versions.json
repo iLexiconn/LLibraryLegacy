@@ -1,0 +1,102 @@
+{
+  "release": "0.7.2",
+  "versions": {
+    "0.5.0": [
+      "Added toast builder",
+      "Added survival tab builder",
+      "Added methods to scale entities",
+      "Added new event hook system for player model",
+      "Added update types to checker",
+      "Added new player render hooks",
+      "Added config option for update type",
+      "Added survival tab pages",
+      "Added simple AbstractMessage register method",
+      "Added simple crash report implementation",
+      "Added JSON config helper",
+      "Added config option for extra tooltip info",
+      "Added NBTIO",
+      "Added ParticleHelper",
+      "Added automatic update installer",
+      "",
+      "Revamped update gui",
+      "",
+      "Fixed server-side ChainBuffer crash",
+      "Fixed flickering images in gui",
+      "Fixed detection of outdated updates",
+      "Fixed toast fade-out animation",
+      "Fixed NBT save format",
+      "Fixed visual glitch with toast messages",
+      "",
+      "Removed update command",
+      "",
+      "Please remove your config file before installing this update!"
+    ],
+    "0.5.1": [
+      "Fixed update crash"
+    ],
+    "0.5.2": [
+      "Fixed server crash"
+    ],
+    "0.5.3": [
+      "Added CommandBuilder",
+      "Fixed Tabula files not animating",
+      "Fixed crash report header",
+      "Updated forge and added as dependency"
+    ],
+    "0.5.4": [
+      "Added CommandBuilder argument types",
+      "Added heightmap world generator",
+      "Added ByteBuf helper"
+    ],
+    "0.5.5": [
+      "Fixed automatic update installer",
+      "Fixed heightmap generator crash",
+      "Fixed duplicate update messages",
+      "Removed heightmap generator from 1.7 branch"
+    ],
+    "0.6.0": [
+      "Updated to Minecraft 1.8.8",
+      "Fixed server crash",
+      "Added ArrayList support to ByteBufHelper"
+    ],
+    "0.6.1": [
+      "Added ASM helpers to 1.8.8 branch",
+      "Added new NBT utils",
+      "Fixed gui override crash",
+      "Fixed auto updater crash",
+      "Updated forge"
+    ],
+    "0.6.2": [
+      "Fixed ASM issues",
+      "Fixed heightmap issues",
+      "Fixed tabula texture issues",
+      "Fixed Java 6 issues",
+      "Fixed issue issues"
+    ],
+    "0.7.0": [
+      "Updated to 1.8.9",
+      "Added ASM hook patcher",
+      "Fixed the infamous model texture bug",
+      "Fixed toast message disabling blending",
+      "Made Heightmap generator more customizable and efficient",
+      "Added MessageContext to AbstractMessage",
+      "Fixed scheduled tasks for AbstractMessage",
+      "Code cleanup",
+      "-> Removed survival tabs",
+      "-> Removed extension interfaces",
+      "Probably some other things I forgot about",
+      "Do people even reads these things?"
+    ],
+    "0.7.1": [
+      "Optimized MowzieModelRenderer",
+      "Added setMovementScale to MowzieModelRenderer",
+      "Fixed source jar"
+    ],
+    "0.7.2": [
+      "Added config option tyo disable update checker",
+      "Fixed caching of wrong entities"
+    ]
+  },
+  "updateUrl": "http://www.planetminecraft.com/mod/llibrary/",
+  "iconUrl": "http://i.imgur.com/N2CJ80g.png"
+}

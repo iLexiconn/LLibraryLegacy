@@ -22,6 +22,7 @@ import net.ilexiconn.llibrary.common.message.MessageLLibraryAnimationAction;
 import net.ilexiconn.llibrary.common.message.MessageLLibraryIntemittentAnimation;
 import net.ilexiconn.llibrary.common.update.UpdateHelper;
 import net.minecraft.crash.CrashReport;
+
 import java.util.Map;
 
 @Mod(modid = "llibrary", name = "LLibrary", version = LLibrary.VERSION, guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory", dependencies = "required-after:Forge")
@@ -33,7 +34,7 @@ public class LLibrary {
     public static LoggerHelper logger = new LoggerHelper("llibrary");
     public static SimpleNetworkWrapper networkWrapper;
 
-    public static final String VERSION = "0.7.1";
+    public static final String VERSION = "0.7.2";
 
     @Mod.EventHandler
     private void preInit(FMLPreInitializationEvent event) {
