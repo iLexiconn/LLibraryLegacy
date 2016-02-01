@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author gegy1000
@@ -231,5 +232,16 @@ public class ModelJson extends MowzieModelBase {
 
     public int getAnimationTimer() {
         return animationTimer;
+    }
+
+    public String[] getCubeNamesArray() {
+        String[] cubeNamesArray = new String[nameMap.size()];
+        int index = 0;
+        Set<String> names = nameMap.keySet();
+        for (String name : names) {
+            cubeNamesArray[index] = name;
+            index++;
+        }
+        return cubeNamesArray;
     }
 }
