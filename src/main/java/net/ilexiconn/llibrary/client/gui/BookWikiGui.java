@@ -41,7 +41,7 @@ public class BookWikiGui extends GuiScreen {
         this.bookWiki = bookWiki;
         this.currentCategory = bookWiki.getCategoryByID(bookWiki.getGeneralCategory());
         this.currentPage = currentCategory.getDefaultPage();
-        this.texture = new ResourceLocation("llibrary", "bookwiki/gui.png");
+        this.texture = new ResourceLocation("llibrary", "textures/bookwiki/gui.png");
     }
 
     @Override
