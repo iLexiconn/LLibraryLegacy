@@ -86,10 +86,12 @@ public class HookPatchManager implements IClassTransformer {
                 insnList.add(new VarInsnNode(Opcodes.FLOAD, j++));
             } else if (s.equals("double")) {
                 desc += "D";
-                insnList.add(new VarInsnNode(Opcodes.DLOAD, j++));
+                insnList.add(new VarInsnNode(Opcodes.DLOAD, j));
+                j += 2;
             } else if (s.equals("long")) {
                 desc += "J";
-                insnList.add(new VarInsnNode(Opcodes.LLOAD, j++));
+                insnList.add(new VarInsnNode(Opcodes.LLOAD, j));
+                j += 2;
             } else if (s.equals("byte")) {
                 desc += "B";
                 insnList.add(new VarInsnNode(Opcodes.ILOAD, j++));
