@@ -8,6 +8,8 @@ import org.objectweb.asm.util.ASMifier;
 import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceClassVisitor;
 
+import com.google.gson.JsonParseException;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,8 +17,17 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class ASMHelper {
+    private static final String IDENTIFIER = "\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*";
+
+    private static final String NAME = "(" + IDENTIFIER + "\\.)*" + IDENTIFIER + "*";
+
+    private static final Pattern QUALIFIED_CLASS_NAME_PATTERN = Pattern.compile(NAME);
+
+    private static final Pattern TYPE_PATTERN = Pattern.compile("\\[*" + NAME);
+
     public interface Acceptor {
         void accept(ClassVisitor cv) throws IOException;
     }
@@ -179,5 +190,33 @@ public class ASMHelper {
                 cnode.accept(cv);
             }
         }, file, filterImportant, sortLocals);
+    }
+
+    public static boolean isQualifiedClassName(String str) {
+        return QUALIFIED_CLASS_NAME_PATTERN.matcher(str).matches();
+    }
+
+    public static boolean isType(String str) {
+        return TYPE_PATTERN.matcher(str).matches();
+    }
+
+    public static String getInternalQualifiedClassName(String str) {
+        return str.replace('.', '/');
+    }
+
+    public static String getClassAsParameter(String str) {
+        return "L" + getInternalQualifiedClassName(str) + ";";
+    }
+
+    public static void checkQualifiedClassName(String name, String str) {
+        if (!isQualifiedClassName(str)) {
+            throw new JsonParseException("Expected a qualified class name for " + name + ", instead got " + str);
+        }
+    }
+
+    public static void checkType(String name, String str) {
+        if (!isType(str)) {
+            throw new JsonParseException("Expected a qualified class name or a primitive type for " + name + ", instead got " + str);
+        }
     }
 }
