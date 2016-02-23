@@ -1,16 +1,13 @@
 {
-  "release": "0.8.1",
+  "release": "0.9.0",
   "versions": {
-    "0.8.0": [
-      "Added BookWiki API",
-      "Removed deprecated APIs",
-      "Added config option to disable update checker",
-      "Fixed caching of wrong entities"
-    ],
-    "0.8.1": [
-      "Fixed Bookwiki tetxures and sounds"
+    "0.9.0": [
+      "Added Tabula IModel implementation",
+      "Fixed bookwiki sounds",
+      "Fixed crash with pau101's Wallpaper mod",
+      "Fixed hook patcher crash"
     ]
   },
   "updateUrl": "http://www.planetminecraft.com/mod/llibrary/",
-  "iconUrl": "http://i.imgur.com/N2CJ80g.png"
+  "iconUrl": "http://i.imgur.com/o20m06W.png"
 }
