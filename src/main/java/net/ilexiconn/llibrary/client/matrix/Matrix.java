@@ -1,14 +1,12 @@
 package net.ilexiconn.llibrary.client.matrix;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.vecmath.*;
 import java.util.Stack;
 
-import javax.vecmath.AxisAngle4d;
-import javax.vecmath.Matrix4d;
-import javax.vecmath.Point3f;
-import javax.vecmath.Quat4f;
-import javax.vecmath.Vector3d;
-import javax.vecmath.Vector3f;
-
+@SideOnly(Side.CLIENT)
 public class Matrix {
     public Stack<Matrix4d> matrixStack;
 

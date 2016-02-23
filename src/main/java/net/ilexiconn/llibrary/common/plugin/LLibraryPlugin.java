@@ -72,12 +72,16 @@ public class LLibraryPlugin implements IFMLLoadingPlugin, IFMLCallHook {
                 if (entry != null) {
                     Collections.addAll(hookList, JsonFactory.getGson().fromJson(new InputStreamReader(zip.getInputStream(entry)), JsonHook[].class));
                 }
-                ZipEntry entry1 = zip.getEntry("mappings.txt");
+                ZipEntry entry1 = zip.getEntry("llibrary_mappings.txt");
                 if (mod.getName().contains("llibrary") && entry1 != null) {
                     Mappings.parseMappings(zip.getInputStream(entry1));
                 }
                 zip.close();
             }
+        }
+        File devHooks = new File("llibrary_hooks.json");
+        if (devHooks.exists()) {
+            Collections.addAll(hookList, JsonFactory.getGson().fromJson(new InputStreamReader(new FileInputStream(devHooks)), JsonHook[].class));
         }
 
         return null;

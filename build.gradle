@@ -195,7 +195,7 @@ task generateMappings << {
         }
     }
 
-    def mappingsFile = new File('src/main/resources/mappings.txt')
+    def mappingsFile = new File('src/main/resources/llibrary_mappings.txt')
     mappingsFile.withWriter('UTF-8') { writer ->
         mappingReplacements.each{k, v -> writer.write(k + '=' + v + '\n')}
         methodDescriptions.each{k, v -> writer.write(k + '=' + v + '\n')}

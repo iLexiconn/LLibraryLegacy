@@ -1,9 +1,7 @@
 package net.ilexiconn.llibrary.client.model.item;
 
-import java.util.List;
-
-import javax.vecmath.Matrix4f;
-
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
@@ -13,12 +11,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.model.IFlexibleBakedModel;
 import net.minecraftforge.client.model.IPerspectiveAwareModel;
 import net.minecraftforge.client.model.TRSRTransformation;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import javax.vecmath.Matrix4f;
+import java.util.List;
 
+@SideOnly(Side.CLIENT)
 public class BakedTabulaModel implements IFlexibleBakedModel, IPerspectiveAwareModel {
     private final ImmutableList<BakedQuad> quads;
 

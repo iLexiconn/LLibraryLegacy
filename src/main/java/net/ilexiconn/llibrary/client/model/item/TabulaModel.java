@@ -1,13 +1,9 @@
 package net.ilexiconn.llibrary.client.model.item;
 
-import java.util.Collection;
-import java.util.List;
-
-import javax.vecmath.Point2f;
-import javax.vecmath.Point2i;
-import javax.vecmath.Point3f;
-import javax.vecmath.Vector3f;
-
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
+import com.google.common.collect.ImmutableMap;
 import net.ilexiconn.llibrary.client.matrix.Matrix;
 import net.ilexiconn.llibrary.client.model.tabula.CubeInfo;
 import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
@@ -22,12 +18,17 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.IModelState;
 import net.minecraftforge.client.model.TRSRTransformation;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.google.common.base.Function;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableList.Builder;
-import com.google.common.collect.ImmutableMap;
+import javax.vecmath.Point2f;
+import javax.vecmath.Point2i;
+import javax.vecmath.Point3f;
+import javax.vecmath.Vector3f;
+import java.util.Collection;
+import java.util.List;
 
+@SideOnly(Side.CLIENT)
 public class TabulaModel implements IModel {
     private static final float EPSILON = 1e-4F;
 
