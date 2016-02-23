@@ -2,10 +2,10 @@ package net.ilexiconn.llibrary.client.gui;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import net.ilexiconn.llibrary.common.book.BookWiki;
-import net.ilexiconn.llibrary.common.book.BookWikiContainer;
 import net.ilexiconn.llibrary.client.book.BookWikiAPI;
 import net.ilexiconn.llibrary.client.book.IComponent;
+import net.ilexiconn.llibrary.common.book.BookWiki;
+import net.ilexiconn.llibrary.common.book.BookWikiContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;

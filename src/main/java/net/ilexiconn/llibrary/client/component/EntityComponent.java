@@ -1,8 +1,8 @@
 package net.ilexiconn.llibrary.client.component;
 
-import net.ilexiconn.llibrary.common.book.BookWiki;
 import net.ilexiconn.llibrary.client.book.IComponent;
 import net.ilexiconn.llibrary.client.gui.BookWikiGui;
+import net.ilexiconn.llibrary.common.book.BookWiki;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiInventory;

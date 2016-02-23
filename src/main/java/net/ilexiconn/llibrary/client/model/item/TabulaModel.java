@@ -46,7 +46,7 @@ public class TabulaModel implements IModel {
 
     @Override
     public Collection<ResourceLocation> getDependencies() {
-        return ImmutableList.<ResourceLocation> of();
+        return ImmutableList.<ResourceLocation>of();
     }
 
     @Override
@@ -141,12 +141,12 @@ public class TabulaModel implements IModel {
     }
 
     private void buildQuad(Builder<BakedQuad> builder, VertexFormat format, boolean isTxMirror, Point3f vert0, Point3f vert1, Point3f vert2, Point3f vert3,
-        Point2i minUV, Point2i maxUV, TextureAtlasSprite sprite) {
-        Point3f[] vertices = { vert0, vert1, vert2, vert3 };
+                           Point2i minUV, Point2i maxUV, TextureAtlasSprite sprite) {
+        Point3f[] vertices = {vert0, vert1, vert2, vert3};
         if (isQuadOneDimensional(vertices)) {
             return;
         }
-        Point2i[] uvs = { new Point2i(maxUV.x, minUV.y), new Point2i(minUV.x, minUV.y), new Point2i(minUV.x, maxUV.y), new Point2i(maxUV.x, maxUV.y) };
+        Point2i[] uvs = {new Point2i(maxUV.x, minUV.y), new Point2i(minUV.x, minUV.y), new Point2i(minUV.x, maxUV.y), new Point2i(maxUV.x, maxUV.y)};
         if (isTxMirror) {
             Point3f[] verticesMirrored = new Point3f[vertices.length];
             Point2i[] uvsMirrored = new Point2i[vertices.length];

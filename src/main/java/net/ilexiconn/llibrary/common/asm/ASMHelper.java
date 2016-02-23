@@ -17,10 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ASMHelper {
-    public interface Acceptor {
-        void accept(ClassVisitor cv) throws IOException;
-    }
-    
     public static boolean asmDump = true;
     public static boolean asmTextify = true;
 
@@ -179,5 +175,9 @@ public class ASMHelper {
                 cnode.accept(cv);
             }
         }, file, filterImportant, sortLocals);
+    }
+
+    public interface Acceptor {
+        void accept(ClassVisitor cv) throws IOException;
     }
 }

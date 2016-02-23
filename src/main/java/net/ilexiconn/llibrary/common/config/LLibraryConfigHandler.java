@@ -4,11 +4,11 @@ import net.ilexiconn.llibrary.common.update.UpdateCheckerThread;
 import net.ilexiconn.llibrary.common.update.UpdateType;
 import net.minecraftforge.common.config.Configuration;
 
-public class LLibraryConfigHandler implements IConfigHandler {   
+public class LLibraryConfigHandler implements IConfigHandler {
     public static boolean threadedScreenshots;
     public static UpdateType updateType;
-    public UpdateType lastUpdateType;
     public static boolean checkForUpdates;
+    public UpdateType lastUpdateType;
 
     @Override
     public void loadConfig(Configuration config) {

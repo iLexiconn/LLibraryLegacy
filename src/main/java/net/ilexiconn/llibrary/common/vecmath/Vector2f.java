@@ -42,7 +42,7 @@ public class Vector2f extends Tuple2f implements Serializable {
     }
 
     public final float length() {
-        return (float)Math.sqrt(this.x * this.x + this.y * this.y);
+        return (float) Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
     public final float lengthSquared() {
@@ -50,27 +50,27 @@ public class Vector2f extends Tuple2f implements Serializable {
     }
 
     public final void normalize(Vector2f var1) {
-        float var2 = (float)(1.0D / Math.sqrt(var1.x * var1.x + var1.y * var1.y));
+        float var2 = (float) (1.0D / Math.sqrt(var1.x * var1.x + var1.y * var1.y));
         this.x = var1.x * var2;
         this.y = var1.y * var2;
     }
 
     public final void normalize() {
-        float var1 = (float)(1.0D / Math.sqrt(this.x * this.x + this.y * this.y));
+        float var1 = (float) (1.0D / Math.sqrt(this.x * this.x + this.y * this.y));
         this.x *= var1;
         this.y *= var1;
     }
 
     public final float angle(Vector2f var1) {
         double var2 = this.dot(var1) / (this.length() * var1.length());
-        if(var2 < -1.0D) {
+        if (var2 < -1.0D) {
             var2 = -1.0D;
         }
 
-        if(var2 > 1.0D) {
+        if (var2 > 1.0D) {
             var2 = 1.0D;
         }
 
-        return (float)Math.acos(var2);
+        return (float) Math.acos(var2);
     }
 }

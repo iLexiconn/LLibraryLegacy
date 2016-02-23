@@ -24,8 +24,7 @@ import java.util.Random;
  * @author gegy1000
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class WorldChunkManagerHeightmap extends WorldChunkManager
-{
+public class WorldChunkManagerHeightmap extends WorldChunkManager {
     /**
      * The biome list.
      */

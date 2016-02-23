@@ -1,9 +1,9 @@
 package net.ilexiconn.llibrary.client.component.recipe;
 
-import net.ilexiconn.llibrary.common.book.BookWiki;
-import net.ilexiconn.llibrary.common.book.BookWikiContainer;
 import net.ilexiconn.llibrary.client.book.IRecipe;
 import net.ilexiconn.llibrary.client.gui.BookWikiGui;
+import net.ilexiconn.llibrary.common.book.BookWiki;
+import net.ilexiconn.llibrary.common.book.BookWikiContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;

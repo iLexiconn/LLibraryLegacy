@@ -14,6 +14,24 @@ import java.util.*;
 
 public class ModularASMTransformer {
 
+    public HashMap<String, ClassNodeTransformerList> transformers = new HashMap<String, ClassNodeTransformerList>();
+
+    public void add(ClassNodeTransformer t) {
+        ClassNodeTransformerList list = transformers.get(t.className());
+        if (list == null) {
+            transformers.put(t.className(), list = new ClassNodeTransformerList());
+        }
+        list.add(t);
+    }
+
+    public byte[] transform(String name, byte[] bytes) {
+        if (bytes == null) {
+            return null;
+        }
+        ClassNodeTransformerList list = transformers.get(name);
+        return list == null ? bytes : list.transform(bytes);
+    }
+
     public static class ClassNodeTransformerList {
         List<ClassNodeTransformer> transformers = new LinkedList<ClassNodeTransformer>();
         HashSet<ObfMapping> methodsToSort = new HashSet<ObfMapping>();
@@ -66,7 +84,8 @@ public class ModularASMTransformer {
 
         public abstract void transform(ClassNode cnode);
 
-        public void addMethodsToSort(Set<ObfMapping> set) {}
+        public void addMethodsToSort(Set<ObfMapping> set) {
+        }
     }
 
     public static abstract class MethodTransformer extends ClassNodeTransformer {
@@ -290,23 +309,5 @@ public class ModularASMTransformer {
             }
             fieldNode.desc = desc;
         }
-    }
-
-    public HashMap<String, ClassNodeTransformerList> transformers = new HashMap<String, ClassNodeTransformerList>();
-
-    public void add(ClassNodeTransformer t) {
-        ClassNodeTransformerList list = transformers.get(t.className());
-        if (list == null) {
-            transformers.put(t.className(), list = new ClassNodeTransformerList());
-        }
-        list.add(t);
-    }
-
-    public byte[] transform(String name, byte[] bytes) {
-        if (bytes == null) {
-            return null;
-        }
-        ClassNodeTransformerList list = transformers.get(name);
-        return list == null ? bytes : list.transform(bytes);
     }
 }

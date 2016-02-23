@@ -64,14 +64,14 @@ public class EntityHelper {
             }
         }
     }
-    
+
     /**
      * Registers an entity for a mod with default tracking range and update frequency
-     * 
-     * @param entityName Name of the entity
+     *
+     * @param entityName  Name of the entity
      * @param entityClass Class of the entity
      * @param modEntityId A mod specific entity id
-     * @param mod An instance of a mod to register the entity for
+     * @param mod         An instance of a mod to register the entity for
      */
     public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int modEntityId, Object mod) {
         EntityRegistry.registerModEntity(entityClass, entityName, modEntityId, mod, 64, 1, true);
@@ -79,12 +79,12 @@ public class EntityHelper {
 
     /**
      * Registers an entity for a mod with default tracking range and update frequency
-     * 
-     * @param entityName Name of the entity
-     * @param entityClass Class of the entity
-     * @param modEntityId A mod specific entity id
-     * @param mod An instance of a mod to register the entity for
-     * @param primaryEggColor Primary egg color
+     *
+     * @param entityName        Name of the entity
+     * @param entityClass       Class of the entity
+     * @param modEntityId       A mod specific entity id
+     * @param mod               An instance of a mod to register the entity for
+     * @param primaryEggColor   Primary egg color
      * @param secondaryEggColor Secondary egg color
      */
     public static void registerEntity(String entityName, Class<? extends Entity> entityClass, int modEntityId, Object mod, int primaryEggColor, int secondaryEggColor) {
@@ -184,8 +184,7 @@ public class EntityHelper {
         return hasScale(entity) ? scales.get(entity) : 1f;
     }
 
-    public static boolean hasScale(Entity entity)
-    {
+    public static boolean hasScale(Entity entity) {
         return scales.containsKey(entity);
     }
 }

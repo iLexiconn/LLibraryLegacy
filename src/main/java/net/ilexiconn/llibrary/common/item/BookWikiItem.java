@@ -1,7 +1,7 @@
 package net.ilexiconn.llibrary.common.item;
 
-import net.ilexiconn.llibrary.common.book.BookWiki;
 import net.ilexiconn.llibrary.client.gui.BookWikiGui;
+import net.ilexiconn.llibrary.common.book.BookWiki;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;

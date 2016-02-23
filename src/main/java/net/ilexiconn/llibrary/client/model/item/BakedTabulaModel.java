@@ -29,7 +29,7 @@ public class BakedTabulaModel implements IFlexibleBakedModel, IPerspectiveAwareM
     private final ImmutableMap<TransformType, TRSRTransformation> transforms;
 
     public BakedTabulaModel(ImmutableList<BakedQuad> quads, TextureAtlasSprite particle, VertexFormat format,
-        ImmutableMap<TransformType, TRSRTransformation> transforms) {
+                            ImmutableMap<TransformType, TRSRTransformation> transforms) {
         this.quads = quads;
         this.particle = particle;
         this.format = format;
@@ -38,7 +38,7 @@ public class BakedTabulaModel implements IFlexibleBakedModel, IPerspectiveAwareM
 
     @Override
     public List<BakedQuad> getFaceQuads(EnumFacing facing) {
-        return ImmutableList.<BakedQuad> of();
+        return ImmutableList.<BakedQuad>of();
     }
 
     @Override

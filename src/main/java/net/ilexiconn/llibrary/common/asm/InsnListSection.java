@@ -1,5 +1,10 @@
 package net.ilexiconn.llibrary.common.asm;
 
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.tree.*;
+import org.objectweb.asm.util.Textifier;
+import org.objectweb.asm.util.TraceMethodVisitor;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -8,42 +13,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.FrameNode;
-import org.objectweb.asm.tree.InsnList;
-import org.objectweb.asm.tree.JumpInsnNode;
-import org.objectweb.asm.tree.LabelNode;
-import org.objectweb.asm.tree.LookupSwitchInsnNode;
-import org.objectweb.asm.tree.TableSwitchInsnNode;
-import org.objectweb.asm.util.Textifier;
-import org.objectweb.asm.util.TraceMethodVisitor;
-
 public class InsnListSection implements Iterable<AbstractInsnNode> {
-
-    private class InsnListSectionIterator implements Iterator<AbstractInsnNode> {
-        private int i = 0;
-
-        @Override
-        public boolean hasNext() {
-            return i < size();
-        }
-
-        @Override
-        public AbstractInsnNode next() {
-            return get(i++);
-        }
-
-        @Override
-        public void remove() {
-            InsnListSection.this.remove(--i);
-        }
-    }
 
     public InsnList list;
     public int start;
     public int end;
-
     public InsnListSection(InsnList list, int start, int end) {
         this.list = list;
         this.start = start;
@@ -63,16 +37,25 @@ public class InsnListSection implements Iterable<AbstractInsnNode> {
     }
 
     public void accept(MethodVisitor mv) {
-        for (AbstractInsnNode insn : this)
+        for (AbstractInsnNode insn : this) {
             insn.accept(mv);
+        }
     }
 
     public AbstractInsnNode getFirst() {
         return size() == 0 ? null : list.get(start);
     }
 
+    public void setFirst(AbstractInsnNode first) {
+        start = list.indexOf(first);
+    }
+
     public AbstractInsnNode getLast() {
         return size() == 0 ? null : list.get(end - 1);
+    }
+
+    public void setLast(AbstractInsnNode last) {
+        end = list.indexOf(last) + 1;
     }
 
     public int size() {
@@ -133,14 +116,6 @@ public class InsnListSection implements Iterable<AbstractInsnNode> {
         }
     }
 
-    public void setLast(AbstractInsnNode last) {
-        end = list.indexOf(last) + 1;
-    }
-
-    public void setFirst(AbstractInsnNode first) {
-        start = list.indexOf(first);
-    }
-
     public InsnListSection drop(int n) {
         return slice(n, size());
     }
@@ -155,7 +130,7 @@ public class InsnListSection implements Iterable<AbstractInsnNode> {
 
     /**
      * Removes leading and trailing labels and line number nodes that don't affect control flow
-     * 
+     *
      * @return this
      */
     public InsnListSection trim(Set<LabelNode> controlFlowLabels) {
@@ -183,7 +158,7 @@ public class InsnListSection implements Iterable<AbstractInsnNode> {
 
     public HashMap<LabelNode, LabelNode> identityLabelMap() {
         HashMap<LabelNode, LabelNode> labelMap = new HashMap<LabelNode, LabelNode>();
-        for (AbstractInsnNode insn : this)
+        for (AbstractInsnNode insn : this) {
             switch (insn.getType()) {
                 case AbstractInsnNode.LABEL:
                     labelMap.put((LabelNode) insn, (LabelNode) insn);
@@ -201,8 +176,9 @@ public class InsnListSection implements Iterable<AbstractInsnNode> {
                 case AbstractInsnNode.TABLESWITCH_INSN:
                     TableSwitchInsnNode tinsn = (TableSwitchInsnNode) insn;
                     labelMap.put(tinsn.dflt, tinsn.dflt);
-                    for (LabelNode label : tinsn.labels)
+                    for (LabelNode label : tinsn.labels) {
                         labelMap.put(label, label);
+                    }
                     break;
                 case AbstractInsnNode.FRAME:
                     FrameNode fnode = (FrameNode) insn;
@@ -222,6 +198,7 @@ public class InsnListSection implements Iterable<AbstractInsnNode> {
                     }
                     break;
             }
+        }
 
         return labelMap;
     }
@@ -249,5 +226,24 @@ public class InsnListSection implements Iterable<AbstractInsnNode> {
     @Override
     public Iterator<AbstractInsnNode> iterator() {
         return new InsnListSectionIterator();
+    }
+
+    private class InsnListSectionIterator implements Iterator<AbstractInsnNode> {
+        private int i = 0;
+
+        @Override
+        public boolean hasNext() {
+            return i < size();
+        }
+
+        @Override
+        public AbstractInsnNode next() {
+            return get(i++);
+        }
+
+        @Override
+        public void remove() {
+            InsnListSection.this.remove(--i);
+        }
     }
 }

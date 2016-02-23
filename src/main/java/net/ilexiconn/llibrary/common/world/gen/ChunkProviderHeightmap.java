@@ -1,12 +1,5 @@
 package net.ilexiconn.llibrary.common.world.gen;
 
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
-
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -28,8 +21,14 @@ import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
-public class ChunkProviderHeightmap implements IChunkProvider
-{
+import java.util.List;
+import java.util.Random;
+
+import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
+
+public class ChunkProviderHeightmap implements IChunkProvider {
     /**
      * RNG.
      */
@@ -65,14 +64,10 @@ public class ChunkProviderHeightmap implements IChunkProvider
             for (int z = 0; z < 16; z++) {
                 int height = (heightmapGenerator.getHeightForCoords(x + (chunkX * 16), z + (chunkZ * 16)));
 
-                for (int y = 0; y < Math.max(heightmapGenerator.getOceanHeight(x, z), height); y++)
-                {
-                    if(y < height)
-                    {
+                for (int y = 0; y < Math.max(heightmapGenerator.getOceanHeight(x, z), height); y++) {
+                    if (y < height) {
                         chunkPrimer.setBlockState(x, y, z, heightmapGenerator.getStoneBlock());
-                    }
-                    else if (heightmapGenerator.hasOcean())
-                    {
+                    } else if (heightmapGenerator.hasOcean()) {
                         chunkPrimer.setBlockState(x, y, z, heightmapGenerator.getOceanLiquid());
                     }
                 }
@@ -98,8 +93,7 @@ public class ChunkProviderHeightmap implements IChunkProvider
         }
     }
 
-    public void genTerrainBlocks(BiomeGenBase biome, World world, Random random, ChunkPrimer chunkPrimer, int x, int z)
-    {
+    public void genTerrainBlocks(BiomeGenBase biome, World world, Random random, ChunkPrimer chunkPrimer, int x, int z) {
         IBlockState topBlock = biome.topBlock;
         IBlockState fillerBlock = biome.fillerBlock;
         int chunkX = x & 15;
@@ -110,30 +104,19 @@ public class ChunkProviderHeightmap implements IChunkProvider
         boolean reachedSurface = false;
         int depthSinceSurface = 0;
 
-        for (int y = 255; y >= 0; --y)
-        {
-            if (y <= random.nextInt(5))
-            {
+        for (int y = 255; y >= 0; --y) {
+            if (y <= random.nextInt(5)) {
                 chunkPrimer.setBlockState(chunkZ, y, chunkX, Blocks.bedrock.getDefaultState());
-            }
-            else
-            {
+            } else {
                 IBlockState previousBlock = chunkPrimer.getBlockState(chunkZ, y, chunkX);
 
-                if (previousBlock.getBlock().getMaterial() == Material.air)
-                {
+                if (previousBlock.getBlock().getMaterial() == Material.air) {
                     reachedSurface = true;
-                }
-                else if (previousBlock == stoneBlock)
-                {
-                    if (reachedSurface)
-                    {
-                        if (depthSinceSurface == 0)
-                        {
+                } else if (previousBlock == stoneBlock) {
+                    if (reachedSurface) {
+                        if (depthSinceSurface == 0) {
                             chunkPrimer.setBlockState(chunkZ, y, chunkX, topBlock);
-                        }
-                        else if (depthSinceSurface < 4)
-                        {
+                        } else if (depthSinceSurface < 4) {
                             chunkPrimer.setBlockState(chunkZ, y, chunkX, fillerBlock);
                         }
 

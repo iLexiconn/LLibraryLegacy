@@ -1,27 +1,10 @@
 package net.ilexiconn.llibrary.common.asm;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.FieldInsnNode;
-import org.objectweb.asm.tree.IincInsnNode;
-import org.objectweb.asm.tree.InsnList;
-import org.objectweb.asm.tree.IntInsnNode;
-import org.objectweb.asm.tree.JumpInsnNode;
-import org.objectweb.asm.tree.LabelNode;
-import org.objectweb.asm.tree.LdcInsnNode;
-import org.objectweb.asm.tree.LookupSwitchInsnNode;
-import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.TableSwitchInsnNode;
-import org.objectweb.asm.tree.TypeInsnNode;
-import org.objectweb.asm.tree.VarInsnNode;
-
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;
+import org.objectweb.asm.tree.*;
+
+import java.util.*;
 
 public class InsnComparator {
     public static boolean varInsnEqual(VarInsnNode insn1, VarInsnNode insn2) {
@@ -103,14 +86,16 @@ public class InsnComparator {
                 case AbstractInsnNode.TABLESWITCH_INSN:
                     TableSwitchInsnNode tsinsn = (TableSwitchInsnNode) insn;
                     controlFlowLabels.add(tsinsn.dflt);
-                    for (LabelNode label : tsinsn.labels)
+                    for (LabelNode label : tsinsn.labels) {
                         controlFlowLabels.add(label);
+                    }
                     break;
                 case AbstractInsnNode.LOOKUPSWITCH_INSN:
                     LookupSwitchInsnNode lsinsn = (LookupSwitchInsnNode) insn;
                     controlFlowLabels.add(lsinsn.dflt);
-                    for (LabelNode label : lsinsn.labels)
+                    for (LabelNode label : lsinsn.labels) {
                         controlFlowLabels.add(label);
+                    }
                     break;
             }
         }

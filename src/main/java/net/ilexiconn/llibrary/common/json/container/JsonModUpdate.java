@@ -28,9 +28,6 @@ public class JsonModUpdate {
     public transient String currentVersion;
     public transient BufferedImage thumbnail;
     public transient UpdateType updateType;
-    private transient ArtifactVersion releaseVersion;
-    private transient ArtifactVersion betaVersion;
-    private transient ArtifactVersion alphaVersion;
     public Map<String, List<String>> versions;
     public String updateUrl;
     public String iconUrl;
@@ -41,6 +38,9 @@ public class JsonModUpdate {
     public String alpha;
     @SerializedName("directUpdateUrl-" + MinecraftForge.MC_VERSION)
     public String directUpdateUrl;
+    private transient ArtifactVersion releaseVersion;
+    private transient ArtifactVersion betaVersion;
+    private transient ArtifactVersion alphaVersion;
 
     public Map<String, List<String>> getVersions() {
         return versions;

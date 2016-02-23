@@ -76,8 +76,7 @@ public class ClientProxy extends ServerProxy {
     }
 
     @Override
-    public void scheduleTask(MessageContext ctx, Runnable runnable)
-    {
+    public void scheduleTask(MessageContext ctx, Runnable runnable) {
         Minecraft.getMinecraft().addScheduledTask(runnable);
     }
 }

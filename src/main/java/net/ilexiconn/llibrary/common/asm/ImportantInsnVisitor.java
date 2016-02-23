@@ -7,6 +7,15 @@ import org.objectweb.asm.tree.MethodNode;
 
 public class ImportantInsnVisitor extends ClassVisitor {
 
+    public ImportantInsnVisitor(ClassVisitor cv) {
+        super(Opcodes.ASM4, cv);
+    }
+
+    @Override
+    public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+        return new ImportantInsnMethodVisitor(access, name, desc, signature, exceptions);
+    }
+
     public class ImportantInsnMethodVisitor extends MethodVisitor {
         private MethodVisitor delegate;
 
@@ -22,14 +31,5 @@ public class ImportantInsnVisitor extends ClassVisitor {
             mnode.instructions = InsnComparator.getImportantList(mnode.instructions);
             mnode.accept(delegate);
         }
-    }
-
-    public ImportantInsnVisitor(ClassVisitor cv) {
-        super(Opcodes.ASM4, cv);
-    }
-
-    @Override
-    public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
-        return new ImportantInsnMethodVisitor(access, name, desc, signature, exceptions);
     }
 }

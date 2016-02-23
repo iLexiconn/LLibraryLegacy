@@ -1,7 +1,5 @@
 package net.ilexiconn.llibrary.common;
 
-import java.io.File;
-
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.common.config.ConfigHelper;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
@@ -14,13 +12,15 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+import java.io.File;
+
 public class ServerProxy {
     public void preInit(File config) {
         MinecraftForge.EVENT_BUS.register(new ServerEventHandler());
         EntityHelper.registerEntity("mountableBlock", EntityMountableBlock.class, 0, LLibrary.instance);
         ConfigHelper.registerConfigHandler("llibrary", config, new LLibraryConfigHandler());
 
-        FMLInterModComms.sendMessage("llibrary", "update-checker", "https://github.com/iLexiconn/LLibrary/raw/version/versions.json");
+        FMLInterModComms.sendMessage("llibrary", "update-checker", "https://pastebin.com/raw/8sEVXE8p");
     }
 
     public void postInit() {
@@ -35,8 +35,7 @@ public class ServerProxy {
         return 0f;
     }
 
-    public void scheduleTask(MessageContext ctx, Runnable runnable)
-    {
+    public void scheduleTask(MessageContext ctx, Runnable runnable) {
         WorldServer worldObj = (WorldServer) ctx.getServerHandler().playerEntity.worldObj;
         worldObj.addScheduledTask(runnable);
     }

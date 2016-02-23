@@ -15,11 +15,9 @@ import java.util.ArrayList;
  * @since 0.1.0
  */
 public class JsonTabulaModel {
+    protected final double[] scale = new double[]{1d, 1d, 1d};
     protected int textureWidth;
     protected int textureHeight;
-
-    protected final double[] scale = new double[]{1d, 1d, 1d};
-
     protected ArrayList<CubeGroup> cubeGroups;
     protected ArrayList<CubeInfo> cubes;
     protected ArrayList<Animation> anims;

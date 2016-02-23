@@ -1,22 +1,19 @@
 package net.ilexiconn.llibrary.common.asm;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-
-import javax.swing.JFileChooser;
-
-import org.objectweb.asm.commons.Remapper;
-
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.io.LineProcessor;
 import com.google.common.io.Resources;
-
 import net.ilexiconn.llibrary.common.config.ConfigHelper;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
+import org.objectweb.asm.commons.Remapper;
+
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 
 public class MCPRemapper extends Remapper implements LineProcessor<Void> {
     private static final int DIR_GUESSES = 4;
@@ -35,34 +32,6 @@ public class MCPRemapper extends Remapper implements LineProcessor<Void> {
         }
     }
 
-    @Override
-    public String mapMethodName(String owner, String name, String desc) {
-        String s = funcs.get(name);
-        return s == null ? name : s;
-    }
-
-    @Override
-    public String mapFieldName(String owner, String name, String desc) {
-        String s = fields.get(name);
-        return s == null ? name : s;
-    }
-
-    @Override
-    public boolean processLine(String line) throws IOException {
-        int i = line.indexOf(',');
-        String srg = line.substring(0, i);
-        int i2 = i + 1;
-        i = line.indexOf(',', i2);
-        String mcp = line.substring(i2, i);
-        (srg.startsWith("func") ? funcs : fields).put(srg, mcp);
-        return true;
-    }
-
-    @Override
-    public Void getResult() {
-        return null;
-    }
-
     public static File[] getConfFiles() {
         // Check for GradleStart system vars
         if (!Strings.isNullOrEmpty(System.getProperty("net.minecraftforge.gradle.GradleStart.srgDir"))) {
@@ -75,7 +44,7 @@ public class MCPRemapper extends Remapper implements LineProcessor<Void> {
                 File methodCsv = new File(csvDir, "methods.csv");
 
                 if (srg.exists() && fieldCsv.exists() && methodCsv.exists()) {
-                    return new File[] {srg, fieldCsv, methodCsv};
+                    return new File[]{srg, fieldCsv, methodCsv};
                 }
             }
         }
@@ -85,7 +54,7 @@ public class MCPRemapper extends Remapper implements LineProcessor<Void> {
             if (dir == null || dir.isFile()) {
                 continue;
             }
-            
+
             File[] mappings;
             try {
                 mappings = parseConfDir(dir);
@@ -148,6 +117,34 @@ public class MCPRemapper extends Remapper implements LineProcessor<Void> {
         if (!fields.exists()) {
             throw new RuntimeException("Could not find fields.csv");
         }
-        return new File[] {srgs, methods, fields};
+        return new File[]{srgs, methods, fields};
+    }
+
+    @Override
+    public String mapMethodName(String owner, String name, String desc) {
+        String s = funcs.get(name);
+        return s == null ? name : s;
+    }
+
+    @Override
+    public String mapFieldName(String owner, String name, String desc) {
+        String s = fields.get(name);
+        return s == null ? name : s;
+    }
+
+    @Override
+    public boolean processLine(String line) throws IOException {
+        int i = line.indexOf(',');
+        String srg = line.substring(0, i);
+        int i2 = i + 1;
+        i = line.indexOf(',', i2);
+        String mcp = line.substring(i2, i);
+        (srg.startsWith("func") ? funcs : fields).put(srg, mcp);
+        return true;
+    }
+
+    @Override
+    public Void getResult() {
+        return null;
     }
 }

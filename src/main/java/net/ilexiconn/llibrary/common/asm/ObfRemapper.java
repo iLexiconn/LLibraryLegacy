@@ -1,13 +1,12 @@
 package net.ilexiconn.llibrary.common.asm;
 
+import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
+import org.objectweb.asm.commons.Remapper;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.objectweb.asm.commons.Remapper;
-
-import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 
 public class ObfRemapper extends Remapper {
     private HashMap<String, String> fields = new HashMap<String, String>();

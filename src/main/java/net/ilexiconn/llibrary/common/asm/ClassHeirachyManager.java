@@ -12,30 +12,6 @@ import java.util.HashSet;
 
 public class ClassHeirachyManager implements IClassTransformer {
 
-    public static class SuperCache {
-        private String superclass;
-        public HashSet<String> parents = new HashSet<String>();
-        private boolean flattened;
-
-        public void add(String parent) {
-            parents.add(parent);
-        }
-
-        public void flatten() {
-            if (flattened) {
-                return;
-            }
-            for (String s : new ArrayList<String>(parents)) {
-                SuperCache c = declareClass(s);
-                if (c != null) {
-                    c.flatten();
-                    parents.addAll(c.parents);
-                }
-            }
-            flattened = true;
-        }
-    }
-
     public static HashMap<String, SuperCache> superclasses = new HashMap<String, SuperCache>();
     private static LaunchClassLoader cl = Launch.classLoader;
 
@@ -54,7 +30,7 @@ public class ClassHeirachyManager implements IClassTransformer {
     }
 
     /**
-     * @param name The class in question
+     * @param name       The class in question
      * @param superclass The class being extended
      * @return true if the class extends, either directly or indirectly, superclass.
      */
@@ -134,17 +110,6 @@ public class ClassHeirachyManager implements IClassTransformer {
         return cache;
     }
 
-    @Override
-    public byte[] transform(String name, String tname, byte[] bytes) {
-        if (bytes == null) {
-            return null;
-        }
-        if (!superclasses.containsKey(tname)) {
-            declareASM(bytes);
-        }
-        return bytes;
-    }
-
     public static SuperCache getOrCreateCache(String name) {
         SuperCache cache = superclasses.get(name);
         if (cache == null) {
@@ -165,5 +130,40 @@ public class ClassHeirachyManager implements IClassTransformer {
             s = FMLDeobfuscatingRemapper.INSTANCE.unmap(s);
         }
         return s;
+    }
+
+    @Override
+    public byte[] transform(String name, String tname, byte[] bytes) {
+        if (bytes == null) {
+            return null;
+        }
+        if (!superclasses.containsKey(tname)) {
+            declareASM(bytes);
+        }
+        return bytes;
+    }
+
+    public static class SuperCache {
+        public HashSet<String> parents = new HashSet<String>();
+        private String superclass;
+        private boolean flattened;
+
+        public void add(String parent) {
+            parents.add(parent);
+        }
+
+        public void flatten() {
+            if (flattened) {
+                return;
+            }
+            for (String s : new ArrayList<String>(parents)) {
+                SuperCache c = declareClass(s);
+                if (c != null) {
+                    c.flatten();
+                    parents.addAll(c.parents);
+                }
+            }
+            flattened = true;
+        }
     }
 }

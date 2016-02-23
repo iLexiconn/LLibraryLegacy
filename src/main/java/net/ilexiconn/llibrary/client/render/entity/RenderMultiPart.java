@@ -1,7 +1,5 @@
 package net.ilexiconn.llibrary.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import net.ilexiconn.llibrary.common.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart;
 import net.minecraft.client.Minecraft;
@@ -11,6 +9,7 @@ import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.EntityLiving;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 
 /**
  * Basic class for debugging entity classes with {@link net.ilexiconn.llibrary.common.entity.multipart.IEntityMultiPart}.

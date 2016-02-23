@@ -7,7 +7,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * @author BobMowzie, gegy1000
@@ -15,12 +17,11 @@ import java.util.*;
  */
 @SideOnly(Side.CLIENT)
 public class MowzieModelBase<T extends Entity> extends ModelBase {
-    private float movementScale = 1.0F;
-
     /**
      * Store every MowzieModelRenderer in this array
      */
     protected List<MowzieModelRenderer> parts;
+    private float movementScale = 1.0F;
 
     @Override
     public ModelRenderer getRandomModelBox(Random rand) {

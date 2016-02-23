@@ -1,33 +1,19 @@
 package net.ilexiconn.llibrary.common.asm;
 
-import java.io.IOException;
-
+import com.google.common.base.Objects;
+import net.minecraft.launchwrapper.Launch;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.commons.Remapper;
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.FieldInsnNode;
-import org.objectweb.asm.tree.FieldNode;
-import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
-import org.objectweb.asm.tree.TypeInsnNode;
+import org.objectweb.asm.tree.*;
 
-import com.google.common.base.Objects;
-
-import net.minecraft.launchwrapper.Launch;
+import java.io.IOException;
 
 public class ObfMapping {
+    public static final boolean obfuscated;
     public static ObfRemapper obfMapper = new ObfRemapper();
     public static Remapper mcpMapper = null;
-
-    public static void loadMCPRemapper() {
-        if (mcpMapper == null) {
-            mcpMapper = new MCPRemapper();
-        }
-    }
-
-    public static final boolean obfuscated;
 
     static {
         boolean obf = true;
@@ -44,7 +30,6 @@ public class ObfMapping {
     public String owner;
     public String name;
     public String desc;
-
     public ObfMapping(String owner) {
         this(owner, "", "");
     }
@@ -61,6 +46,33 @@ public class ObfMapping {
 
     public ObfMapping(ObfMapping descmap, String subclass) {
         this(subclass, descmap.name, descmap.desc);
+    }
+
+    public static void loadMCPRemapper() {
+        if (mcpMapper == null) {
+            mcpMapper = new MCPRemapper();
+        }
+    }
+
+    public static ObfMapping fromDesc(String s) {
+        int lastDot = s.lastIndexOf('.');
+        if (lastDot < 0) {
+            return new ObfMapping(s, "", "");
+        }
+        int sep = s.indexOf('('); // methods
+        int sep_end = sep;
+        if (sep < 0) {
+            sep = s.indexOf(' '); // some stuffs
+            sep_end = sep + 1;
+        }
+        if (sep < 0) {
+            sep = s.indexOf(':'); // fields
+            sep_end = sep + 1;
+        }
+        if (sep < 0) {
+            return new ObfMapping(s.substring(0, lastDot), s.substring(lastDot + 1), "");
+        }
+        return new ObfMapping(s.substring(0, lastDot), s.substring(lastDot + 1, sep), s.substring(sep_end));
     }
 
     public ObfMapping copy() {
@@ -208,26 +220,5 @@ public class ObfMapping {
         } else {
             return "[" + (isMethod() ? methodDesc() : fieldDesc()) + "]";
         }
-    }
-
-    public static ObfMapping fromDesc(String s) {
-        int lastDot = s.lastIndexOf('.');
-        if (lastDot < 0) {
-            return new ObfMapping(s, "", "");
-        }
-        int sep = s.indexOf('('); // methods
-        int sep_end = sep;
-        if (sep < 0) {
-            sep = s.indexOf(' '); // some stuffs
-            sep_end = sep + 1;
-        }
-        if (sep < 0) {
-            sep = s.indexOf(':'); // fields
-            sep_end = sep + 1;
-        }
-        if (sep < 0) {
-            return new ObfMapping(s.substring(0, lastDot), s.substring(lastDot + 1), "");
-        }
-        return new ObfMapping(s.substring(0, lastDot), s.substring(lastDot + 1, sep), s.substring(sep_end));
     }
 }

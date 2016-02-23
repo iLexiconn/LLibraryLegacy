@@ -171,7 +171,8 @@ public class GuiModUpdates extends GuiScreen {
                                 updateQueue = Lists.newArrayList();
                             } else {
                                 try {
-                                    updateQueue = JsonFactory.getGson().fromJson(new FileReader(configFile), new TypeToken<List<JsonModUpdate>>(){}.getType());
+                                    updateQueue = JsonFactory.getGson().fromJson(new FileReader(configFile), new TypeToken<List<JsonModUpdate>>() {
+                                    }.getType());
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                     return;
@@ -278,6 +279,48 @@ public class GuiModUpdates extends GuiScreen {
         GL11.glPopMatrix();
     }
 
+    private enum SortType implements Comparator<JsonModUpdate> {
+        NORMAL(24),
+        A_TO_Z(25) {
+            @Override
+            protected int compare(String name1, String name2) {
+                return name1.compareTo(name2);
+            }
+        },
+        Z_TO_A(26) {
+            @Override
+            protected int compare(String name1, String name2) {
+                return name2.compareTo(name1);
+            }
+        };
+
+        private int buttonID;
+
+        SortType(int buttonID) {
+            this.buttonID = buttonID;
+        }
+
+        public static SortType getTypeForButton(GuiButton button) {
+            for (SortType t : values()) {
+                if (t.buttonID == button.id) {
+                    return t;
+                }
+            }
+            return null;
+        }
+
+        protected int compare(String name1, String name2) {
+            return 0;
+        }
+
+        @Override
+        public int compare(JsonModUpdate o1, JsonModUpdate o2) {
+            String name1 = StringUtils.stripControlCodes(o1.name).toLowerCase();
+            String name2 = StringUtils.stripControlCodes(o2.name).toLowerCase();
+            return compare(name1, name2);
+        }
+    }
+
     private class Info extends GuiScrollingList {
         private List<IChatComponent> lines = null;
 
@@ -373,48 +416,6 @@ public class GuiModUpdates extends GuiScreen {
                     }
                 }
             }
-        }
-    }
-
-    private enum SortType implements Comparator<JsonModUpdate> {
-        NORMAL(24),
-        A_TO_Z(25) {
-            @Override
-            protected int compare(String name1, String name2) {
-                return name1.compareTo(name2);
-            }
-        },
-        Z_TO_A(26) {
-            @Override
-            protected int compare(String name1, String name2) {
-                return name2.compareTo(name1);
-            }
-        };
-
-        private int buttonID;
-
-        SortType(int buttonID) {
-            this.buttonID = buttonID;
-        }
-
-        public static SortType getTypeForButton(GuiButton button) {
-            for (SortType t : values()) {
-                if (t.buttonID == button.id) {
-                    return t;
-                }
-            }
-            return null;
-        }
-
-        protected int compare(String name1, String name2) {
-            return 0;
-        }
-
-        @Override
-        public int compare(JsonModUpdate o1, JsonModUpdate o2) {
-            String name1 = StringUtils.stripControlCodes(o1.name).toLowerCase();
-            String name2 = StringUtils.stripControlCodes(o2.name).toLowerCase();
-            return compare(name1, name2);
         }
     }
 }

@@ -20,14 +20,13 @@ import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = "llibrary", name = "LLibrary", version = LLibrary.VERSION, guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory", dependencies = "required-after:Forge")
 public class LLibrary {
+    public static final String VERSION = "0.9.0";
     @Mod.Instance("llibrary")
     public static LLibrary instance;
     @SidedProxy(serverSide = "net.ilexiconn.llibrary.common.ServerProxy", clientSide = "net.ilexiconn.llibrary.client.ClientProxy")
     public static ServerProxy proxy;
     public static LoggerHelper logger = new LoggerHelper("llibrary");
     public static SimpleNetworkWrapper networkWrapper;
-
-    public static final String VERSION = "0.9.0";
 
     @Mod.EventHandler
     private void preInit(FMLPreInitializationEvent event) {

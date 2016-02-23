@@ -1,6 +1,6 @@
 package net.ilexiconn.llibrary.common.asm;
 
-import static org.objectweb.asm.Opcodes.*;
+import org.objectweb.asm.tree.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,15 +9,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.IincInsnNode;
-import org.objectweb.asm.tree.InsnNode;
-import org.objectweb.asm.tree.IntInsnNode;
-import org.objectweb.asm.tree.JumpInsnNode;
-import org.objectweb.asm.tree.LdcInsnNode;
-import org.objectweb.asm.tree.LineNumberNode;
-import org.objectweb.asm.tree.MultiANewArrayInsnNode;
-import org.objectweb.asm.tree.VarInsnNode;
+import static org.objectweb.asm.Opcodes.*;
 
 public class ASMReader {
     public static Map<String, Integer> opCodes = new HashMap<String, Integer>();

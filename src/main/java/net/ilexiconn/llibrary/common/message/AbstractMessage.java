@@ -17,6 +17,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @since 0.5.0
  */
 public abstract class AbstractMessage<M extends AbstractMessage<?>> implements IMessage, IMessageHandler<M, IMessage> {
+    protected MessageContext messageContext;
+
     /**
      * Register the message to the {@link net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper}.
      *
@@ -28,8 +30,6 @@ public abstract class AbstractMessage<M extends AbstractMessage<?>> implements I
     public static <T extends AbstractMessage<T> & IMessageHandler<T, IMessage>> void registerMessage(SimpleNetworkWrapper networkWrapper, Class<T> clazz, int id, Side side) {
         networkWrapper.registerMessage(clazz, clazz, id, side);
     }
-    
-    protected MessageContext messageContext;
 
     @Override
     public IMessage onMessage(final M message, final MessageContext ctx) {

@@ -1,14 +1,7 @@
 package net.ilexiconn.llibrary.client.model.item;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
+import com.google.common.collect.ImmutableList;
+import com.google.gson.*;
 import net.ilexiconn.llibrary.common.json.JsonHelper;
 import net.ilexiconn.llibrary.common.json.container.JsonTabulaModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -20,29 +13,30 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.IPerspectiveAwareModel;
-
-import com.google.common.collect.ImmutableList;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 @SideOnly(Side.CLIENT)
 public enum TabulaLoader implements ICustomModelLoader, JsonDeserializationContext {
     INSTANCE;
 
     private static final Gson GSON = new GsonBuilder()
-        .registerTypeAdapter(ItemTransformVec3f.class, new ItemTransformVec3f.Deserializer())
-        .registerTypeAdapter(ItemCameraTransforms.class, new ItemCameraTransforms.Deserializer())
-        .create();
+            .registerTypeAdapter(ItemTransformVec3f.class, new ItemTransformVec3f.Deserializer())
+            .registerTypeAdapter(ItemCameraTransforms.class, new ItemCameraTransforms.Deserializer())
+            .create();
 
     private static final JsonParser PARSER = new JsonParser();
 
-    private static final ModelBlock.Deserializer MODEL_BLOCK_DESERIALIZER = new ModelBlock.Deserializer(); 
+    private static final ModelBlock.Deserializer MODEL_BLOCK_DESERIALIZER = new ModelBlock.Deserializer();
 
     private final Set<String> enabledDomains = new HashSet<String>();
 
