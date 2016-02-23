@@ -9,6 +9,7 @@ import net.ilexiconn.llibrary.client.component.recipe.CraftingRecipe;
 import net.ilexiconn.llibrary.client.component.recipe.FurnaceRecipe;
 import net.ilexiconn.llibrary.client.gui.GuiHelper;
 import net.ilexiconn.llibrary.client.gui.GuiLLibraryMainMenu;
+import net.ilexiconn.llibrary.client.model.item.TabulaLoader;
 import net.ilexiconn.llibrary.common.ServerProxy;
 import net.ilexiconn.llibrary.common.config.LLibraryConfigHandler;
 import net.minecraft.client.Minecraft;
@@ -16,6 +17,7 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Timer;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -54,6 +56,8 @@ public class ClientProxy extends ServerProxy {
         BookWikiAPI.registerComponent(new StackComponent());
         BookWikiAPI.registerRecipe(new CraftingRecipe());
         BookWikiAPI.registerRecipe(new FurnaceRecipe());
+
+        ModelLoaderRegistry.registerLoader(TabulaLoader.INSTANCE);
     }
 
     @Override
