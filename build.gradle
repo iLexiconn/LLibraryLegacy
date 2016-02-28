@@ -95,6 +95,10 @@ publishing {
                 classifier "dev"
             }
 
+            artifact sourceJar {
+                classifier "sources"
+            }
+
             pom.withXml {
                 asNode().appendNode("description", "The modding library that claims to be lightweight")
                 asNode().appendNode("url", "https://github.com/iLexiconn/LLibrary")
