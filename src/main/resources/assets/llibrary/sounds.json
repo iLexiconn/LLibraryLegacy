@@ -2,9 +2,9 @@
 	"page-flip": {
         "category": "master",
         "sounds": [
-            "bookwiki/page-flip-1",
-            "bookwiki/page-flip-2",
-            "bookwiki/page-flip-3"
+            "page-flip-1",
+            "page-flip-2",
+            "page-flip-3"
         ]
     }
 }

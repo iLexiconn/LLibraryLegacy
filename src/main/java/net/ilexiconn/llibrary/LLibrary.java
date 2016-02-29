@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = "llibrary", name = "LLibrary", version = LLibrary.VERSION, guiFactory = "net.ilexiconn.llibrary.client.gui.GuiLLibraryConfigFactory", dependencies = "required-after:Forge")
 public class LLibrary {
-    public static final String VERSION = "0.9.1";
+    public static final String VERSION = "0.9.2";
     @Mod.Instance("llibrary")
     public static LLibrary instance;
     @SidedProxy(serverSide = "net.ilexiconn.llibrary.common.ServerProxy", clientSide = "net.ilexiconn.llibrary.client.ClientProxy")

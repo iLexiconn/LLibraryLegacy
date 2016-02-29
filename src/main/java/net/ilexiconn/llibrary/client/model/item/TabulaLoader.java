@@ -30,8 +30,8 @@ public enum TabulaLoader implements ICustomModelLoader, JsonDeserializationConte
     INSTANCE;
 
     private static final Gson GSON = new GsonBuilder()
-            .registerTypeAdapter(ItemTransformVec3f.class, new ItemTransformVec3f.Deserializer())
-            .registerTypeAdapter(ItemCameraTransforms.class, new ItemCameraTransforms.Deserializer())
+            .registerTypeAdapter(ItemTransformVec3f.class, new ItemTransformVec3fDeserializer())
+            .registerTypeAdapter(ItemCameraTransforms.class, new ItemCameraTransformsDeserializer())
             .create();
 
     private static final JsonParser PARSER = new JsonParser();
