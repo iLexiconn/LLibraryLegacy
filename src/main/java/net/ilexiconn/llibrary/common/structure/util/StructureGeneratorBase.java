@@ -830,9 +830,9 @@ public abstract class StructureGeneratorBase extends WorldGenerator {
         int centerX = blockArray[0].length / 2, centerZ = blockArray[0][0].length / 2;
 
         for (int y = (removeStructure ? blockArray.length - 1 : 0); (removeStructure ? y >= 0 : y < blockArray.length); y = (removeStructure ? --y : ++y)) {
-            for (int x = 0; x < blockArray[y].length; ++x) {
-                for (int z = 0; z < blockArray[y][x].length; ++z) {
-                    if (blockArray[y][x][z].length == 0 || blockArray[y][x][z][0] == SET_NO_BLOCK) {
+            for (int x = 0; x < blockArray[0].length; ++x) {
+                for (int z = 0; z < blockArray[0][0].length; ++z) {
+                    if (blockArray[0][0][0].length == 0 || blockArray[y][x][z][0] == SET_NO_BLOCK) {
                         continue;
                     }
 
