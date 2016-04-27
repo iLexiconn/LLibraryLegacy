@@ -15,6 +15,9 @@ public class HookPatchManager implements IClassTransformer {
 
     @Override
     public byte[] transform(String name, String transformedName, byte[] classBytes) {
+        if (classBytes == null) {
+            return null;
+        }
         ClassNode classNode = ASMHelper.createClassNode(classBytes);
         for (JsonHook hook : LLibraryPlugin.hookList) {
             if (transformedName.equals(hook.hookClass.name.replaceAll("/", "."))) {
